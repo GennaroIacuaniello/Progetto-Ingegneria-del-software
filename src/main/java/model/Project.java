@@ -1,0 +1,61 @@
+package model;
+
+import java.util.List;
+
+public class Project {
+
+    private String name;
+    private List<Issue> issues;
+    private List<Team> teams;
+    private List<Developer> developers;
+
+    public Project(String name, List<Team> teams, List<Developer> developers) throws IllegalArgumentException {
+
+        if((teams == null || teams.size() == 0) || (developers == null || developers.size() == 0))
+            throw new IllegalArgumentException("teams or developers cannot be null or empty");
+
+        this.name = name;
+        this.issues = null;
+        this.teams = teams;
+        this.developers = developers;
+    }
+
+    public Project(String name, List<Issue> issues, List<Team> teams, List<Developer> developers) throws IllegalArgumentException {
+
+        this(name, teams, developers);
+
+        this.issues = issues;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<Issue> getIssues() {
+        return issues;
+    }
+
+    public void setIssues(List<Issue> issues) {
+        this.issues = issues;
+    }
+
+    public List<Team> getTeams() {
+        return teams;
+    }
+
+    public void setTeams(List<Team> teams) {
+        this.teams = teams;
+    }
+
+    public List<Developer> getDevelopers() {
+        return developers;
+    }
+
+    public void setDevelopers(List<Developer> developers) {
+        this.developers = developers;
+    }
+}
