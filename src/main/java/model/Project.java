@@ -11,7 +11,7 @@ public class Project {
 
     public Project(String name, List<Team> teams, List<Developer> developers) throws IllegalArgumentException {
 
-        if((teams == null || teams.size() == 0) || (developers == null || developers.size() == 0))
+        if((teams == null || teams.isEmpty()) || (developers == null || developers.isEmpty()))
             throw new IllegalArgumentException("teams or developers cannot be null or empty");
 
         this.name = name;

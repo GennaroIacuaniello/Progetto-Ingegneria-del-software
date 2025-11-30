@@ -10,7 +10,7 @@ public class Team {
 
     public Team(String name, Project project, List<Developer> developers) throws IllegalArgumentException {
 
-        if (developers == null || developers.size() == 0)
+        if (developers == null || developers.isEmpty())
             throw new IllegalArgumentException("developers cannot be null or empty");
 
         this.name = name;
