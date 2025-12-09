@@ -1,16 +1,15 @@
 package gui;
 
-import com.formdev.flatlaf.util.HSLColor;
-
 import javax.swing.*;
 import java.awt.*;
+import java.net.URL;
 
 public class HomePanel {
 
     private static HomePanel instance;
     private RoundedPanel homePanel;
     private SearchProjectPanel searchProjectPanel;
-    private JButton logOutButton;
+    private LogOutButton logOutButton;
     private final Color BorderColor = new Color (77, 133, 255);
     private final Color BgColor = new Color(230, 238, 255);
 
@@ -31,7 +30,8 @@ public class HomePanel {
 
     private void setLogOutButton() {
         //todo aggiungi action listener
-        logOutButton = new JButton("Log out");
+
+        logOutButton = new LogOutButton();
 
         Constraints.setConstraints(1, 0, 1, 1,
                 GridBagConstraints.NONE, 0, 0, GridBagConstraints.FIRST_LINE_END,

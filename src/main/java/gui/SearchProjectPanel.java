@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.net.URL;
 
 public class SearchProjectPanel {
 
@@ -17,7 +18,7 @@ public class SearchProjectPanel {
     */
 
     private RoundedPanel searchProjectPanel;
-    private JButton searchButton;
+    private SearchButton searchButton;
     private JTextField searchTextField;
     private final String TextFieldInitializer = "Inserire nome progetto";
     private final Color BorderColor = new Color (77, 133, 255);
@@ -29,8 +30,8 @@ public class SearchProjectPanel {
         searchProjectPanel.setBackground(Color.WHITE);
         searchProjectPanel.setRoundBorderColor(BorderColor);
 
-        setSearchTextField();
         setSearchButton();
+        setSearchTextField();
     }
 
     private void setSearchTextField() {
@@ -66,7 +67,7 @@ public class SearchProjectPanel {
 
     private void setSearchButton() {
 
-        searchButton = new JButton("Cerca");
+        searchButton = new SearchButton();
 
         searchProjectPanel.add(searchButton);
     }
