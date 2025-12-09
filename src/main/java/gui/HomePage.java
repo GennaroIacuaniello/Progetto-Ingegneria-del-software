@@ -11,6 +11,7 @@ public class HomePage {
     private static HomePage instance;
     private JFrame mainFrame;
     private HomePanel homePanel;
+    private final Color bgColor = new Color(230, 255, 255);
 
     private HomePage() {
 
@@ -38,6 +39,8 @@ public class HomePage {
         mainFrame.setLayout(new GridBagLayout());
         mainFrame.setSize(800, 600);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        mainFrame.getContentPane().setBackground(bgColor);
     }
 
     private void setPanels() {
@@ -57,23 +60,29 @@ public class HomePage {
 
     private void setHomePanel() {
 
-        JPanel placeHolderPanelLeft = new JPanel();
-        JPanel placeHolderPanelRight = new JPanel();
-
-        placeHolderPanelLeft.setBackground(new Color(230, 255, 255));
-        placeHolderPanelRight.setBackground(new Color(230, 255, 255));
+        mainFrame.addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent e) {
+                updateHomePanelConstraints();
+            }
+        });
 
         Constraints.setConstraints(0, 1, 1, 1,
-                GridBagConstraints.BOTH, 30, 0, GridBagConstraints.PAGE_START, 0.01f, 0.1f);
-        mainFrame.add(placeHolderPanelLeft, Constraints.getGridBagConstraints());
-
-        Constraints.setConstraints(1, 1, 1, 1,
-                GridBagConstraints.BOTH, 0, 0, GridBagConstraints.PAGE_START, 0.05f, 0.1f);
+                GridBagConstraints.VERTICAL, (int)(mainFrame.getWidth() * 0.75), 0, GridBagConstraints.PAGE_START, 0.1f, 0.1f);
         mainFrame.add(HomePanel.getInstance().getHomePanel(), Constraints.getGridBagConstraints());
 
-        Constraints.setConstraints(2, 1, 1, 1,
-                GridBagConstraints.BOTH, 30, 0, GridBagConstraints.PAGE_START, 0.01f, 0.1f);
-        mainFrame.add(placeHolderPanelRight, Constraints.getGridBagConstraints());
+    }
+
+    private void updateHomePanelConstraints() {
+
+        mainFrame.remove(HomePanel.getInstance().getHomePanel());
+
+        Constraints.setConstraints(0, 1, 1, 1, GridBagConstraints.VERTICAL,
+                (int)(mainFrame.getWidth() * 0.75), 0, GridBagConstraints.PAGE_START, 0.1f, 0.1f);
+        mainFrame.add(HomePanel.getInstance().getHomePanel(), Constraints.getGridBagConstraints());
+
+        mainFrame.revalidate();
+        mainFrame.repaint();
     }
 
     public static HomePage getInstance() {
@@ -87,5 +96,9 @@ public class HomePage {
     public static void main(String[] args) {
 
         HomePage homePage = HomePage.getInstance();
+    }
+
+    public Color getBackgroundColor() {
+        return bgColor;
     }
 }

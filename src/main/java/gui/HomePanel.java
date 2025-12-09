@@ -6,14 +6,14 @@ import java.awt.*;
 public class HomePanel {
 
     private static HomePanel instance;
-    private JPanel homePanel;
+    private RoundedPanel homePanel;
 
     private HomePanel() {
 
         homePanel = new RoundedPanel(new GridBagLayout());
 
-        //homePanel.setLayout(new GridBagLayout());
         homePanel.setBackground(Color.WHITE);
+        homePanel.setRoundBorderColor(new Color(153, 255, 255));
 
         //todo rimuovi testLabel
         JLabel testLabel = new JLabel("contenuto");

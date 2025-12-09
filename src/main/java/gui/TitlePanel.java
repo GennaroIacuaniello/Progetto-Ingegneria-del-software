@@ -7,12 +7,13 @@ public class TitlePanel {
 
     private final JPanel titlePanel = new JPanel();
     private final JLabel titleLabel = new JLabel("titolo");
+    private final Color bgColor = new Color(204, 239, 255);
 
     public TitlePanel() {
 
         titlePanel.setLayout(new GridBagLayout());
 
-        titlePanel.setBackground(new Color(204, 239, 255));
+        titlePanel.setBackground(bgColor);
         //titlePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
         addTitleLabel();
