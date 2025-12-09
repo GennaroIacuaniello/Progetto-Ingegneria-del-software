@@ -7,20 +7,31 @@ public class HomePanel {
 
     private static HomePanel instance;
     private RoundedPanel homePanel;
+    private SearchProjectPanel searchProjectPanel;
 
     private HomePanel() {
+
+        setHomePanel();
+        setLogOutButton();
+        setSearchProjectPanel();
+    }
+
+    private void setHomePanel() {
 
         homePanel = new RoundedPanel(new GridBagLayout());
 
         homePanel.setBackground(Color.WHITE);
         homePanel.setRoundBorderColor(new Color(153, 255, 255));
+    }
 
-        //todo rimuovi testLabel
-        JLabel testLabel = new JLabel("contenuto");
-        testLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        testLabel.setVerticalAlignment(SwingConstants.CENTER);
+    private void setLogOutButton() {
+        //todo
+    }
 
-        homePanel.add(testLabel);
+    private void setSearchProjectPanel() {
+
+        //todo: completa
+        searchProjectPanel = new SearchProjectPanel();
     }
 
     public JPanel getHomePanel() {
@@ -33,5 +44,9 @@ public class HomePanel {
             instance = new HomePanel();
 
         return instance;
+    }
+
+    public SearchProjectPanel getSearchProjectPanel() {
+        return searchProjectPanel;
     }
 }

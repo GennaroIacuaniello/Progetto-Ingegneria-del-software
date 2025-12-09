@@ -10,7 +10,6 @@ public class HomePage {
 
     private static HomePage instance;
     private JFrame mainFrame;
-    private HomePanel homePanel;
     private final Color bgColor = new Color(230, 255, 255);
 
     private HomePage() {
