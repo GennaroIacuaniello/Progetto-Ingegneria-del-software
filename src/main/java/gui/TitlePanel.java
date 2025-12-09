@@ -12,11 +12,21 @@ public class TitlePanel {
 
         titlePanel.setLayout(new GridBagLayout());
 
+        titlePanel.setBackground(new Color(204, 239, 255));
+        //titlePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+        addTitleLabel();
+
+        titlePanel.setVisible(true);
+    }
+
+    private void addTitleLabel() {
+
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
         Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.BOTH,
                 0, 0, GridBagConstraints.CENTER);
         titlePanel.add(titleLabel, Constraints.getGridBagConstraints());
-
-        titlePanel.setVisible(true);
     }
 
     public JPanel getTitlePanel() {

@@ -8,10 +8,11 @@ import java.awt.*;
 
 public class HomePage {
 
-    private final JFrame mainFrame = new JFrame("HomePage");
-    private final TitlePanel titlePanel = new TitlePanel();
+    private static HomePage instance;
+    private JFrame mainFrame;
+    private HomePanel homePanel;
 
-    public HomePage() {
+    private HomePage() {
 
         setFlatLaf();
 
@@ -26,18 +27,13 @@ public class HomePage {
         try {
             UIManager.setLookAndFeel(new FlatLightLaf());
         } catch (UnsupportedLookAndFeelException e) {
-            String[] options = {"Continua", "Chiudi"};
-            int action = JOptionPane.showOptionDialog(null, "<html><center>Il tuo device non supporta FlatLaf,<br>" +
-                            "utilizzerai un'altra versione dell'app,<br>" +
-                            "tutte le funzioni rimarranno invariate.</center></html>",
-                    "Errore nel caricamento grafica", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, null);
-            if (action == 1 || action == JOptionPane.CLOSED_OPTION) {
-                return;
-            }
+            //todo
         }
     }
 
     private void setMainFrame() {
+
+        mainFrame = new JFrame("Home Page");
 
         mainFrame.setLayout(new GridBagLayout());
         mainFrame.setSize(800, 600);
@@ -46,13 +42,50 @@ public class HomePage {
 
     private void setPanels() {
 
+        setTitlePanel();
+        setHomePanel();
+    }
+
+    private void setTitlePanel() {
+
+        TitlePanel titlePanel = new TitlePanel();
+
         Constraints.setConstraints(0, 0, 3, 1,
-                GridBagConstraints.HORIZONTAL, 0, 50, GridBagConstraints.NORTH);
+                GridBagConstraints.BOTH, 0, 50, GridBagConstraints.NORTH);
         mainFrame.add(titlePanel.getTitlePanel(), Constraints.getGridBagConstraints());
+    }
+
+    private void setHomePanel() {
+
+        JPanel placeHolderPanelLeft = new JPanel();
+        JPanel placeHolderPanelRight = new JPanel();
+
+        placeHolderPanelLeft.setBackground(new Color(230, 255, 255));
+        placeHolderPanelRight.setBackground(new Color(230, 255, 255));
+
+        Constraints.setConstraints(0, 1, 1, 1,
+                GridBagConstraints.BOTH, 30, 0, GridBagConstraints.PAGE_START, 0.01f, 0.1f);
+        mainFrame.add(placeHolderPanelLeft, Constraints.getGridBagConstraints());
+
+        Constraints.setConstraints(1, 1, 1, 1,
+                GridBagConstraints.BOTH, 0, 0, GridBagConstraints.PAGE_START, 0.05f, 0.1f);
+        mainFrame.add(HomePanel.getInstance().getHomePanel(), Constraints.getGridBagConstraints());
+
+        Constraints.setConstraints(2, 1, 1, 1,
+                GridBagConstraints.BOTH, 30, 0, GridBagConstraints.PAGE_START, 0.01f, 0.1f);
+        mainFrame.add(placeHolderPanelRight, Constraints.getGridBagConstraints());
+    }
+
+    public static HomePage getInstance() {
+
+        if (instance == null)
+            instance = new HomePage();
+
+        return instance;
     }
 
     public static void main(String[] args) {
 
-        new HomePage();
+        HomePage homePage = HomePage.getInstance();
     }
 }
