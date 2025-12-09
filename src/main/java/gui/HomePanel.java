@@ -30,8 +30,11 @@ public class HomePanel {
 
     private void setSearchProjectPanel() {
 
-        //todo: completa
         searchProjectPanel = new SearchProjectPanel();
+
+        Constraints.setConstraints(0, 1, 3, 1,
+                GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER);
+        homePanel.add(searchProjectPanel.getSearchProjectPanel(), Constraints.getGridBagConstraints());
     }
 
     public JPanel getHomePanel() {
@@ -44,9 +47,5 @@ public class HomePanel {
             instance = new HomePanel();
 
         return instance;
-    }
-
-    public SearchProjectPanel getSearchProjectPanel() {
-        return searchProjectPanel;
     }
 }
