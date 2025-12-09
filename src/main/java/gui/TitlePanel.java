@@ -5,16 +5,15 @@ import java.awt.*;
 
 public class TitlePanel {
 
-    private final JPanel titlePanel = new JPanel();
+    private final RoundedPanel titlePanel = new RoundedPanel(new GridBagLayout());
     private final JLabel titleLabel = new JLabel("titolo");
-    private final Color bgColor = new Color(204, 239, 255);
+    private final Color bgColor = new Color(153, 201, 255);
+    private final Color BorderColor = new Color (77, 133, 255);
 
     public TitlePanel() {
 
-        titlePanel.setLayout(new GridBagLayout());
-
         titlePanel.setBackground(bgColor);
-        //titlePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        titlePanel.setRoundBorderColor(BorderColor);
 
         addTitleLabel();
 

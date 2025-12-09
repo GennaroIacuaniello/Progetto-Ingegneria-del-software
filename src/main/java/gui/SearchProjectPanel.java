@@ -19,14 +19,15 @@ public class SearchProjectPanel {
     private RoundedPanel searchProjectPanel;
     private JButton searchButton;
     private JTextField searchTextField;
-    private final String textFieldInitializer = "Inserire nome progetto";
+    private final String TextFieldInitializer = "Inserire nome progetto";
+    private final Color BorderColor = new Color (77, 133, 255);
 
     public SearchProjectPanel() {
 
         searchProjectPanel = new RoundedPanel(new FlowLayout(FlowLayout.LEFT));
 
         searchProjectPanel.setBackground(Color.WHITE);
-        searchProjectPanel.setRoundBorderColor(new Color (77, 133, 255));
+        searchProjectPanel.setRoundBorderColor(BorderColor);
 
         setSearchTextField();
         setSearchButton();
@@ -34,13 +35,13 @@ public class SearchProjectPanel {
 
     private void setSearchTextField() {
 
-        searchTextField = new JTextField(textFieldInitializer);
+        searchTextField = new JTextField(TextFieldInitializer);
 
         searchTextField.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
                 super.focusGained(e);
-                if (searchTextField.getText().equals(textFieldInitializer)) {
+                if (searchTextField.getText().equals(TextFieldInitializer)) {
                     searchTextField.setText("");
                 }
             }
@@ -49,7 +50,7 @@ public class SearchProjectPanel {
             public void focusLost(FocusEvent e) {
                 super.focusLost(e);
                 if (searchTextField.getText().isEmpty()) {
-                    searchTextField.setText(textFieldInitializer);
+                    searchTextField.setText(TextFieldInitializer);
                 }
             }
         });
@@ -57,6 +58,10 @@ public class SearchProjectPanel {
         searchTextField.setBorder(BorderFactory.createEmptyBorder());
 
         searchProjectPanel.add(searchTextField);
+    }
+
+    public JTextField getSearchTextField() {
+        return searchTextField;
     }
 
     private void setSearchButton() {

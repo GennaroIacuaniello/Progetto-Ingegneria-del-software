@@ -10,7 +10,7 @@ public class HomePage {
 
     private static HomePage instance;
     private JFrame mainFrame;
-    private final Color bgColor = new Color(230, 255, 255);
+    private final Color bgColor = new Color(204, 229, 255);
 
     private HomePage() {
 
@@ -53,7 +53,8 @@ public class HomePage {
         TitlePanel titlePanel = new TitlePanel();
 
         Constraints.setConstraints(0, 0, 3, 1,
-                GridBagConstraints.BOTH, 0, 50, GridBagConstraints.NORTH);
+                GridBagConstraints.BOTH, 0, 50,
+                GridBagConstraints.NORTH, new Insets(10, 10, 10, 10));
         mainFrame.add(titlePanel.getTitlePanel(), Constraints.getGridBagConstraints());
     }
 
@@ -67,7 +68,9 @@ public class HomePage {
         });
 
         Constraints.setConstraints(0, 1, 1, 1,
-                GridBagConstraints.VERTICAL, (int)(mainFrame.getWidth() * 0.75), 0, GridBagConstraints.PAGE_START, 0.1f, 0.1f);
+                GridBagConstraints.VERTICAL, (int)(mainFrame.getWidth() * 0.75), 0,
+                GridBagConstraints.PAGE_START, 0.1f, 0.1f,
+                new Insets(10, 0, 10, 0));
         mainFrame.add(HomePanel.getInstance().getHomePanel(), Constraints.getGridBagConstraints());
 
     }
@@ -77,7 +80,9 @@ public class HomePage {
         mainFrame.remove(HomePanel.getInstance().getHomePanel());
 
         Constraints.setConstraints(0, 1, 1, 1, GridBagConstraints.VERTICAL,
-                (int)(mainFrame.getWidth() * 0.75), 0, GridBagConstraints.PAGE_START, 0.1f, 0.1f);
+                (int)(mainFrame.getWidth() * 0.75), 0,
+                GridBagConstraints.PAGE_START, 0.1f, 0.1f,
+                new Insets(10, 0, 10, 0));
         mainFrame.add(HomePanel.getInstance().getHomePanel(), Constraints.getGridBagConstraints());
 
         mainFrame.revalidate();
