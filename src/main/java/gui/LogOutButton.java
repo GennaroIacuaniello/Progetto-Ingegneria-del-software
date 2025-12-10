@@ -2,33 +2,17 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.FocusListener;
+import java.awt.event.MouseListener;
 import java.net.URL;
 
-public class LogOutButton extends JButton {
+public class LogOutButton extends IconButton {
 
     public LogOutButton() {
 
-        super();
+        super("/gui/images/logOutButtonIcon.png", 50, 50);
 
-        setImageIcon();
-        setBackground();
         setActionListener();
-    }
-
-    private void setImageIcon() {
-
-        URL imageURL = getClass().getResource("/gui/images/logOutButtonIcon.png");
-        Image image = new ImageIcon(imageURL).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-        ImageIcon imageIcon = new ImageIcon(image);
-
-        this.setIcon(imageIcon);
-    }
-
-    private void setBackground() {
-
-        this.setBackground(new Color(0, 0, 0, 0));
-        this.setForeground(new Color(0, 0, 0, 0));
-        this.setBorderPainted(false);
     }
 
     private void setActionListener() {

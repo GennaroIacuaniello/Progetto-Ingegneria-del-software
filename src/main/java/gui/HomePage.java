@@ -14,7 +14,7 @@ public class HomePage {
 
     private HomePage() {
 
-        setFlatLaf();
+        //setFlatLaf();
 
         setMainFrame();
         setPanels();
@@ -66,23 +66,16 @@ public class HomePage {
                 updateHomePanelConstraints();
             }
         });
-
-        Constraints.setConstraints(0, 1, 1, 1,
-                GridBagConstraints.VERTICAL, (int)(mainFrame.getWidth() * 0.75), 0,
-                GridBagConstraints.PAGE_START, 0.1f, 0.1f,
-                new Insets(10, 0, 10, 0));
-        mainFrame.add(HomePanel.getInstance().getHomePanel(), Constraints.getGridBagConstraints());
-
     }
 
     private void updateHomePanelConstraints() {
 
         mainFrame.remove(HomePanel.getInstance().getHomePanel());
 
-        Constraints.setConstraints(0, 1, 1, 1, GridBagConstraints.VERTICAL,
-                (int)(mainFrame.getWidth() * 0.75), 0,
-                GridBagConstraints.PAGE_START, 0.1f, 0.1f,
-                new Insets(10, 0, 10, 0));
+        Constraints.setConstraints(0, 1, 1, 1,
+                GridBagConstraints.BOTH, 0, 0,
+                GridBagConstraints.PAGE_START, 0.01f, 0.1f,
+                new Insets(10, (int)(mainFrame.getWidth() * 0.1), 10, (int)(mainFrame.getWidth() * 0.1)));
         mainFrame.add(HomePanel.getInstance().getHomePanel(), Constraints.getGridBagConstraints());
 
         mainFrame.revalidate();

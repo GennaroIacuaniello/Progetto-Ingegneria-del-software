@@ -8,8 +8,7 @@ public class HomePanel {
 
     private static HomePanel instance;
     private RoundedPanel homePanel;
-    private SearchProjectPanel searchProjectPanel;
-    private LogOutButton logOutButton;
+    private SearchProjectViewResults searchProjectViewResults;
     private final Color BorderColor = new Color (77, 133, 255);
     private final Color BgColor = new Color(230, 238, 255);
 
@@ -18,6 +17,7 @@ public class HomePanel {
         setHomePanel();
         setLogOutButton();
         setSearchProjectPanel();
+        setSearchProjectViewResults();
     }
 
     private void setHomePanel() {
@@ -31,7 +31,7 @@ public class HomePanel {
     private void setLogOutButton() {
         //todo aggiungi action listener
 
-        logOutButton = new LogOutButton();
+        LogOutButton logOutButton = new LogOutButton();
 
         Constraints.setConstraints(1, 0, 1, 1,
                 GridBagConstraints.NONE, 0, 0, GridBagConstraints.FIRST_LINE_END,
@@ -41,14 +41,27 @@ public class HomePanel {
 
     private void setSearchProjectPanel() {
 
-        searchProjectPanel = new SearchProjectPanel();
-
-        //todo: la barra non si deve buggare su resize
-        searchProjectPanel.getSearchTextField().setSize(300, 50);
+        SearchProjectPanel searchProjectPanel = new SearchProjectPanel();
 
         Constraints.setConstraints(0, 1, 2, 1,
-                GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER, 0.1f, 0.5f);
+                GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER, 0.1f, 0.25f);
         homePanel.add(searchProjectPanel.getSearchProjectPanel(), Constraints.getGridBagConstraints());
+    }
+
+    private void setSearchProjectViewResults() {
+
+        searchProjectViewResults = new SearchProjectViewResults();
+
+        Constraints.setConstraints(0, 2, 2, 1,
+                GridBagConstraints.BOTH, 0, 0, GridBagConstraints.CENTER,
+                0.1f, 0.9f, new Insets(10, 30, 10, 30));
+        homePanel.add(searchProjectViewResults.getViewportScrollPane(), Constraints.getGridBagConstraints());
+    }
+
+    public void updateSearchProjectViewResults(Component component) {
+
+        //todo: funzione che permette di aggiornare la vista dei risultati della ricerca
+        searchProjectViewResults.updateViewportView(component);
     }
 
     public JPanel getHomePanel() {

@@ -56,6 +56,7 @@ public class SearchProjectPanel {
             }
         });
 
+        searchTextField.setPreferredSize(new Dimension(150, 20));
         searchTextField.setBorder(BorderFactory.createEmptyBorder());
 
         searchProjectPanel.add(searchTextField);
