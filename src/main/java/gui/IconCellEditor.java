@@ -33,11 +33,11 @@ class IconCellEditor extends DefaultCellEditor {
 
         this.selectedRow = row;
 
-       /* if (isSelected) {
+       if (isSelected) {
             button.setBackground(table.getSelectionBackground());
         } else {
             button.setBackground(table.getBackground());
-        }*/
+        }
 
         return button;
     }

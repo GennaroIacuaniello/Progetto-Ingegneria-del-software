@@ -14,7 +14,7 @@ public class HomePage {
 
     private HomePage() {
 
-        //setFlatLaf();
+
 
         setMainFrame();
         setPanels();
@@ -22,12 +22,19 @@ public class HomePage {
         mainFrame.setVisible(true);
     }
 
-    private void setFlatLaf() {
+    private static void setFlatLaf() {
 
         try {
             UIManager.setLookAndFeel(new FlatLightLaf());
         } catch (UnsupportedLookAndFeelException e) {
-            //todo
+            String[] options = {"Continua", "Chiudi"};
+            int action = JOptionPane.showOptionDialog(null, "<html><center>Il tuo device non supporta FlatLaf,<br>" +
+                            "utilizzerai un'altra versione dell'app,<br>" +
+                            "tutte le funzioni rimarranno invariate.</center></html>",
+                    "Errore nel caricamento grafica", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, null);
+            if (action == 1 || action == JOptionPane.CLOSED_OPTION) {
+                return;
+            }
         }
     }
 
@@ -91,6 +98,8 @@ public class HomePage {
     }
 
     public static void main(String[] args) {
+
+        setFlatLaf();
 
         HomePage homePage = HomePage.getInstance();
     }
