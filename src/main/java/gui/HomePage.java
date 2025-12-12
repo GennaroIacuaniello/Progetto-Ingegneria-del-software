@@ -8,13 +8,11 @@ import java.awt.*;
 
 public class HomePage {
 
-    private static HomePage instance;
-    private JFrame mainFrame;
-    private final Color bgColor = new Color(204, 229, 255);
+    protected static HomePage instance;
+    protected JFrame mainFrame;
+    protected final Color bgColor = new Color(204, 229, 255);
 
-    private HomePage() {
-
-
+    protected HomePage() {
 
         setMainFrame();
         setPanels();
@@ -22,7 +20,7 @@ public class HomePage {
         mainFrame.setVisible(true);
     }
 
-    private static void setFlatLaf() {
+    protected static void setFlatLaf() {
 
         try {
             UIManager.setLookAndFeel(new FlatLightLaf());
@@ -75,7 +73,7 @@ public class HomePage {
         });
     }
 
-    private void updateHomePanelConstraints() {
+    protected void updateHomePanelConstraints() {
 
         mainFrame.remove(HomePanel.getInstance().getHomePanel());
 

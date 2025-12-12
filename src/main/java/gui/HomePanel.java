@@ -6,13 +6,13 @@ import java.net.URL;
 
 public class HomePanel {
 
-    private static HomePanel instance;
-    private RoundedPanel homePanel;
-    private SearchProjectViewResults searchProjectViewResults;
-    private final Color BorderColor = new Color (77, 133, 255);
-    private final Color BgColor = new Color(230, 238, 255);
+    protected static HomePanel instance;
+    protected RoundedPanel homePanel;
+    protected SearchProjectViewResults searchProjectViewResults;
+    protected final Color BorderColor = new Color (77, 133, 255);
+    protected final Color BgColor = new Color(230, 238, 255);
 
-    private HomePanel() {
+    protected HomePanel() {
 
         setHomePanel();
         setLogOutButton();
