@@ -3,13 +3,20 @@ package gui;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.JButton;
 
-class ProjectTableModel extends AbstractTableModel {
+public class ProjectTableModelUser extends AbstractTableModel {
 
-    private final String[] columnNames = {"ID PROGETTO", "NOME PROGETTO", "SEGNALA ISSUE", "ISSUE SEGNALATE", "ISSUE ASSEGNATE", "VEDI TUTTE LE ISSUE"};
-    private final Object[][] data;
+    protected String[] columnNames;
+    protected final Object[][] data;
 
-    public ProjectTableModel(Object[][] data) {
+    public ProjectTableModelUser(Object[][] data) {
+
+        setColumnNames();
         this.data = data;
+    }
+
+    protected void setColumnNames() {
+
+        columnNames = new String[]{"ID PROGETTO", "NOME PROGETTO", "SEGNALA ISSUE", "ISSUE SEGNALATE"};
     }
 
     @Override
@@ -35,7 +42,7 @@ class ProjectTableModel extends AbstractTableModel {
     @Override
     public Class<?> getColumnClass(int columnIndex) {
 
-        if (columnIndex >= 2 && columnIndex <= 5)
+        if (columnIndex >= 2 && columnIndex <= 3)
             return IconButton.class;
         else
             return super.getColumnClass(columnIndex);
@@ -43,6 +50,6 @@ class ProjectTableModel extends AbstractTableModel {
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return columnIndex >= 2 && columnIndex <= 5;
+        return columnIndex >= 2 && columnIndex <= 3;
     }
 }

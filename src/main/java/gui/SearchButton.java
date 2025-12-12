@@ -30,7 +30,7 @@ public class SearchButton extends IconButton {
                 ids.add("id");
                 names.add("name");
 
-                new SearchProjectResults(ids, names);
+                new SearchProjectResultsUser(ids, names);
             }
         });
     }
