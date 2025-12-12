@@ -30,30 +30,32 @@ class IconCellEditor extends DefaultCellEditor {
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value,
                                                  boolean isSelected, int row, int column) {
-
         this.selectedRow = row;
 
-       if (isSelected) {
+        if (isSelected)
             button.setBackground(table.getSelectionBackground());
-        } else {
+        else
             button.setBackground(table.getBackground());
-        }
 
-        return button;
+       return button;
     }
 
     @Override
     public Object getCellEditorValue() {
 
-        int columnIndex = parentTable.getEditingColumn();
+        String action = parentTable.getColumnName(parentTable.getEditingColumn());
 
-        String action = parentTable.getColumnName(columnIndex);
+        //String projectId = (String)parentTable.getValueAt(selectedRow, 0);
 
-        String projectId = (String)parentTable.getValueAt(selectedRow, 0);
+        switch (action) {
 
-        System.out.println("Azione: " + action + ", ID: " + projectId);
+            case "SEGNALA ISSUE":
+                new ReportIssue();
+                break;
 
-        //todo: implementa in base a action e id
+            case "ISSUE SEGNALATE":
+                break;
+        }
 
         return null;
     }

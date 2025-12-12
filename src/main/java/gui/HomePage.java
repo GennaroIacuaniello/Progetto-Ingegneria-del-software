@@ -105,4 +105,8 @@ public class HomePage {
     public Color getBackgroundColor() {
         return bgColor;
     }
+
+    public JFrame getMainFrame() {
+        return mainFrame;
+    }
 }

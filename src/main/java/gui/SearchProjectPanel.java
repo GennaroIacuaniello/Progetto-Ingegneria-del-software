@@ -17,8 +17,7 @@ public class SearchProjectPanel {
        Controllare se la classe può essere implementata tramite design pattern singleton
     */
 
-    private RoundedPanel searchProjectPanel;
-    private SearchButton searchButton;
+    private final RoundedPanel searchProjectPanel;
     private JTextField searchTextField;
     private final String TextFieldInitializer = "Inserire nome progetto";
     private final Color BorderColor = new Color (77, 133, 255);
@@ -68,7 +67,7 @@ public class SearchProjectPanel {
 
     private void setSearchButton() {
 
-        searchButton = new SearchButton();
+        SearchButton searchButton = new SearchButton();
 
         searchProjectPanel.add(searchButton);
     }
