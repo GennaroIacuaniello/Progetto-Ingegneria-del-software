@@ -8,11 +8,11 @@ import java.awt.*;
 
 public class HomePage {
 
-    protected static HomePage instance;
     protected JFrame mainFrame;
     protected final Color bgColor = new Color(204, 229, 255);
+    private HomePanel homePanel;
 
-    protected HomePage() {
+    public HomePage() {
 
         setMainFrame();
         setPanels();
@@ -65,6 +65,8 @@ public class HomePage {
 
     private void setHomePanel() {
 
+        homePanel = new HomePanel();
+
         mainFrame.addComponentListener(new java.awt.event.ComponentAdapter() {
             @Override
             public void componentResized(java.awt.event.ComponentEvent e) {
@@ -75,38 +77,22 @@ public class HomePage {
 
     protected void updateHomePanelConstraints() {
 
-        mainFrame.remove(HomePanel.getInstance().getHomePanel());
+        mainFrame.remove(homePanel.getScrollPane());
 
         Constraints.setConstraints(0, 1, 1, 1,
                 GridBagConstraints.BOTH, 0, 0,
                 GridBagConstraints.PAGE_START, 0.01f, 0.1f,
                 new Insets(10, (int)(mainFrame.getWidth() * 0.1), 10, (int)(mainFrame.getWidth() * 0.1)));
-        mainFrame.add(HomePanel.getInstance().getHomePanel(), Constraints.getGridBagConstraints());
+        mainFrame.add(homePanel.getScrollPane(), Constraints.getGridBagConstraints());
 
         mainFrame.revalidate();
         mainFrame.repaint();
-    }
-
-    public static HomePage getInstance() {
-
-        if (instance == null)
-            instance = new HomePage();
-
-        return instance;
     }
 
     public static void main(String[] args) {
 
         setFlatLaf();
 
-        HomePage homePage = HomePage.getInstance();
-    }
-
-    public Color getBackgroundColor() {
-        return bgColor;
-    }
-
-    public JFrame getMainFrame() {
-        return mainFrame;
+        HomePage homePage = new HomePage();
     }
 }

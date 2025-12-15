@@ -6,7 +6,7 @@ import java.net.URL;
 
 public class HomePanel {
 
-    protected static HomePanel instance;
+    protected JScrollPane contentScrollPane;
     protected RoundedPanel homePanel;
     protected SearchProjectViewResults searchProjectViewResults;
     protected final Color BorderColor = new Color (77, 133, 255);
@@ -26,6 +26,17 @@ public class HomePanel {
 
         homePanel.setBackground(BgColor);
         homePanel.setRoundBorderColor(BorderColor);
+
+        setScrollPane();
+    }
+
+    private void setScrollPane() {
+
+        contentScrollPane = new JScrollPane();
+        contentScrollPane.setBorder(BorderFactory.createEmptyBorder());
+        contentScrollPane.getViewport().setBackground(new Color(0, 0, 0,0));
+
+        contentScrollPane.setViewportView(homePanel);
     }
 
     private void setLogOutButton() {
@@ -41,7 +52,7 @@ public class HomePanel {
 
     private void setSearchProjectPanel() {
 
-        SearchProjectPanel searchProjectPanel = new SearchProjectPanel();
+        SearchProjectPanel searchProjectPanel = new SearchProjectPanel(this);
 
         Constraints.setConstraints(0, 1, 2, 1,
                 GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER, 0.1f, 0.25f);
@@ -68,11 +79,7 @@ public class HomePanel {
         return homePanel;
     }
 
-    public static HomePanel getInstance() {
-
-        if (instance == null)
-            instance = new HomePanel();
-
-        return instance;
+    public JScrollPane getScrollPane() {
+        return contentScrollPane;
     }
 }

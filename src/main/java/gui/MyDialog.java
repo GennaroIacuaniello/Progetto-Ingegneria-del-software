@@ -10,7 +10,7 @@ public class MyDialog extends JDialog {
 
     public MyDialog() {
 
-        super(HomePage.getInstance().getMainFrame(), true);
+        /*super(HomePage.getInstance().getMainFrame(), true);
         setUndecorated(true);
 
         setBackground(new Color(0, 0, 0, 0));
@@ -23,6 +23,6 @@ public class MyDialog extends JDialog {
         setContentPane(contentPanel);
 
         pack();
-        setLocationRelativeTo(getOwner());
+        setLocationRelativeTo(getOwner());*/
     }
 }

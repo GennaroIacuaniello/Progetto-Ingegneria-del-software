@@ -20,12 +20,4 @@ public class HomePanelAdmin extends HomePanel{
                 new Insets(10, 10, 0, 0));
         homePanel.add(menuButton, Constraints.getGridBagConstraints());
     }
-
-    public static HomePanel getInstance() {
-
-        if (instance == null)
-            instance = new HomePanelAdmin();
-
-        return instance;
-    }
 }

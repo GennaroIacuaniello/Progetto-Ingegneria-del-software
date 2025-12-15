@@ -18,7 +18,8 @@ public class SearchProjectViewResults {
 
         scrollPane = new JScrollPane();
 
-        scrollPane.setBorder(null);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
+        scrollPane.getViewport().setBackground(new Color(0, 0, 0,0));
 
         scrollPane.setViewportView(createTmpViewPanel());
     }

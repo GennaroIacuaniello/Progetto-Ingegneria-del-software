@@ -12,12 +12,12 @@ public class SearchProjectResultsUser {
     protected static final int ICON_WIDTH = 20;
     protected static final int ICON_HEIGHT = 20;
 
-    public SearchProjectResultsUser (List<String > projectsIds, List<String> projectsNames) {
+    public SearchProjectResultsUser (HomePanel homePanel, List<String > projectsIds, List<String> projectsNames) {
 
         setIconUrlMap();
         setButtonActions();
 
-        HomePanel.getInstance().updateSearchProjectViewResults(createTable(projectsIds, projectsNames));
+        homePanel.updateSearchProjectViewResults(createTable(projectsIds, projectsNames));
     }
 
     protected void setIconUrlMap() {
