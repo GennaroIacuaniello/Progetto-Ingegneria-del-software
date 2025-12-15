@@ -15,8 +15,8 @@ class IconCellRenderer extends IconButton implements TableCellRenderer {
 
     private void setBackGround() {
 
-        this.setContentAreaFilled(false);
-        this.setBorderPainted(false);
+        this.setContentAreaFilled(true);
+        //this.setBorderPainted(false);
         this.setOpaque(true);
     }
 

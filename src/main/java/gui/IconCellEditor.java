@@ -7,15 +7,17 @@ import java.awt.event.ActionListener;
 
 class IconCellEditor extends DefaultCellEditor {
 
-    protected IconButton button;
+    private IconButton button;
     private int selectedRow;
     private final JTable parentTable;
+    private HomePanel homePanel;
 
-    public IconCellEditor(String url, int width, int height, JTable table) {
+    public IconCellEditor(HomePanel homePanel, String url, int width, int height, JTable table) {
 
         super(new JTextField()); //se togli il parametro si incazza
 
         this.parentTable = table;
+        this.homePanel = homePanel;
 
         setClickCountToStart(1);
 
@@ -50,7 +52,7 @@ class IconCellEditor extends DefaultCellEditor {
         switch (action) {
 
             case "SEGNALA ISSUE":
-                new ReportIssue();
+                homePanel.getScrollPane().setViewportView(new ReportIssue());
                 break;
 
             case "ISSUE SEGNALATE":

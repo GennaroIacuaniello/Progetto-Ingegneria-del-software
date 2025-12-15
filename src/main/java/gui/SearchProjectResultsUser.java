@@ -17,7 +17,7 @@ public class SearchProjectResultsUser {
         setIconUrlMap();
         setButtonActions();
 
-        homePanel.updateSearchProjectViewResults(createTable(projectsIds, projectsNames));
+        homePanel.updateSearchProjectViewResults(createTable(homePanel, projectsIds, projectsNames));
     }
 
     protected void setIconUrlMap() {
@@ -33,7 +33,7 @@ public class SearchProjectResultsUser {
         buttonActions = new String[]{"Report", "Reported"};
     }
 
-    protected JTable createTable(List<String> projectIds, List<String> projectNames) {
+    protected JTable createTable(HomePanel homePanel, List<String> projectIds, List<String> projectNames) {
 
         JTable resultsTable = new JTable(createTableModel(projectIds, projectNames));
 
@@ -46,7 +46,7 @@ public class SearchProjectResultsUser {
             TableColumn buttonColumn = resultsTable.getColumnModel().getColumn(columnIndex);
 
             buttonColumn.setCellRenderer(new IconCellRenderer(iconUrl, ICON_WIDTH, ICON_HEIGHT));
-            buttonColumn.setCellEditor(new IconCellEditor(iconUrl, ICON_WIDTH, ICON_HEIGHT, resultsTable));
+            buttonColumn.setCellEditor(new IconCellEditor(homePanel, iconUrl, ICON_WIDTH, ICON_HEIGHT, resultsTable));
         }
 
         resultsTable.setRowHeight(ICON_HEIGHT + 4);

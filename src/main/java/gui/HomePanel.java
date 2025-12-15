@@ -7,6 +7,7 @@ import java.net.URL;
 public class HomePanel {
 
     protected JScrollPane contentScrollPane;
+    protected RoundedPanel projectsPanel;
     protected RoundedPanel homePanel;
     protected SearchProjectViewResults searchProjectViewResults;
     protected final Color BorderColor = new Color (77, 133, 255);
@@ -16,8 +17,8 @@ public class HomePanel {
 
         setHomePanel();
         setLogOutButton();
-        setSearchProjectPanel();
-        setSearchProjectViewResults();
+        setProjectsPanel();
+        setScrollPane();
     }
 
     private void setHomePanel() {
@@ -26,17 +27,6 @@ public class HomePanel {
 
         homePanel.setBackground(BgColor);
         homePanel.setRoundBorderColor(BorderColor);
-
-        setScrollPane();
-    }
-
-    private void setScrollPane() {
-
-        contentScrollPane = new JScrollPane();
-        contentScrollPane.setBorder(BorderFactory.createEmptyBorder());
-        contentScrollPane.getViewport().setBackground(new Color(0, 0, 0,0));
-
-        contentScrollPane.setViewportView(homePanel);
     }
 
     private void setLogOutButton() {
@@ -50,23 +40,46 @@ public class HomePanel {
         homePanel.add(logOutButton, Constraints.getGridBagConstraints());
     }
 
+    private void setProjectsPanel() {
+
+        projectsPanel = new RoundedPanel(new GridBagLayout());
+        projectsPanel.setRoundBorderColor(new  Color(0, 0, 0,0));
+        projectsPanel.setBackground(new Color(0, 0, 0,0));
+
+        setSearchProjectPanel();
+        setSearchProjectViewResults();
+    }
+
     private void setSearchProjectPanel() {
 
         SearchProjectPanel searchProjectPanel = new SearchProjectPanel(this);
 
-        Constraints.setConstraints(0, 1, 2, 1,
+        Constraints.setConstraints(0, 0, 1, 1,
                 GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER, 0.1f, 0.25f);
-        homePanel.add(searchProjectPanel.getSearchProjectPanel(), Constraints.getGridBagConstraints());
+        projectsPanel.add(searchProjectPanel.getSearchProjectPanel(), Constraints.getGridBagConstraints());
     }
 
     private void setSearchProjectViewResults() {
 
         searchProjectViewResults = new SearchProjectViewResults();
 
-        Constraints.setConstraints(0, 2, 2, 1,
+        Constraints.setConstraints(0, 1, 1, 1,
+                GridBagConstraints.BOTH, 0, 0, GridBagConstraints.CENTER, 0.1f, 1f);
+        projectsPanel.add(searchProjectViewResults.getViewportScrollPane(), Constraints.getGridBagConstraints());
+    }
+
+    private void setScrollPane() {
+
+        contentScrollPane = new JScrollPane();
+        contentScrollPane.setBorder(BorderFactory.createEmptyBorder());
+        contentScrollPane.getViewport().setBackground(new Color(0, 0, 0,0));
+
+        contentScrollPane.setViewportView(projectsPanel);
+
+        Constraints.setConstraints(0, 1, 2, 1,
                 GridBagConstraints.BOTH, 0, 0, GridBagConstraints.CENTER,
-                0.1f, 0.9f, new Insets(10, 30, 10, 30));
-        homePanel.add(searchProjectViewResults.getViewportScrollPane(), Constraints.getGridBagConstraints());
+                0.1f, 1f, new Insets(0, 10, 10, 10));
+        homePanel.add(contentScrollPane, Constraints.getGridBagConstraints());
     }
 
     public void updateSearchProjectViewResults(Component component) {

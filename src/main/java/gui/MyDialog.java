@@ -8,9 +8,9 @@ public class MyDialog extends JDialog {
     protected final Color BorderColor = new Color (77, 133, 255);
     protected RoundedPanel contentPanel;
 
-    public MyDialog() {
+    public MyDialog(JFrame owner) {
 
-        /*super(HomePage.getInstance().getMainFrame(), true);
+        super(owner, true);
         setUndecorated(true);
 
         setBackground(new Color(0, 0, 0, 0));
@@ -23,6 +23,6 @@ public class MyDialog extends JDialog {
         setContentPane(contentPanel);
 
         pack();
-        setLocationRelativeTo(getOwner());*/
+        setLocationRelativeTo(getOwner());
     }
 }

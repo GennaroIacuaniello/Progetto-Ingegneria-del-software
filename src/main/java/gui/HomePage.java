@@ -83,7 +83,7 @@ public class HomePage {
                 GridBagConstraints.BOTH, 0, 0,
                 GridBagConstraints.PAGE_START, 0.01f, 0.1f,
                 new Insets(10, (int)(mainFrame.getWidth() * 0.1), 10, (int)(mainFrame.getWidth() * 0.1)));
-        mainFrame.add(homePanel.getScrollPane(), Constraints.getGridBagConstraints());
+        mainFrame.add(homePanel.getHomePanel(), Constraints.getGridBagConstraints());
 
         mainFrame.revalidate();
         mainFrame.repaint();

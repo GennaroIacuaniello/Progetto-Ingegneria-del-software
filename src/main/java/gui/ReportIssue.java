@@ -5,33 +5,33 @@ import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
-public class ReportIssue extends MyDialog{
+public class ReportIssue extends RoundedPanel{
 
-    protected JLabel titleLabel;
-    protected JTextField titleTextField;
-    protected JTextArea descriptionTextArea;
-    protected JOptionPane typeOptionPane;
-    protected JButton tagsButton;
-    protected JFileChooser fileChooser;
-    protected JButton reportButton;
-    protected JButton cancelButton;
-    protected static final String TITLE_PLACEHOLDER = "Inserisci titolo";
-    protected static final String DESCRIPTION_PLACEHOLDER = "Inserisci descrizione";
+    private JLabel titleLabel;
+    private JTextField titleTextField;
+    private JTextArea descriptionTextArea;
+    private JOptionPane typeOptionPane;
+    private JButton tagsButton;
+    private JFileChooser fileChooser;
+    private JButton reportButton;
+    private JButton cancelButton;
+    private static final String TITLE_PLACEHOLDER = "Inserisci titolo";
+    private static final String DESCRIPTION_PLACEHOLDER = "Inserisci descrizione";
+    private final Color BorderColor = new Color (77, 133, 255);
 
     public ReportIssue() {
 
-        super();
+        super(new GridBagLayout());
 
-        setTitleLabel();
+        setRoundedPanel();
+        //setTitleLabel();
         setTitleTextField();
         setDescriptionTextArea();
-
-        pack();
 
         setVisible(true);
     }
 
-    private void setTitleLabel() {
+    /*private void setTitleLabel() {
 
         titleLabel = new JLabel ("SEGNALA ISSUE");
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -43,6 +43,12 @@ public class ReportIssue extends MyDialog{
         Constraints.setConstraints(0, 0, 4, 1,
                 GridBagConstraints.HORIZONTAL, 0, 0, GridBagConstraints.PAGE_START, 0.01f, 0.01f);
         contentPanel.add(titleLabel, Constraints.getGridBagConstraints());
+    }*/
+
+    private void setRoundedPanel() {
+
+        setRoundBorderColor(new Color(0, 0, 0, 0));
+        setBackground(Color.WHITE);
     }
 
     private void setTitleTextField() {
@@ -72,15 +78,15 @@ public class ReportIssue extends MyDialog{
             }
         });
 
-        Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.NONE,
-                0, 0, GridBagConstraints.CENTER, 0.01f, 0.01f,
-                new Insets(5, 5, 5, 5));
+        Constraints.setConstraints(0, 0, 1, 1,
+                GridBagConstraints.BOTH, 0, 0, GridBagConstraints.CENTER,
+                0.01f, 0.01f, new Insets(5, 5, 5, 5));
         tmpPanel.add(titleTextField, Constraints.getGridBagConstraints());
 
         Constraints.setConstraints(0, 1, 4, 1,
-                GridBagConstraints.NONE, 0, 0, GridBagConstraints.LINE_START, 0.5f, 0.5f,
-                new Insets(10, 10, 0, 10));
-        contentPanel.add(tmpPanel, Constraints.getGridBagConstraints());
+                GridBagConstraints.NONE, 0, 0, GridBagConstraints.LAST_LINE_START,
+                0.5f, 0.5f, new Insets(10, 10, 0, 10));
+        this.add(tmpPanel, Constraints.getGridBagConstraints());
     }
 
     private void setDescriptionTextArea() {
@@ -115,14 +121,14 @@ public class ReportIssue extends MyDialog{
         tmpScrollPane.setBackground(new Color(0, 0, 0, 0));
         tmpScrollPane.setViewportView(descriptionTextArea);
 
-        Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.NONE,
-                0, 0, GridBagConstraints.CENTER, 0.01f, 0.01f,
-                new Insets(5, 5, 5, 5));
+        Constraints.setConstraints(0, 0, 1, 1,
+                GridBagConstraints.BOTH, 0, 0, GridBagConstraints.CENTER,
+                0.01f, 0.01f, new Insets(5, 5, 5, 5));
         tmpPanel.add(tmpScrollPane, Constraints.getGridBagConstraints());
 
         Constraints.setConstraints(0, 2, 4, 1,
-                GridBagConstraints.BOTH, 0, 0, GridBagConstraints.LINE_START, 1f, 1f
-                , new Insets(0, 10, 10, 10));
-        contentPanel.add(tmpPanel, Constraints.getGridBagConstraints());
+                GridBagConstraints.NONE, 0, 0, GridBagConstraints.FIRST_LINE_START,
+                1f, 1f, new Insets(0, 10, 10, 10));
+        this.add(tmpPanel, Constraints.getGridBagConstraints());
     }
 }

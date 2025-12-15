@@ -48,7 +48,8 @@ public class IconButton extends JButton {
 
     private void setBackground() {
 
-        this.setBackground(new Color(0, 0, 0, 0));
+        //this.setBackground(new Color(0, 0, 0, 0));
+        this.setContentAreaFilled(false);
         this.setBorderPainted(false);
     }
 }
