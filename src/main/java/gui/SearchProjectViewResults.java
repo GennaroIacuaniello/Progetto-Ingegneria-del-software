@@ -11,7 +11,6 @@ public class SearchProjectViewResults {
         a inizio programma si potrebbe visualizzare un messaggio che suggerisce all'utente di effettuare una ricerca
         per visualizzare i risultati. Il JScrollPane deve essere contenuto in HomePanel della classe HomePanel.
      */
-    private final Color BorderColor = new Color (77, 133, 255);
     private final JScrollPane scrollPane;
 
     public SearchProjectViewResults() {
@@ -19,7 +18,7 @@ public class SearchProjectViewResults {
         scrollPane = new JScrollPane();
 
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
-        scrollPane.getViewport().setBackground(new Color(0, 0, 0,0));
+        scrollPane.getViewport().setBackground(ColorsList.EMPTY_COLOR);
 
         scrollPane.setViewportView(createTmpViewPanel());
     }
@@ -28,7 +27,7 @@ public class SearchProjectViewResults {
 
         RoundedPanel tmpViewPanel = new RoundedPanel(new BorderLayout());
 
-        tmpViewPanel.setRoundBorderColor(BorderColor);
+        tmpViewPanel.setRoundBorderColor(ColorsList.BORDER_COLOR);
         tmpViewPanel.setBackground(Color.WHITE);
 
         tmpViewPanel.add(createTmpViewLabel());
@@ -46,7 +45,7 @@ public class SearchProjectViewResults {
         tmpViewLabel.setHorizontalAlignment(SwingConstants.CENTER);
         tmpViewLabel.setVerticalAlignment(SwingConstants.CENTER);
 
-        tmpViewLabel.setBackground(new Color(0, 0, 0, 0));
+        tmpViewLabel.setBackground(ColorsList.EMPTY_COLOR);
 
         tmpViewLabel.setFont(new Font("Monospaced", Font.PLAIN, 16));
 

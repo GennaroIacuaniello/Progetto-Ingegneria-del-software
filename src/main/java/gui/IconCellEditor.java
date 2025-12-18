@@ -52,7 +52,7 @@ class IconCellEditor extends DefaultCellEditor {
         switch (action) {
 
             case "SEGNALA ISSUE":
-                homePanel.getScrollPane().setViewportView(new ReportIssue());
+                homePanel.setContentPanel(new ReportIssue());
                 break;
 
             case "ISSUE SEGNALATE":

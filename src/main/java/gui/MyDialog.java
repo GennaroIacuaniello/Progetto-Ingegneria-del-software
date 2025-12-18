@@ -5,7 +5,6 @@ import java.awt.*;
 
 public class MyDialog extends JDialog {
 
-    protected final Color BorderColor = new Color (77, 133, 255);
     protected RoundedPanel contentPanel;
 
     public MyDialog(JFrame owner) {
@@ -13,12 +12,12 @@ public class MyDialog extends JDialog {
         super(owner, true);
         setUndecorated(true);
 
-        setBackground(new Color(0, 0, 0, 0));
+        setBackground(ColorsList.EMPTY_COLOR);
 
         contentPanel = new RoundedPanel(new GridBagLayout());
 
         contentPanel.setBackground(Color.WHITE);
-        contentPanel.setRoundBorderColor(BorderColor);
+        contentPanel.setRoundBorderColor(ColorsList.BORDER_COLOR);
 
         setContentPane(contentPanel);
 

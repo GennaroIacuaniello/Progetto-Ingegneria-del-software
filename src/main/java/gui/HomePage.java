@@ -9,7 +9,6 @@ import java.awt.*;
 public class HomePage {
 
     protected JFrame mainFrame;
-    protected final Color bgColor = new Color(204, 229, 255);
     private HomePanel homePanel;
 
     public HomePage() {
@@ -44,7 +43,7 @@ public class HomePage {
         mainFrame.setSize(800, 600);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        mainFrame.getContentPane().setBackground(bgColor);
+        mainFrame.getContentPane().setBackground(ColorsList.FRAME_COLOR);
     }
 
     private void setPanels() {
@@ -77,7 +76,7 @@ public class HomePage {
 
     protected void updateHomePanelConstraints() {
 
-        mainFrame.remove(homePanel.getScrollPane());
+        mainFrame.remove(homePanel.getHomePanel());
 
         Constraints.setConstraints(0, 1, 1, 1,
                 GridBagConstraints.BOTH, 0, 0,

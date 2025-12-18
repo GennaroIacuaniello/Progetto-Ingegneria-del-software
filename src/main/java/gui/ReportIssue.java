@@ -17,7 +17,6 @@ public class ReportIssue extends RoundedPanel{
     private JButton cancelButton;
     private static final String TITLE_PLACEHOLDER = "Inserisci titolo";
     private static final String DESCRIPTION_PLACEHOLDER = "Inserisci descrizione";
-    private final Color BorderColor = new Color (77, 133, 255);
 
     public ReportIssue() {
 
@@ -47,15 +46,15 @@ public class ReportIssue extends RoundedPanel{
 
     private void setRoundedPanel() {
 
-        setRoundBorderColor(new Color(0, 0, 0, 0));
-        setBackground(Color.WHITE);
+        setRoundBorderColor(ColorsList.EMPTY_COLOR);
+        setBackground(ColorsList.EMPTY_COLOR);
     }
 
     private void setTitleTextField() {
 
         RoundedPanel tmpPanel = new RoundedPanel(new GridBagLayout());
-        tmpPanel.setRoundBorderColor(BorderColor);
-        tmpPanel.setBackground(new Color(0, 0, 0, 0));
+        tmpPanel.setRoundBorderColor(ColorsList.BORDER_COLOR);
+        tmpPanel.setBackground(ColorsList.EMPTY_COLOR);
 
         titleTextField = new JTextField(TITLE_PLACEHOLDER, 30);
         titleTextField.setBorder(BorderFactory.createEmptyBorder());
@@ -92,8 +91,8 @@ public class ReportIssue extends RoundedPanel{
     private void setDescriptionTextArea() {
 
         RoundedPanel tmpPanel = new RoundedPanel(new GridBagLayout());
-        tmpPanel.setRoundBorderColor(BorderColor);
-        tmpPanel.setBackground(new Color(0, 0, 0, 0));
+        tmpPanel.setRoundBorderColor(ColorsList.BORDER_COLOR);
+        tmpPanel.setBackground(ColorsList.EMPTY_COLOR);
 
         descriptionTextArea = new JTextArea(DESCRIPTION_PLACEHOLDER, 10, 60);
         descriptionTextArea.setBorder(BorderFactory.createEmptyBorder());
@@ -118,7 +117,7 @@ public class ReportIssue extends RoundedPanel{
 
         JScrollPane tmpScrollPane = new JScrollPane(descriptionTextArea);
         tmpScrollPane.setBorder(BorderFactory.createEmptyBorder());
-        tmpScrollPane.setBackground(new Color(0, 0, 0, 0));
+        tmpScrollPane.setBackground(ColorsList.EMPTY_COLOR);
         tmpScrollPane.setViewportView(descriptionTextArea);
 
         Constraints.setConstraints(0, 0, 1, 1,

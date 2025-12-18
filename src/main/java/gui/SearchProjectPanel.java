@@ -18,14 +18,13 @@ public class SearchProjectPanel {
     private final RoundedPanel searchProjectPanel;
     private JTextField searchTextField;
     private final String TextFieldInitializer = "Inserire nome progetto";
-    private final Color BorderColor = new Color (77, 133, 255);
 
     public SearchProjectPanel(HomePanel homePanel) {
 
         searchProjectPanel = new RoundedPanel(new FlowLayout(FlowLayout.LEFT));
 
         searchProjectPanel.setBackground(Color.WHITE);
-        searchProjectPanel.setRoundBorderColor(BorderColor);
+        searchProjectPanel.setRoundBorderColor(ColorsList.BORDER_COLOR);
 
         setSearchButton(homePanel);
         setSearchTextField();
