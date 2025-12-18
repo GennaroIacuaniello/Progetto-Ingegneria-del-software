@@ -10,13 +10,14 @@ public class ReportIssue extends RoundedPanel{
 
     private JTextField titleTextField;
     private JTextArea descriptionTextArea;
-    private JOptionPane typeOptionPane;
+    private JComboBox<String> typeOptionPane;
     private JButton tagsButton;
     private JFileChooser fileChooser;
     private JButton reportButton;
     private JButton cancelButton;
     private static final String TITLE_PLACEHOLDER = "Inserisci titolo";
     private static final String DESCRIPTION_PLACEHOLDER = "Inserisci descrizione";
+    private static final String[] options = {"Bug", "Documentation", "Feature", "Question"};
 
     public ReportIssue() {
 
@@ -25,6 +26,8 @@ public class ReportIssue extends RoundedPanel{
         setRoundedPanel();
         setTitleTextField();
         setDescriptionTextArea();
+        setTypeOptionPane();
+        setTagsButton();
 
         setVisible(true);
     }
@@ -68,6 +71,30 @@ public class ReportIssue extends RoundedPanel{
                 GridBagConstraints.NONE, 0, 0, GridBagConstraints.FIRST_LINE_START,
                 1f, 1f, new Insets(0, 10, 10, 10));
         this.add(tmpPanel, Constraints.getGridBagConstraints());
+    }
+
+    private void setTypeOptionPane() {
+
+        typeOptionPane = new JComboBox<>(options);
+        typeOptionPane.setBorder(BorderFactory.createEmptyBorder());
+        typeOptionPane.setBackground(ColorsList.EMPTY_COLOR);
+
+        RoundedPanel tmpPanel = createRoundedPanelContainer(typeOptionPane);
+
+        Constraints.setConstraints(0, 3, 1, 1,
+                GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
+                0.5f, 0.5f);
+        this.add(tmpPanel, Constraints.getGridBagConstraints());
+    }
+
+    private void setTagsButton() {
+
+        tagsButton = new IconButton("/gui/images/tagsButton.png", 30, 30);
+
+        Constraints.setConstraints(1, 3, 1, 1,
+                GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
+                0.5f, 0.5f);
+        this.add(tagsButton, Constraints.getGridBagConstraints());
     }
 
     private RoundedPanel createRoundedPanelContainer(Component component) {
