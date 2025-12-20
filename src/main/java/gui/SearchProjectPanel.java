@@ -19,14 +19,14 @@ public class SearchProjectPanel {
     private JTextField searchTextField;
     private final String TextFieldInitializer = "Inserire nome progetto";
 
-    public SearchProjectPanel(HomePanel homePanel) {
+    public SearchProjectPanel(JFrame mainFrame, HomePanel homePanel) {
 
         searchProjectPanel = new RoundedPanel(new FlowLayout(FlowLayout.LEFT));
 
         searchProjectPanel.setBackground(Color.WHITE);
         searchProjectPanel.setRoundBorderColor(ColorsList.BORDER_COLOR);
 
-        setSearchButton(homePanel);
+        setSearchButton(mainFrame, homePanel);
         setSearchTextField();
     }
 
@@ -62,9 +62,9 @@ public class SearchProjectPanel {
         return searchTextField;
     }
 
-    private void setSearchButton(HomePanel homePanel) {
+    private void setSearchButton(JFrame mainFrame, HomePanel homePanel) {
 
-        SearchButton searchButton = new SearchButton(homePanel);
+        SearchButton searchButton = new SearchButton(mainFrame, homePanel);
 
         searchProjectPanel.add(searchButton);
     }

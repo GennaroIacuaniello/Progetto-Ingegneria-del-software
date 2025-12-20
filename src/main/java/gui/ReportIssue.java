@@ -19,7 +19,7 @@ public class ReportIssue extends RoundedPanel{
     private static final String DESCRIPTION_PLACEHOLDER = "Inserisci descrizione";
     private static final String[] options = {"Bug", "Documentation", "Feature", "Question"};
 
-    public ReportIssue() {
+    public ReportIssue(JFrame mainFrame) {
 
         super(new GridBagLayout());
 
@@ -27,7 +27,7 @@ public class ReportIssue extends RoundedPanel{
         setTitleTextField();
         setDescriptionTextArea();
         setTypeOptionPane();
-        setTagsButton();
+        setTagsButton(mainFrame);
 
         setVisible(true);
     }
@@ -45,7 +45,7 @@ public class ReportIssue extends RoundedPanel{
 
         setFocusBehaviour(titleTextField, TITLE_PLACEHOLDER);
 
-        RoundedPanel tmpPanel = createRoundedPanelContainer(titleTextField);
+        RoundedPanel tmpPanel = ContainerFactory.createRoundedPanelContainer(titleTextField);
 
         Constraints.setConstraints(0, 1, 4, 1,
                 GridBagConstraints.NONE, 0, 0, GridBagConstraints.LAST_LINE_START,
@@ -65,7 +65,7 @@ public class ReportIssue extends RoundedPanel{
         tmpScrollPane.setBackground(ColorsList.EMPTY_COLOR);
         tmpScrollPane.setViewportView(descriptionTextArea);
 
-        RoundedPanel tmpPanel = createRoundedPanelContainer(tmpScrollPane);
+        RoundedPanel tmpPanel = ContainerFactory.createRoundedPanelContainer(tmpScrollPane);
 
         Constraints.setConstraints(0, 2, 4, 1,
                 GridBagConstraints.NONE, 0, 0, GridBagConstraints.FIRST_LINE_START,
@@ -79,7 +79,7 @@ public class ReportIssue extends RoundedPanel{
         typeOptionPane.setBorder(BorderFactory.createEmptyBorder());
         typeOptionPane.setBackground(ColorsList.EMPTY_COLOR);
 
-        RoundedPanel tmpPanel = createRoundedPanelContainer(typeOptionPane);
+        RoundedPanel tmpPanel = ContainerFactory.createRoundedPanelContainer(typeOptionPane);
 
         Constraints.setConstraints(0, 3, 1, 1,
                 GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
@@ -87,29 +87,14 @@ public class ReportIssue extends RoundedPanel{
         this.add(tmpPanel, Constraints.getGridBagConstraints());
     }
 
-    private void setTagsButton() {
+    private void setTagsButton(JFrame mainFrame) {
 
-        tagsButton = new IconButton("/gui/images/tagsButton.png", 30, 30);
+        tagsButton = new TagsButton(mainFrame);
 
         Constraints.setConstraints(1, 3, 1, 1,
                 GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
                 0.5f, 0.5f);
         this.add(tagsButton, Constraints.getGridBagConstraints());
-    }
-
-    private RoundedPanel createRoundedPanelContainer(Component component) {
-
-        RoundedPanel tmpPanel = new RoundedPanel(new GridBagLayout());
-
-        tmpPanel.setRoundBorderColor(ColorsList.BORDER_COLOR);
-        tmpPanel.setBackground(Color.WHITE);
-
-        Constraints.setConstraints(0, 0, 1, 1,
-                GridBagConstraints.BOTH, 0, 0, GridBagConstraints.CENTER,
-                0.01f, 0.01f, new Insets(5, 5, 5, 5));
-        tmpPanel.add(component, Constraints.getGridBagConstraints());
-
-        return tmpPanel;
     }
 
     private void setFocusBehaviour(JTextComponent component, String placeHolder) {

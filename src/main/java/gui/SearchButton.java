@@ -1,5 +1,6 @@
 package gui;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -7,14 +8,14 @@ import java.util.List;
 
 public class SearchButton extends IconButton {
 
-    public SearchButton(HomePanel homePanel) {
+    public SearchButton(JFrame mainFrame, HomePanel homePanel) {
 
         super("/gui/images/searchButton.png", 30, 30);
 
-        setActionListener(homePanel);
+        setActionListener(mainFrame, homePanel);
     }
 
-    private void setActionListener(HomePanel homePanel) {
+    private void setActionListener(JFrame mainFrame, HomePanel homePanel) {
         //todo: implementa
         this.addActionListener(new ActionListener() {
 
@@ -27,7 +28,7 @@ public class SearchButton extends IconButton {
                 ids.add("id");
                 names.add("name");
 
-                new SearchProjectResultsUser(homePanel, ids, names);
+                new SearchProjectResultsUser(mainFrame, homePanel, ids, names);
             }
         });
     }

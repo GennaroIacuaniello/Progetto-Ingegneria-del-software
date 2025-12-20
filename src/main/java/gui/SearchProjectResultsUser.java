@@ -12,12 +12,12 @@ public class SearchProjectResultsUser {
     protected static final int ICON_WIDTH = 20;
     protected static final int ICON_HEIGHT = 20;
 
-    public SearchProjectResultsUser (HomePanel homePanel, List<String > projectsIds, List<String> projectsNames) {
+    public SearchProjectResultsUser (JFrame mainFrame, HomePanel homePanel, List<String > projectsIds, List<String> projectsNames) {
 
         setIconUrlMap();
         setButtonActions();
 
-        homePanel.updateSearchProjectViewResults(createTable(homePanel, projectsIds, projectsNames));
+        homePanel.updateSearchProjectViewResults(createTable(mainFrame, homePanel, projectsIds, projectsNames));
     }
 
     protected void setIconUrlMap() {
@@ -33,7 +33,7 @@ public class SearchProjectResultsUser {
         buttonActions = new String[]{"Report", "Reported"};
     }
 
-    protected JTable createTable(HomePanel homePanel, List<String> projectIds, List<String> projectNames) {
+    protected JTable createTable(JFrame mainFrame, HomePanel homePanel, List<String> projectIds, List<String> projectNames) {
 
         JTable resultsTable = new JTable(createTableModel(projectIds, projectNames));
 
@@ -46,7 +46,7 @@ public class SearchProjectResultsUser {
             TableColumn buttonColumn = resultsTable.getColumnModel().getColumn(columnIndex);
 
             buttonColumn.setCellRenderer(new IconCellRenderer(iconUrl, ICON_WIDTH, ICON_HEIGHT));
-            buttonColumn.setCellEditor(new IconCellEditor(homePanel, iconUrl, ICON_WIDTH, ICON_HEIGHT, resultsTable));
+            buttonColumn.setCellEditor(new IconCellEditor(mainFrame, homePanel, iconUrl, ICON_WIDTH, ICON_HEIGHT, resultsTable));
         }
 
         resultsTable.setRowHeight(ICON_HEIGHT + 4);

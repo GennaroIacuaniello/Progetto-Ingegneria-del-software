@@ -11,13 +11,15 @@ class IconCellEditor extends DefaultCellEditor {
     private int selectedRow;
     private final JTable parentTable;
     private HomePanel homePanel;
+    private JFrame  mainFrame;
 
-    public IconCellEditor(HomePanel homePanel, String url, int width, int height, JTable table) {
+    public IconCellEditor(JFrame mainFrame, HomePanel homePanel, String url, int width, int height, JTable table) {
 
         super(new JTextField()); //se togli il parametro si incazza
 
         this.parentTable = table;
         this.homePanel = homePanel;
+        this.mainFrame = mainFrame;
 
         setClickCountToStart(1);
 
@@ -52,7 +54,7 @@ class IconCellEditor extends DefaultCellEditor {
         switch (action) {
 
             case "SEGNALA ISSUE":
-                homePanel.setContentPanel(new ReportIssue());
+                homePanel.setContentPanel(new ReportIssue(mainFrame));
                 break;
 
             case "ISSUE SEGNALATE":

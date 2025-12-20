@@ -7,9 +7,9 @@ import java.util.Map;
 
 public class SearchProjectResultsDeveloper extends SearchProjectResultsUser{
 
-    public SearchProjectResultsDeveloper(HomePanel homePanel, List<String> projectsIds, List<String> projectsNames) {
+    public SearchProjectResultsDeveloper(JFrame mainFrame, HomePanel homePanel, List<String> projectsIds, List<String> projectsNames) {
 
-        super(homePanel, projectsIds, projectsNames);
+        super(mainFrame, homePanel, projectsIds, projectsNames);
     }
 
     @Override

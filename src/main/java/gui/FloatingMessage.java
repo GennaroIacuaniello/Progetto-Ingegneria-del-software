@@ -276,16 +276,16 @@ public class FloatingMessage {
 
         switch (messageType) {
             case ERROR_MESSAGE -> {
-                messagePanel.setBackground(new Color(200, 60, 60));
-                messagePanel.setRoundBorderColor(new Color(120, 0, 10));
+                messagePanel.setBackground(ColorsList.RED_BACKGROUND_COLOR);
+                messagePanel.setRoundBorderColor(ColorsList.RED_BORDER_COLOR);
             }
             case WARNING_MESSAGE -> {
-                messagePanel.setBackground(new Color(240, 220, 50));
-                messagePanel.setRoundBorderColor(new Color(160, 140, 10));
+                messagePanel.setBackground(ColorsList.YELLOW_BACKGROUND_COLOR);
+                messagePanel.setRoundBorderColor(ColorsList.YELLOW_BORDER_COLOR);
             }
             case SUCCESS_MESSAGE -> {
-                messagePanel.setBackground(new Color(139, 255, 104));
-                messagePanel.setRoundBorderColor(new Color(55, 142, 5));
+                messagePanel.setBackground(ColorsList.GREEN_BACKGROUND_COLOR);
+                messagePanel.setRoundBorderColor(ColorsList.GREEN_BORDER_COLOR);
             }
             default ->
                     throw new FloatingMessageException("FloatingMessage: messageType must be one of" +

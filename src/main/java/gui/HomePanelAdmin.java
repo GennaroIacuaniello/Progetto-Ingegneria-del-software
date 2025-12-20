@@ -1,12 +1,13 @@
 package gui;
 
+import javax.swing.*;
 import java.awt.*;
 
 public class HomePanelAdmin extends HomePanel{
 
-    protected HomePanelAdmin() {
+    protected HomePanelAdmin(JFrame mainFrame) {
 
-        super();
+        super(mainFrame);
 
         setMenuButton();
     }

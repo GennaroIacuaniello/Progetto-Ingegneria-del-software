@@ -10,11 +10,11 @@ public class HomePanel {
     protected RoundedPanel homePanel;
     protected SearchProjectViewResults searchProjectViewResults;
 
-    protected HomePanel() {
+    protected HomePanel(JFrame mainFrame) {
 
         setHomePanel();
         setLogOutButton();
-        setDefaultContentPanel();
+        setDefaultContentPanel(mainFrame);
     }
 
     private void setHomePanel() {
@@ -36,21 +36,21 @@ public class HomePanel {
         homePanel.add(logOutButton, Constraints.getGridBagConstraints());
     }
 
-    private void setDefaultContentPanel() {
+    private void setDefaultContentPanel(JFrame mainFrame) {
 
         contentPanel = new RoundedPanel(new GridBagLayout());
-        contentPanel.setRoundBorderColor(new Color(0, 0, 0, 0));
-        contentPanel.setBackground(new Color(0, 0, 0, 0));
+        contentPanel.setRoundBorderColor(ColorsList.EMPTY_COLOR);
+        contentPanel.setBackground(ColorsList.EMPTY_COLOR);
 
-        setSearchProjectPanel();
+        setSearchProjectPanel(mainFrame);
         setSearchProjectViewResults();
 
         setContentPanel(contentPanel);
     }
 
-    private void setSearchProjectPanel() {
+    private void setSearchProjectPanel(JFrame  mainFrame) {
 
-        SearchProjectPanel searchProjectPanel = new SearchProjectPanel(this);
+        SearchProjectPanel searchProjectPanel = new SearchProjectPanel(mainFrame, this);
 
         Constraints.setConstraints(0, 0, 1, 1,
                 GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER, 0.1f, 0.25f);
