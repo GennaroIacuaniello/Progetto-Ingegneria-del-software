@@ -36,7 +36,15 @@ public class FileChooserButton extends IconButton{
                 "Immagini (JPG, PNG, GIF)", "jpg", "jpeg", "png", "gif");
         fileChooser.setFileFilter(filter);
 
-        if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
-            fileChooserPanel.setSelectedFile(fileChooser.getSelectedFile());
+        if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+
+            String fileName = fileChooser.getSelectedFile().getName().toLowerCase();
+
+            if (fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") ||
+                    fileName.endsWith(".png") || fileName.endsWith(".gif"))
+                fileChooserPanel.setSelectedFile(fileChooser.getSelectedFile());
+            else
+                new FloatingMessage("Formato del file non supportato", this, FloatingMessage.ERROR_MESSAGE);
+        }
     }
 }
