@@ -14,6 +14,7 @@ public class IconButton extends JButton {
         removeListeners();
         setImageIcon(url, width, height);
         setBackground();
+        setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
     private void removeListeners() {
