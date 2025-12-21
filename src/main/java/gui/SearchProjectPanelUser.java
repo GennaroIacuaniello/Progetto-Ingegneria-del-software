@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
-public class SearchProjectPanel {
+public class SearchProjectPanelUser {
 
     //todo:
     /*
@@ -15,11 +15,11 @@ public class SearchProjectPanel {
        Controllare se la classe può essere implementata tramite design pattern singleton
     */
 
-    private final RoundedPanel searchProjectPanel;
+    protected final RoundedPanel searchProjectPanel;
     private JTextField searchTextField;
     private final String TextFieldInitializer = "Inserire nome progetto";
 
-    public SearchProjectPanel(JFrame mainFrame, HomePanel homePanel) {
+    public SearchProjectPanelUser(JFrame mainFrame, HomePanelUser homePanel) {
 
         searchProjectPanel = new RoundedPanel(new FlowLayout(FlowLayout.LEFT));
 
@@ -62,9 +62,9 @@ public class SearchProjectPanel {
         return searchTextField;
     }
 
-    private void setSearchButton(JFrame mainFrame, HomePanel homePanel) {
+    protected void setSearchButton(JFrame mainFrame, HomePanelUser homePanel) {
 
-        SearchButton searchButton = new SearchButton(mainFrame, homePanel);
+        SearchButtonUser searchButton = new SearchButtonUser(mainFrame, homePanel);
 
         searchProjectPanel.add(searchButton);
     }

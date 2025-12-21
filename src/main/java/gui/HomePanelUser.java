@@ -2,15 +2,14 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.net.URL;
 
-public class HomePanel {
+public class HomePanelUser {
 
     protected RoundedPanel contentPanel;
     protected RoundedPanel homePanel;
     protected SearchProjectViewResults searchProjectViewResults;
 
-    protected HomePanel(JFrame mainFrame) {
+    protected HomePanelUser(JFrame mainFrame) {
 
         setHomePanel();
         setLogOutButton();
@@ -48,9 +47,9 @@ public class HomePanel {
         setContentPanel(contentPanel);
     }
 
-    private void setSearchProjectPanel(JFrame  mainFrame) {
+    protected void setSearchProjectPanel(JFrame  mainFrame) {
 
-        SearchProjectPanel searchProjectPanel = new SearchProjectPanel(mainFrame, this);
+        SearchProjectPanelUser searchProjectPanel = new SearchProjectPanelUser(mainFrame, this);
 
         Constraints.setConstraints(0, 0, 1, 1,
                 GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER, 0.1f, 0.25f);

@@ -9,7 +9,7 @@ import java.awt.*;
 public class HomePage {
 
     protected JFrame mainFrame;
-    private HomePanel homePanel;
+    private HomePanelUser homePanel;
 
     public HomePage() {
 

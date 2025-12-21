@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 
 public class TagsButton extends IconButton {
 
+    private TagsMenu tagsMenu;
+
     public TagsButton(JFrame mainFrame) {
 
         super("/gui/images/tagsButton.png", 30, 30);
@@ -20,8 +22,11 @@ public class TagsButton extends IconButton {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                JDialog dialog = new TagsMenu(mainFrame);
-                dialog.setVisible(true);
+                if (tagsMenu == null)
+                    tagsMenu = new TagsMenu(mainFrame);
+
+                tagsMenu.setLocationRelativeTo(mainFrame);
+                tagsMenu.setVisible(true);
             }
         });
     }

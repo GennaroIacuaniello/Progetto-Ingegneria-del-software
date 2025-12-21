@@ -10,10 +10,10 @@ class IconCellEditor extends DefaultCellEditor {
     private IconButton button;
     private int selectedRow;
     private final JTable parentTable;
-    private HomePanel homePanel;
+    private HomePanelUser homePanel;
     private JFrame  mainFrame;
 
-    public IconCellEditor(JFrame mainFrame, HomePanel homePanel, String url, int width, int height, JTable table) {
+    public IconCellEditor(JFrame mainFrame, HomePanelUser homePanel, String url, int width, int height, JTable table) {
 
         super(new JTextField()); //se togli il parametro si incazza
 

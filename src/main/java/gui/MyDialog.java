@@ -7,10 +7,10 @@ import java.awt.event.ActionListener;
 
 public class MyDialog extends JDialog {
 
-    private RoundedPanel mainPanel;
+    protected RoundedPanel mainPanel;
     protected RoundedPanel contentPanel;
+    protected RoundedPanel buttonsPanel;
     private IconButton confirmButton;
-    private IconButton cancelButton;
 
     public MyDialog(JFrame owner) {
 
@@ -19,11 +19,10 @@ public class MyDialog extends JDialog {
         setDialog();
         setMainPanel();
         setContentPanel();
+        setButtonsPanel();
         setOkButton();
-        setCancelButton();
 
         pack();
-        setLocationRelativeTo(getOwner());
     }
 
     private void setDialog() {
@@ -36,7 +35,7 @@ public class MyDialog extends JDialog {
 
         mainPanel = new RoundedPanel(new GridBagLayout());
 
-        mainPanel.setBackground(Color.WHITE);
+        mainPanel.setBackground(ColorsList.BACKGROUND_COLOR);
         mainPanel.setRoundBorderColor(ColorsList.BORDER_COLOR);
 
         setContentPane(mainPanel);
@@ -49,36 +48,39 @@ public class MyDialog extends JDialog {
         contentPanel.setBackground(ColorsList.EMPTY_COLOR);
         contentPanel.setRoundBorderColor(ColorsList.EMPTY_COLOR);
 
-        Constraints.setConstraints(0, 0, 2, 1,
+        Constraints.setConstraints(0, 0, 1, 1,
                 GridBagConstraints.BOTH, 0, 0, GridBagConstraints.CENTER);
         mainPanel.add(contentPanel, Constraints.getGridBagConstraints());
+    }
+
+    private void setButtonsPanel() {
+
+        buttonsPanel = new RoundedPanel(new GridBagLayout());
+
+        buttonsPanel.setBackground(Color.WHITE);
+        buttonsPanel.setRoundBorderColor(ColorsList.BORDER_COLOR);
+
+        Constraints.setConstraints(0, 1, 1, 1,
+                GridBagConstraints.HORIZONTAL, 0, 0, GridBagConstraints.CENTER,
+                new Insets(5, 5, 5, 5));
+        mainPanel.add(buttonsPanel, Constraints.getGridBagConstraints());
     }
 
     private void setOkButton() {
 
         confirmButton = new IconButton("/gui/images/confirmButtonIcon.png", 30, 30);
 
-        Constraints.setConstraints(0, 1, 1, 1,
-                GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
-                new Insets(5, 5, 5, 5));
-        mainPanel.add(confirmButton, Constraints.getGridBagConstraints());
-    }
-
-    private void setCancelButton() {
-
-        cancelButton = new IconButton("/gui/images/cancelButtonIcon.png", 30, 30);
-
-        cancelButton.addActionListener(new ActionListener() {
+        confirmButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose();
+                setVisible(false);
             }
         });
 
-        Constraints.setConstraints(1, 1, 1, 1,
+        Constraints.setConstraints(0, 0, 1, 1,
                 GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
                 new Insets(5, 5, 5, 5));
-        mainPanel.add(cancelButton, Constraints.getGridBagConstraints());
+        buttonsPanel.add(confirmButton, Constraints.getGridBagConstraints());
     }
 }

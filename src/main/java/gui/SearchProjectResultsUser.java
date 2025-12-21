@@ -12,7 +12,7 @@ public class SearchProjectResultsUser {
     protected static final int ICON_WIDTH = 20;
     protected static final int ICON_HEIGHT = 20;
 
-    public SearchProjectResultsUser (JFrame mainFrame, HomePanel homePanel, List<String > projectsIds, List<String> projectsNames) {
+    public SearchProjectResultsUser (JFrame mainFrame, HomePanelUser homePanel, List<String > projectsIds, List<String> projectsNames) {
 
         setIconUrlMap();
         setButtonActions();
@@ -33,7 +33,7 @@ public class SearchProjectResultsUser {
         buttonActions = new String[]{"Report", "Reported"};
     }
 
-    protected JTable createTable(JFrame mainFrame, HomePanel homePanel, List<String> projectIds, List<String> projectNames) {
+    protected JTable createTable(JFrame mainFrame, HomePanelUser homePanel, List<String> projectIds, List<String> projectNames) {
 
         JTable resultsTable = new JTable(createTableModel(projectIds, projectNames));
 
