@@ -12,7 +12,7 @@ public class ReportIssue extends RoundedPanel{
     private JTextArea descriptionTextArea;
     private JComboBox<String> typeOptionPane;
     private JButton tagsButton;
-    private JFileChooser fileChooser;
+    private FileChooserPanel fileChooserPanel;
     private JButton reportButton;
     private JButton cancelButton;
     private static final String TITLE_PLACEHOLDER = "Inserisci titolo";
@@ -28,6 +28,7 @@ public class ReportIssue extends RoundedPanel{
         setDescriptionTextArea();
         setTypeOptionPane();
         setTagsButton(mainFrame);
+        setFileChooserPanel();
 
         setVisible(true);
     }
@@ -95,6 +96,16 @@ public class ReportIssue extends RoundedPanel{
                 GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
                 0.5f, 0.5f);
         this.add(tagsButton, Constraints.getGridBagConstraints());
+    }
+
+    private void setFileChooserPanel() {
+
+        fileChooserPanel = new FileChooserPanel();
+
+        Constraints.setConstraints(2, 3, 1, 1,
+                GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
+                0.5f, 0.5f);
+        this.add(fileChooserPanel, Constraints.getGridBagConstraints());
     }
 
     private void setFocusBehaviour(JTextComponent component, String placeHolder) {
