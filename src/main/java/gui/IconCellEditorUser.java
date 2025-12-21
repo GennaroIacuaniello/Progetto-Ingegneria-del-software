@@ -1,19 +1,17 @@
 package gui;
 
 import javax.swing.*;
-import javax.swing.table.TableCellEditor;
 import java.awt.*;
-import java.awt.event.ActionListener;
 
-class IconCellEditor extends DefaultCellEditor {
+class IconCellEditorUser extends DefaultCellEditor {
 
     private IconButton button;
     private int selectedRow;
-    private final JTable parentTable;
-    private HomePanelUser homePanel;
-    private JFrame  mainFrame;
+    protected final JTable parentTable;
+    protected HomePanelUser homePanel;
+    protected JFrame  mainFrame;
 
-    public IconCellEditor(JFrame mainFrame, HomePanelUser homePanel, String url, int width, int height, JTable table) {
+    public IconCellEditorUser(JFrame mainFrame, HomePanelUser homePanel, String url, int width, int height, JTable table) {
 
         super(new JTextField()); //se togli il parametro si incazza
 
@@ -54,7 +52,7 @@ class IconCellEditor extends DefaultCellEditor {
         switch (action) {
 
             case "SEGNALA ISSUE":
-                homePanel.setContentPanel(new ReportIssue(mainFrame));
+                homePanel.setContentPanel(new ReportIssueUser(mainFrame));
                 break;
 
             case "ISSUE SEGNALATE":

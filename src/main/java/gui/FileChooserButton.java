@@ -8,6 +8,7 @@ import java.io.File;
 
 public class FileChooserButton extends IconButton{
 
+    JFileChooser fileChooser;
     FileChooserPanel fileChooserPanel;
 
     public FileChooserButton(FileChooserPanel fileChooserPanel) {
@@ -28,13 +29,7 @@ public class FileChooserButton extends IconButton{
 
     private void openFileChooser() {
 
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Seleziona un'immagine");
-        fileChooser.setMultiSelectionEnabled(false);
-
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                "Immagini (JPG, PNG, GIF)", "jpg", "jpeg", "png", "gif");
-        fileChooser.setFileFilter(filter);
+        setFileChooser();
 
         if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
 
@@ -46,5 +41,16 @@ public class FileChooserButton extends IconButton{
             else
                 new FloatingMessage("Formato del file non supportato", this, FloatingMessage.ERROR_MESSAGE);
         }
+    }
+
+    private void setFileChooser() {
+
+        fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Seleziona un'immagine");
+        fileChooser.setMultiSelectionEnabled(false);
+
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                "Immagini (JPG, PNG, GIF)", "jpg", "jpeg", "png", "gif");
+        fileChooser.setFileFilter(filter);
     }
 }

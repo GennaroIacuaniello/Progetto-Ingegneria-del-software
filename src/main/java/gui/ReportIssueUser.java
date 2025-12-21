@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
-public class ReportIssue extends RoundedPanel{
+public class ReportIssueUser extends RoundedPanel{
 
     private JTextField titleTextField;
     private JTextArea descriptionTextArea;
@@ -19,7 +19,7 @@ public class ReportIssue extends RoundedPanel{
     private static final String DESCRIPTION_PLACEHOLDER = "Inserisci descrizione";
     private static final String[] options = {"Bug", "Documentation", "Feature", "Question"};
 
-    public ReportIssue(JFrame mainFrame) {
+    public ReportIssueUser(JFrame mainFrame) {
 
         super(new GridBagLayout());
 
