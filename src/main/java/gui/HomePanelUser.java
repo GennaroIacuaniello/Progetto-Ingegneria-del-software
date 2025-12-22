@@ -5,6 +5,7 @@ import java.awt.*;
 
 public class HomePanelUser {
 
+    protected RoundedPanel defaultContentPanel;
     protected RoundedPanel contentPanel;
     protected RoundedPanel homePanel;
     protected SearchProjectViewResults searchProjectViewResults;
@@ -45,6 +46,7 @@ public class HomePanelUser {
         setSearchProjectViewResults();
 
         setContentPanel(contentPanel);
+        defaultContentPanel = contentPanel;
     }
 
     protected void setSearchProjectPanel(JFrame  mainFrame) {
@@ -88,5 +90,10 @@ public class HomePanelUser {
 
         homePanel.revalidate();
         homePanel.repaint();
+    }
+
+    public void returnToDefaultContentPanel() {
+
+        setContentPanel(defaultContentPanel);
     }
 }

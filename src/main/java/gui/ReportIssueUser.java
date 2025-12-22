@@ -3,6 +3,8 @@ package gui;
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
@@ -13,24 +15,31 @@ public class ReportIssueUser extends RoundedPanel{
     private JComboBox<String> typeOptionPane;
     private JButton tagsButton;
     private FileChooserPanel fileChooserPanel;
-    private JButton reportButton;
-    private JButton cancelButton;
+    protected JButton reportButton;
+    protected JButton cancelButton;
     private static final String TITLE_PLACEHOLDER = "Inserisci titolo";
     private static final String DESCRIPTION_PLACEHOLDER = "Inserisci descrizione";
     private static final String[] options = {"Bug", "Documentation", "Feature", "Question"};
 
-    public ReportIssueUser(JFrame mainFrame) {
+    public ReportIssueUser(JFrame mainFrame, HomePanelUser homePanelUser) {
 
         super(new GridBagLayout());
 
         setRoundedPanel();
+        setComponents(mainFrame, homePanelUser);
+
+        setVisible(true);
+    }
+
+    protected void setComponents(JFrame mainFrame, HomePanelUser  homePanelUser) {
+
         setTitleTextField();
         setDescriptionTextArea();
         setTypeOptionPane();
         setTagsButton(mainFrame);
         setFileChooserPanel();
-
-        setVisible(true);
+        setReportButton(homePanelUser);
+        setCancelButton(homePanelUser);
     }
 
     private void setRoundedPanel() {
@@ -39,7 +48,7 @@ public class ReportIssueUser extends RoundedPanel{
         setBackground(ColorsList.EMPTY_COLOR);
     }
 
-    private void setTitleTextField() {
+    protected void setTitleTextField() {
 
         titleTextField = new JTextField(TITLE_PLACEHOLDER, 30);
         titleTextField.setBorder(BorderFactory.createEmptyBorder());
@@ -54,7 +63,7 @@ public class ReportIssueUser extends RoundedPanel{
         this.add(tmpPanel, Constraints.getGridBagConstraints());
     }
 
-    private void setDescriptionTextArea() {
+    protected void setDescriptionTextArea() {
 
         descriptionTextArea = new JTextArea(DESCRIPTION_PLACEHOLDER, 10, 60);
         descriptionTextArea.setBorder(BorderFactory.createEmptyBorder());
@@ -74,7 +83,7 @@ public class ReportIssueUser extends RoundedPanel{
         this.add(tmpPanel, Constraints.getGridBagConstraints());
     }
 
-    private void setTypeOptionPane() {
+    protected void setTypeOptionPane() {
 
         typeOptionPane = new JComboBox<>(options);
         typeOptionPane.setBorder(BorderFactory.createEmptyBorder());
@@ -88,7 +97,7 @@ public class ReportIssueUser extends RoundedPanel{
         this.add(tmpPanel, Constraints.getGridBagConstraints());
     }
 
-    private void setTagsButton(JFrame mainFrame) {
+    protected void setTagsButton(JFrame mainFrame) {
 
         tagsButton = new TagsButton(mainFrame);
 
@@ -98,7 +107,7 @@ public class ReportIssueUser extends RoundedPanel{
         this.add(tagsButton, Constraints.getGridBagConstraints());
     }
 
-    private void setFileChooserPanel() {
+    protected void setFileChooserPanel() {
 
         fileChooserPanel = new FileChooserPanel();
 
@@ -106,6 +115,52 @@ public class ReportIssueUser extends RoundedPanel{
                 GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
                 0.5f, 0.5f);
         this.add(fileChooserPanel, Constraints.getGridBagConstraints());
+    }
+
+    protected void setReportButton(HomePanelUser homePanelUser) {
+
+        reportButton = new JButton("Report");
+
+        reportButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                report(homePanelUser);
+            }
+        });
+
+        Constraints.setConstraints(0, 4, 2, 1,
+                GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
+                0.5f, 0.5f, new Insets(5, 5, 5, 5));
+        this.add(reportButton, Constraints.getGridBagConstraints());
+    }
+
+    protected void report(HomePanelUser homePanelUser) {
+
+        homePanelUser.returnToDefaultContentPanel();
+    }
+
+    protected void setCancelButton(HomePanelUser homePanelUser) {
+
+        cancelButton = new JButton("Cancel");
+
+        cancelButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cancel(homePanelUser);
+            }
+        });
+
+        Constraints.setConstraints(1, 4, 2, 1,
+                GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
+                0.5f, 0.5f, new Insets(5, 5, 5, 5));
+        this.add(cancelButton, Constraints.getGridBagConstraints());
+    }
+
+    protected void cancel(HomePanelUser homePanelUser) {
+
+        homePanelUser.returnToDefaultContentPanel();
     }
 
     private void setFocusBehaviour(JTextComponent component, String placeHolder) {
