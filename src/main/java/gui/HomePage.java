@@ -64,7 +64,7 @@ public class HomePage {
 
     private void setHomePanel() {
 
-        homePanel = new HomePanelAdmin(mainFrame);
+        homePanel = new HomePanelUser(mainFrame);
 
         mainFrame.addComponentListener(new java.awt.event.ComponentAdapter() {
             @Override

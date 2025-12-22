@@ -1,12 +1,14 @@
 package gui;
 
+import controller.Controller;
+
 import javax.swing.*;
 import java.awt.*;
 
 class IconCellEditorUser extends DefaultCellEditor {
 
     private IconButton button;
-    private int selectedRow;
+    protected int selectedRow;
     protected final JTable parentTable;
     protected HomePanelUser homePanel;
     protected JFrame  mainFrame;
@@ -47,11 +49,12 @@ class IconCellEditorUser extends DefaultCellEditor {
 
         String action = parentTable.getColumnName(parentTable.getEditingColumn());
 
-        //String projectId = (String)parentTable.getValueAt(selectedRow, 0);
+        String projectId = (String)parentTable.getValueAt(selectedRow, 0);
 
         switch (action) {
 
             case "SEGNALA ISSUE":
+                Controller.setProject(projectId);
                 homePanel.setContentPanel(new ReportIssueUser(mainFrame, homePanel));
                 break;
 

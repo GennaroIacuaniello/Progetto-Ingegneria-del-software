@@ -4,9 +4,9 @@ import controller.Controller;
 
 import javax.swing.*;
 
-public class IconCellEditorDeveloper extends IconCellEditorUser {
+public class IconCellEditorAdmin extends IconCellEditorDeveloper{
 
-    public IconCellEditorDeveloper(JFrame mainFrame, HomePanelUser homePanel, String url, int width, int height, JTable table) {
+    public IconCellEditorAdmin(JFrame mainFrame, HomePanelUser homePanel, String url, int width, int height, JTable table) {
 
         super(mainFrame, homePanel, url, width, height, table);
     }
@@ -29,6 +29,9 @@ public class IconCellEditorDeveloper extends IconCellEditorUser {
                 break;
 
             case "ISSUE ASSEGNATE":
+                break;
+
+            case "VEDI TUTTE LE ISSUE":
                 break;
         }
 

@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Project {
 
+    private String id;
     private String name;
     private List<Issue> issues;
     private List<Team> teams;
@@ -25,6 +26,24 @@ public class Project {
         this(name, teams, developers);
 
         this.issues = issues;
+    }
+
+    public Project(String id, String name) {
+
+        this.id = id;
+        this.name = name;
+    }
+
+    public Project(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {

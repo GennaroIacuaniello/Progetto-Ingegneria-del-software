@@ -46,4 +46,28 @@ public class SearchProjectResultsAdmin extends SearchProjectResultsDeveloper{
 
         return new ProjectTableModelAdmin(rowData);
     }
+
+    @Override
+    protected JTable createTable(JFrame mainFrame, HomePanelUser homePanel, List<String> projectIds, List<String> projectNames) {
+
+        JTable resultsTable = new JTable(createTableModel(projectIds, projectNames));
+
+        for (int i = 0; i < buttonActions.length; i++) {
+
+            int columnIndex = 2 + i;
+            String actionName = buttonActions[i];
+            String iconUrl = ICON_URL_MAP.get(actionName);
+
+            TableColumn buttonColumn = resultsTable.getColumnModel().getColumn(columnIndex);
+
+            buttonColumn.setCellRenderer(new IconCellRenderer(iconUrl, ICON_WIDTH, ICON_HEIGHT));
+            buttonColumn.setCellEditor(new IconCellEditorAdmin(mainFrame, homePanel, iconUrl, ICON_WIDTH, ICON_HEIGHT, resultsTable));
+        }
+
+        resultsTable.setRowHeight(ICON_HEIGHT + 4);
+
+        resultsTable.getTableHeader().setReorderingAllowed(false);
+
+        return resultsTable;
+    }
 }

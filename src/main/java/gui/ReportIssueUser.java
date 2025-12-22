@@ -1,5 +1,7 @@
 package gui;
 
+import controller.Controller;
+
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
 import java.awt.*;
@@ -155,6 +157,7 @@ public class ReportIssueUser extends RoundedPanel{
 
     protected void report(HomePanelUser homePanelUser) {
 
+        Controller.reportIssue(this);
         homePanelUser.returnToDefaultContentPanel();
     }
 

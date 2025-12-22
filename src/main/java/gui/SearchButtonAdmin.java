@@ -1,5 +1,7 @@
 package gui;
 
+import controller.Controller;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,27 +11,22 @@ import java.util.List;
 
 public class SearchButtonAdmin extends SearchButtonDeveloper{
 
-    public SearchButtonAdmin(JFrame mainFrame, HomePanelUser homePanel) {
+    public SearchButtonAdmin(JFrame mainFrame, HomePanelUser homePanel, JTextField searchTextField, String placeholder) {
 
-        super(mainFrame, homePanel);
+        super(mainFrame, homePanel, searchTextField, placeholder);
     }
 
     @Override
-    protected void setActionListener(JFrame mainFrame, HomePanelUser homePanel) {
+    protected void setActionListener(JFrame mainFrame, HomePanelUser homePanel,  JTextField searchTextField, String placeholder) {
 
         this.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                //todo: ricerca che ritorna lista di ids e nomi progetti
-                java.util.List<String> ids = new ArrayList<>();
-                List<String> names = new ArrayList<>();
+                Controller.searchProjects(searchTextField.getText(), placeholder);
 
-                ids.add("id");
-                names.add("name");
-
-                new SearchProjectResultsAdmin(mainFrame, homePanel, ids, names);
+                new SearchProjectResultsAdmin(mainFrame, homePanel, Controller.getProjectsIds(), Controller.getProjectsNames());
             }
         });
     }
