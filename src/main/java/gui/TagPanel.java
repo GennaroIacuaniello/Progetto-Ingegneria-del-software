@@ -5,9 +5,10 @@ import java.awt.*;
 
 public class TagPanel extends RoundedPanel{
 
-    JTextField tagField;
-    RemoveTagButton removetagButton;
+    private JTextField tagField;
+    private RemoveTagButton removetagButton;
     private int index;
+    private static final String TAGFIELD_PLACEHOLDER = "Inserisci etichetta";
 
     public TagPanel(TagsMenu menu, int index) {
 
@@ -24,7 +25,9 @@ public class TagPanel extends RoundedPanel{
 
     private void setField() {
 
-        tagField = new JTextField();
+        tagField = new JTextField(TAGFIELD_PLACEHOLDER);
+
+        TextComponentFocusBehaviour.setTextComponentFocusBehaviour(tagField, TAGFIELD_PLACEHOLDER);
 
         tagField.setBorder(BorderFactory.createEmptyBorder());
         tagField.setBackground(ColorsList.EMPTY_COLOR);

@@ -10,7 +10,7 @@ public class TagsButton extends IconButton {
 
     public TagsButton(JFrame mainFrame) {
 
-        super("/gui/images/tagsButton.png", 30, 30);
+        super("/gui/images/tagsButton.png", 40, 40);
 
         setActionListener(mainFrame);
     }

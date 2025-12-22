@@ -29,6 +29,9 @@ public class ReportIssueUser extends RoundedPanel{
         setComponents(mainFrame, homePanelUser);
 
         setVisible(true);
+
+        revalidate();
+        repaint();
     }
 
     protected void setComponents(JFrame mainFrame, HomePanelUser  homePanelUser) {
@@ -52,14 +55,18 @@ public class ReportIssueUser extends RoundedPanel{
 
         titleTextField = new JTextField(TITLE_PLACEHOLDER, 30);
         titleTextField.setBorder(BorderFactory.createEmptyBorder());
+        titleTextField.setFont(new Font("SansSerif", Font.BOLD, 24));
+        titleTextField.setHorizontalAlignment(SwingConstants.CENTER);
+        titleTextField.setPreferredSize(new Dimension(300, 30));
+        titleTextField.setMinimumSize(new Dimension(300, 30));
 
-        setFocusBehaviour(titleTextField, TITLE_PLACEHOLDER);
+        TextComponentFocusBehaviour.setTextComponentFocusBehaviour(titleTextField, TITLE_PLACEHOLDER);
 
         RoundedPanel tmpPanel = ContainerFactory.createRoundedPanelContainer(titleTextField);
 
         Constraints.setConstraints(0, 1, 4, 1,
-                GridBagConstraints.NONE, 0, 0, GridBagConstraints.LAST_LINE_START,
-                0.5f, 0.5f, new Insets(10, 10, 0, 10));
+                GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
+                0.5f, 0.5f, new Insets(10, 160, 10, 160));
         this.add(tmpPanel, Constraints.getGridBagConstraints());
     }
 
@@ -67,8 +74,9 @@ public class ReportIssueUser extends RoundedPanel{
 
         descriptionTextArea = new JTextArea(DESCRIPTION_PLACEHOLDER, 10, 60);
         descriptionTextArea.setBorder(BorderFactory.createEmptyBorder());
+        descriptionTextArea.setFont(new Font("JetBrains Mono", Font.PLAIN, 18));
 
-        setFocusBehaviour(descriptionTextArea, DESCRIPTION_PLACEHOLDER);
+        TextComponentFocusBehaviour.setTextComponentFocusBehaviour(descriptionTextArea, DESCRIPTION_PLACEHOLDER);
 
         JScrollPane tmpScrollPane = new JScrollPane(descriptionTextArea);
         tmpScrollPane.setBorder(BorderFactory.createEmptyBorder());
@@ -78,8 +86,8 @@ public class ReportIssueUser extends RoundedPanel{
         RoundedPanel tmpPanel = ContainerFactory.createRoundedPanelContainer(tmpScrollPane);
 
         Constraints.setConstraints(0, 2, 4, 1,
-                GridBagConstraints.NONE, 0, 0, GridBagConstraints.FIRST_LINE_START,
-                1f, 1f, new Insets(0, 10, 10, 10));
+                GridBagConstraints.BOTH, 0, 0, GridBagConstraints.CENTER,
+                1f, 1f, new Insets(10, 80, 10, 80));
         this.add(tmpPanel, Constraints.getGridBagConstraints());
     }
 
@@ -121,6 +129,10 @@ public class ReportIssueUser extends RoundedPanel{
 
         reportButton = new JButton("Report");
 
+        reportButton.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
+        reportButton.setBorder(BorderFactory.createEmptyBorder());
+        reportButton.setBackground(ColorsList.EMPTY_COLOR);
+
         reportButton.addActionListener(new ActionListener() {
 
             @Override
@@ -129,10 +141,16 @@ public class ReportIssueUser extends RoundedPanel{
             }
         });
 
+        RoundedPanel tmpPanel = ContainerFactory.createRoundedPanelContainer(reportButton);
+
+        tmpPanel.setRoundBorderColor(ColorsList.GREEN_BORDER_COLOR);
+        tmpPanel.setBackground(ColorsList.GREEN_BACKGROUND_COLOR);
+        tmpPanel.setCursor(new  Cursor(Cursor.HAND_CURSOR));
+
         Constraints.setConstraints(0, 4, 2, 1,
-                GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
+                GridBagConstraints.NONE, 40, 20, GridBagConstraints.CENTER,
                 0.5f, 0.5f, new Insets(5, 5, 5, 5));
-        this.add(reportButton, Constraints.getGridBagConstraints());
+        this.add(tmpPanel, Constraints.getGridBagConstraints());
     }
 
     protected void report(HomePanelUser homePanelUser) {
@@ -144,6 +162,10 @@ public class ReportIssueUser extends RoundedPanel{
 
         cancelButton = new JButton("Cancel");
 
+        cancelButton.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
+        cancelButton.setBorder(BorderFactory.createEmptyBorder());
+        cancelButton.setBackground(ColorsList.EMPTY_COLOR);
+
         cancelButton.addActionListener(new ActionListener() {
 
             @Override
@@ -152,35 +174,20 @@ public class ReportIssueUser extends RoundedPanel{
             }
         });
 
+        RoundedPanel tmpPanel = ContainerFactory.createRoundedPanelContainer(cancelButton);
+
+        tmpPanel.setRoundBorderColor(ColorsList.RED_BORDER_COLOR);
+        tmpPanel.setBackground(ColorsList.RED_BACKGROUND_COLOR);
+        tmpPanel.setCursor(new  Cursor(Cursor.HAND_CURSOR));
+
         Constraints.setConstraints(1, 4, 2, 1,
-                GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
+                GridBagConstraints.NONE, 40, 20, GridBagConstraints.CENTER,
                 0.5f, 0.5f, new Insets(5, 5, 5, 5));
-        this.add(cancelButton, Constraints.getGridBagConstraints());
+        this.add(tmpPanel, Constraints.getGridBagConstraints());
     }
 
     protected void cancel(HomePanelUser homePanelUser) {
 
         homePanelUser.returnToDefaultContentPanel();
-    }
-
-    private void setFocusBehaviour(JTextComponent component, String placeHolder) {
-
-        component.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                super.focusGained(e);
-                if (component.getText().equals(placeHolder)) {
-                    component.setText("");
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                super.focusLost(e);
-                if (component.getText().isEmpty()) {
-                    component.setText(placeHolder);
-                }
-            }
-        });
     }
 }

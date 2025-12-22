@@ -36,6 +36,10 @@ public class ReportIssueDeveloper extends ReportIssueUser {
 
         reportButton = new JButton("Report");
 
+        reportButton.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
+        reportButton.setBorder(BorderFactory.createEmptyBorder());
+        reportButton.setBackground(ColorsList.EMPTY_COLOR);
+
         reportButton.addActionListener(new ActionListener() {
 
             @Override
@@ -44,16 +48,26 @@ public class ReportIssueDeveloper extends ReportIssueUser {
             }
         });
 
+        RoundedPanel tmpPanel = ContainerFactory.createRoundedPanelContainer(reportButton);
+
+        tmpPanel.setRoundBorderColor(ColorsList.GREEN_BORDER_COLOR);
+        tmpPanel.setBackground(ColorsList.GREEN_BACKGROUND_COLOR);
+        tmpPanel.setCursor(new  Cursor(Cursor.HAND_CURSOR));
+
         Constraints.setConstraints(0, 4, 3, 1,
-                GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
+                GridBagConstraints.NONE, 40, 20, GridBagConstraints.CENTER,
                 0.5f, 0.5f, new Insets(5, 5, 5, 5));
-        this.add(reportButton, Constraints.getGridBagConstraints());
+        this.add(tmpPanel, Constraints.getGridBagConstraints());
     }
 
     @Override
     protected void setCancelButton(HomePanelUser homePanelUser) {
 
         cancelButton = new JButton("Cancel");
+
+        cancelButton.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
+        cancelButton.setBorder(BorderFactory.createEmptyBorder());
+        cancelButton.setBackground(ColorsList.EMPTY_COLOR);
 
         cancelButton.addActionListener(new ActionListener() {
 
@@ -63,10 +77,16 @@ public class ReportIssueDeveloper extends ReportIssueUser {
             }
         });
 
+        RoundedPanel tmpPanel = ContainerFactory.createRoundedPanelContainer(cancelButton);
+
+        tmpPanel.setRoundBorderColor(ColorsList.RED_BORDER_COLOR);
+        tmpPanel.setBackground(ColorsList.RED_BACKGROUND_COLOR);
+        tmpPanel.setCursor(new  Cursor(Cursor.HAND_CURSOR));
+
         Constraints.setConstraints(1, 4, 3, 1,
-                GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
+                GridBagConstraints.NONE, 40, 20, GridBagConstraints.CENTER,
                 0.5f, 0.5f, new Insets(5, 5, 5, 5));
-        this.add(cancelButton, Constraints.getGridBagConstraints());
+        this.add(tmpPanel, Constraints.getGridBagConstraints());
     }
 
     private void setPriorityComboBox() {

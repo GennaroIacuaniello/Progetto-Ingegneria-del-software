@@ -34,23 +34,7 @@ public class SearchProjectPanelUser {
 
         searchTextField = new JTextField(TextFieldInitializer);
 
-        searchTextField.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                super.focusGained(e);
-                if (searchTextField.getText().equals(TextFieldInitializer)) {
-                    searchTextField.setText("");
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                super.focusLost(e);
-                if (searchTextField.getText().isEmpty()) {
-                    searchTextField.setText(TextFieldInitializer);
-                }
-            }
-        });
+        TextComponentFocusBehaviour.setTextComponentFocusBehaviour(searchTextField, TextFieldInitializer);
 
         searchTextField.setPreferredSize(new Dimension(150, 20));
         searchTextField.setBorder(BorderFactory.createEmptyBorder());
