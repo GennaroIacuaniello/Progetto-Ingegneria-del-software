@@ -1,14 +1,14 @@
-package model;
+package dto;
 
 import java.util.List;
 
-public class User {
+public class UserDTO {
 
     private String email;
     private final String hashedPassword;
-    private List<Issue> reportedIssues;
+    private List<IssueDTO> reportedIssues;
 
-    public User(String email, String hashedPassword, List<Issue> reportedIssues) {
+    public UserDTO(String email, String hashedPassword, List<IssueDTO> reportedIssues) {
 
         this.email = email;
         this.hashedPassword = hashedPassword;
@@ -27,11 +27,11 @@ public class User {
         return hashedPassword;
     }
 
-    public List<Issue> getReportedIssues() {
+    public List<IssueDTO> getReportedIssues() {
         return reportedIssues;
     }
 
-    public void setReportedIssues (List<Issue> reportedIssues) {
+    public void setReportedIssues (List<IssueDTO> reportedIssues) {
         this.reportedIssues = reportedIssues;
     }
 

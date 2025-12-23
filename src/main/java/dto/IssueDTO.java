@@ -1,4 +1,4 @@
-package model;
+package dto;
 
 import java.awt.*;
 import java.util.List;
@@ -10,24 +10,23 @@ import java.sql.Date;
 
  */
 
-
-public class Issue {
+public class IssueDTO {
 
     private String title;
     private String description;
     private int priority;
     private Image image;
-    private IssueType type;
-    private IssueStatus status;
+    private IssueTypeDTO type;
+    private IssueStatusDTO status;
     private List<String> tags;
     private Date reportDate;
     private Date resolutionDate;
-    private User reportingUser;
-    private Developer assignedDeveloper;
-    private Project relatedProject;
+    private UserDTO reportingUser;
+    private DeveloperDTO assignedDeveloper;
+    private ProjectDTO relatedProject;
 
-    public Issue(String title, String description, int priority, Image image, IssueType type, IssueStatus status,
-                 List<String> tags, Date reportDate, Date resolutionDate, User reportingUser, Project relatedProject) {
+    public IssueDTO(String title, String description, int priority, Image image, IssueTypeDTO type, IssueStatusDTO status,
+                 List<String> tags, Date reportDate, Date resolutionDate, UserDTO reportingUser, ProjectDTO relatedProject) {
 
         this.title = title;
         this.description = description;
@@ -43,8 +42,8 @@ public class Issue {
         this.relatedProject = relatedProject;
     }
 
-    public Issue (String title, String description, int priority, Image image, IssueType type, IssueStatus status,
-                  List<String> tags, Date reportDate, Date resolutionDate, User reportingUser, Developer assignedDeveloper, Project relatedProject) {
+    public IssueDTO (String title, String description, int priority, Image image, IssueTypeDTO type, IssueStatusDTO status,
+                  List<String> tags, Date reportDate, Date resolutionDate, UserDTO reportingUser, DeveloperDTO assignedDeveloper, ProjectDTO relatedProject) {
 
         this(title, description, priority, image, type, status, tags, reportDate, resolutionDate, reportingUser, relatedProject);
 
@@ -83,19 +82,19 @@ public class Issue {
         this.image = image;
     }
 
-    public IssueType getType() {
+    public IssueTypeDTO getType() {
         return type;
     }
 
-    public void setType(IssueType type) {
+    public void setType(IssueTypeDTO type) {
         this.type = type;
     }
 
-    public IssueStatus getStatus() {
+    public IssueStatusDTO getStatus() {
         return status;
     }
 
-    public void setStatus(IssueStatus status) {
+    public void setStatus(IssueStatusDTO status) {
         this.status = status;
     }
 
@@ -123,27 +122,27 @@ public class Issue {
         this.resolutionDate = resolutionDate;
     }
 
-    public User getReportingUser() {
+    public UserDTO getReportingUser() {
         return reportingUser;
     }
 
-    public void setReportingUser(User reportingUser) {
+    public void setReportingUser(UserDTO reportingUser) {
         this.reportingUser = reportingUser;
     }
 
-    public Developer getAssignedDeveloper() {
+    public DeveloperDTO getAssignedDeveloper() {
         return assignedDeveloper;
     }
 
-    public void setAssignedDeveloper(Developer assignedDeveloper) {
+    public void setAssignedDeveloper(DeveloperDTO assignedDeveloper) {
         this.assignedDeveloper = assignedDeveloper;
     }
 
-    public Project getRelatedProject() {
+    public ProjectDTO getRelatedProject() {
         return relatedProject;
     }
 
-    public void setRelatedProject(Project relatedProject) {
+    public void setRelatedProject(ProjectDTO relatedProject) {
         this.relatedProject = relatedProject;
     }
 }
