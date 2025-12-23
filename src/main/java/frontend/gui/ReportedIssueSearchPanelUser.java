@@ -2,10 +2,12 @@ package frontend.gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Objects;
 import java.util.List;
 
-public class IssueSearchPanelUser extends RoundedPanel{
+public class ReportedIssueSearchPanelUser extends RoundedPanel{
 
     private RoundedPanel upperPanel;
     private JTextField titleTextField;
@@ -16,7 +18,7 @@ public class IssueSearchPanelUser extends RoundedPanel{
     private static final String[] statusOptions = {"Tutte", "To do", "Assegnate", "Risolte"};
     private static final String[] typeOptions = {"Tutte", "Bug", "Documentazione", "Feature", "Domanda"};
 
-    public IssueSearchPanelUser(JFrame mainFrame) {
+    public ReportedIssueSearchPanelUser(JFrame mainFrame) {
 
         super(new GridBagLayout());
 
@@ -34,8 +36,6 @@ public class IssueSearchPanelUser extends RoundedPanel{
 
         this.setRoundBorderColor(ColorsList.BORDER_COLOR);
         this.setBackground(Color.WHITE);
-
-
     }
 
     private void setUpperPanel() {
@@ -55,10 +55,23 @@ public class IssueSearchPanelUser extends RoundedPanel{
 
         IconButton searchIssuesButton = new IconButton("/frontend/gui/images/searchButton.png", 30, 30);
 
+        searchIssuesButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                searchButtonActionListener();
+            }
+        });
+
         Constraints.setConstraints(0, 0, 1, 1,
                 GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
                 new Insets(5, 5, 5, 0));
         upperPanel.add(searchIssuesButton, Constraints.getGridBagConstraints());
+    }
+
+    protected void searchButtonActionListener() {
+
+        //todo implementa
     }
 
     private void setTitleTextField() {

@@ -3,12 +3,12 @@ package frontend.gui;
 import javax.swing.*;
 import java.awt.*;
 
-public class IssueSearchPanelDeveloper extends IssueSearchPanelUser {
+public class ReportedIssueSearchPanelDeveloper extends ReportedIssueSearchPanelUser {
 
     private JComboBox<String> priorityComboBox;
     private static final String[] priorityOptions = {"Tutte", "Molto bassa", "Bassa", "Media", "Alta", "Molto alta"};
 
-    public IssueSearchPanelDeveloper(JFrame mainFrame) {
+    public ReportedIssueSearchPanelDeveloper(JFrame mainFrame) {
 
         super(mainFrame);
 
@@ -28,5 +28,10 @@ public class IssueSearchPanelDeveloper extends IssueSearchPanelUser {
                 GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
                 0.5f, 0.5f);
         this.add(tmpPanel, Constraints.getGridBagConstraints());
+    }
+
+    @Override
+    protected void searchButtonActionListener() {
+        //todo implementa
     }
 }

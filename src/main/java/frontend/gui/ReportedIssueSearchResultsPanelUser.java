@@ -1,11 +1,10 @@
 package frontend.gui;
 
-import javax.swing.*;
 import java.awt.*;
 
-public class IssueSearchResultsPanel extends RoundedPanel{
+public class ReportedIssueSearchResultsPanelUser extends RoundedPanel{
 
-    public IssueSearchResultsPanel() {
+    public ReportedIssueSearchResultsPanelUser() {
 
         super(new GridBagLayout());
 
