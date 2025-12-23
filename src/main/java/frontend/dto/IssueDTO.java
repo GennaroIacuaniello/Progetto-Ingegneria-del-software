@@ -4,51 +4,43 @@ import java.awt.*;
 import java.util.List;
 import java.sql.Date;
 
-/*TODO
-
-    Usare builder
-
- */
-
 public class IssueDTO {
 
     private String title;
     private String description;
-    private int priority;
-    private Image image;
     private IssueTypeDTO type;
     private IssueStatusDTO status;
     private List<String> tags;
     private Date reportDate;
     private Date resolutionDate;
     private UserDTO reportingUser;
-    private DeveloperDTO assignedDeveloper;
     private ProjectDTO relatedProject;
 
-    public IssueDTO(String title, String description, int priority, Image image, IssueTypeDTO type, IssueStatusDTO status,
-                 List<String> tags, Date reportDate, Date resolutionDate, UserDTO reportingUser, ProjectDTO relatedProject) {
+    private int priority;
+    private Image image;
+    private DeveloperDTO assignedDeveloper;
+
+    public IssueDTO (String title, String description, IssueTypeDTO type, IssueStatusDTO status,
+          List<String> tags, Date reportDate, Date resolutionDate, UserDTO reportingUser, ProjectDTO relatedProject,
+          int priority, Image image, DeveloperDTO assignedDeveloper) {
 
         this.title = title;
         this.description = description;
-        this.priority = priority;
-        this.image = image;
         this.type = type;
         this.status = status;
         this.tags = tags;
         this.reportDate = reportDate;
         this.resolutionDate = resolutionDate;
         this.reportingUser = reportingUser;
-        this.assignedDeveloper = null;
         this.relatedProject = relatedProject;
-    }
 
-    public IssueDTO (String title, String description, int priority, Image image, IssueTypeDTO type, IssueStatusDTO status,
-                  List<String> tags, Date reportDate, Date resolutionDate, UserDTO reportingUser, DeveloperDTO assignedDeveloper, ProjectDTO relatedProject) {
-
-        this(title, description, priority, image, type, status, tags, reportDate, resolutionDate, reportingUser, relatedProject);
-
+        this.priority = priority;
+        this.image = image;
         this.assignedDeveloper = assignedDeveloper;
+
     }
+
+
 
     public String getTitle() {
         return title;

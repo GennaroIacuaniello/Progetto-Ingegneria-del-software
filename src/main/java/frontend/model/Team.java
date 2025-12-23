@@ -2,6 +2,7 @@ package frontend.model;
 
 import frontend.exception.InvalidDeveloper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Team {
@@ -17,7 +18,11 @@ public class Team {
 
         this.name = name;
         this.project = project;
-        this.developers = developers;
+
+        this.developers = new ArrayList<>();
+
+        this.developers.addAll(developers);
+
     }
 
     public String getName() {
@@ -42,5 +47,9 @@ public class Team {
 
     public void setDevelopers(List<Developer> developers) {
         this.developers = developers;
+    }
+
+    public void addDeveloper (Developer developer){
+        this.developers.add(developer);
     }
 }

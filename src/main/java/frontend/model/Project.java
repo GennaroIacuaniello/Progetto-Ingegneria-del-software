@@ -3,6 +3,7 @@ package frontend.model;
 import frontend.exception.InvalidDeveloper;
 import frontend.exception.InvalidTeam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Project {
@@ -22,8 +23,13 @@ public class Project {
             throw new InvalidDeveloper("Developers cannot be null or empty");
 
         this.name = name;
+
         this.issues = null;
-        this.teams = teams;
+
+        this.teams = new ArrayList<>();
+
+        this.teams.addAll(teams);
+
         this.developers = developers;
     }
 
@@ -31,7 +37,10 @@ public class Project {
 
         this(name, teams, developers);
 
-        this.issues = issues;
+        this.issues = new ArrayList<>();
+
+        if(issues != null)
+            this.issues.addAll(issues);
     }
 
     public Project(String id, String name) {
@@ -83,4 +92,9 @@ public class Project {
     public void setDevelopers(List<Developer> developers) {
         this.developers = developers;
     }
+
+    public void addIssue (Issue issue){
+        this.issues.add(issue);
+    }
+
 }

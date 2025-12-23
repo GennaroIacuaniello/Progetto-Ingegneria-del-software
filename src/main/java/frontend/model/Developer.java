@@ -1,5 +1,6 @@
 package frontend.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Developer extends User {
@@ -9,13 +10,25 @@ public class Developer extends User {
     private List<Team> teams;
 
     public Developer(String email, String hashedPassword, List<Issue> reportedIssues,
-                     List<Issue> assignedIssue, List<Project> projects, List<Team> teams) {
+                     List<Issue> assignedIssues, List<Project> projects, List<Team> teams) {
 
         super(email, hashedPassword, reportedIssues);
 
-        this.assignedIssues = assignedIssue;
-        this.projects = projects;
-        this.teams = teams;
+        this.assignedIssues = new ArrayList<>();
+
+        if(assignedIssues != null)
+            this.assignedIssues.addAll(assignedIssues);
+
+        this.projects = new ArrayList<>();
+
+        if(projects != null)
+            this.projects.addAll(projects);
+
+        this.teams = new ArrayList<>();
+
+        if(teams != null)
+            this.teams.addAll(teams);
+
     }
 
     public List<Issue> getAssignedIssues() {
@@ -41,5 +54,18 @@ public class Developer extends User {
     public void setTeams(List<Team> teams) {
         this.teams = teams;
     }
+
+    public void addAssignedIssue (Issue assignedIssue){
+        this.assignedIssues.add(assignedIssue);
+    }
+
+    public void addProject (Project project){
+        this.projects.add(project);
+    }
+
+    public void addTeam (Team team){
+        this.teams.add(team);
+    }
+
 
 }
