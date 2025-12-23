@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 public class TagsMenu extends MyDialog{
 
-    private IconButton addButton;
     private final ArrayList<TagPanel> tagPanels = new ArrayList<>();
     private JScrollPane scrollPane;
     private JPanel tagsPanel;
@@ -55,7 +54,7 @@ public class TagsMenu extends MyDialog{
 
     private void setAddButton() {
 
-        addButton = new IconButton("/frontend/gui/images/addButtonIcon.png", 30, 30);
+        IconButton addButton = new IconButton("/frontend/gui/images/addButtonIcon.png", 30, 30);
 
         addButton.addActionListener(new ActionListener() {
 

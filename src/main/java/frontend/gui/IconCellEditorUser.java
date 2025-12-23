@@ -59,6 +59,8 @@ class IconCellEditorUser extends DefaultCellEditor {
                 break;
 
             case "ISSUE SEGNALATE":
+                //todo: controller
+                homePanel.setContentPanel(new SearchReportedIssuePageUser(mainFrame, homePanel));
                 break;
         }
 

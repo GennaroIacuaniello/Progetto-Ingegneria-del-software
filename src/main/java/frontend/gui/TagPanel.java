@@ -56,4 +56,8 @@ public class TagPanel extends RoundedPanel{
 
         index--;
     }
+
+    public String getTagField() {
+        return tagField.getText();
+    }
 }

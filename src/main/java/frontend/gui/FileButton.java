@@ -30,7 +30,7 @@ public class FileButton extends JPanel {
 
     private void setRemoveButton() {
 
-        removeButton = new IconButton("/gui/images/xIconButton.png", 10, 10);
+        removeButton = new IconButton("/frontend/gui/images/xIconButton.png", 10, 10);
 
         removeButton.addActionListener(new ActionListener() {
 

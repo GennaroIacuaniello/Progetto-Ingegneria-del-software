@@ -23,7 +23,7 @@ public class ReportIssueDeveloper extends ReportIssueUser {
 
         setTitleTextField();
         setDescriptionTextArea();
-        setTypeOptionPane();
+        setTypeComboBox();
         setTagsButton(mainFrame);
         setFileChooserPanel();
         setPriorityComboBox();

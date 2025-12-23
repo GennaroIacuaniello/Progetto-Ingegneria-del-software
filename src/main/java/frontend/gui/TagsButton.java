@@ -3,6 +3,8 @@ package frontend.gui;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TagsButton extends IconButton {
 
@@ -29,5 +31,17 @@ public class TagsButton extends IconButton {
                 tagsMenu.setVisible(true);
             }
         });
+    }
+
+    public List<String> getTags() {
+
+        List<TagPanel> tagPanels = tagsMenu.getTagPanels();
+        List<String> tags = new ArrayList<>();
+
+        for (TagPanel tagPanel : tagPanels) {
+            tags.add(tagPanel.getTagField());
+        }
+
+        return tags;
     }
 }
