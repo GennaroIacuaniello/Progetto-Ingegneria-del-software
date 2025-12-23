@@ -1,4 +1,4 @@
-package frontend.model;
+package backend.model;
 
 import java.util.List;
 
@@ -10,11 +10,4 @@ public class Admin extends Developer{
         super(email, hashedPassword, reportedIssues, assignedIssue, projects, teams);
     }
 
-    public void assignIssue() {}
-
-    public void viewIssueDashBoard() {}
-
-    public void viewTeamReport() {}
-
-    public void createDeveloper() {}
 }

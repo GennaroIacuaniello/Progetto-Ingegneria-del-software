@@ -1,8 +1,8 @@
-package frontend.dto;
+package backend.dto;
 
 import java.awt.*;
-import java.util.List;
 import java.sql.Date;
+import java.util.List;
 
 public class IssueDTO {
 
@@ -21,8 +21,8 @@ public class IssueDTO {
     private DeveloperDTO assignedDeveloper;
 
     public IssueDTO (String title, String description, IssueTypeDTO type, IssueStatusDTO status,
-          List<String> tags, Date reportDate, Date resolutionDate, UserDTO reportingUser, ProjectDTO relatedProject,
-          int priority, Image image, DeveloperDTO assignedDeveloper) {
+                     List<String> tags, Date reportDate, Date resolutionDate, UserDTO reportingUser, ProjectDTO relatedProject,
+                     int priority, Image image, DeveloperDTO assignedDeveloper) {
 
         this.title = title;
         this.description = description;

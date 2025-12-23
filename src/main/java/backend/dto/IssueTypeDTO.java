@@ -1,6 +1,6 @@
-package frontend.model;
+package backend.dto;
 
-public enum IssueType {
+public enum IssueTypeDTO {
 
     BUG,
     DOCUMENTATION,

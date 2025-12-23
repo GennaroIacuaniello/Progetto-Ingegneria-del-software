@@ -1,55 +1,45 @@
-package frontend.model;
+package backend.model;
 
 import java.awt.*;
 import java.util.List;
 import java.sql.Date;
 
-/*TODO
-
-    Usare builder
-
- */
-
-
 public class Issue {
 
     private String title;
     private String description;
-    private int priority;
-    private Image image;
     private IssueType type;
     private IssueStatus status;
     private List<String> tags;
     private Date reportDate;
     private Date resolutionDate;
     private User reportingUser;
-    private Developer assignedDeveloper;
     private Project relatedProject;
 
-    public Issue(String title, String description, int priority, Image image, IssueType type, IssueStatus status,
-                 List<String> tags, Date reportDate, Date resolutionDate, User reportingUser, Project relatedProject) {
+    private int priority;
+    private Image image;
+    private Developer assignedDeveloper;
+
+    Issue(String title, String description, IssueType type, IssueStatus status,
+          List<String> tags, Date reportDate, Date resolutionDate, User reportingUser, Project relatedProject,
+          int priority, Image image, Developer assignedDeveloper) {
 
         this.title = title;
         this.description = description;
-        this.priority = priority;
-        this.image = image;
         this.type = type;
         this.status = status;
         this.tags = tags;
         this.reportDate = reportDate;
         this.resolutionDate = resolutionDate;
         this.reportingUser = reportingUser;
-        this.assignedDeveloper = null;
         this.relatedProject = relatedProject;
-    }
 
-    public Issue (String title, String description, int priority, Image image, IssueType type, IssueStatus status,
-                  List<String> tags, Date reportDate, Date resolutionDate, User reportingUser, Developer assignedDeveloper, Project relatedProject) {
-
-        this(title, description, priority, image, type, status, tags, reportDate, resolutionDate, reportingUser, relatedProject);
-
+        this.priority = priority;
+        this.image = image;
         this.assignedDeveloper = assignedDeveloper;
+
     }
+
 
     public String getTitle() {
         return title;

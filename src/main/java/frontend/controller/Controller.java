@@ -1,8 +1,8 @@
 package frontend.controller;
 
-import frontend.dto.ProjectDTO;
-import frontend.dto.UserDTO;
 import frontend.gui.ReportIssueUser;
+import backend.model.Project;
+import backend.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +11,9 @@ import static java.lang.Integer.valueOf;
 
 public class Controller {
 
-    private static UserDTO user;
-    private static List<ProjectDTO> projects;
-    private static ProjectDTO project;
+    private static User user;
+    private static List<Project> projects;
+    private static Project project;
 
     public static void searchProjects(String query, String placeholder) {
 
@@ -28,7 +28,7 @@ public class Controller {
 
         for (int i = 0; i < 10; i++) {
 
-            projects.add(new ProjectDTO(valueOf(i).toString(), "progetto " + i));
+            projects.add(new Project(valueOf(i).toString(), "progetto " + i));
         }
     }
 
@@ -46,7 +46,7 @@ public class Controller {
 
         List<String> ids = new ArrayList<>();
 
-        for (ProjectDTO p : projects)
+        for (Project p : projects)
             ids.add(p.getId());
 
         return ids;
@@ -56,7 +56,7 @@ public class Controller {
 
         List<String> names = new ArrayList<>();
 
-        for (ProjectDTO p : projects)
+        for (Project p : projects)
             names.add(p.getName());
 
         return names;
@@ -64,7 +64,7 @@ public class Controller {
 
     public static void setProject(String id) {
 
-        project =  new ProjectDTO(id);
+        project =  new Project(id);
     }
 
     public static String getProject(String id) {
