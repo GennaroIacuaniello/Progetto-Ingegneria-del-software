@@ -2,7 +2,7 @@ package frontend.gui;
 
 import javax.swing.*;
 
-public class AllIssueSearchPanel extends ReportedIssueSearchPanelUser {
+public class AllIssueSearchPanel extends ReportedIssueSearchPanelDeveloper {
 
     public AllIssueSearchPanel(JFrame mainFrame) {
 
