@@ -1,26 +1,28 @@
-package frontend.model;
+package backend.model;
 
-import frontend.exception.InvalidDeveloper;
-import frontend.exception.InvalidTeam;
+import backend.exception.InvalidDeveloper;
+import backend.exception.InvalidTeam;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Project {
 
-    private String id;
+    private int id;
     private String name;
     private List<Issue> issues;
     private List<Team> teams;
     private List<Developer> developers;
 
-    public Project(String name, List<Team> teams, List<Developer> developers) throws InvalidTeam, InvalidDeveloper {
+    public Project(int id, String name, List<Team> teams, List<Developer> developers) throws InvalidTeam, InvalidDeveloper {
 
         if( teams == null || teams.isEmpty() )
             throw new InvalidTeam("Teams cannot be null or empty");
 
         if( developers == null || developers.isEmpty() )
             throw new InvalidDeveloper("Developers cannot be null or empty");
+
+        this.id = id;
 
         this.name = name;
 
@@ -33,9 +35,9 @@ public class Project {
         this.developers = developers;
     }
 
-    public Project(String name, List<Issue> issues, List<Team> teams, List<Developer> developers) throws InvalidTeam, InvalidDeveloper {
+    public Project(int id, String name, List<Issue> issues, List<Team> teams, List<Developer> developers) throws InvalidTeam, InvalidDeveloper {
 
-        this(name, teams, developers);
+        this(id, name, teams, developers);
 
         this.issues = new ArrayList<>();
 
@@ -43,21 +45,17 @@ public class Project {
             this.issues.addAll(issues);
     }
 
-    public Project(String id, String name) {
+    public Project(int id, String name) {
 
         this.id = id;
         this.name = name;
     }
 
-    public Project(String id) {
-        this.id = id;
-    }
-
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -1,4 +1,4 @@
-package frontend.exception;
+package backend.exception;
 
 public class InvalidTeam extends RuntimeException {
 

@@ -1,8 +1,8 @@
 package frontend.controller;
 
 import frontend.gui.ReportIssueUser;
-import frontend.model.Project;
-import frontend.model.User;
+import backend.model.Project;
+import backend.model.User;
 
 import java.util.ArrayList;
 import java.util.List;

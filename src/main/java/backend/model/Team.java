@@ -1,6 +1,6 @@
-package frontend.model;
+package backend.model;
 
-import frontend.exception.InvalidDeveloper;
+import backend.exception.InvalidDeveloper;
 
 import java.util.ArrayList;
 import java.util.List;

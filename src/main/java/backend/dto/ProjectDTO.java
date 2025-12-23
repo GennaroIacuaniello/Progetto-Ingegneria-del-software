@@ -1,4 +1,4 @@
-package frontend.dto;
+package backend.dto;
 
 import backend.exception.InvalidDeveloper;
 import backend.exception.InvalidTeam;

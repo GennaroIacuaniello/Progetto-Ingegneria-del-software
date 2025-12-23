@@ -1,4 +1,4 @@
-package frontend.database;
+package backend.database;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
@@ -26,7 +26,7 @@ public class DatabaseConnection {
         String connString = dotenv.get("DATABASE_URL");
 
         connection = DriverManager.getConnection(connString);
-        
+
     }
 
 
