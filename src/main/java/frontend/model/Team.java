@@ -1,5 +1,7 @@
 package frontend.model;
 
+import frontend.exception.InvalidDeveloper;
+
 import java.util.List;
 
 public class Team {
@@ -8,10 +10,10 @@ public class Team {
     private Project project;
     private List<Developer> developers;
 
-    public Team(String name, Project project, List<Developer> developers) throws IllegalArgumentException {
+    public Team(String name, Project project, List<Developer> developers) throws InvalidDeveloper {
 
         if (developers == null || developers.isEmpty())
-            throw new IllegalArgumentException("developers cannot be null or empty");
+            throw new InvalidDeveloper("Developers cannot be null or empty");
 
         this.name = name;
         this.project = project;

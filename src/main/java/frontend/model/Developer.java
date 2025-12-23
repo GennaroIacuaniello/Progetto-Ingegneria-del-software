@@ -42,5 +42,4 @@ public class Developer extends User {
         this.teams = teams;
     }
 
-    public void viewAssignedIssue() {}
 }

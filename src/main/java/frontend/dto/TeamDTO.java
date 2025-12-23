@@ -1,5 +1,7 @@
 package frontend.dto;
 
+import frontend.exception.InvalidDeveloper;
+
 import java.util.List;
 
 public class TeamDTO {
@@ -8,10 +10,10 @@ public class TeamDTO {
     private ProjectDTO project;
     private List<DeveloperDTO> developers;
 
-    public TeamDTO(String name, ProjectDTO project, List<DeveloperDTO> developers) throws IllegalArgumentException {
+    public TeamDTO(String name, ProjectDTO project, List<DeveloperDTO> developers) throws InvalidDeveloper {
 
         if (developers == null || developers.isEmpty())
-            throw new IllegalArgumentException("developers cannot be null or empty");
+            throw new InvalidDeveloper("Developers cannot be null or empty");
 
         this.name = name;
         this.project = project;

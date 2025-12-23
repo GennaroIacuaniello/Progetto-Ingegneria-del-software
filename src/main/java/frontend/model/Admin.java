@@ -10,11 +10,4 @@ public class Admin extends Developer{
         super(email, hashedPassword, reportedIssues, assignedIssue, projects, teams);
     }
 
-    public void assignIssue() {}
-
-    public void viewIssueDashBoard() {}
-
-    public void viewTeamReport() {}
-
-    public void createDeveloper() {}
 }
