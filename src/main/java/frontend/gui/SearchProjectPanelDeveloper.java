@@ -13,7 +13,7 @@ public class SearchProjectPanelDeveloper extends SearchProjectPanelUser {
     @Override
     protected void setSearchButton(JFrame mainFrame, HomePanelUser homePanel) {
 
-        SearchButtonUser searchButton = new SearchButtonDeveloper(mainFrame, homePanel, searchTextField, TEXTFIELD_PLACEHOLDER);
+        SearchProjectsButtonUser searchButton = new SearchProjectsButtonDeveloper(mainFrame, homePanel, searchTextField, TEXTFIELD_PLACEHOLDER);
 
         Constraints.setConstraints(0, 0, 1, 1,
                 GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,

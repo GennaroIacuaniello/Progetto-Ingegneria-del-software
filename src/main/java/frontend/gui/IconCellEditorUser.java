@@ -59,6 +59,7 @@ class IconCellEditorUser extends DefaultCellEditor {
                 break;
 
             case "ISSUE SEGNALATE":
+                homePanel.setContentPanel(new SearchIssuePageUser(mainFrame, homePanel));
                 break;
         }
 

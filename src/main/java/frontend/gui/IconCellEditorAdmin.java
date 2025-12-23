@@ -26,6 +26,7 @@ public class IconCellEditorAdmin extends IconCellEditorDeveloper{
                 break;
 
             case "ISSUE SEGNALATE":
+                homePanel.setContentPanel(new SearchIssuePageDeveloper(mainFrame, homePanel));
                 break;
 
             case "ISSUE ASSEGNATE":

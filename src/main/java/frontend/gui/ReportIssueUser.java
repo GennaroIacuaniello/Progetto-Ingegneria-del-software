@@ -11,7 +11,7 @@ public class ReportIssueUser extends RoundedPanel{
 
     private JTextField titleTextField;
     private JTextArea descriptionTextArea;
-    private JComboBox<String> typeOptionPane;
+    private JComboBox<String> typeComboBox;
     private JButton tagsButton;
     private FileChooserPanel fileChooserPanel;
     protected JButton reportButton;
@@ -37,7 +37,7 @@ public class ReportIssueUser extends RoundedPanel{
 
         setTitleTextField();
         setDescriptionTextArea();
-        setTypeOptionPane();
+        setTypeComboBox();
         setTagsButton(mainFrame);
         setFileChooserPanel();
         setReportButton(homePanelUser);
@@ -90,13 +90,13 @@ public class ReportIssueUser extends RoundedPanel{
         this.add(tmpPanel, Constraints.getGridBagConstraints());
     }
 
-    protected void setTypeOptionPane() {
+    protected void setTypeComboBox() {
 
-        typeOptionPane = new JComboBox<>(options);
-        typeOptionPane.setBorder(BorderFactory.createEmptyBorder());
-        typeOptionPane.setBackground(ColorsList.EMPTY_COLOR);
+        typeComboBox = new JComboBox<>(options);
+        typeComboBox.setBorder(BorderFactory.createEmptyBorder());
+        typeComboBox.setBackground(ColorsList.EMPTY_COLOR);
 
-        RoundedPanel tmpPanel = ContainerFactory.createRoundedPanelContainer(typeOptionPane);
+        RoundedPanel tmpPanel = ContainerFactory.createRoundedPanelContainer(typeComboBox);
 
         Constraints.setConstraints(0, 3, 1, 1,
                 GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
