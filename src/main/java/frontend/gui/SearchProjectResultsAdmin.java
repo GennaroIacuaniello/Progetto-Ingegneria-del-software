@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class SearchProjectResultsAdmin extends SearchProjectResultsDeveloper{
 
-    public SearchProjectResultsAdmin(JFrame mainFrame, HomePanelUser homePanel, List<String > projectsIds, List<String> projectsNames) {
+    public SearchProjectResultsAdmin(JFrame mainFrame, HomePanelUser homePanel, List<Integer> projectsIds, List<String> projectsNames) {
 
         super(mainFrame, homePanel, projectsIds, projectsNames);
     }
@@ -30,7 +30,7 @@ public class SearchProjectResultsAdmin extends SearchProjectResultsDeveloper{
     }
 
     @Override
-    protected ProjectTableModelUser createTableModel(List<String> projectIds, List<String> projectNames) {
+    protected ProjectTableModelUser createTableModel(List<Integer> projectIds, List<String> projectNames) {
 
         int numRows = projectIds.size();
         Object[][] rowData = new Object[numRows][6];
@@ -48,7 +48,7 @@ public class SearchProjectResultsAdmin extends SearchProjectResultsDeveloper{
     }
 
     @Override
-    protected JTable createTable(JFrame mainFrame, HomePanelUser homePanel, List<String> projectIds, List<String> projectNames) {
+    protected JTable createTable(JFrame mainFrame, HomePanelUser homePanel, List<Integer> projectIds, List<String> projectNames) {
 
         JTable resultsTable = new JTable(createTableModel(projectIds, projectNames));
 

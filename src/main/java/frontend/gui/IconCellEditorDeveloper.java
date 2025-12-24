@@ -16,12 +16,12 @@ public class IconCellEditorDeveloper extends IconCellEditorUser {
 
         String action = parentTable.getColumnName(parentTable.getEditingColumn());
 
-        String projectId = (String)parentTable.getValueAt(selectedRow, 0);
+        Integer projectId = (Integer)parentTable.getValueAt(selectedRow, 0);
 
         switch (action) {
 
             case "SEGNALA ISSUE":
-                Controller.setProject(projectId);
+                Controller.setProject(projectId, "Ciao");
                 homePanel.setContentPanel(new ReportIssueDeveloper(mainFrame, homePanel));
                 break;
 

@@ -28,7 +28,7 @@ public class ControllerTMP {
 
         for (int i = 0; i < 10; i++) {
 
-            projects.add(new Project(valueOf(i).toString(), "progetto " + i));
+            projects.add(new Project(i, "progetto " + i));
         }
     }
 
@@ -42,9 +42,9 @@ public class ControllerTMP {
          */
     }
 
-    public static List<String> getProjectsIds () {
+    public static List<Integer> getProjectsIds () {
 
-        List<String> ids = new ArrayList<>();
+        List<Integer> ids = new ArrayList<>();
 
         for (Project p : projects)
             ids.add(p.getId());
@@ -62,12 +62,12 @@ public class ControllerTMP {
         return names;
     }
 
-    public static void setProject(String id) {
+    public static void setProject(int id, String name) {
 
-        project =  new Project(id);
+        project =  new Project(id, name);
     }
 
-    public static String getProject(String id) {
+    public static int getProject(int id) {
         return project.getId();
     }
 
