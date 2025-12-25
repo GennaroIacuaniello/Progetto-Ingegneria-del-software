@@ -8,6 +8,10 @@ public class TeamDTO {
     private ProjectDTO project;
     private List<DeveloperDTO> developers;
 
+    public TeamDTO(){
+        //Empty constructor needed for jackson
+    }
+
     public TeamDTO(String name, ProjectDTO project, List<DeveloperDTO> developers) {
 
         this.name = name;
