@@ -8,7 +8,7 @@ public class HomePanelUser {
     protected RoundedPanel defaultContentPanel;
     protected RoundedPanel contentPanel;
     protected RoundedPanel homePanel;
-    protected SearchProjectViewResults searchProjectViewResults;
+    protected SearchViewResults searchViewResults;
 
     protected HomePanelUser(JFrame mainFrame) {
 
@@ -60,17 +60,16 @@ public class HomePanelUser {
 
     private void setSearchProjectViewResults() {
 
-        searchProjectViewResults = new SearchProjectViewResults();
+        searchViewResults = new SearchViewResults();
 
         Constraints.setConstraints(0, 1, 1, 1,
                 GridBagConstraints.BOTH, 0, 0, GridBagConstraints.CENTER, 0.1f, 1f);
-        contentPanel.add(searchProjectViewResults.getViewportScrollPane(), Constraints.getGridBagConstraints());
+        contentPanel.add(searchViewResults.getViewportScrollPane(), Constraints.getGridBagConstraints());
     }
 
     public void updateSearchProjectViewResults(Component component) {
 
-        //todo: funzione che permette di aggiornare la vista dei risultati della ricerca
-        searchProjectViewResults.updateViewportView(component);
+        searchViewResults.updateViewportView(component);
     }
 
     public RoundedPanel getHomePanel() {

@@ -1,19 +1,47 @@
 package frontend.gui;
 
+import javax.swing.*;
+import javax.swing.table.TableColumn;
 import java.awt.*;
+import java.util.List;
+import java.util.Map;
 
-public class ReportedIssueSearchResultsPanelUser extends RoundedPanel{
+public class ReportedIssueSearchResultsPanelUser {
 
-    public ReportedIssueSearchResultsPanelUser() {
+    protected static final int ICON_WIDTH = 20;
+    protected static final int ICON_HEIGHT = 20;
 
-        super(new GridBagLayout());
+    public ReportedIssueSearchResultsPanelUser(JFrame mainFrame, SearchReportedIssuePageUser searchPage, List<String> issuesTitles) {
 
-        setPanel();
+        searchPage.updateSearchIssueViewResults(createTable(mainFrame, issuesTitles));
     }
 
-    private void setPanel() {
+    protected JTable createTable(JFrame mainFrame, List<String> issuesTitles) {
 
-        this.setRoundBorderColor(ColorsList.BORDER_COLOR);
-        this.setBackground(Color.WHITE);
+        JTable resultsTable = new JTable(createTableModel(issuesTitles));
+
+        TableColumn buttonColumn = resultsTable.getColumnModel().getColumn(1);
+
+        buttonColumn.setCellRenderer(new IconCellRenderer("/frontend/gui/images/reportIssue.png", ICON_WIDTH, ICON_HEIGHT));
+        buttonColumn.setCellEditor(new IconCellEditor(mainFrame, "/frontend/gui/images/reportIssue.png", ICON_WIDTH, ICON_HEIGHT, resultsTable));
+
+        resultsTable.setRowHeight(ICON_HEIGHT + 4);
+
+        resultsTable.getTableHeader().setReorderingAllowed(false);
+
+        return resultsTable;
+    }
+
+    protected IssueTableModel createTableModel(List<String> issueTitles) {
+
+        int numRows = issueTitles.size();
+        Object[][] rowData = new Object[numRows][2];
+
+        for (int i = 0; i < numRows; i++) {
+            rowData[i][0] = issueTitles.get(i);
+            rowData[i][1] = "View";
+        }
+
+        return new IssueTableModel(rowData);
     }
 }

@@ -40,7 +40,9 @@ public class IssueDTO {
 
     }
 
-
+    public IssueDTO (String title) {
+        this.title = title;
+    }
 
     public String getTitle() {
         return title;

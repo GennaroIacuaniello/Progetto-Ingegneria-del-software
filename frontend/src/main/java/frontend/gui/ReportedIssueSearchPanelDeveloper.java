@@ -1,16 +1,18 @@
 package frontend.gui;
 
+import frontend.controller.ControllerTMP;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class ReportedIssueSearchPanelDeveloper extends ReportedIssueSearchPanelUser {
 
-    private JComboBox<String> priorityComboBox;
+    protected JComboBox<String> priorityComboBox;
     private static final String[] priorityOptions = {"Tutte", "Molto bassa", "Bassa", "Media", "Alta", "Molto alta"};
 
-    public ReportedIssueSearchPanelDeveloper(JFrame mainFrame) {
+    public ReportedIssueSearchPanelDeveloper(JFrame mainFrame, SearchReportedIssuePageUser searchPage) {
 
-        super(mainFrame);
+        super(mainFrame, searchPage);
 
         setPriorityComboBox();
     }
@@ -31,7 +33,11 @@ public class ReportedIssueSearchPanelDeveloper extends ReportedIssueSearchPanelU
     }
 
     @Override
-    protected void searchButtonActionListener() {
-        //todo implementa
+    protected void searchButtonActionListener(JFrame mainFrame) {
+
+        ControllerTMP.searchReportedIssues(titleTextField.getText(), TITLE_PLACEHOLDER, (String)statusComboBox.getSelectedItem(),
+                tagsButton.getTags(), (String)typeComboBox.getSelectedItem(), (String)priorityComboBox.getSelectedItem());
+
+        new ReportedIssueSearchResultsPanelDeveloper(mainFrame, searchPage, ControllerTMP.getIssuesTitles());
     }
 }

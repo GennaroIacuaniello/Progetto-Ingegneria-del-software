@@ -3,7 +3,7 @@ package frontend.gui;
 import javax.swing.*;
 import java.awt.*;
 
-public class SearchProjectViewResults {
+public class SearchViewResults {
 
     //todo
     /*
@@ -13,7 +13,7 @@ public class SearchProjectViewResults {
      */
     private final JScrollPane scrollPane;
 
-    public SearchProjectViewResults() {
+    public SearchViewResults() {
 
         scrollPane = new JScrollPane();
 
@@ -25,22 +25,24 @@ public class SearchProjectViewResults {
 
     private JPanel createTmpViewPanel() {
 
-        RoundedPanel tmpViewPanel = new RoundedPanel(new BorderLayout());
+        RoundedPanel tmpViewPanel = new RoundedPanel(new GridBagLayout());
 
         tmpViewPanel.setRoundBorderColor(ColorsList.BORDER_COLOR);
         tmpViewPanel.setBackground(Color.WHITE);
 
-        tmpViewPanel.add(createTmpViewLabel());
-
-
+        Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.BOTH,
+                0, 0, GridBagConstraints.CENTER,
+                new Insets(10, 10, 10, 10));
+        tmpViewPanel.add(createTmpViewLabel(), Constraints.getGridBagConstraints());
 
         return tmpViewPanel;
     }
 
     private JLabel createTmpViewLabel() {
 
-        JLabel tmpViewLabel = new JLabel("<html><center>Effettua una ricerca per visualizzare i progetti" +
-                "<br>presenti e le azioni disponibili</center></html>");
+        JLabel tmpViewLabel = new JLabel("<html><center>Effettua una ricerca<br>" +
+                "per visualizzare i risultati<br>" +
+                "e le azioni disponibili</center></html>");
 
         tmpViewLabel.setHorizontalAlignment(SwingConstants.CENTER);
         tmpViewLabel.setVerticalAlignment(SwingConstants.CENTER);

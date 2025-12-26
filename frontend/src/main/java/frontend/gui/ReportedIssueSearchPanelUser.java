@@ -1,5 +1,8 @@
 package frontend.gui;
 
+import frontend.controller.Controller;
+import frontend.controller.ControllerTMP;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,23 +12,26 @@ import java.util.List;
 
 public class ReportedIssueSearchPanelUser extends RoundedPanel{
 
+    protected SearchReportedIssuePageUser searchPage;
     private RoundedPanel upperPanel;
-    private JTextField titleTextField;
-    private JComboBox<String> statusComboBox;
-    private TagsButton tagsButton;
-    private JComboBox<String> typeComboBox;
-    private static final String TITLE_PLACEHOLDER = "Inserisci titolo";
+    protected JTextField titleTextField;
+    protected JComboBox<String> statusComboBox;
+    protected TagsButton tagsButton;
+    protected JComboBox<String> typeComboBox;
+    protected static final String TITLE_PLACEHOLDER = "Inserisci titolo";
     private static final String[] statusOptions = {"Tutte", "To do", "Assegnate", "Risolte"};
     private static final String[] typeOptions = {"Tutte", "Bug", "Documentazione", "Feature", "Domanda"};
 
-    public ReportedIssueSearchPanelUser(JFrame mainFrame) {
+    public ReportedIssueSearchPanelUser(JFrame mainFrame, SearchReportedIssuePageUser searchPage) {
 
         super(new GridBagLayout());
+
+        this.searchPage = searchPage;
 
         setPanel();
 
         setUpperPanel();
-        setSearchButton();
+        setSearchButton(mainFrame);
         setTitleTextField();
         setStatusComboBox();
         setTagsButton(mainFrame);
@@ -51,7 +57,7 @@ public class ReportedIssueSearchPanelUser extends RoundedPanel{
         this.add(upperPanel, Constraints.getGridBagConstraints());
     }
 
-    private void setSearchButton() {
+    private void setSearchButton(JFrame mainFrame) {
 
         IconButton searchIssuesButton = new IconButton("/frontend/gui/images/searchButton.png", 30, 30);
 
@@ -59,7 +65,7 @@ public class ReportedIssueSearchPanelUser extends RoundedPanel{
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                searchButtonActionListener();
+                searchButtonActionListener(mainFrame);
             }
         });
 
@@ -69,9 +75,12 @@ public class ReportedIssueSearchPanelUser extends RoundedPanel{
         upperPanel.add(searchIssuesButton, Constraints.getGridBagConstraints());
     }
 
-    protected void searchButtonActionListener() {
+    protected void searchButtonActionListener(JFrame mainFrame) {
 
-        //todo implementa
+        ControllerTMP.searchReportedIssues(titleTextField.getText(), TITLE_PLACEHOLDER, (String)statusComboBox.getSelectedItem(),
+                tagsButton.getTags(), (String)typeComboBox.getSelectedItem(), null);
+
+        new ReportedIssueSearchResultsPanelUser(mainFrame, searchPage, ControllerTMP.getIssuesTitles());
     }
 
     private void setTitleTextField() {

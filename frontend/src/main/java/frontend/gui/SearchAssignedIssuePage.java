@@ -13,7 +13,7 @@ public class SearchAssignedIssuePage extends SearchReportedIssuePageDeveloper{
     @Override
     protected void setIssueSearchPanel(JFrame mainFrame) {
 
-        ReportedIssueSearchPanelUser issueSearchPanel = new AssignedIssueSearchPanel(mainFrame);
+        ReportedIssueSearchPanelUser issueSearchPanel = new AssignedIssueSearchPanel(mainFrame, this);
 
         Constraints.setConstraints(0, 0, 1, 1,
                 GridBagConstraints.BOTH, 0, 0, GridBagConstraints.CENTER,
@@ -21,7 +21,7 @@ public class SearchAssignedIssuePage extends SearchReportedIssuePageDeveloper{
         this.add(issueSearchPanel, Constraints.getGridBagConstraints());
     }
 
-    @Override
+    /*@Override
     protected void setIssueSearchResultsPanel() {
 
         ReportedIssueSearchResultsPanelUser reportedIssueSearchResultsPanelDeveloper = new AssignedIssueSearchResultsPanel();
@@ -30,5 +30,5 @@ public class SearchAssignedIssuePage extends SearchReportedIssuePageDeveloper{
                 GridBagConstraints.VERTICAL, 0, 0, GridBagConstraints.CENTER,
                 1f, 1f, new Insets(10, 0, 10, 0));
         this.add(reportedIssueSearchResultsPanelDeveloper, Constraints.getGridBagConstraints());
-    }
+    }*/
 }

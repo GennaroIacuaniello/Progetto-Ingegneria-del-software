@@ -5,6 +5,8 @@ import java.awt.*;
 
 public class SearchReportedIssuePageUser extends RoundedPanel{
 
+    SearchViewResults searchViewResults;
+
     public SearchReportedIssuePageUser(JFrame mainFrame, HomePanelUser homePanel) {
 
         super(new GridBagLayout());
@@ -22,7 +24,7 @@ public class SearchReportedIssuePageUser extends RoundedPanel{
 
     protected void setIssueSearchPanel(JFrame mainFrame) {
 
-        ReportedIssueSearchPanelUser issueSearchPanel = new ReportedIssueSearchPanelUser(mainFrame);
+        ReportedIssueSearchPanelUser issueSearchPanel = new ReportedIssueSearchPanelUser(mainFrame, this);
 
         Constraints.setConstraints(0, 0, 1, 1,
                 GridBagConstraints.BOTH, 0, 0, GridBagConstraints.CENTER,
@@ -32,11 +34,16 @@ public class SearchReportedIssuePageUser extends RoundedPanel{
 
     protected void setIssueSearchResultsPanel() {
 
-        ReportedIssueSearchResultsPanelUser reportedIssueSearchResultsPanelUser = new ReportedIssueSearchResultsPanelUser();
+        searchViewResults = new SearchViewResults();
 
         Constraints.setConstraints(0, 1, 1, 1,
                 GridBagConstraints.VERTICAL, 0, 0, GridBagConstraints.CENTER,
-                1f, 1f, new Insets(10, 0, 10, 0));
-        this.add(reportedIssueSearchResultsPanelUser, Constraints.getGridBagConstraints());
+                1f, 1f);
+        this.add(searchViewResults.getViewportScrollPane(), Constraints.getGridBagConstraints());
+    }
+
+    public void updateSearchIssueViewResults(Component component) {
+
+        searchViewResults.updateViewportView(component);
     }
 }

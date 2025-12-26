@@ -13,6 +13,7 @@ public class ControllerTMP {
     private static UserDTO user;
     private static List<ProjectDTO> projects;
     private static ProjectDTO project;
+    private static List<IssueDTO> issues;
 
     public static void searchProjects(String query, String placeholder) {
 
@@ -70,4 +71,31 @@ public class ControllerTMP {
         return project.getId();
     }
 
+    public static void searchReportedIssues(String title, String placeholder, String status, List<String> tags, String type, String priority) {
+
+        /*  todo:
+            effettua una query che restituisce di tutte le reported issues dell'utente corrente secondo i criteri di ricerca
+            passati come parametri, se title corrisponde a placeholder considerare la stringa vuota "" invece di title,
+            gli attributi possono essere null!
+            I risultati della ricerca devono essere usati per creare una List<Issue> da inserire come attributo in questa classe.
+        */
+
+        //behaviour per test (rimuovi dopo aver implementato versione Client-Server)
+        issues = new ArrayList<>();
+
+        for (int i = 0; i < 10; i++) {
+
+            issues.add(new IssueDTO("issue " + i));
+        }
+    }
+
+    public static List<String> getIssuesTitles () {
+
+        List<String> issuesTitles = new ArrayList<>();
+
+        for (IssueDTO i : issues)
+            issuesTitles.add(i.getTitle());
+
+        return issuesTitles;
+    }
 }
