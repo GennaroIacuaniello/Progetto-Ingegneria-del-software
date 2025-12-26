@@ -77,7 +77,7 @@ public class FileButton extends JPanel {
             try {
                 Desktop.getDesktop().open(currentFile);
             } catch (IOException ex) {
-                JOptionPane.showMessageDialog(this, "Impossibile aprire il file.");
+                new FloatingMessage("Impossibile aprire il file.", removeButton, FloatingMessage.ERROR_MESSAGE);
             }
         }
     }

@@ -1,14 +1,17 @@
 package frontend.gui;
 
+import frontend.controller.ControllerTMP;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class ShowReportedIssueUser extends JDialog {
 
-    private RoundedPanel mainPanel;
-    private IconButton backButton;
+    protected RoundedPanel mainPanel;
+    protected JPanel upperPanel;
 
     public ShowReportedIssueUser(JFrame parent) {
 
@@ -17,7 +20,17 @@ public class ShowReportedIssueUser extends JDialog {
         setDialog();
         setMainPanel(parent);
 
-        setBackButton();
+        setUpperPanel();
+        setTitleLabel();
+        setDescriptionTextArea();
+        setTypeLabel();
+        setTagsList();
+        setImageButton();
+        setStatusLabel();
+        setReportDateLabel();
+        setResolutionDateLabel();
+        setReportingUserLabel();
+        setAssignedDeveloperLabel();
 
         pack();
         setLocationRelativeTo(parent);
@@ -43,9 +56,23 @@ public class ShowReportedIssueUser extends JDialog {
         setContentPane(mainPanel);
     }
 
-    private void setBackButton() {
+    protected void setUpperPanel() {
 
-        backButton = new IconButton("/frontend/gui/images/backIconButton.png", 30, 30);
+        upperPanel = new RoundedPanel(new GridBagLayout());
+
+        upperPanel.setBackground(ColorsList.EMPTY_COLOR);
+        upperPanel.setBorder(BorderFactory.createEmptyBorder());
+
+        setBackButton();
+
+        Constraints.setConstraints(0, 0, 4, 1, GridBagConstraints.HORIZONTAL,
+                0, 0, GridBagConstraints.CENTER);
+        mainPanel.add(upperPanel, Constraints.getGridBagConstraints());
+    }
+
+    protected void setBackButton() {
+
+        IconButton backButton = new IconButton("/frontend/gui/images/backIconButton.png", 30, 30);
 
         backButton.addActionListener(new ActionListener() {
 
@@ -56,7 +83,181 @@ public class ShowReportedIssueUser extends JDialog {
         });
 
         Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.NONE,
-                0, 0, GridBagConstraints.CENTER, new Insets(5, 5, 5, 5));
-        mainPanel.add(backButton);
+                0, 0, GridBagConstraints.LINE_START, new Insets(5, 5, 5, 5));
+        upperPanel.add(backButton, Constraints.getGridBagConstraints());
+    }
+
+    private void setTitleLabel() {
+
+        JLabel titleLabel = new JLabel(ControllerTMP.getIssueTitle());
+        titleLabel.setBorder(BorderFactory.createEmptyBorder());
+        titleLabel.setBackground(ColorsList.EMPTY_COLOR);
+
+        RoundedPanel tmp = ContainerFactory.createRoundedPanelContainer(titleLabel);
+
+        Constraints.setConstraints(0, 1, 4, 1, GridBagConstraints.NONE,
+                0, 0, GridBagConstraints.LINE_START, 0.5f, 0.5f,
+                new Insets(10, 10, 10, 30));
+        mainPanel.add(tmp, Constraints.getGridBagConstraints());
+    }
+
+    private void setDescriptionTextArea() {
+
+        JTextArea descriptionTextArea = new JTextArea(ControllerTMP.getIssueDescription(), 8, 40);
+
+        descriptionTextArea.setBorder(BorderFactory.createEmptyBorder());
+        descriptionTextArea.setFont(new Font("JetBrains Mono", Font.PLAIN, 16));
+        descriptionTextArea.setEditable(false);
+
+        JScrollPane tmpScrollPane = new JScrollPane(descriptionTextArea);
+
+        tmpScrollPane.setBorder(BorderFactory.createEmptyBorder());
+        tmpScrollPane.setBackground(ColorsList.EMPTY_COLOR);
+        tmpScrollPane.setViewportView(descriptionTextArea);
+
+        RoundedPanel tmpPanel = ContainerFactory.createRoundedPanelContainer(tmpScrollPane);
+
+        Constraints.setConstraints(0, 2, 4, 1,
+                GridBagConstraints.BOTH, 0, 0, GridBagConstraints.CENTER,
+                1f, 1f, new Insets(10, 60, 10, 60));
+        mainPanel.add(tmpPanel, Constraints.getGridBagConstraints());
+    }
+
+    private void setTypeLabel() {
+        JLabel typeLabel = new JLabel(ControllerTMP.getIssueType());
+
+        typeLabel.setBorder(BorderFactory.createEmptyBorder());
+        typeLabel.setBackground(ColorsList.EMPTY_COLOR);
+
+        RoundedPanel tmp = ContainerFactory.createRoundedPanelContainer(typeLabel);
+
+        Constraints.setConstraints(0, 3, 1, 1, GridBagConstraints.NONE,
+                0, 0, GridBagConstraints.CENTER, 0.1f, 0.1f,
+                new Insets(10, 10, 10, 10));
+        mainPanel.add(tmp, Constraints.getGridBagConstraints());
+    }
+
+    private void setTagsList() {
+
+        IconButton tagsButton = new IconButton("/frontend/gui/images/tagsButton.png", 30, 30);
+
+        JPopupMenu menu = new JPopupMenu();
+
+        for (String tag : ControllerTMP.getIssueTags()) {
+
+            JLabel tmpLabel = new JLabel(tag);
+            tmpLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+            menu.add(tmpLabel);
+        }
+
+        tagsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                menu.show(tagsButton, 0, tagsButton.getHeight());
+            }
+        });
+
+        Constraints.setConstraints(1, 3, 1, 1, GridBagConstraints.NONE,
+                0, 0, GridBagConstraints.CENTER, 0.1f, 0.1f,
+                new Insets(10, 10, 10, 10));
+        mainPanel.add(tagsButton, Constraints.getGridBagConstraints());
+    }
+
+    private void setImageButton() {
+
+        IconButton imageButton = new IconButton("/frontend/gui/images/imageButton.png", 30, 30);
+
+        imageButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                try {
+                    Desktop.getDesktop().open(ControllerTMP.getIssueImage());
+                } catch (IOException ex) {
+                    new FloatingMessage("Impossibile aprire il file.", imageButton, FloatingMessage.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        Constraints.setConstraints(2, 3, 1, 1, GridBagConstraints.NONE,
+                0, 0, GridBagConstraints.CENTER, 0.1f, 0.1f,
+                new Insets(10, 10, 10, 10));
+        mainPanel.add(imageButton, Constraints.getGridBagConstraints());
+    }
+
+    protected void setStatusLabel() {
+
+        JLabel statusLabel = new JLabel(ControllerTMP.getIssueStatus());
+
+        statusLabel.setBorder(BorderFactory.createEmptyBorder());
+        statusLabel.setBackground(ColorsList.EMPTY_COLOR);
+
+        RoundedPanel tmp = ContainerFactory.createRoundedPanelContainer(statusLabel);
+
+        Constraints.setConstraints(3, 3, 1, 1, GridBagConstraints.NONE,
+                0, 0, GridBagConstraints.CENTER, 0.1f, 0.1f,
+                new Insets(10, 10, 10, 10));
+        mainPanel.add(tmp, Constraints.getGridBagConstraints());
+    }
+
+    private void setReportDateLabel() {
+
+        JLabel reportDateLabel = new JLabel("Segnalazione: " + ControllerTMP.getIssueReportDate().toString());
+
+        reportDateLabel.setBorder(BorderFactory.createEmptyBorder());
+        reportDateLabel.setBackground(ColorsList.EMPTY_COLOR);
+
+        RoundedPanel tmp = ContainerFactory.createRoundedPanelContainer(reportDateLabel);
+
+        Constraints.setConstraints(0, 4, 1, 1, GridBagConstraints.NONE,
+                0, 0, GridBagConstraints.CENTER, 0.1f, 0.1f,
+                new Insets(10, 10, 10, 10));
+        mainPanel.add(tmp, Constraints.getGridBagConstraints());
+    }
+
+    private void setResolutionDateLabel() {
+
+        JLabel resolutionDateLabel = new JLabel("Risoluzione: " + ControllerTMP.getIssueResolutionDate().toString());
+
+        resolutionDateLabel.setBorder(BorderFactory.createEmptyBorder());
+        resolutionDateLabel.setBackground(ColorsList.EMPTY_COLOR);
+
+        RoundedPanel tmp = ContainerFactory.createRoundedPanelContainer(resolutionDateLabel);
+
+        Constraints.setConstraints(1, 4, 1, 1, GridBagConstraints.NONE,
+                0, 0, GridBagConstraints.CENTER, 0.1f, 0.1f,
+                new Insets(10, 10, 10, 10));
+        mainPanel.add(tmp, Constraints.getGridBagConstraints());
+    }
+
+    private void setReportingUserLabel() {
+
+        JLabel reportingUserLabel = new JLabel("Segnalatore: " + ControllerTMP.getIssueReportingUser().getEmail());
+
+        reportingUserLabel.setBorder(BorderFactory.createEmptyBorder());
+        reportingUserLabel.setBackground(ColorsList.EMPTY_COLOR);
+
+        RoundedPanel tmp = ContainerFactory.createRoundedPanelContainer(reportingUserLabel);
+
+        Constraints.setConstraints(2, 4, 1, 1, GridBagConstraints.NONE,
+                0, 0, GridBagConstraints.CENTER, 0.1f, 0.1f,
+                new Insets(10, 10, 10, 10));
+        mainPanel.add(tmp, Constraints.getGridBagConstraints());
+    }
+
+    private void setAssignedDeveloperLabel() {
+
+        JLabel assignedDeveloperLabel = new JLabel("Developer assegnato: " + ControllerTMP.getIssueAssignedDeveloper().getEmail());
+
+        assignedDeveloperLabel.setBorder(BorderFactory.createEmptyBorder());
+        assignedDeveloperLabel.setBackground(ColorsList.EMPTY_COLOR);
+
+        RoundedPanel tmp = ContainerFactory.createRoundedPanelContainer(assignedDeveloperLabel);
+
+        Constraints.setConstraints(3, 4, 1, 1, GridBagConstraints.NONE,
+                0, 0, GridBagConstraints.CENTER, 0.1f, 0.1f,
+                new Insets(10, 10, 10, 10));
+        mainPanel.add(tmp, Constraints.getGridBagConstraints());
     }
 }

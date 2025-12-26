@@ -1,6 +1,7 @@
 package frontend.dto;
 
 import java.awt.*;
+import java.io.File;
 import java.util.List;
 import java.sql.Date;
 
@@ -17,12 +18,12 @@ public class IssueDTO {
     private ProjectDTO relatedProject;
 
     private int priority;
-    private Image image;
+    private File image;
     private DeveloperDTO assignedDeveloper;
 
     public IssueDTO (String title, String description, IssueTypeDTO type, IssueStatusDTO status,
           List<String> tags, Date reportDate, Date resolutionDate, UserDTO reportingUser, ProjectDTO relatedProject,
-          int priority, Image image, DeveloperDTO assignedDeveloper) {
+          int priority, File image, DeveloperDTO assignedDeveloper) {
 
         this.title = title;
         this.description = description;
@@ -68,11 +69,11 @@ public class IssueDTO {
         this.priority = priority;
     }
 
-    public Image getImage() {
+    public File getImage() {
         return image;
     }
 
-    public void setImage(Image image) {
+    public void setImage(File image) {
         this.image = image;
     }
 

@@ -3,6 +3,9 @@ package frontend.controller;
 import frontend.dto.*;
 import frontend.gui.ReportIssueUser;
 
+import java.awt.*;
+import java.io.File;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +17,7 @@ public class ControllerTMP {
     private static List<ProjectDTO> projects;
     private static ProjectDTO project;
     private static List<IssueDTO> issues;
+    private static IssueDTO issue;
 
     public static void searchProjects(String query, String placeholder) {
 
@@ -97,5 +101,72 @@ public class ControllerTMP {
             issuesTitles.add(i.getTitle());
 
         return issuesTitles;
+    }
+
+    public static String getIssueTitle() {
+        return issue.getTitle();
+    }
+
+    public static String getIssueDescription() {
+        return issue.getDescription();
+    }
+
+    public static String getIssueStatus() {
+        return issue.getStatus().toString();
+    }
+
+    public static String getIssuePriority() {
+
+        String priority;
+
+        switch (issue.getPriority()) {
+
+            case 0:
+                priority = "Molto Bassa";
+                break;
+            case 1:
+                priority = "Bassa";
+                break;
+            case 2:
+                priority = "Media";
+                break;
+            case 3:
+                priority = "Alta";
+            case 4:
+                priority = "Molto Alta";
+                break;
+            default:
+                priority = "Errore";
+        }
+
+        return priority;
+    }
+
+    public static String getIssueType() {
+        return issue.getType().toString();
+    }
+
+    public static File getIssueImage() {
+        return issue.getImage();
+    }
+
+    public static List<String> getIssueTags () {
+        return issue.getTags();
+    }
+
+    public static Date getIssueResolutionDate () {
+        return issue.getResolutionDate();
+    }
+
+    public static Date getIssueReportDate () {
+        return issue.getReportDate();
+    }
+
+    public static UserDTO getIssueReportingUser () {
+        return issue.getReportingUser();
+    }
+
+    public static UserDTO getIssueAssignedDeveloper () {
+        return issue.getAssignedDeveloper();
     }
 }
