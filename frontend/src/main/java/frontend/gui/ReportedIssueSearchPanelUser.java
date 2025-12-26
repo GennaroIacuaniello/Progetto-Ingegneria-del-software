@@ -1,6 +1,5 @@
 package frontend.gui;
 
-import frontend.controller.Controller;
 import frontend.controller.ControllerTMP;
 
 import javax.swing.*;
@@ -12,8 +11,9 @@ import java.util.List;
 
 public class ReportedIssueSearchPanelUser extends RoundedPanel{
 
+    private IconButton backButton;
     protected SearchReportedIssuePageUser searchPage;
-    private RoundedPanel upperPanel;
+    private RoundedPanel titlePanel;
     protected JTextField titleTextField;
     protected JComboBox<String> statusComboBox;
     protected TagsButton tagsButton;
@@ -30,6 +30,7 @@ public class ReportedIssueSearchPanelUser extends RoundedPanel{
 
         setPanel();
 
+        setBackButton(searchPage);
         setUpperPanel();
         setSearchButton(mainFrame);
         setTitleTextField();
@@ -44,17 +45,36 @@ public class ReportedIssueSearchPanelUser extends RoundedPanel{
         this.setBackground(Color.WHITE);
     }
 
+    private void setBackButton(SearchReportedIssuePageUser searchPage) {
+
+        backButton = new IconButton("/frontend/gui/images/backIconButton.png", 30, 30);
+
+        backButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                searchPage.homePanelReturnToDefaultContentPane();
+            }
+        });
+
+        Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.NONE,
+                0, 0, GridBagConstraints.LINE_START, 0.01f, 0.01f,
+                new Insets(5, 5, 5, 5));
+        this.add(backButton, Constraints.getGridBagConstraints());
+    }
+
     private void setUpperPanel() {
 
-        upperPanel = new RoundedPanel(new GridBagLayout());
+        titlePanel = new RoundedPanel(new GridBagLayout());
 
-        upperPanel.setRoundBorderColor(ColorsList.BORDER_COLOR);
-        upperPanel.setBackground(Color.WHITE);
+        titlePanel.setRoundBorderColor(ColorsList.BORDER_COLOR);
+        titlePanel.setBackground(Color.WHITE);
 
-        Constraints.setConstraints(0, 0, 4, 1,
+        Constraints.setConstraints(0, 1, 4, 1,
                 GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
                 1f, 0.5f);
-        this.add(upperPanel, Constraints.getGridBagConstraints());
+        this.add(titlePanel, Constraints.getGridBagConstraints());
     }
 
     private void setSearchButton(JFrame mainFrame) {
@@ -72,7 +92,7 @@ public class ReportedIssueSearchPanelUser extends RoundedPanel{
         Constraints.setConstraints(0, 0, 1, 1,
                 GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
                 new Insets(5, 5, 5, 0));
-        upperPanel.add(searchIssuesButton, Constraints.getGridBagConstraints());
+        titlePanel.add(searchIssuesButton, Constraints.getGridBagConstraints());
     }
 
     protected void searchButtonActionListener(JFrame mainFrame) {
@@ -96,7 +116,7 @@ public class ReportedIssueSearchPanelUser extends RoundedPanel{
         Constraints.setConstraints(1, 0, 1, 1,
                 GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
                 new Insets(5, 0, 5, 5));
-        upperPanel.add(titleTextField, Constraints.getGridBagConstraints());
+        titlePanel.add(titleTextField, Constraints.getGridBagConstraints());
     }
 
     private void setStatusComboBox() {
@@ -108,7 +128,7 @@ public class ReportedIssueSearchPanelUser extends RoundedPanel{
 
         RoundedPanel tmpPanel = ContainerFactory.createRoundedPanelContainer(statusComboBox);
 
-        Constraints.setConstraints(0, 1, 1, 1,
+        Constraints.setConstraints(0, 2, 1, 1,
                 GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
                 0.5f, 0.5f);
         this.add(tmpPanel, Constraints.getGridBagConstraints());
@@ -118,7 +138,7 @@ public class ReportedIssueSearchPanelUser extends RoundedPanel{
 
         tagsButton = new TagsButton(mainFrame);
 
-        Constraints.setConstraints(1, 1, 1, 1,
+        Constraints.setConstraints(1, 2, 1, 1,
                 GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
                 0.5f, 0.5f);
         this.add(tagsButton, Constraints.getGridBagConstraints());
@@ -133,7 +153,7 @@ public class ReportedIssueSearchPanelUser extends RoundedPanel{
 
         RoundedPanel tmpPanel = ContainerFactory.createRoundedPanelContainer(typeComboBox);
 
-        Constraints.setConstraints(2, 1, 1, 1,
+        Constraints.setConstraints(2, 2, 1, 1,
                 GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
                 0.5f, 0.5f);
         this.add(tmpPanel, Constraints.getGridBagConstraints());

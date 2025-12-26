@@ -26,7 +26,7 @@ public class ReportedIssueSearchPanelDeveloper extends ReportedIssueSearchPanelU
 
         RoundedPanel tmpPanel = ContainerFactory.createRoundedPanelContainer(priorityComboBox);
 
-        Constraints.setConstraints(3, 1, 1, 1,
+        Constraints.setConstraints(3, 2, 1, 1,
                 GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
                 0.5f, 0.5f);
         this.add(tmpPanel, Constraints.getGridBagConstraints());

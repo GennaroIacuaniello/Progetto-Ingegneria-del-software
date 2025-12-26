@@ -6,10 +6,13 @@ import java.awt.*;
 public class SearchReportedIssuePageUser extends RoundedPanel{
 
     SearchViewResults searchViewResults;
+    HomePanelUser homePanelUser;
 
     public SearchReportedIssuePageUser(JFrame mainFrame, HomePanelUser homePanel) {
 
         super(new GridBagLayout());
+
+        this.homePanelUser = homePanel;
 
         setPanel();
         setIssueSearchPanel(mainFrame);
@@ -45,5 +48,10 @@ public class SearchReportedIssuePageUser extends RoundedPanel{
     public void updateSearchIssueViewResults(Component component) {
 
         searchViewResults.updateViewportView(component);
+    }
+
+    public void homePanelReturnToDefaultContentPane() {
+
+        homePanelUser.returnToDefaultContentPanel();
     }
 }

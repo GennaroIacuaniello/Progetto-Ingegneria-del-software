@@ -14,6 +14,10 @@ public class TagsButton extends IconButton {
 
         super("/frontend/gui/images/tagsButton.png", 40, 40);
 
+        tagsMenu = new TagsMenu(mainFrame);
+        tagsMenu.setLocationRelativeTo(mainFrame);
+        tagsMenu.setVisible(false);
+
         setActionListener(mainFrame);
     }
 
@@ -23,9 +27,6 @@ public class TagsButton extends IconButton {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                if (tagsMenu == null)
-                    tagsMenu = new TagsMenu(mainFrame);
 
                 tagsMenu.setLocationRelativeTo(mainFrame);
                 tagsMenu.setVisible(true);

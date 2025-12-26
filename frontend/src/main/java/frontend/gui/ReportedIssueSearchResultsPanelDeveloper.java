@@ -19,7 +19,7 @@ public class ReportedIssueSearchResultsPanelDeveloper extends ReportedIssueSearc
         TableColumn buttonColumn = resultsTable.getColumnModel().getColumn(1);
 
         buttonColumn.setCellRenderer(new IconCellRenderer("/frontend/gui/images/reportIssue.png", ICON_WIDTH, ICON_HEIGHT));
-        buttonColumn.setCellEditor(new IconCellEditor(mainFrame, "/frontend/gui/images/reportIssue.png", ICON_WIDTH, ICON_HEIGHT, resultsTable));
+        buttonColumn.setCellEditor(new IconCellEditorReportedIssueDeveloper(mainFrame, "/frontend/gui/images/reportIssue.png", ICON_WIDTH, ICON_HEIGHT, resultsTable));
 
         resultsTable.setRowHeight(ICON_HEIGHT + 4);
 

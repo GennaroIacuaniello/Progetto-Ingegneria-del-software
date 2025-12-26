@@ -1,11 +1,9 @@
 package frontend.gui;
 
-import frontend.controller.Controller;
-
 import javax.swing.*;
 import java.awt.*;
 
-public class IconCellEditor extends DefaultCellEditor {
+public class IconCellEditorReportedIssueUser extends DefaultCellEditor {
 
     private IconButton button;
     protected int selectedRow;
@@ -13,7 +11,7 @@ public class IconCellEditor extends DefaultCellEditor {
     protected HomePanelUser homePanel;
     protected JFrame  mainFrame;
 
-    public IconCellEditor(JFrame mainFrame, String url, int width, int height, JTable table) {
+    public IconCellEditorReportedIssueUser(JFrame mainFrame, String url, int width, int height, JTable table) {
 
         super(new JTextField()); //se togli il parametro si incazza
 
