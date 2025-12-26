@@ -1,5 +1,6 @@
 package backend.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,6 +12,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class Security {
+
+    @Autowired // <--- Spring ti passa l'istanza creata sopra
+    private JWTRequestFilter jwtRequestFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -28,7 +32,7 @@ public class Security {
                 )
 
                 // Aggiungiamo il filtro JWT (che creeremo sotto) PRIMA del filtro user/pass standard
-                .addFilterBefore(new JWTRequestFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

@@ -1,0 +1,84 @@
+package frontend.controller;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import frontend.dto.ProjectDTO;
+import frontend.dto.UserDTO;
+import frontend.exception.RequestError;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.URLEncoder;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
+
+public class ProjectController {
+
+    private static ProjectController instance;
+    private final ApiClient client = ApiClient.getInstance();
+
+    private ArrayList<ProjectDTO> projects;
+    private ProjectDTO project;
+
+
+    private ProjectController(){
+
+    }
+
+    public static ProjectController getInstance() {
+        if (instance == null) {
+            instance = new ProjectController();
+        }
+        return instance;
+    }
+
+    public void searchProjectsByName(String projectName) {
+
+        try {
+
+            //Da utilizzare dato che non possono esserci spazi nei parametri search delle richieste HTTP
+            String encodedProjectName = URLEncoder.encode(projectName, StandardCharsets.UTF_8);
+
+            HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+                    .uri(URI.create(client.getBaseUrl() + "/project?search=" + encodedProjectName))
+                    .GET();
+
+            HttpResponse<String> response = client.sendRequest(requestBuilder);
+
+            if (response.statusCode() == 200) {
+
+                this.projects = client.getObjectMapper().readValue(response.body(), new TypeReference<>() {});
+
+
+            } else if (response.statusCode() == 204) {
+
+                //Nessun risultato, svuoto la cache
+                this.projects = new ArrayList<>();
+
+            } else {
+
+                // CASO ERRORE (500, 400, ecc.)
+                System.err.println("Errore dal server. Codice: " + response.statusCode());
+                System.err.println("Dettaglio errore: " + response.body());
+
+            }
+
+        } catch (RequestError re) {
+
+            System.err.println("Backend offline: " + re.getMessage());
+            this.projects = new ArrayList<>();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            this.projects = new ArrayList<>();
+        }
+
+    }
+
+}

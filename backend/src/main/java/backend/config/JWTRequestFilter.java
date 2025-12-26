@@ -4,8 +4,10 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -13,10 +15,11 @@ import io.jsonwebtoken.security.Keys;
 import java.io.IOException;
 import java.util.ArrayList;
 
+@Component
 public class JWTRequestFilter extends OncePerRequestFilter {
 
-    // Deve essere la stessa chiave usata nel Login!
-    private static final String SECRET = "MioSegretoSuperSicuroPerLaFirmaDelToken123!";
+    @Value("${jwt.secret}")
+    private String secret;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
@@ -33,7 +36,7 @@ public class JWTRequestFilter extends OncePerRequestFilter {
             try {
                 // 2. Valida il token ed estrae lo username
                 username = Jwts.parserBuilder()
-                        .setSigningKey(Keys.hmacShaKeyFor(SECRET.getBytes()))
+                        .setSigningKey(Keys.hmacShaKeyFor(secret.getBytes(java.nio.charset.StandardCharsets.UTF_8)))
                         .build()
                         .parseClaimsJws(jwt)
                         .getBody()

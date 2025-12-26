@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface UserDAO {
 
-    void searchUserByMail(String email, List<UserDTO> users) throws SQLException;
+    List<UserDTO> searchUserByMail(String email) throws SQLException;
 
 }

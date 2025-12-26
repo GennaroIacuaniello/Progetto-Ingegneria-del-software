@@ -1,6 +1,7 @@
 package backend.controller;
 
 import backend.database.dao.UserDAO;
+import backend.dto.UserDTO;
 import backend.model.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -19,14 +20,15 @@ public class AuthController {
     @Autowired
     private UserDAO userDao;
 
+    /*
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
-        Optional<User> userOpt = userDao.searchUserByMail(request.getUsername());
+    public ResponseEntity<?> login(@RequestBody User request) {
+        Optional<User> userOpt = userDao.searchUserByMail(request.getEmail());
 
-        if (userOpt.isPresent() && userOpt.get().getHashedPassword().equals(request.getPassword())) {
+        if (userOpt.isPresent() && userOpt.get().getHashedPassword().equals(request.getHashedPassword())) {
             // Generazione Token JWT (usando libreria jjwt)
             String token = Jwts.builder()
-                    .setSubject(request.getUsername())
+                    .setSubject(request.getEmail())
                     .setIssuedAt(new Date())
                     .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 1 giorno
                     .signWith(Keys.hmacShaKeyFor("MioSegretoSuperSicuroPerLaFirmaDelToken123!".getBytes()))
@@ -35,5 +37,5 @@ public class AuthController {
             return ResponseEntity.ok(new AuthResponse(token));
         }
         return ResponseEntity.status(401).body("Credenziali non valide");
-    }
+    }*/
 }
