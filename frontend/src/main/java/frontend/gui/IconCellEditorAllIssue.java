@@ -13,7 +13,7 @@ public class IconCellEditorAllIssue extends IconCellEditorAssignedIssue{
     public Object getCellEditorValue() {
 
         //todo: implementa
-        System.out.println("forse funziona");
+        new ShowIssueAdmin(mainFrame);
 
         return null;
     }

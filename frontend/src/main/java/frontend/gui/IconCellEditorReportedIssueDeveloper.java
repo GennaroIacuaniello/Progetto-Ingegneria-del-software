@@ -13,7 +13,7 @@ public class IconCellEditorReportedIssueDeveloper extends IconCellEditorReported
     public Object getCellEditorValue() {
 
         //todo: implementa
-        System.out.println("forse funziona");
+        new ShowReportedIssueDeveloper(mainFrame);
 
         return null;
     }

@@ -5,7 +5,7 @@ import frontend.controller.Controller;
 import javax.swing.*;
 import java.awt.*;
 
-class IconCellEditorUser extends DefaultCellEditor {
+class ProjectIconCellEditorUser extends DefaultCellEditor {
 
     private IconButton button;
     protected int selectedRow;
@@ -13,7 +13,7 @@ class IconCellEditorUser extends DefaultCellEditor {
     protected HomePanelUser homePanel;
     protected JFrame  mainFrame;
 
-    public IconCellEditorUser(JFrame mainFrame, HomePanelUser homePanel, String url, int width, int height, JTable table) {
+    public ProjectIconCellEditorUser(JFrame mainFrame, HomePanelUser homePanel, String url, int width, int height, JTable table) {
 
         super(new JTextField()); //se togli il parametro si incazza
 

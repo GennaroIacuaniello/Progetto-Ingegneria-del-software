@@ -4,9 +4,9 @@ import frontend.controller.Controller;
 
 import javax.swing.*;
 
-public class IconCellEditorDeveloper extends IconCellEditorUser {
+public class ProjectIconCellEditorAdmin extends ProjectIconCellEditorDeveloper {
 
-    public IconCellEditorDeveloper(JFrame mainFrame, HomePanelUser homePanel, String url, int width, int height, JTable table) {
+    public ProjectIconCellEditorAdmin(JFrame mainFrame, HomePanelUser homePanel, String url, int width, int height, JTable table) {
 
         super(mainFrame, homePanel, url, width, height, table);
     }
@@ -26,13 +26,17 @@ public class IconCellEditorDeveloper extends IconCellEditorUser {
                 break;
 
             case "ISSUE SEGNALATE":
-                //todo: controller
                 homePanel.setContentPanel(new SearchReportedIssuePageDeveloper(mainFrame, homePanel));
                 break;
 
             case "ISSUE ASSEGNATE":
                 //todo: controller
                 homePanel.setContentPanel(new SearchAssignedIssuePage(mainFrame, homePanel));
+                break;
+
+            case "VEDI TUTTE LE ISSUE":
+                //todo: controller
+                homePanel.setContentPanel(new SearchAllIssuePage(mainFrame, homePanel));
                 break;
         }
 

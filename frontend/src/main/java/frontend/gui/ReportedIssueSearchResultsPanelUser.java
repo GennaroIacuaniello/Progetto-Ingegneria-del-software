@@ -20,8 +20,8 @@ public class ReportedIssueSearchResultsPanelUser {
 
         TableColumn buttonColumn = resultsTable.getColumnModel().getColumn(1);
 
-        buttonColumn.setCellRenderer(new IconCellRenderer("/frontend/gui/images/reportIssue.png", ICON_WIDTH, ICON_HEIGHT));
-        buttonColumn.setCellEditor(new IconCellEditorReportedIssueUser(mainFrame, "/frontend/gui/images/reportIssue.png", ICON_WIDTH, ICON_HEIGHT, resultsTable));
+        buttonColumn.setCellRenderer(new IconCellRenderer("/frontend/gui/images/showIssueIconButton.png", ICON_WIDTH, ICON_HEIGHT));
+        buttonColumn.setCellEditor(new IconCellEditorReportedIssueUser(mainFrame, "/frontend/gui/images/showIssueIconButton.png", ICON_WIDTH, ICON_HEIGHT, resultsTable));
 
         resultsTable.setRowHeight(ICON_HEIGHT + 4);
 

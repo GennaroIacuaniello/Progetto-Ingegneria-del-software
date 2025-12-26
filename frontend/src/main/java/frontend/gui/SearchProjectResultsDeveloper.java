@@ -59,7 +59,7 @@ public class SearchProjectResultsDeveloper extends SearchProjectResultsUser{
             TableColumn buttonColumn = resultsTable.getColumnModel().getColumn(columnIndex);
 
             buttonColumn.setCellRenderer(new IconCellRenderer(iconUrl, ICON_WIDTH, ICON_HEIGHT));
-            buttonColumn.setCellEditor(new IconCellEditorDeveloper(mainFrame, homePanel, iconUrl, ICON_WIDTH, ICON_HEIGHT, resultsTable));
+            buttonColumn.setCellEditor(new ProjectIconCellEditorDeveloper(mainFrame, homePanel, iconUrl, ICON_WIDTH, ICON_HEIGHT, resultsTable));
         }
 
         resultsTable.setRowHeight(ICON_HEIGHT + 4);

@@ -6,9 +6,7 @@ import java.awt.*;
 public class IconCellEditorReportedIssueUser extends DefaultCellEditor {
 
     private IconButton button;
-    protected int selectedRow;
     protected final JTable parentTable;
-    protected HomePanelUser homePanel;
     protected JFrame  mainFrame;
 
     public IconCellEditorReportedIssueUser(JFrame mainFrame, String url, int width, int height, JTable table) {
@@ -16,7 +14,6 @@ public class IconCellEditorReportedIssueUser extends DefaultCellEditor {
         super(new JTextField()); //se togli il parametro si incazza
 
         this.parentTable = table;
-        this.homePanel = homePanel;
         this.mainFrame = mainFrame;
 
         setClickCountToStart(1);
@@ -32,7 +29,6 @@ public class IconCellEditorReportedIssueUser extends DefaultCellEditor {
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value,
                                                  boolean isSelected, int row, int column) {
-        this.selectedRow = row;
 
         if (isSelected)
             button.setBackground(table.getSelectionBackground());
@@ -45,8 +41,7 @@ public class IconCellEditorReportedIssueUser extends DefaultCellEditor {
     @Override
     public Object getCellEditorValue() {
 
-        //todo: implementa
-        System.out.println("forse funziona");
+        new ShowReportedIssueUser(mainFrame);
 
         return null;
     }
