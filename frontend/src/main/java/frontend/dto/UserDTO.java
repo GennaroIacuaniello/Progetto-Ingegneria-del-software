@@ -5,8 +5,19 @@ import java.util.List;
 public class UserDTO {
 
     private String email;
-    private final String hashedPassword;
+    private String hashedPassword;
     private List<IssueDTO> reportedIssues;
+
+    public UserDTO(){
+        //Empty constructor needed for jackson
+    }
+
+    public UserDTO(String email, String hashedPassword) {
+
+        this.email = email;
+        this.hashedPassword = hashedPassword;
+        this.reportedIssues = null;
+    }
 
     public UserDTO(String email, String hashedPassword, List<IssueDTO> reportedIssues) {
 

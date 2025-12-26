@@ -21,6 +21,10 @@ public class IssueDTO {
     private File image;
     private DeveloperDTO assignedDeveloper;
 
+    public IssueDTO(){
+        //Empty constructor needed for jackson
+    }
+
     public IssueDTO (String title, String description, IssueTypeDTO type, IssueStatusDTO status,
           List<String> tags, Date reportDate, Date resolutionDate, UserDTO reportingUser, ProjectDTO relatedProject,
           int priority, File image, DeveloperDTO assignedDeveloper) {

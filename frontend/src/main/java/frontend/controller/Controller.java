@@ -15,11 +15,11 @@ public class Controller {
     private static List<ProjectDTO> projects;
     private static ProjectDTO project;
 
-    public static void searchProjects(String query, String placeholder) {
+    public static void searchProjects(String projectName, String placeholder) {
 
         /*  todo:
-            effettua una query che restituisce id e nome di tutti i progetti il cui nome contiene la stringa query,
-            se query corrisponde a placeholder considerare la stringa vuota "" invece di query.
+            effettua una query che restituisce id e nome di tutti i progetti il cui nome contiene la stringa projectName,
+            se projectName corrisponde a placeholder considerare la stringa vuota "" invece di projectName.
             I risultati della ricerca devono essere usati per creare una List<Project> da inserire come attributo in questa classe.
         */
 

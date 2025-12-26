@@ -13,6 +13,8 @@ import static java.lang.Integer.valueOf;
 
 public class ControllerTMP {
 
+    private ProjectController projectController;
+
     private static UserDTO user;
     private static List<ProjectDTO> projects;
     private static ProjectDTO project;

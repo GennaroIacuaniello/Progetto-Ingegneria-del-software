@@ -8,6 +8,9 @@ public class DeveloperDTO extends UserDTO {
     private List<ProjectDTO> projects;
     private List<TeamDTO> teams;
 
+    public DeveloperDTO(){
+        //Empty constructor needed for jackson
+    }
     public DeveloperDTO(String email, String hashedPassword, List<IssueDTO> reportedIssues,
                      List<IssueDTO> assignedIssue, List<ProjectDTO> projects, List<TeamDTO> teams) {
 

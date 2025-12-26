@@ -10,6 +10,10 @@ public class ProjectDTO {
     private List<TeamDTO> teams;
     private List<DeveloperDTO> developers;
 
+    public ProjectDTO(){
+        //Empty constructor needed for jackson
+    }
+
     public ProjectDTO(int id, String name, List<TeamDTO> teams, List<DeveloperDTO> developers) {
 
         this.id = id;
