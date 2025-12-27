@@ -22,8 +22,11 @@ public class DatabaseConnection {
 
     private DatabaseConnection() throws SQLException {
 
-        Dotenv dotenv = Dotenv.load();
-        String connString = dotenv.get("DATABASE_URL");
+        String connString = System.getProperty("DATABASE_URL");
+
+        if (connString == null) {
+            throw new SQLException("Errore: La variabile DATABASE_URL è null. Controlla il file .env o il caricamento nel main.");
+        }
 
         connection = DriverManager.getConnection(connString);
 

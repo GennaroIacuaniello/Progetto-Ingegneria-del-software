@@ -6,13 +6,13 @@ public class TeamDTO {
 
     private String name;
     private ProjectDTO project;
-    private List<DeveloperDTO> developers;
+    private List<UserDTO> developers;
 
     public TeamDTO(){
         //Empty constructor needed for jackson
     }
 
-    public TeamDTO(String name, ProjectDTO project, List<DeveloperDTO> developers) {
+    public TeamDTO(String name, ProjectDTO project, List<UserDTO> developers) {
 
         this.name = name;
         this.project = project;
@@ -36,11 +36,11 @@ public class TeamDTO {
         this.project = project;
     }
 
-    public List<DeveloperDTO> getDevelopers() {
+    public List<UserDTO> getDevelopers() {
         return developers;
     }
 
-    public void setDevelopers(List<DeveloperDTO> developers) {
+    public void setDevelopers(List<UserDTO> developers) {
         this.developers = developers;
     }
 }

@@ -1,5 +1,7 @@
 package backend.dto;
 
+import backend.caso.DeveloperDTO;
+
 import java.awt.*;
 import java.sql.Date;
 import java.util.List;
@@ -18,11 +20,11 @@ public class IssueDTO {
 
     private int priority;
     private Image image;
-    private DeveloperDTO assignedDeveloper;
+    private UserDTO assignedDeveloper;
 
     public IssueDTO (String title, String description, IssueTypeDTO type, IssueStatusDTO status,
                      List<String> tags, Date reportDate, Date resolutionDate, UserDTO reportingUser, ProjectDTO relatedProject,
-                     int priority, Image image, DeveloperDTO assignedDeveloper) {
+                     int priority, Image image, UserDTO assignedDeveloper) {
 
         this.title = title;
         this.description = description;
@@ -122,11 +124,11 @@ public class IssueDTO {
         this.reportingUser = reportingUser;
     }
 
-    public DeveloperDTO getAssignedDeveloper() {
+    public UserDTO getAssignedDeveloper() {
         return assignedDeveloper;
     }
 
-    public void setAssignedDeveloper(DeveloperDTO assignedDeveloper) {
+    public void setAssignedDeveloper(UserDTO assignedDeveloper) {
         this.assignedDeveloper = assignedDeveloper;
     }
 

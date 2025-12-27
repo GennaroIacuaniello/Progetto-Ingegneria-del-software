@@ -1,5 +1,6 @@
 package backend.dto;
 
+import backend.caso.DeveloperDTO;
 import backend.exception.InvalidDeveloper;
 
 import java.util.List;
@@ -9,9 +10,9 @@ public class TeamDTO {
     private int id;
     private String name;
     private ProjectDTO project;
-    private List<DeveloperDTO> developers;
+    private List<UserDTO> developers;
 
-    public TeamDTO(int id, String name, ProjectDTO project, List<DeveloperDTO> developers) throws InvalidDeveloper {
+    public TeamDTO(int id, String name, ProjectDTO project, List<UserDTO> developers) throws InvalidDeveloper {
 
         if (developers == null || developers.isEmpty())
             throw new InvalidDeveloper("Developers cannot be null or empty");
@@ -47,11 +48,11 @@ public class TeamDTO {
         this.project = project;
     }
 
-    public List<DeveloperDTO> getDevelopers() {
+    public List<UserDTO> getDevelopers() {
         return developers;
     }
 
-    public void setDevelopers(List<DeveloperDTO> developers) {
+    public void setDevelopers(List<UserDTO> developers) {
         this.developers = developers;
     }
 }

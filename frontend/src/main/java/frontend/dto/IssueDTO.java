@@ -19,7 +19,7 @@ public class IssueDTO {
 
     private int priority;
     private File image;
-    private DeveloperDTO assignedDeveloper;
+    private UserDTO assignedDeveloper;
 
     public IssueDTO(){
         //Empty constructor needed for jackson
@@ -27,7 +27,7 @@ public class IssueDTO {
 
     public IssueDTO (String title, String description, IssueTypeDTO type, IssueStatusDTO status,
           List<String> tags, Date reportDate, Date resolutionDate, UserDTO reportingUser, ProjectDTO relatedProject,
-          int priority, File image, DeveloperDTO assignedDeveloper) {
+          int priority, File image, UserDTO assignedDeveloper) {
 
         this.title = title;
         this.description = description;
@@ -129,11 +129,11 @@ public class IssueDTO {
         this.reportingUser = reportingUser;
     }
 
-    public DeveloperDTO getAssignedDeveloper() {
+    public UserDTO getAssignedDeveloper() {
         return assignedDeveloper;
     }
 
-    public void setAssignedDeveloper(DeveloperDTO assignedDeveloper) {
+    public void setAssignedDeveloper(UserDTO assignedDeveloper) {
         this.assignedDeveloper = assignedDeveloper;
     }
 

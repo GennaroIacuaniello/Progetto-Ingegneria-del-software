@@ -81,4 +81,24 @@ public class ProjectController {
 
     }
 
+    public List<Integer> getProjectsIds () {
+
+        List<Integer> ids = new ArrayList<>();
+
+        for (ProjectDTO p : projects)
+            ids.add(p.getId());
+
+        return ids;
+    }
+
+    public List<String> getProjectsNames () {
+
+        List<String> names = new ArrayList<>();
+
+        for (ProjectDTO p : projects)
+            names.add(p.getName());
+
+        return names;
+    }
+
 }

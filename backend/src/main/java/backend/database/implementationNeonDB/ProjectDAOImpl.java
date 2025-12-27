@@ -25,7 +25,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 
         List<ProjectDTO> searchResult = null;
 
-        String query = "SELECT * FROM Project P WHERE project_name ILIKE ?";
+        String query = "SELECT * FROM Project P WHERE project_name ILIKE ?;";
 
         String toSearch = "%" + projectName + "%";
 

@@ -25,7 +25,7 @@ public class SearchProjectsButtonAdmin extends SearchProjectsButtonDeveloper {
                 ProjectController.getInstance().searchProjectsByName("ciao");
                 //Controller.searchProjects(searchTextField.getText(), placeholder);
 
-                new SearchProjectResultsAdmin(mainFrame, homePanel, Controller.getProjectsIds(), Controller.getProjectsNames());
+                new SearchProjectResultsAdmin(mainFrame, homePanel, ProjectController.getInstance().getProjectsIds(), ProjectController.getInstance().getProjectsNames());
             }
         });
     }

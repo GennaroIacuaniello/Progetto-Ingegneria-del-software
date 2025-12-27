@@ -1,17 +1,26 @@
-package backend.dto;
+package frontend.caso;
+
+import frontend.dto.IssueDTO;
+import frontend.dto.ProjectDTO;
+import frontend.dto.TeamDTO;
+import frontend.dto.UserDTO;
 
 import java.util.List;
 
 public class DeveloperDTO extends UserDTO {
 
+    /*
     private List<IssueDTO> assignedIssues;
     private List<ProjectDTO> projects;
     private List<TeamDTO> teams;
 
-    public DeveloperDTO(int id, String email, String hashedPassword, List<IssueDTO> reportedIssues,
-                        List<IssueDTO> assignedIssue, List<ProjectDTO> projects, List<TeamDTO> teams) {
+    public DeveloperDTO(){
+        //Empty constructor needed for jackson
+    }
+    public DeveloperDTO(String email, String hashedPassword, List<IssueDTO> reportedIssues,
+                     List<IssueDTO> assignedIssue, List<ProjectDTO> projects, List<TeamDTO> teams) {
 
-        super(id, email, hashedPassword, reportedIssues);
+        super(email, hashedPassword, reportedIssues);
 
         this.assignedIssues = assignedIssue;
         this.projects = projects;
@@ -41,5 +50,7 @@ public class DeveloperDTO extends UserDTO {
     public void setTeams(List<TeamDTO> teams) {
         this.teams = teams;
     }
+
+     */
 
 }

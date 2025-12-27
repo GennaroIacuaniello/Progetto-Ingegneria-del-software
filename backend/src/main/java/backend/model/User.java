@@ -6,13 +6,13 @@ import java.util.List;
 public class User {
 
     private String email;
-    private final String hashedPassword;
+    private final String password;
     private ArrayList<Issue> reportedIssues;
 
-    public User(String email, String hashedPassword, List<Issue> reportedIssues) {
+    public User(String email, String password, List<Issue> reportedIssues) {
 
         this.email = email;
-        this.hashedPassword = hashedPassword;
+        this.password = password;
 
         this.reportedIssues = new ArrayList<>();
 
@@ -28,8 +28,8 @@ public class User {
         this.email = email;
     }
 
-    public String getHashedPassword() {
-        return hashedPassword;
+    public String getPassword() {
+        return password;
     }
 
     public List<Issue> getReportedIssues() {

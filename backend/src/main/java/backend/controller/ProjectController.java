@@ -35,12 +35,11 @@ public class ProjectController {
         List<ProjectDTO> searchResults = projectDAO.searchProjectsByName(projectName);
 
         if ( searchResults == null || searchResults.isEmpty()) {
-            // Se la lista è vuota, restituiamo un 204 No Content
-            // Dice al client: "Ho capito la richiesta, è andata bene, ma non c'è nulla da mostrarti"
+            // Se la lista è vuota, restituisce un 204 No Content
             return ResponseEntity.noContent().build();
         }
 
-        // 3. Se abbiamo dati, restituiamo 200 OK con il corpo (la lista)
+        //Se ci sono dati, restituisce 200 OK con il corpo (la lista)
         return ResponseEntity.ok(searchResults);
     }
 

@@ -1,6 +1,7 @@
 package frontend.gui;
 
 import com.formdev.flatlaf.FlatLightLaf;
+import frontend.controller.AuthController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -90,6 +91,7 @@ public class HomePage {
     public static void main(String[] args) {
 
         setFlatLaf();
+        AuthController.getInstance().login("admin@admin.admin", "admin");
 
         HomePage homePage = new HomePage();
     }
