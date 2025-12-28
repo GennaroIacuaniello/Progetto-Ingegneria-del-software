@@ -22,8 +22,10 @@ public class SearchProjectsButtonAdmin extends SearchProjectsButtonDeveloper {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                ProjectController.getInstance().searchProjectsByName("ciao");
-                //Controller.searchProjects(searchTextField.getText(), placeholder);
+                if (searchTextField.getText().equals(placeholder))
+                    ProjectController.getInstance().searchProjectsByName("");
+                else
+                    ProjectController.getInstance().searchProjectsByName(searchTextField.getText());
 
                 new SearchProjectResultsAdmin(mainFrame, homePanel, ProjectController.getInstance().getProjectsIds(), ProjectController.getInstance().getProjectsNames());
             }

@@ -43,8 +43,8 @@ public class ControllerTMP {
         /*
             todo:
             effettua una query per reportare una Issue, le informazioni sulla Issue possono essere ricavate tramite l'oggetto reportIssue,
-            aggiungere eventuali metodi mancanti per ottenere le informazioni nella classe ReportIssue (aattenzione agli Override),
-            l'utente che ha riportato la Issue può essere trovaato nell'attributo user di questa classe (non ancora implementato pke manca tutta la logica di login)
+            aggiungere eventuali metodi mancanti per ottenere le informazioni nella classe ReportIssue (attenzione agli Override),
+            l'utente che ha riportato la Issue può essere trovato nell'attributo user di questa classe (non ancora implementato pke manca tutta la logica di login)
          */
     }
 
