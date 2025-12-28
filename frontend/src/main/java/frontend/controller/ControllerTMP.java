@@ -85,13 +85,67 @@ public class ControllerTMP {
         return project.getId();
     }
 
-    public static void searchReportedIssues(String title, String placeholder, String status, List<String> tags, String type, String priority) {
+    public static void searchReportedIssues(String title, String status, List<String> tags, String type, String priority) {
 
         /*  todo:
-            effettua una query che restituisce di tutte le reported issues dell'utente corrente secondo i criteri di ricerca
-            passati come parametri, se title corrisponde a placeholder considerare la stringa vuota "" invece di title,
-            gli attributi possono essere null!
-            I risultati della ricerca devono essere usati per creare una List<Issue> da inserire come attributo in questa classe.
+            effettuare una query che restituisce le reportedIssue del loggedUser relative al project in ProjectController,
+            filtrate secondo i criteri passati come parametri,
+            di tali issue sono richiesti le chiavi primarie e i titoli.
+            Parametri:
+            - title: può essere stringa vuota
+            - status: != null
+            - tags: List<String> != null, ma può essere vuota (io passo tante stringhe, nel DB c'è la stringa unica)
+            - type: != null
+            - priority: può essere null
+            I risultati della query devono essere usati per creare una List<IssueDTO> da mettere come attributo al controller corrispondente
+        */
+
+        //behaviour per test (rimuovi dopo aver implementato versione Client-Server)
+        issues = new ArrayList<>();
+
+        for (int i = 0; i < 10; i++) {
+
+            issues.add(new IssueDTO("issue " + i));
+        }
+    }
+
+    public static void searchAssignedIssues(String title, String status, List<String> tags, String type, String priority) {
+
+        /*  todo:
+            effettuare una query che restituisce le assignedIssue del loggedUser relative al project in ProjectController,
+            filtrate secondo i criteri passati come parametri,
+            di tali issue sono richiesti le chiavi primarie e i titoli.
+            Parametri:
+            - title: può essere stringa vuota
+            - status: != null
+            - tags: List<String> != null, ma può essere vuota (io passo tante stringhe, nel DB c'è la stringa unica)
+            - type: != null
+            - priority: != null
+            I risultati della query devono essere usati per creare una List<IssueDTO> da mettere come attributo al controller corrispondente
+        */
+
+        //behaviour per test (rimuovi dopo aver implementato versione Client-Server)
+        issues = new ArrayList<>();
+
+        for (int i = 0; i < 10; i++) {
+
+            issues.add(new IssueDTO("issue " + i));
+        }
+    }
+
+    public static void searchAllIssues(String title, String status, List<String> tags, String type, String priority) {
+
+        /*  todo:
+            effettuare una query che restituisce  tutte le issue relative al project in ProjectController
+            filtrate secondo i criteri passati come parametri,
+            di tali issue sono richiesti le chiavi primarie e i titoli.
+            Parametri:
+            - title: può essere stringa vuota
+            - status: != null
+            - tags: List<String> != null, ma può essere vuota (io passo tante stringhe, nel DB c'è la stringa unica)
+            - type: != null
+            - priority: != null
+            I risultati della query devono essere usati per creare una List<IssueDTO> da mettere come attributo al controller corrispondente
         */
 
         //behaviour per test (rimuovi dopo aver implementato versione Client-Server)
