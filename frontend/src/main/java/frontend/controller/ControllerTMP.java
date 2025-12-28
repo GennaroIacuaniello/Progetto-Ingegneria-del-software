@@ -49,6 +49,7 @@ public class ControllerTMP {
             - status: devi mettere a to do
             - priority: sempre inserita
             - image: potrebbe essere null
+            - tags: List<String> != null, ma può essere vuoto, che devi mergare
             - date: le ricavi tu
             - utenti: li ricavi tu
             _ projectId: lo ricavi tu
