@@ -222,4 +222,12 @@ public class ControllerTMP {
         return issues.get(index);
     }
 
+    public static void setIssueDetails() {
+
+        /*
+            Questo metodo deve settare tutti gli attributi della issue che si trova nel controller
+            (attualmente è questa classe, poi diventerà IssueController)
+         */
+    }
+
 }
