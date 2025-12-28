@@ -38,12 +38,11 @@ public class ControllerTMP {
         }
     }
 
-    public static void reportIssue(ReportIssueUser reportIssue) {
+    public static void reportIssue(IssueDTO issue) {
 
         /*
             todo:
-            effettua una query per reportare una Issue, le informazioni sulla Issue possono essere ricavate tramite l'oggetto reportIssue,
-            aggiungere eventuali metodi mancanti per ottenere le informazioni nella classe ReportIssue (attenzione agli Override),
+            effettua una query per reportare una Issue, le informazioni sulla Issue possono essere ricavate tramite l'oggetto issue,
             l'utente che ha riportato la Issue può essere trovato nell'attributo user di questa classe (non ancora implementato pke manca tutta la logica di login)
          */
     }
@@ -119,29 +118,7 @@ public class ControllerTMP {
 
     public static String getIssuePriority() {
 
-        String priority;
-
-        switch (issue.getPriority()) {
-
-            case 0:
-                priority = "Molto Bassa";
-                break;
-            case 1:
-                priority = "Bassa";
-                break;
-            case 2:
-                priority = "Media";
-                break;
-            case 3:
-                priority = "Alta";
-            case 4:
-                priority = "Molto Alta";
-                break;
-            default:
-                priority = "Errore";
-        }
-
-        return priority;
+        return PriorityConverter.intToString(issue.getPriority());
     }
 
     public static String getIssueType() {

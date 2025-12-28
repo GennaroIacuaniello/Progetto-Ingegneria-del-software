@@ -1,18 +1,22 @@
 package frontend.gui;
 
 import frontend.controller.Controller;
+import frontend.controller.ControllerTMP;
+import frontend.controller.PriorityConverter;
+import frontend.dto.IssueDTO;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 
 public class ReportIssueUser extends RoundedPanel{
 
     private JTextField titleTextField;
     private JTextArea descriptionTextArea;
     private JComboBox<String> typeComboBox;
-    private JButton tagsButton;
+    private TagsButton tagsButton;
     private FileChooserPanel fileChooserPanel;
     protected JButton reportButton;
     protected JButton cancelButton;
@@ -154,7 +158,15 @@ public class ReportIssueUser extends RoundedPanel{
 
     protected void report(HomePanelUser homePanelUser) {
 
-        Controller.reportIssue(this);
+        IssueDTO issue = new IssueDTO();
+
+        issue.setTitle((titleTextField.getText().equals(TITLE_PLACEHOLDER) ? "" : titleTextField.getText()));
+        issue.setDescription((descriptionTextArea.getText().equals(DESCRIPTION_PLACEHOLDER) ? "" : descriptionTextArea.getText()));
+        issue.setType((String) Objects.requireNonNull(typeComboBox.getSelectedItem()));
+        issue.setTags(tagsButton.getTags());
+        issue.setPriority(PriorityConverter.stringToInt("Media"));
+
+        ControllerTMP.reportIssue(issue);
         homePanelUser.returnToDefaultContentPanel();
     }
 

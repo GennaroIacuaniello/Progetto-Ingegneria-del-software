@@ -124,4 +124,22 @@ public class IssueDTO {
     public void setRelatedProject(ProjectDTO relatedProject) {
         this.relatedProject = relatedProject;
     }
+
+    public void setType(String type) {
+
+        switch (type) {
+            case "Bug":
+                this.type = IssueTypeDTO.BUG;
+                break;
+            case "Question":
+                this.type = IssueTypeDTO.QUESTION;
+                break;
+            case "Documentation":
+                this.type = IssueTypeDTO.DOCUMENTATION;
+                break;
+            case "Feature":
+                this.type = IssueTypeDTO.FEATURE;
+                break;
+        }
+    }
 }
