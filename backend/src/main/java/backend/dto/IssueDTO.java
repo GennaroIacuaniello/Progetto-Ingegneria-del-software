@@ -3,25 +3,37 @@ package backend.dto;
 import backend.caso.DeveloperDTO;
 
 import java.awt.*;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 public class IssueDTO {
 
+    private int id;
     private String title;
     private String description;
     private IssueTypeDTO type;
     private IssueStatusDTO status;
-    private List<String> tags;
+    private String tags;
     private Date reportDate;
     private Date resolutionDate;
     private UserDTO reportingUser;
     private ProjectDTO relatedProject;
 
     private int priority;
-    private Image image;
+    private byte[] image;
     private UserDTO assignedDeveloper;
 
+    public IssueDTO(){
+        //Empty constructor needed for jackson
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -47,11 +59,11 @@ public class IssueDTO {
         this.priority = priority;
     }
 
-    public Image getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(Image image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 
@@ -71,11 +83,11 @@ public class IssueDTO {
         this.status = status;
     }
 
-    public List<String> getTags() {
+    public String getTags() {
         return tags;
     }
 
-    public void setTags(List<String> tags) {
+    public void setTags(String tags) {
         this.tags = tags;
     }
 

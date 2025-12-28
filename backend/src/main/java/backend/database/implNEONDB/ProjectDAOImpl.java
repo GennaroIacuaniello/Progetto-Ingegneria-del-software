@@ -1,4 +1,4 @@
-package backend.database.implementationNeonDB;
+package backend.database.implNEONDB;
 
 import backend.database.DatabaseConnection;
 import backend.database.dao.ProjectDAO;

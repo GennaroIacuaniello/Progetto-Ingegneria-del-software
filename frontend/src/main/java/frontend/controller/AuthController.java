@@ -137,4 +137,11 @@ public class AuthController {
     }
 
 
+    public UserDTO getLoggedUser() {
+        return loggedUser;
+    }
+
+    public void setLoggedUser(UserDTO loggedUser) {
+        this.loggedUser = loggedUser;
+    }
 }

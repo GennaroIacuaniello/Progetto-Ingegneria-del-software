@@ -10,14 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
 
     //ESEMPIO DI CONTROLLER REST
 
 
-    @Autowired
-    private UserDAO userDao;
+    private final UserDAO userDao;
 
 
     public UserController(UserDAO userDao) {
