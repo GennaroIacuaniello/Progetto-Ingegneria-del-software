@@ -17,7 +17,9 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.sql.Date;
+import java.time.Instant;
+import java.util.Arrays;
+import java.util.Date;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -28,6 +30,9 @@ public class IssueController {
     private static IssueController instance;
     private final ApiClient client = ApiClient.getInstance();
 
+
+    private static List<IssueDTO> issues;
+    private static IssueDTO issue;
 
     private IssueController(){
 
@@ -50,7 +55,7 @@ public class IssueController {
                 issueToReport.setTags(String.join(";", tags));
             }
 
-            issueToReport.setReportDate(Date.valueOf(LocalDate.now()));
+            issueToReport.setReportDate(Date.from(Instant.now()));
 
 
             UserDTO reportingUser = AuthController.getInstance().getLoggedUser();
@@ -103,7 +108,95 @@ public class IssueController {
 
 
 
-    public static String priorityIntToString(int priority) {
+
+
+    public List<String> getIssuesTitles () {
+
+        List<String> issuesTitles = new ArrayList<>();
+
+        for (IssueDTO i : issues)
+            issuesTitles.add(i.getTitle());
+
+        return issuesTitles;
+    }
+
+    public String getIssueTitle() {
+        return issue.getTitle();
+    }
+
+    public String getIssueDescription() {
+        return issue.getDescription();
+    }
+
+    public String getIssueStatus() {
+        return issue.getStatus().toString();
+    }
+
+    public String getIssuePriority() {
+
+        return priorityIntToString(issue.getPriority());
+    }
+
+    public String getIssueType() {
+        return issue.getType().toString();
+    }
+
+    public File getIssueImageAsFile() {
+
+        try {
+            File tempFile = File.createTempFile("issue_img_", ".jpg");
+
+
+            Files.write(tempFile.toPath(), issue.getImage());
+
+            tempFile.deleteOnExit();
+
+            return tempFile;
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<String> getIssueTagsAsList () {
+
+        String tagsString = issue.getTags();
+
+        String[] tagsArray = tagsString.split(";");
+
+        return Arrays.asList(tagsArray);
+
+    }
+
+    public Date getIssueResolutionDate () {
+        return issue.getResolutionDate();
+    }
+
+    public Date getIssueReportDate () {
+        return issue.getReportDate();
+    }
+
+    public UserDTO getIssueReportingUser () {
+        return issue.getReportingUser();
+    }
+
+    public UserDTO getIssueAssignedDeveloper () {
+        return issue.getAssignedDeveloper();
+    }
+
+    public void setIssue(IssueDTO i) {
+
+        issue = i;
+
+    }
+
+    public IssueDTO getIssueFromIndex(int index) {
+
+        return issues.get(index);
+    }
+
+
+    public String priorityIntToString(int priority) {
 
         return switch (priority) {
             case 0 -> "Molto Bassa";
@@ -115,7 +208,7 @@ public class IssueController {
         };
     }
 
-    public static int priorityStringToInt(String priority) {
+    public int priorityStringToInt(String priority) {
 
         return switch (priority) {
             case "Molto Bassa" -> 0;

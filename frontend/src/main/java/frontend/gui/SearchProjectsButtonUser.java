@@ -1,6 +1,6 @@
 package frontend.gui;
 
-import frontend.controller.Controller;
+import frontend.controller.ProjectController;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -22,9 +22,9 @@ public class SearchProjectsButtonUser extends IconButton {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                Controller.searchProjects(searchTextField.getText(), placeholder);
+                ProjectController.getInstance().searchProjectsByName(searchTextField.getText());
 
-                new SearchProjectResultsUser(mainFrame, homePanel, Controller.getProjectsIds(), Controller.getProjectsNames());
+                new SearchProjectResultsUser(mainFrame, homePanel, ProjectController.getInstance().getProjectsIds(), ProjectController.getInstance().getProjectsNames());
             }
         });
     }

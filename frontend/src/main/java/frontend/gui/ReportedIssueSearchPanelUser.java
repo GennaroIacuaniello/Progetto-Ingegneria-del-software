@@ -1,6 +1,7 @@
 package frontend.gui;
 
 import frontend.controller.ControllerTMP;
+import frontend.controller.IssueController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -100,7 +101,7 @@ public class ReportedIssueSearchPanelUser extends RoundedPanel{
         ControllerTMP.searchReportedIssues((titleTextField.getText().equals(TITLE_PLACEHOLDER) ? "" : titleTextField.getText()),
                 (String)statusComboBox.getSelectedItem(), tagsButton.getTags(), (String)typeComboBox.getSelectedItem(), null);
 
-        new ReportedIssueSearchResultsPanelUser(mainFrame, searchPage, ControllerTMP.getIssuesTitles());
+        new ReportedIssueSearchResultsPanelUser(mainFrame, searchPage, IssueController.getInstance().getIssuesTitles());
     }
 
     private void setTitleTextField() {

@@ -76,11 +76,11 @@ public class ReportIssueDeveloper extends ReportIssueUser {
         issue.setTitle(titleTextField.getText());
         issue.setDescription((descriptionTextArea.getText().equals(DESCRIPTION_PLACEHOLDER) ? "" : descriptionTextArea.getText()));
         issue.setType((String) Objects.requireNonNull(typeComboBox.getSelectedItem()));
-        issue.setTags(tagsButton.getTags());
-        issue.setPriority(IssueController.getInstance().priorityStringToInt(Objects.requireNonNull(priorityComboBox.getSelectedItem()).toString()));
-        issue.setImage(fileChooserPanel.getSelectedFile());
 
-        ControllerTMP.reportIssue(issue);
+        issue.setPriority(IssueController.getInstance().priorityStringToInt(Objects.requireNonNull(priorityComboBox.getSelectedItem()).toString()));
+
+        IssueController.getInstance().reportIssue(issue, tagsButton.getTags(), fileChooserPanel.getSelectedFile());
+
         homePanelUser.returnToDefaultContentPanel();
     }
 

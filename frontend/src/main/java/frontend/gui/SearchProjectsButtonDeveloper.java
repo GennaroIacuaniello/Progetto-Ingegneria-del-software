@@ -1,6 +1,6 @@
 package frontend.gui;
 
-import frontend.controller.Controller;
+import frontend.controller.ProjectController;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -21,9 +21,9 @@ public class SearchProjectsButtonDeveloper extends SearchProjectsButtonUser {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                Controller.searchProjects(searchTextField.getText(), placeholder);
+                ProjectController.getInstance().searchProjectsByName(searchTextField.getText());
 
-                new SearchProjectResultsDeveloper(mainFrame, homePanel, Controller.getProjectsIds(), Controller.getProjectsNames());
+                new SearchProjectResultsDeveloper(mainFrame, homePanel, ProjectController.getInstance().getProjectsIds(), ProjectController.getInstance().getProjectsNames());
             }
         });
     }

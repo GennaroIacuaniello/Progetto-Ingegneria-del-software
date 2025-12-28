@@ -1,6 +1,7 @@
 package frontend.gui;
 
 import frontend.controller.ControllerTMP;
+import frontend.controller.IssueController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,6 +40,6 @@ public class ReportedIssueSearchPanelDeveloper extends ReportedIssueSearchPanelU
                 (String)statusComboBox.getSelectedItem(), tagsButton.getTags(), (String)typeComboBox.getSelectedItem(),
                 (String)priorityComboBox.getSelectedItem());
 
-        new ReportedIssueSearchResultsPanelDeveloper(mainFrame, searchPage, ControllerTMP.getIssuesTitles());
+        new ReportedIssueSearchResultsPanelDeveloper(mainFrame, searchPage, IssueController.getInstance().getIssuesTitles());
     }
 }

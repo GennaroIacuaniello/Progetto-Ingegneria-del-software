@@ -1,6 +1,7 @@
 package frontend.gui;
 
 import frontend.controller.ControllerTMP;
+import frontend.controller.IssueController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,7 +31,7 @@ public class ShowReportedIssueDeveloper extends ShowReportedIssueUser {
 
     private void setPriorityLabel() {
 
-        JLabel priorityLabel = new JLabel(ControllerTMP.getIssuePriority());
+        JLabel priorityLabel = new JLabel(IssueController.getInstance().getIssuePriority());
         priorityLabel.setBorder(BorderFactory.createEmptyBorder());
         priorityLabel.setBackground(ColorsList.EMPTY_COLOR);
 

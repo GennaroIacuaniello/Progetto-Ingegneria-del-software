@@ -14,6 +14,12 @@ public class ProjectDTO {
     private List<TeamDTO> teams;
     private List<UserDTO> developers;
 
+    public ProjectDTO() {
+
+        //Empty constructor needed for jackson
+
+    }
+
     public ProjectDTO(int id, String name, List<TeamDTO> teams, List<UserDTO> developers) throws InvalidTeam, InvalidDeveloper {
 
         if( teams == null || teams.isEmpty() )

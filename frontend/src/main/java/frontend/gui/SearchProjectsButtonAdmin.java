@@ -1,6 +1,5 @@
 package frontend.gui;
 
-import frontend.controller.Controller;
 import frontend.controller.ProjectController;
 
 import javax.swing.*;

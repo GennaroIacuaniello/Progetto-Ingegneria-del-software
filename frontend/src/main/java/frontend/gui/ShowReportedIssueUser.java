@@ -1,6 +1,7 @@
 package frontend.gui;
 
 import frontend.controller.ControllerTMP;
+import frontend.controller.IssueController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -89,7 +90,7 @@ public class ShowReportedIssueUser extends JDialog {
 
     private void setTitleLabel() {
 
-        JLabel titleLabel = new JLabel(ControllerTMP.getIssueTitle());
+        JLabel titleLabel = new JLabel(IssueController.getInstance().getIssueTitle());
         titleLabel.setBorder(BorderFactory.createEmptyBorder());
         titleLabel.setBackground(ColorsList.EMPTY_COLOR);
 
@@ -103,7 +104,7 @@ public class ShowReportedIssueUser extends JDialog {
 
     private void setDescriptionTextArea() {
 
-        JTextArea descriptionTextArea = new JTextArea(ControllerTMP.getIssueDescription(), 8, 40);
+        JTextArea descriptionTextArea = new JTextArea(IssueController.getInstance().getIssueDescription(), 8, 40);
 
         descriptionTextArea.setBorder(BorderFactory.createEmptyBorder());
         descriptionTextArea.setFont(new Font("JetBrains Mono", Font.PLAIN, 16));
@@ -124,7 +125,7 @@ public class ShowReportedIssueUser extends JDialog {
     }
 
     private void setTypeLabel() {
-        JLabel typeLabel = new JLabel(ControllerTMP.getIssueType());
+        JLabel typeLabel = new JLabel(IssueController.getInstance().getIssueType());
 
         typeLabel.setBorder(BorderFactory.createEmptyBorder());
         typeLabel.setBackground(ColorsList.EMPTY_COLOR);
@@ -143,7 +144,7 @@ public class ShowReportedIssueUser extends JDialog {
 
         JPopupMenu menu = new JPopupMenu();
 
-        for (String tag : ControllerTMP.getIssueTags()) {
+        for (String tag : IssueController.getInstance().getIssueTagsAsList()) {
 
             JLabel tmpLabel = new JLabel(tag);
             tmpLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
@@ -173,7 +174,7 @@ public class ShowReportedIssueUser extends JDialog {
             public void actionPerformed(ActionEvent e) {
 
                 try {
-                    Desktop.getDesktop().open(ControllerTMP.getIssueImage());
+                    Desktop.getDesktop().open(IssueController.getInstance().getIssueImageAsFile());
                 } catch (IOException ex) {
                     new FloatingMessage("Impossibile aprire il file.", imageButton, FloatingMessage.ERROR_MESSAGE);
                 } catch (NullPointerException ex) {
@@ -190,7 +191,7 @@ public class ShowReportedIssueUser extends JDialog {
 
     protected void setStatusLabel() {
 
-        JLabel statusLabel = new JLabel(ControllerTMP.getIssueStatus());
+        JLabel statusLabel = new JLabel(IssueController.getInstance().getIssueStatus());
 
         statusLabel.setBorder(BorderFactory.createEmptyBorder());
         statusLabel.setBackground(ColorsList.EMPTY_COLOR);
@@ -205,7 +206,7 @@ public class ShowReportedIssueUser extends JDialog {
 
     private void setReportDateLabel() {
 
-        JLabel reportDateLabel = new JLabel("Segnalazione: " + ControllerTMP.getIssueReportDate().toString());
+        JLabel reportDateLabel = new JLabel("Segnalazione: " + IssueController.getInstance().getIssueReportDate().toString());
 
         reportDateLabel.setBorder(BorderFactory.createEmptyBorder());
         reportDateLabel.setBackground(ColorsList.EMPTY_COLOR);
@@ -220,8 +221,8 @@ public class ShowReportedIssueUser extends JDialog {
 
     private void setResolutionDateLabel() {
 
-        JLabel resolutionDateLabel = new JLabel("Risoluzione: " + (ControllerTMP.getIssueResolutionDate() != null ?
-                ControllerTMP.getIssueResolutionDate().toString() : "questa issue non è ancora stata risolta"));
+        JLabel resolutionDateLabel = new JLabel("Risoluzione: " + (IssueController.getInstance().getIssueResolutionDate() != null ?
+                IssueController.getInstance().getIssueResolutionDate().toString() : "questa issue non è ancora stata risolta"));
 
         resolutionDateLabel.setBorder(BorderFactory.createEmptyBorder());
         resolutionDateLabel.setBackground(ColorsList.EMPTY_COLOR);
@@ -236,7 +237,7 @@ public class ShowReportedIssueUser extends JDialog {
 
     private void setReportingUserLabel() {
 
-        JLabel reportingUserLabel = new JLabel("Segnalatore: " + ControllerTMP.getIssueReportingUser().getEmail());
+        JLabel reportingUserLabel = new JLabel("Segnalatore: " + IssueController.getInstance().getIssueReportingUser().getEmail());
 
         reportingUserLabel.setBorder(BorderFactory.createEmptyBorder());
         reportingUserLabel.setBackground(ColorsList.EMPTY_COLOR);
@@ -251,8 +252,8 @@ public class ShowReportedIssueUser extends JDialog {
 
     private void setAssignedDeveloperLabel() {
 
-        JLabel assignedDeveloperLabel = new JLabel("Developer assegnato: " + ((ControllerTMP.getIssueAssignedDeveloper() != null) ?
-                ControllerTMP.getIssueAssignedDeveloper().getEmail() : "questa issue non è ancora stata assegnata"));
+        JLabel assignedDeveloperLabel = new JLabel("Developer assegnato: " + ((IssueController.getInstance().getIssueAssignedDeveloper() != null) ?
+                IssueController.getInstance().getIssueAssignedDeveloper().getEmail() : "questa issue non è ancora stata assegnata"));
 
         assignedDeveloperLabel.setBorder(BorderFactory.createEmptyBorder());
         assignedDeveloperLabel.setBackground(ColorsList.EMPTY_COLOR);
