@@ -176,6 +176,8 @@ public class ShowReportedIssueUser extends JDialog {
                     Desktop.getDesktop().open(ControllerTMP.getIssueImage());
                 } catch (IOException ex) {
                     new FloatingMessage("Impossibile aprire il file.", imageButton, FloatingMessage.ERROR_MESSAGE);
+                } catch (NullPointerException ex) {
+                    new FloatingMessage("Nessuna immagine è stata allegata per questa issue", imageButton, FloatingMessage.WARNING_MESSAGE);
                 }
             }
         });
@@ -218,7 +220,8 @@ public class ShowReportedIssueUser extends JDialog {
 
     private void setResolutionDateLabel() {
 
-        JLabel resolutionDateLabel = new JLabel("Risoluzione: " + ControllerTMP.getIssueResolutionDate().toString());
+        JLabel resolutionDateLabel = new JLabel("Risoluzione: " + (ControllerTMP.getIssueResolutionDate() != null ?
+                ControllerTMP.getIssueResolutionDate().toString() : "questa issue non è ancora stata risolta"));
 
         resolutionDateLabel.setBorder(BorderFactory.createEmptyBorder());
         resolutionDateLabel.setBackground(ColorsList.EMPTY_COLOR);
@@ -248,7 +251,8 @@ public class ShowReportedIssueUser extends JDialog {
 
     private void setAssignedDeveloperLabel() {
 
-        JLabel assignedDeveloperLabel = new JLabel("Developer assegnato: " + ControllerTMP.getIssueAssignedDeveloper().getEmail());
+        JLabel assignedDeveloperLabel = new JLabel("Developer assegnato: " + ((ControllerTMP.getIssueAssignedDeveloper() != null) ?
+                ControllerTMP.getIssueAssignedDeveloper().getEmail() : "questa issue non è ancora stata assegnata"));
 
         assignedDeveloperLabel.setBorder(BorderFactory.createEmptyBorder());
         assignedDeveloperLabel.setBackground(ColorsList.EMPTY_COLOR);

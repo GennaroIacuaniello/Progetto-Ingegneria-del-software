@@ -227,6 +227,23 @@ public class ControllerTMP {
         /*
             Questo metodo deve settare tutti gli attributi della issue che si trova nel controller
             (attualmente è questa classe, poi diventerà IssueController)
+            Attributi:
+            - title: c'è obbligatoriamente
+            - description: visto che io ti passo le stringhe vuote se non c'è
+                           la descrizione mi aspetto che tu fai lo stesso
+            - type: c'è obbligatoriamente
+            - tags: me li aspetto separati in un List<String>, se non ci
+                    sono tags mi aspetto la List<String> vuota ma non null
+            - image: mi aspetto l'immagine di tipo File (quando le metterai nel DB vedremo se
+                     effettivamente va bene o devo cambiare io qualcosa nel FileChooser) oppure null
+            - status: c'è obbligatoriamente
+            - reportDate: c'è obbligatoriamente
+            - resolutionDate: se non è stato ancora risolto mi aspetto null
+                              (se preferisci stringa vuota va bene basta che mi fai sapere)
+            - reportingUser: c'è obbligatoriamente
+            - assignedDeveloper: se non c'è mi aspetto null (se preferisci stringa
+                                 vuota va bene basta che mi fai sapere)
+            - priority: c'è obbligatoriamente
          */
     }
 
