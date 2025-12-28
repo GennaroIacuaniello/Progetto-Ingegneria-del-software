@@ -25,26 +25,6 @@ public class IssueDTO {
         //Empty constructor needed for jackson
     }
 
-    public IssueDTO (String title, String description, IssueTypeDTO type, IssueStatusDTO status,
-          List<String> tags, Date reportDate, Date resolutionDate, UserDTO reportingUser, ProjectDTO relatedProject,
-          int priority, File image, UserDTO assignedDeveloper) {
-
-        this.title = title;
-        this.description = description;
-        this.type = type;
-        this.status = status;
-        this.tags = tags;
-        this.reportDate = reportDate;
-        this.resolutionDate = resolutionDate;
-        this.reportingUser = reportingUser;
-        this.relatedProject = relatedProject;
-
-        this.priority = priority;
-        this.image = image;
-        this.assignedDeveloper = assignedDeveloper;
-
-    }
-
     public IssueDTO (String title) {
         this.title = title;
     }
