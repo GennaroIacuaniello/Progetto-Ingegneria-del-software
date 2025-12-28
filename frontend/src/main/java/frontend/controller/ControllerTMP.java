@@ -181,7 +181,7 @@ public class ControllerTMP {
 
     public static String getIssuePriority() {
 
-        return PriorityConverter.intToString(issue.getPriority());
+        return IssueController.getInstance().priorityIntToString(issue.getPriority());
     }
 
     public static String getIssueType() {

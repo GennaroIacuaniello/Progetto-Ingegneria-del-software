@@ -1,7 +1,7 @@
 package backend.model;
 
 import java.awt.*;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 public class IssueBuilder {
@@ -17,7 +17,7 @@ public class IssueBuilder {
     private Project relatedProject;
 
     private int priority = 2;
-    private Image image = null;
+    private byte[] image = null;
 
     private Developer assignedDeveloper = null;
 
@@ -42,7 +42,7 @@ public class IssueBuilder {
         return this;
     }
 
-    public IssueBuilder withImage (Image image){
+    public IssueBuilder withImage (byte[] image){
 
         this.image = image;
 

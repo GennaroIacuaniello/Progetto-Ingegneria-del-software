@@ -3,26 +3,35 @@ package frontend.dto;
 import java.awt.*;
 import java.io.File;
 import java.util.List;
-import java.sql.Date;
+import java.util.Date;
 
 public class IssueDTO {
 
+    private int id;
     private String title;
     private String description;
     private IssueTypeDTO type;
     private IssueStatusDTO status;
-    private List<String> tags;
+    private String tags;
     private Date reportDate;
     private Date resolutionDate;
     private UserDTO reportingUser;
     private ProjectDTO relatedProject;
 
     private int priority;
-    private File image;
+    private byte[] image;
     private UserDTO assignedDeveloper;
 
     public IssueDTO(){
         //Empty constructor needed for jackson
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public IssueDTO (String title) {
@@ -53,11 +62,11 @@ public class IssueDTO {
         this.priority = priority;
     }
 
-    public File getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(File image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 
@@ -77,11 +86,11 @@ public class IssueDTO {
         this.status = status;
     }
 
-    public List<String> getTags() {
+    public String getTags() {
         return tags;
     }
 
-    public void setTags(List<String> tags) {
+    public void setTags(String tags) {
         this.tags = tags;
     }
 

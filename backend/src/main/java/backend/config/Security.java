@@ -15,13 +15,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class Security {
 
-    @Autowired // <--- Spring ti passa l'istanza creata sopra
+    @Autowired
     private JWTRequestFilter jwtRequestFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // Disabilita CSRF perché usiamo token, non sessioni browser
+                // Disabilita CSRF perché si usano token, non sessioni browser
                 .csrf(csrf -> csrf.disable())
 
                 // Gestione sessione: STATELESS (Niente cookie JSESSIONID)

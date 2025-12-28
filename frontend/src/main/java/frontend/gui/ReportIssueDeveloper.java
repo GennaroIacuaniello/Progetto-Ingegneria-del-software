@@ -1,7 +1,7 @@
 package frontend.gui;
 
 import frontend.controller.ControllerTMP;
-import frontend.controller.PriorityConverter;
+import frontend.controller.IssueController;
 import frontend.dto.IssueDTO;
 
 import javax.swing.*;
@@ -77,7 +77,7 @@ public class ReportIssueDeveloper extends ReportIssueUser {
         issue.setDescription((descriptionTextArea.getText().equals(DESCRIPTION_PLACEHOLDER) ? "" : descriptionTextArea.getText()));
         issue.setType((String) Objects.requireNonNull(typeComboBox.getSelectedItem()));
         issue.setTags(tagsButton.getTags());
-        issue.setPriority(PriorityConverter.stringToInt(Objects.requireNonNull(priorityComboBox.getSelectedItem()).toString()));
+        issue.setPriority(IssueController.getInstance().priorityStringToInt(Objects.requireNonNull(priorityComboBox.getSelectedItem()).toString()));
         issue.setImage(fileChooserPanel.getSelectedFile());
 
         ControllerTMP.reportIssue(issue);

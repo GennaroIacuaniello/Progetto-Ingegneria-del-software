@@ -2,7 +2,7 @@ package backend.model;
 
 import java.awt.*;
 import java.util.List;
-import java.sql.Date;
+import java.util.Date;
 
 public class Issue {
 
@@ -17,12 +17,12 @@ public class Issue {
     private Project relatedProject;
 
     private int priority;
-    private Image image;
+    private byte[] image;
     private Developer assignedDeveloper;
 
     Issue(String title, String description, IssueType type, IssueStatus status,
           List<String> tags, Date reportDate, Date resolutionDate, User reportingUser, Project relatedProject,
-          int priority, Image image, Developer assignedDeveloper) {
+          int priority, byte[] image, Developer assignedDeveloper) {
 
         this.title = title;
         this.description = description;
@@ -65,11 +65,11 @@ public class Issue {
         this.priority = priority;
     }
 
-    public Image getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(Image image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 

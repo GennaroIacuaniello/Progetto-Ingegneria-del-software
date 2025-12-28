@@ -20,14 +20,17 @@ import java.util.Optional;
 @RestController
 public class AuthController {
 
-    @Autowired
-    private UserDAO userDao;
+    private final UserDAO userDao;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Value("${jwt.secret}")
     private String secret;
+
+    public AuthController(UserDAO userDao, PasswordEncoder passwordEncoder) {
+        this.userDao = userDao;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @PostMapping("/auth/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) throws SQLException {

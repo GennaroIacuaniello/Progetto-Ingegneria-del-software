@@ -1,8 +1,7 @@
-package backend.database.implementationNeonDB;
+package backend.database.implNEONDB;
 
 import backend.database.DatabaseConnection;
 import backend.database.dao.UserDAO;
-import backend.dto.ProjectDTO;
 import backend.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -12,8 +11,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 @Repository
 public class UserDAOImpl implements UserDAO {

@@ -14,7 +14,7 @@ public class UserController {
     //ESEMPIO DI CONTROLLER REST DEL FRONTEND
 
     /*
-    private final String SERVER_URL = "http://localhost:8080/api/utenti";
+    private final String SERVER_URL = "http://localhost:8080/api/users";
     private final HttpClient client = HttpClient.newHttpClient();
     private final ObjectMapper mapper = new ObjectMapper();
 

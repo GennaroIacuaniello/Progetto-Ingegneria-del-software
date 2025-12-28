@@ -45,7 +45,7 @@ public class ProjectController {
             String encodedProjectName = URLEncoder.encode(projectName, StandardCharsets.UTF_8);
 
             HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
-                    .uri(URI.create(client.getBaseUrl() + "/project?search=" + encodedProjectName))
+                    .uri(URI.create(client.getBaseUrl() + "/projects?search=" + encodedProjectName))
                     .GET();
 
             HttpResponse<String> response = client.sendRequest(requestBuilder);
@@ -106,4 +106,11 @@ public class ProjectController {
         this.project = new ProjectDTO(id, name);
     }
 
+    public ProjectDTO getProject() {
+        return project;
+    }
+
+    public void setProject(ProjectDTO project) {
+        this.project = project;
+    }
 }

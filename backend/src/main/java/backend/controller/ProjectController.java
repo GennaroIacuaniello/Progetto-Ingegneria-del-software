@@ -18,16 +18,14 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/project")
+@RequestMapping("/projects")
 public class ProjectController {
 
-    @Autowired
-    private ProjectDAO projectDAO;
+    private final ProjectDAO projectDAO;
 
     public ProjectController(ProjectDAO projectDAO) {
         this.projectDAO = projectDAO;
     }
-
 
     @GetMapping
     public ResponseEntity<List<ProjectDTO>> searchProjects(@RequestParam("search") String projectName) throws SQLException {
