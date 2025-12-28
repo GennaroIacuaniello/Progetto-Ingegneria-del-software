@@ -1,5 +1,7 @@
 package frontend.gui;
 
+import frontend.controller.ControllerTMP;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -40,6 +42,8 @@ public class IconCellEditorReportedIssueUser extends DefaultCellEditor {
 
     @Override
     public Object getCellEditorValue() {
+
+        ControllerTMP.setIssue(ControllerTMP.getIssueFromIndex(parentTable.getSelectedRow()));
 
         new ShowReportedIssueUser(mainFrame);
 

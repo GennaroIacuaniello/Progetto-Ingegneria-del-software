@@ -105,7 +105,7 @@ public class ControllerTMP {
 
         for (int i = 0; i < 10; i++) {
 
-            issues.add(new IssueDTO("issue " + i));
+            issues.add(new IssueDTO(i, "issue " + i));
         }
     }
 
@@ -129,7 +129,7 @@ public class ControllerTMP {
 
         for (int i = 0; i < 10; i++) {
 
-            issues.add(new IssueDTO("issue " + i));
+            issues.add(new IssueDTO(i, "issue " + i));
         }
     }
 
@@ -153,7 +153,7 @@ public class ControllerTMP {
 
         for (int i = 0; i < 10; i++) {
 
-            issues.add(new IssueDTO("issue " + i));
+            issues.add(new IssueDTO(i, "issue " + i));
         }
     }
 
@@ -211,4 +211,15 @@ public class ControllerTMP {
     public static UserDTO getIssueAssignedDeveloper () {
         return issue.getAssignedDeveloper();
     }
+
+    public static void setIssue(IssueDTO i) {
+
+        issue = i;
+    }
+
+    public static IssueDTO getIssueFromIndex(int index) {
+
+        return issues.get(index);
+    }
+
 }
