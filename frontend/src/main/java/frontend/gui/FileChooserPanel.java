@@ -51,4 +51,8 @@ public class FileChooserPanel extends RoundedPanel {
         this.selectedFile = null;
         fileButton.updateFile(null);
     }
+
+    public File getSelectedFile() {
+        return this.selectedFile;
+    }
 }

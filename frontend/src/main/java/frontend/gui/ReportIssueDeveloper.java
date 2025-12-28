@@ -1,9 +1,14 @@
 package frontend.gui;
 
+import frontend.controller.ControllerTMP;
+import frontend.controller.PriorityConverter;
+import frontend.dto.IssueDTO;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 
 public class ReportIssueDeveloper extends ReportIssueUser {
 
@@ -44,7 +49,10 @@ public class ReportIssueDeveloper extends ReportIssueUser {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                report(homePanelUser);
+                if (titleTextField.getText().equals(TITLE_PLACEHOLDER))
+                    new FloatingMessage("Inserire il titolo per segnalare una issue", reportButton, FloatingMessage.ERROR_MESSAGE);
+                else
+                    report(homePanelUser);
             }
         });
 
@@ -58,6 +66,22 @@ public class ReportIssueDeveloper extends ReportIssueUser {
                 GridBagConstraints.NONE, 40, 20, GridBagConstraints.CENTER,
                 0.5f, 0.5f, new Insets(5, 5, 5, 5));
         this.add(tmpPanel, Constraints.getGridBagConstraints());
+    }
+
+    @Override
+    protected void report(HomePanelUser homePanelUser) {
+
+        IssueDTO issue = new IssueDTO();
+
+        issue.setTitle(titleTextField.getText());
+        issue.setDescription((descriptionTextArea.getText().equals(DESCRIPTION_PLACEHOLDER) ? "" : descriptionTextArea.getText()));
+        issue.setType((String) Objects.requireNonNull(typeComboBox.getSelectedItem()));
+        issue.setTags(tagsButton.getTags());
+        issue.setPriority(PriorityConverter.stringToInt(Objects.requireNonNull(priorityComboBox.getSelectedItem()).toString()));
+        issue.setImage(fileChooserPanel.getSelectedFile());
+
+        ControllerTMP.reportIssue(issue);
+        homePanelUser.returnToDefaultContentPanel();
     }
 
     @Override

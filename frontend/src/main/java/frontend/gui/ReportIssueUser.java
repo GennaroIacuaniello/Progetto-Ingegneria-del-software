@@ -13,16 +13,16 @@ import java.util.Objects;
 
 public class ReportIssueUser extends RoundedPanel{
 
-    private JTextField titleTextField;
-    private JTextArea descriptionTextArea;
-    private JComboBox<String> typeComboBox;
-    private TagsButton tagsButton;
-    private FileChooserPanel fileChooserPanel;
+    protected JTextField titleTextField;
+    protected JTextArea descriptionTextArea;
+    protected JComboBox<String> typeComboBox;
+    protected TagsButton tagsButton;
+    protected FileChooserPanel fileChooserPanel;
     protected JButton reportButton;
     protected JButton cancelButton;
-    private static final String TITLE_PLACEHOLDER = "Inserisci titolo";
-    private static final String DESCRIPTION_PLACEHOLDER = "Inserisci descrizione";
-    private static final String[] options = {"Bug", "Documentation", "Feature", "Question"};
+    protected static final String TITLE_PLACEHOLDER = "Inserisci titolo";
+    protected static final String DESCRIPTION_PLACEHOLDER = "Inserisci descrizione";
+    protected static final String[] options = {"Bug", "Documentation", "Feature", "Question"};
 
     public ReportIssueUser(JFrame mainFrame, HomePanelUser homePanelUser) {
 
@@ -140,7 +140,10 @@ public class ReportIssueUser extends RoundedPanel{
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                report(homePanelUser);
+                if (titleTextField.getText().equals(TITLE_PLACEHOLDER))
+                    new FloatingMessage("Inserire il titolo per segnalare una issue", reportButton, FloatingMessage.ERROR_MESSAGE);
+                else
+                    report(homePanelUser);
             }
         });
 
@@ -160,11 +163,12 @@ public class ReportIssueUser extends RoundedPanel{
 
         IssueDTO issue = new IssueDTO();
 
-        issue.setTitle((titleTextField.getText().equals(TITLE_PLACEHOLDER) ? "" : titleTextField.getText()));
+        issue.setTitle(titleTextField.getText());
         issue.setDescription((descriptionTextArea.getText().equals(DESCRIPTION_PLACEHOLDER) ? "" : descriptionTextArea.getText()));
         issue.setType((String) Objects.requireNonNull(typeComboBox.getSelectedItem()));
         issue.setTags(tagsButton.getTags());
         issue.setPriority(PriorityConverter.stringToInt("Media"));
+        issue.setImage(fileChooserPanel.getSelectedFile());
 
         ControllerTMP.reportIssue(issue);
         homePanelUser.returnToDefaultContentPanel();

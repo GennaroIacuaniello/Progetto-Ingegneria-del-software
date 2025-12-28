@@ -42,8 +42,16 @@ public class ControllerTMP {
 
         /*
             todo:
-            effettua una query per reportare una Issue, le informazioni sulla Issue possono essere ricavate tramite l'oggetto issue,
-            l'utente che ha riportato la Issue può essere trovato nell'attributo user di questa classe (non ancora implementato pke manca tutta la logica di login)
+            effettua una query per reportare una Issue, le informazioni sulla Issue possono essere ricavate tramite l'oggetto issue:
+            - titolo: sempre inserito
+            - descrizione: sempre inserita (potrebbe essere stringa vuota)
+            - type: sempre inserito
+            - status: devi mettere a to do
+            - priority: sempre inserita
+            - image: potrebbe essere null
+            - date: le ricavi tu
+            - utenti: li ricavi tu
+            _ projectId: lo ricavi tu
          */
     }
 
