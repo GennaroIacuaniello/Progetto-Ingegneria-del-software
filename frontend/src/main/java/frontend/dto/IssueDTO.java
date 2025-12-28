@@ -26,14 +26,6 @@ public class IssueDTO {
         //Empty constructor needed for jackson
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public IssueDTO (String title) {
         this.title = title;
     }
