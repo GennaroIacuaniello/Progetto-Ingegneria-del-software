@@ -13,7 +13,7 @@ public class AuthController {
     private UserDTO loggedUser;
 
     private AuthController(){
-
+        //Empty constructor needed for jackson
     }
 
     public static AuthController getInstance() {
@@ -82,4 +82,59 @@ public class AuthController {
         public UserDTO getUser() { return user; }
         public void setUser(UserDTO user) { this.user = user; }
     }
+
+    public boolean registration(String email, String password, int role) {
+
+        try {
+            RegisterRequest registerRequest = new RegisterRequest(email, password, role);
+
+            String jsonBody = client.getObjectMapper().writeValueAsString(registerRequest);
+
+            HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+                    .uri(URI.create(client.getBaseUrl() + "/auth/register"))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(jsonBody));
+
+            HttpResponse<String> response = client.sendRequest(requestBuilder);
+
+            if (response.statusCode() == 200) {
+
+                System.out.println("Registration ok! Login to start working!");
+                return true;
+
+            } else {
+                System.err.println("Registration failed. Error code: " + response.statusCode());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static class RegisterRequest {
+        private String email;
+        private String password;
+        private int role;
+
+        public RegisterRequest(String email, String password, int role) {
+            this.email = email;
+            this.password = password;
+            this.role = role;
+        }
+
+        public String getEmail() { return email; }
+        public void setEmail(String email) { this.email = email; }
+        public String getPassword() { return password; }
+        public void setPassword(String password) { this.password = password; }
+
+        public int getRole() {
+            return role;
+        }
+
+        public void setRole(int role) {
+            this.role = role;
+        }
+    }
+
+
 }

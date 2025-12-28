@@ -29,8 +29,8 @@ public class Security {
 
                 // Regole di autorizzazione
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/login").permitAll() // Login pubblico
-                        .anyRequest().authenticated()               // Il resto richiede token
+                        .requestMatchers("/auth/**").permitAll() // Login and registration public
+                        .anyRequest().authenticated()               // others require token
                 )
 
                 // Aggiungiamo il filtro JWT PRIMA del filtro user/pass standard

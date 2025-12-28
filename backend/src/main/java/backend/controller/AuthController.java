@@ -52,7 +52,7 @@ public class AuthController {
             }
         }
 
-        return ResponseEntity.status(401).body("Credenziali non valide");
+        return ResponseEntity.status(401).body("Invalid credentials");
 
     }
 
@@ -60,7 +60,9 @@ public class AuthController {
         private String email;
         private String password;
 
-        public LoginRequest() {}
+        public LoginRequest() {
+            //Empty constructor needed for jackson
+        }
 
         public String getEmail() { return email; }
         public void setEmail(String email) { this.email = email; }
@@ -81,5 +83,48 @@ public class AuthController {
         public void setToken(String token) { this.token = token; }
         public UserDTO getUser() { return user; }
         public void setUser(UserDTO user) { this.user = user; }
+    }
+
+
+    @PostMapping("/auth/register")
+    public ResponseEntity<?> register(@RequestBody RegisterRequest request) throws SQLException {
+
+        if (userDao.searchUserByMail(request.getEmail()) != null) {
+            return ResponseEntity.badRequest().body("Error: email already used!");
+        }
+
+        String hashedPassword = passwordEncoder.encode(request.getPassword());
+
+        UserDTO newUser = new UserDTO();
+        newUser.setEmail(request.getEmail());
+        newUser.setPassword(hashedPassword);
+        newUser.setRole(request.getRole());
+        userDao.resisterNewUser(newUser);
+
+        return ResponseEntity.ok("Registration success!");
+
+    }
+
+    public static class RegisterRequest {
+        private String email;
+        private String password;
+        private int role;
+
+        public RegisterRequest() {
+            //Empty constructor needed for jackson
+        }
+
+        public String getEmail() { return email; }
+        public void setEmail(String email) { this.email = email; }
+        public String getPassword() { return password; }
+        public void setPassword(String password) { this.password = password; }
+
+        public int getRole() {
+            return role;
+        }
+
+        public void setRole(int role) {
+            this.role = role;
+        }
     }
 }

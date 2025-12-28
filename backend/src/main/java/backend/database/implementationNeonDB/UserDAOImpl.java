@@ -34,16 +34,16 @@ public class UserDAOImpl implements UserDAO {
 
             ResultSet rs = statement.executeQuery();
 
-            rs.next();
+            while (rs.next()) {
 
-            foundedUser = new UserDTO();
+                foundedUser = new UserDTO();
 
-            foundedUser.setId(rs.getInt("user_id"));
-            foundedUser.setEmail(rs.getString("email"));
-            foundedUser.setPassword(rs.getString("hashed_password"));
-            foundedUser.setRole(rs.getInt("user_type"));
+                foundedUser.setId(rs.getInt("user_id"));
+                foundedUser.setEmail(rs.getString("email"));
+                foundedUser.setPassword(rs.getString("hashed_password"));
+                foundedUser.setRole(rs.getInt("user_type"));
 
-
+            }
 
             rs.close();
 

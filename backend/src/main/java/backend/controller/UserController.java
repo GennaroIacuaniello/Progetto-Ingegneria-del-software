@@ -30,12 +30,6 @@ public class UserController {
         return new ArrayList<>();
     }
 
-    @PostMapping
-    public String addUser(@RequestBody User user) {
-        //userDao.save(user);
-        return "Utente salvato!";
-    }
-
 
 
 }
