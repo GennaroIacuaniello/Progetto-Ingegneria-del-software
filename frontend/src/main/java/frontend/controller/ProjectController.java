@@ -101,4 +101,9 @@ public class ProjectController {
         return names;
     }
 
+    public void setProject(int id, String name) {
+
+        this.project = new ProjectDTO(id, name);
+    }
+
 }

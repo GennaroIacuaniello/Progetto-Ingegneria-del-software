@@ -51,8 +51,8 @@ public class ControllerTMP {
             - image: potrebbe essere null
             - tags: List<String> != null, ma può essere vuoto, che devi mergare
             - date: le ricavi tu
-            - utenti: li ricavi tu
-            _ projectId: lo ricavi tu
+            - utenti: li ricavi tu (loggedUser)
+            _ projectId: lo ricavi tu (project di ProjectController)
          */
     }
 

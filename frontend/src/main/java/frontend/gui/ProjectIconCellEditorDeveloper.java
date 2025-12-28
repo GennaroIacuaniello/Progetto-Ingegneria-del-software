@@ -1,6 +1,7 @@
 package frontend.gui;
 
 import frontend.controller.Controller;
+import frontend.controller.ProjectController;
 
 import javax.swing.*;
 
@@ -16,22 +17,20 @@ public class ProjectIconCellEditorDeveloper extends ProjectIconCellEditorUser {
 
         String action = parentTable.getColumnName(parentTable.getEditingColumn());
 
-        Integer projectId = (Integer)parentTable.getValueAt(selectedRow, 0);
+        ProjectController.getInstance().setProject((Integer)parentTable.getValueAt(selectedRow, 0),
+                (String)parentTable.getValueAt(selectedRow, 1));
 
         switch (action) {
 
             case "SEGNALA ISSUE":
-                Controller.setProject(projectId, "Ciao");
                 homePanel.setContentPanel(new ReportIssueDeveloper(mainFrame, homePanel));
                 break;
 
             case "ISSUE SEGNALATE":
-                //todo: controller
                 homePanel.setContentPanel(new SearchReportedIssuePageDeveloper(mainFrame, homePanel));
                 break;
 
             case "ISSUE ASSEGNATE":
-                //todo: controller
                 homePanel.setContentPanel(new SearchAssignedIssuePage(mainFrame, homePanel));
                 break;
         }
