@@ -1,4 +1,4 @@
-package frontend.dto; // Assicurati del package
+package frontend.dto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,12 +10,10 @@ public class UserDTO {
     private String password; // Solo per invio login, sarà null in ricezione
     private int role; // 0=User, 1=Dev, 2=Admin
 
-    // Liste complete
     private List<IssueDTO> reportedIssues;
     private List<IssueDTO> assignedIssues;
 
-    // IMPORTANTE: Nel backend abbiamo deciso di mandare liste di ProjectDTO o String?
-    // Nel DTOMapper backend mandavamo ProjectDTO.
+
     private List<ProjectDTO> projects;
     private List<TeamDTO> teams;
 
@@ -26,13 +24,12 @@ public class UserDTO {
         this.assignedIssues = new ArrayList<>();
     }
 
-    // Costruttore rapido per il login request
+    // Costruttore per la login request
     public UserDTO(String email, String password) {
         this.email = email;
         this.password = password;
     }
 
-    // --- GETTER E SETTER ---
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 

@@ -1,8 +1,5 @@
 package frontend.dto;
 
-import java.awt.*;
-import java.io.File;
-import java.util.List;
 import java.util.Date;
 
 public class IssueDTO {
@@ -140,7 +137,7 @@ public class IssueDTO {
         this.relatedProject = relatedProject;
     }
 
-    public void setType(String type) {
+    public void setTypeWithString(String type) {
 
         switch (type) {
             case "Bug":
@@ -155,6 +152,8 @@ public class IssueDTO {
             case "Feature":
                 this.type = IssueTypeDTO.FEATURE;
                 break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + type);
         }
     }
     

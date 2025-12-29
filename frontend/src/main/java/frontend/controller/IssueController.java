@@ -31,8 +31,8 @@ public class IssueController {
     private final ApiClient client = ApiClient.getInstance();
 
 
-    private static List<IssueDTO> issues;
-    private static IssueDTO issue;
+    private ArrayList<IssueDTO> issues;
+    private IssueDTO issue;
 
     private IssueController(){
 
@@ -46,6 +46,7 @@ public class IssueController {
     }
 
     public void reportIssue(IssueDTO issueToReport, List<String> tags, File image) {
+
         try {
 
             issueToReport.setStatus(IssueStatusDTO.TODO);
@@ -105,9 +106,145 @@ public class IssueController {
     }
 
 
+    public void searchAssignedIssues(String issueTitle, String issueStatus, List<String> issueTags, String issueType, String issuePriority) {
+
+        try {
+
+            List<String> params = new ArrayList<>();
+
+            if (issueTitle != null && !issueTitle.isEmpty()) {
+                //Encoder da utilizzare dato che non possono esserci spazi nei parametri search delle richieste HTTP
+                params.add("title=" + URLEncoder.encode(issueTitle, StandardCharsets.UTF_8));
+            }
+            if (issueStatus != null && !issueStatus.isEmpty()) {
+                params.add("status=" + URLEncoder.encode(issueStatus, StandardCharsets.UTF_8));
+            }
+            if (issueTags != null && !issueTags.isEmpty()) {
+                params.add("tags=" + URLEncoder.encode(String.join(";", issueTags), StandardCharsets.UTF_8));
+            }
+            if (issueType != null && !issueType.isEmpty()) {
+                params.add("type=" + URLEncoder.encode(issueType, StandardCharsets.UTF_8));
+            }
+            if (issuePriority != null && !issuePriority.isEmpty()) {
+                params.add("priority=" + priorityStringToInt(issuePriority));
+            }
+
+            params.add("resolverId=" + AuthController.getInstance().getLoggedUser().getId());
+            params.add("projectId=" + ProjectController.getInstance().getProject().getId());
+
+            String queryString = String.join("&", params);
+
+            String fullUrl = client.getBaseUrl() + "/issues/search";
+
+            fullUrl += "?" + queryString;
 
 
+            System.out.println("Calling URL: " + fullUrl); // Debug utile
 
+            HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+                    .uri(URI.create(fullUrl))
+                    .GET();
+
+            HttpResponse<String> response = client.sendRequest(requestBuilder);
+
+            if (response.statusCode() == 200) {
+
+                this.issues = client.getObjectMapper().readValue(response.body(), new TypeReference<>(){});
+
+            } else if (response.statusCode() == 204) {
+
+                this.issues = new ArrayList<>();
+
+            } else {
+
+                // CASO ERRORE (500, 400, ecc.)
+                System.err.println("Errore dal server. Codice: " + response.statusCode());
+                System.err.println("Dettaglio errore: " + response.body());
+
+            }
+
+        } catch (RequestError re) {
+
+            System.err.println("Backend offline: " + re.getMessage());
+            this.issues = new ArrayList<>();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            this.issues = new ArrayList<>();
+        }
+
+    }
+
+
+    public void searchAllIssues(String issueTitle, String issueStatus, List<String> issueTags, String issueType, String issuePriority) {
+
+        try {
+
+            List<String> params = new ArrayList<>();
+
+            if (issueTitle != null && !issueTitle.isEmpty()) {
+                //Encoder da utilizzare dato che non possono esserci spazi nei parametri search delle richieste HTTP
+                params.add("title=" + URLEncoder.encode(issueTitle, StandardCharsets.UTF_8));
+            }
+            if (issueStatus != null && !issueStatus.isEmpty()) {
+                params.add("status=" + URLEncoder.encode(issueStatus, StandardCharsets.UTF_8));
+            }
+            if (issueTags != null && !issueTags.isEmpty()) {
+                params.add("tags=" + URLEncoder.encode(String.join(";", issueTags), StandardCharsets.UTF_8));
+            }
+            if (issueType != null && !issueType.isEmpty()) {
+                params.add("type=" + URLEncoder.encode(issueType, StandardCharsets.UTF_8));
+            }
+            if (issuePriority != null && !issuePriority.isEmpty()) {
+                params.add("priority=" + priorityStringToInt(issuePriority));
+            }
+
+            params.add("projectId=" + ProjectController.getInstance().getProject().getId());
+
+            String queryString = String.join("&", params);
+
+            String fullUrl = client.getBaseUrl() + "/issues/search";
+
+            fullUrl += "?" + queryString;
+
+
+            System.out.println("Calling URL: " + fullUrl); // Debug utile
+
+            HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+                    .uri(URI.create(fullUrl))
+                    .GET();
+
+            HttpResponse<String> response = client.sendRequest(requestBuilder);
+
+            if (response.statusCode() == 200) {
+
+                this.issues = client.getObjectMapper().readValue(response.body(), new TypeReference<>(){});
+
+            } else if (response.statusCode() == 204) {
+
+                this.issues = new ArrayList<>();
+
+            } else {
+
+                // CASO ERRORE (500, 400, ecc.)
+                System.err.println("Errore dal server. Codice: " + response.statusCode());
+                System.err.println("Dettaglio errore: " + response.body());
+
+            }
+
+        } catch (RequestError re) {
+
+            System.err.println("Backend offline: " + re.getMessage());
+            this.issues = new ArrayList<>();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            this.issues = new ArrayList<>();
+        }
+
+    }
 
 
     public List<String> getIssuesTitles () {
@@ -227,53 +364,9 @@ public class IssueController {
 
 
 
-    public void searchAssignedIssues(String title, String status, List<String> tags, String type, String priority) {
 
-        /*  todo:
-            effettuare una query che restituisce le assignedIssue del loggedUser relative al project in ProjectController,
-            filtrate secondo i criteri passati come parametri,
-            di tali issue sono richiesti le chiavi primarie e i titoli.
-            Parametri:
-            - title: può essere stringa vuota
-            - status: != null
-            - tags: List<String> != null, ma può essere vuota (io passo tante stringhe, nel DB c'è la stringa unica)
-            - type: != null
-            - priority: != null
-            I risultati della query devono essere usati per creare una List<IssueDTO> da mettere come attributo al controller corrispondente
-        */
 
-        //behaviour per test (rimuovi dopo aver implementato versione Client-Server)
-        issues = new ArrayList<>();
 
-        for (int i = 0; i < 10; i++) {
-
-            issues.add(new IssueDTO(i, "issue " + i));
-        }
-    }
-
-    public void searchAllIssues(String title, String status, List<String> tags, String type, String priority) {
-
-        /*  todo:
-            effettuare una query che restituisce  tutte le issue relative al project in ProjectController
-            filtrate secondo i criteri passati come parametri,
-            di tali issue sono richiesti le chiavi primarie e i titoli.
-            Parametri:
-            - title: può essere stringa vuota
-            - status: != null
-            - tags: List<String> != null, ma può essere vuota (io passo tante stringhe, nel DB c'è la stringa unica)
-            - type: != null
-            - priority: != null
-            I risultati della query devono essere usati per creare una List<IssueDTO> da mettere come attributo al controller corrispondente
-        */
-
-        //behaviour per test (rimuovi dopo aver implementato versione Client-Server)
-        issues = new ArrayList<>();
-
-        for (int i = 0; i < 10; i++) {
-
-            issues.add(new IssueDTO(i, "issue " + i));
-        }
-    }
 
 
     public void setIssueDetails() {
