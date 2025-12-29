@@ -21,7 +21,8 @@ public class SearchProjectsButtonDeveloper extends SearchProjectsButtonUser {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                ProjectController.getInstance().searchProjectsByName(searchTextField.getText());
+                ProjectController.getInstance().searchProjectsByName((searchTextField.getText().equals(placeholder) ?
+                        "" : searchTextField.getText()));
 
                 new SearchProjectResultsDeveloper(mainFrame, homePanel, ProjectController.getInstance().getProjectsIds(), ProjectController.getInstance().getProjectsNames());
             }
