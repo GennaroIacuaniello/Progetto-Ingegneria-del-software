@@ -12,7 +12,6 @@ import java.io.IOException;
 public class ShowReportedIssueUser extends JDialog {
 
     protected RoundedPanel mainPanel;
-    protected JPanel upperPanel;
 
     public ShowReportedIssueUser(JFrame parent) {
 
@@ -21,7 +20,7 @@ public class ShowReportedIssueUser extends JDialog {
         setDialog();
         setMainPanel(parent);
 
-        setUpperPanel();
+        setBackButton();
         setTitleLabel();
         setDescriptionTextArea();
         setTypeLabel();
@@ -57,20 +56,6 @@ public class ShowReportedIssueUser extends JDialog {
         setContentPane(mainPanel);
     }
 
-    protected void setUpperPanel() {
-
-        upperPanel = new RoundedPanel(new GridBagLayout());
-
-        upperPanel.setBackground(ColorsList.EMPTY_COLOR);
-        upperPanel.setBorder(BorderFactory.createEmptyBorder());
-
-        setBackButton();
-
-        Constraints.setConstraints(0, 0, 4, 1, GridBagConstraints.HORIZONTAL,
-                0, 0, GridBagConstraints.CENTER);
-        mainPanel.add(upperPanel, Constraints.getGridBagConstraints());
-    }
-
     protected void setBackButton() {
 
         IconButton backButton = new IconButton("/frontend/gui/images/backIconButton.png", 30, 30);
@@ -85,7 +70,7 @@ public class ShowReportedIssueUser extends JDialog {
 
         Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.NONE,
                 0, 0, GridBagConstraints.LINE_START, new Insets(5, 5, 5, 5));
-        upperPanel.add(backButton, Constraints.getGridBagConstraints());
+        mainPanel.add(backButton, Constraints.getGridBagConstraints());
     }
 
     private void setTitleLabel() {
@@ -93,12 +78,13 @@ public class ShowReportedIssueUser extends JDialog {
         JLabel titleLabel = new JLabel(IssueController.getInstance().getIssueTitle());
         titleLabel.setBorder(BorderFactory.createEmptyBorder());
         titleLabel.setBackground(ColorsList.EMPTY_COLOR);
+        titleLabel.setFont(new Font("JetBrains Mono", Font.PLAIN, 24));
 
         RoundedPanel tmp = ContainerFactory.createRoundedPanelContainer(titleLabel);
 
         Constraints.setConstraints(0, 1, 4, 1, GridBagConstraints.NONE,
-                0, 0, GridBagConstraints.LINE_START, 0.5f, 0.5f,
-                new Insets(10, 10, 10, 30));
+                50, 0, GridBagConstraints.LINE_START, 0.1f, 0.1f,
+                new Insets(10, 60, 10, 0));
         mainPanel.add(tmp, Constraints.getGridBagConstraints());
     }
 
@@ -107,13 +93,16 @@ public class ShowReportedIssueUser extends JDialog {
         JTextArea descriptionTextArea = new JTextArea(IssueController.getInstance().getIssueDescription(), 8, 40);
 
         descriptionTextArea.setBorder(BorderFactory.createEmptyBorder());
+        descriptionTextArea.setBackground(Color.WHITE);
         descriptionTextArea.setFont(new Font("JetBrains Mono", Font.PLAIN, 16));
         descriptionTextArea.setEditable(false);
+        descriptionTextArea.setFocusable(false);
 
         JScrollPane tmpScrollPane = new JScrollPane(descriptionTextArea);
 
         tmpScrollPane.setBorder(BorderFactory.createEmptyBorder());
         tmpScrollPane.setBackground(ColorsList.EMPTY_COLOR);
+        //tmpScrollPane.getViewport().setBackground(ColorsList.EMPTY_COLOR);
         tmpScrollPane.setViewportView(descriptionTextArea);
 
         RoundedPanel tmpPanel = ContainerFactory.createRoundedPanelContainer(tmpScrollPane);
@@ -125,7 +114,7 @@ public class ShowReportedIssueUser extends JDialog {
     }
 
     private void setTypeLabel() {
-        JLabel typeLabel = new JLabel(IssueController.getInstance().getIssueType());
+        JLabel typeLabel = new JLabel("Tipo: " + IssueController.getInstance().getIssueType());
 
         typeLabel.setBorder(BorderFactory.createEmptyBorder());
         typeLabel.setBackground(ColorsList.EMPTY_COLOR);
@@ -191,7 +180,7 @@ public class ShowReportedIssueUser extends JDialog {
 
     protected void setStatusLabel() {
 
-        JLabel statusLabel = new JLabel(IssueController.getInstance().getIssueStatus());
+        JLabel statusLabel = new JLabel("Stato: " + IssueController.getInstance().getIssueStatus());
 
         statusLabel.setBorder(BorderFactory.createEmptyBorder());
         statusLabel.setBackground(ColorsList.EMPTY_COLOR);
@@ -214,7 +203,7 @@ public class ShowReportedIssueUser extends JDialog {
         RoundedPanel tmp = ContainerFactory.createRoundedPanelContainer(reportDateLabel);
 
         Constraints.setConstraints(0, 4, 1, 1, GridBagConstraints.NONE,
-                0, 0, GridBagConstraints.CENTER, 0.1f, 0.1f,
+                0, 0, GridBagConstraints.CENTER, 0.5f, 0.1f,
                 new Insets(10, 10, 10, 10));
         mainPanel.add(tmp, Constraints.getGridBagConstraints());
     }
@@ -230,7 +219,7 @@ public class ShowReportedIssueUser extends JDialog {
         RoundedPanel tmp = ContainerFactory.createRoundedPanelContainer(resolutionDateLabel);
 
         Constraints.setConstraints(1, 4, 1, 1, GridBagConstraints.NONE,
-                0, 0, GridBagConstraints.CENTER, 0.1f, 0.1f,
+                0, 0, GridBagConstraints.CENTER, 0.5f, 0.1f,
                 new Insets(10, 10, 10, 10));
         mainPanel.add(tmp, Constraints.getGridBagConstraints());
     }
@@ -245,7 +234,7 @@ public class ShowReportedIssueUser extends JDialog {
         RoundedPanel tmp = ContainerFactory.createRoundedPanelContainer(reportingUserLabel);
 
         Constraints.setConstraints(2, 4, 1, 1, GridBagConstraints.NONE,
-                0, 0, GridBagConstraints.CENTER, 0.1f, 0.1f,
+                0, 0, GridBagConstraints.CENTER, 0.5f, 0.1f,
                 new Insets(10, 10, 10, 10));
         mainPanel.add(tmp, Constraints.getGridBagConstraints());
     }
@@ -261,7 +250,7 @@ public class ShowReportedIssueUser extends JDialog {
         RoundedPanel tmp = ContainerFactory.createRoundedPanelContainer(assignedDeveloperLabel);
 
         Constraints.setConstraints(3, 4, 1, 1, GridBagConstraints.NONE,
-                0, 0, GridBagConstraints.CENTER, 0.1f, 0.1f,
+                0, 0, GridBagConstraints.CENTER, 0.5f, 0.1f,
                 new Insets(10, 10, 10, 10));
         mainPanel.add(tmp, Constraints.getGridBagConstraints());
     }
