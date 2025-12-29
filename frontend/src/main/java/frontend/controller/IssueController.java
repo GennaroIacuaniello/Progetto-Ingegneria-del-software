@@ -106,11 +106,11 @@ public class IssueController {
     }
 
 
-    public void searchAssignedIssues(String issueTitle, String issueStatus, List<String> issueTags, String issueType, String issuePriority) {
+    private void searchIssueGeneral(String issueTitle, String issueStatus, List<String> issueTags, String issueType, String issuePriority, String roleToSearch) {
 
         List<String> params = setUpSearchParams(issueTitle, issueStatus, issueTags, issueType, issuePriority);
 
-        params.add(RESOLVER_ID + AuthController.getInstance().getLoggedUser().getId());
+        params.add(roleToSearch + AuthController.getInstance().getLoggedUser().getId());
         params.add(PROJECT_ID + ProjectController.getInstance().getProject().getId());
 
         String queryString = String.join("&", params);
@@ -121,6 +121,11 @@ public class IssueController {
 
     }
 
+    public void searchAssignedIssues(String issueTitle, String issueStatus, List<String> issueTags, String issueType, String issuePriority) {
+
+        searchIssueGeneral(issueTitle, issueStatus, issueTags, issueType, issuePriority, RESOLVER_ID);
+
+    }
 
     public void searchAllIssues(String issueTitle, String issueStatus, List<String> issueTags, String issueType, String issuePriority) {
 
@@ -136,23 +141,13 @@ public class IssueController {
 
     }
 
-
     public void searchReportedIssues(String issueTitle, String issueStatus, List<String> issueTags, String issueType, String issuePriority) {
 
-        List<String> params = setUpSearchParams(issueTitle, issueStatus, issueTags, issueType, issuePriority);
-
-        params.add(REPORTER_ID + AuthController.getInstance().getLoggedUser().getId());
-        params.add(PROJECT_ID + ProjectController.getInstance().getProject().getId());
-
-        String queryString = String.join("&", params);
-
-        HttpResponse<String> response = sendSearchRequest(queryString);
-
-        handleSearchResponse(response);
+        searchIssueGeneral(issueTitle, issueStatus, issueTags, issueType, issuePriority, REPORTER_ID);
 
     }
 
-    public List<String> setUpSearchParams(String issueTitle, String issueStatus, List<String> issueTags, String issueType, String issuePriority){
+    private List<String> setUpSearchParams(String issueTitle, String issueStatus, List<String> issueTags, String issueType, String issuePriority){
 
         List<String> params = new ArrayList<>();
 
@@ -175,7 +170,7 @@ public class IssueController {
         return params;
     }
 
-    public HttpResponse<String> sendSearchRequest(String queryString){
+    private HttpResponse<String> sendSearchRequest(String queryString){
 
         String fullUrl = client.getBaseUrl() + "/issues/search";
 
@@ -191,7 +186,7 @@ public class IssueController {
 
     }
 
-    public void handleSearchResponse(HttpResponse<String> response){
+    private void handleSearchResponse(HttpResponse<String> response){
 
         try{
 
@@ -308,8 +303,7 @@ public class IssueController {
 
         return issues.get(index);
     }
-
-
+    
     public String priorityIntToString(int priority) {
 
         return switch (priority) {
