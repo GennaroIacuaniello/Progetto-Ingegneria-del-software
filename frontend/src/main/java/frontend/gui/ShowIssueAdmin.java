@@ -1,6 +1,7 @@
 package frontend.gui;
 
 import frontend.controller.ControllerTMP;
+import frontend.controller.IssueController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -76,7 +77,9 @@ public class ShowIssueAdmin extends ShowAssignedIssue {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    ControllerTMP.searchDevelopers(developer);
+                    ControllerTMP.assignIssueToDeveloper(developer);
+                    statusLabel.setText("Stato: TODO");
+                    tmpPanel.setVisible(false);
                 }
             });
 

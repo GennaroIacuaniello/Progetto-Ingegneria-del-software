@@ -141,6 +141,7 @@ public class ControllerTMP {
             todo:
             effettuare una query che imposti lo stato della issue indicata
             dell'attributo issue dell'IssueController a Resolved
+            aggiorna pure i DTO dei controller
          */
 
     }
@@ -170,6 +171,7 @@ public class ControllerTMP {
             todo:
             effettuare una query che assegni l'issue presente in IssueController
             al developer con email uguale a quella passata come parametro
+            aggiorna pure i DTO dei controller
          */
     }
 }
