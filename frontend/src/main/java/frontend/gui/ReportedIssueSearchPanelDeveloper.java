@@ -5,6 +5,7 @@ import frontend.controller.IssueController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 public class ReportedIssueSearchPanelDeveloper extends ReportedIssueSearchPanelUser {
 
@@ -37,8 +38,9 @@ public class ReportedIssueSearchPanelDeveloper extends ReportedIssueSearchPanelU
     protected void searchButtonActionListener(JFrame mainFrame) {
 
         IssueController.getInstance().searchReportedIssues((titleTextField.getText().equals(TITLE_PLACEHOLDER) ? "" : titleTextField.getText()),
-                (String)statusComboBox.getSelectedItem(), tagsButton.getTags(), (String)typeComboBox.getSelectedItem(),
-                (String)priorityComboBox.getSelectedItem());
+                (Objects.equals(statusComboBox.getSelectedItem(), ALL_PLACEHOLDER) ? null : (String)statusComboBox.getSelectedItem()),
+                tagsButton.getTags(), (Objects.equals(typeComboBox.getSelectedItem(), ALL_PLACEHOLDER)) ? null : (String)typeComboBox.getSelectedItem(),
+                (Objects.equals(priorityComboBox.getSelectedItem(), ALL_PLACEHOLDER)) ? null : (String)priorityComboBox.getSelectedItem());
 
         new ReportedIssueSearchResultsPanelDeveloper(mainFrame, searchPage, IssueController.getInstance().getIssuesTitles());
     }

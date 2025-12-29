@@ -22,6 +22,7 @@ public class ReportedIssueSearchPanelUser extends RoundedPanel{
     protected static final String TITLE_PLACEHOLDER = "Inserisci titolo";
     private static final String[] statusOptions = {"Tutte", "To do", "Assegnate", "Risolte"};
     private static final String[] typeOptions = {"Tutte", "Bug", "Documentazione", "Feature", "Domanda"};
+    protected static final String ALL_PLACEHOLDER = "Tutte";
 
     public ReportedIssueSearchPanelUser(JFrame mainFrame, SearchReportedIssuePageUser searchPage) {
 
@@ -99,7 +100,8 @@ public class ReportedIssueSearchPanelUser extends RoundedPanel{
     protected void searchButtonActionListener(JFrame mainFrame) {
 
         IssueController.getInstance().searchReportedIssues((titleTextField.getText().equals(TITLE_PLACEHOLDER) ? "" : titleTextField.getText()),
-                (String)statusComboBox.getSelectedItem(), tagsButton.getTags(), (String)typeComboBox.getSelectedItem(), null);
+                (Objects.equals(statusComboBox.getSelectedItem(), ALL_PLACEHOLDER) ? null : (String)statusComboBox.getSelectedItem()),
+                tagsButton.getTags(), (Objects.equals(typeComboBox.getSelectedItem(), ALL_PLACEHOLDER)) ? null : (String)typeComboBox.getSelectedItem(), null);
 
         new ReportedIssueSearchResultsPanelUser(mainFrame, searchPage, IssueController.getInstance().getIssuesTitles());
     }
