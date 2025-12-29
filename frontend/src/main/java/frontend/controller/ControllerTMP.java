@@ -1,10 +1,7 @@
 package frontend.controller;
 
 import frontend.dto.*;
-import frontend.gui.ReportIssueUser;
 
-import java.awt.*;
-import java.io.File;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,54 +17,6 @@ public class ControllerTMP {
     private static ProjectDTO project;
     private static List<IssueDTO> issues;
     private static IssueDTO issue;
-
-    public static void searchAssignedIssues(String title, String status, List<String> tags, String type, String priority) {
-
-        /*  todo:
-            effettuare una query che restituisce le assignedIssue del loggedUser relative al project in ProjectController,
-            filtrate secondo i criteri passati come parametri,
-            di tali issue sono richiesti le chiavi primarie e i titoli.
-            Parametri:
-            - title: può essere stringa vuota
-            - status: != null
-            - tags: List<String> != null, ma può essere vuota (io passo tante stringhe, nel DB c'è la stringa unica)
-            - type: != null
-            - priority: != null
-            I risultati della query devono essere usati per creare una List<IssueDTO> da mettere come attributo al controller corrispondente
-        */
-
-        //behaviour per test (rimuovi dopo aver implementato versione Client-Server)
-        issues = new ArrayList<>();
-
-        for (int i = 0; i < 10; i++) {
-
-            issues.add(new IssueDTO(i, "issue " + i));
-        }
-    }
-
-    public static void searchAllIssues(String title, String status, List<String> tags, String type, String priority) {
-
-        /*  todo:
-            effettuare una query che restituisce  tutte le issue relative al project in ProjectController
-            filtrate secondo i criteri passati come parametri,
-            di tali issue sono richiesti le chiavi primarie e i titoli.
-            Parametri:
-            - title: può essere stringa vuota
-            - status: != null
-            - tags: List<String> != null, ma può essere vuota (io passo tante stringhe, nel DB c'è la stringa unica)
-            - type: != null
-            - priority: != null
-            I risultati della query devono essere usati per creare una List<IssueDTO> da mettere come attributo al controller corrispondente
-        */
-
-        //behaviour per test (rimuovi dopo aver implementato versione Client-Server)
-        issues = new ArrayList<>();
-
-        for (int i = 0; i < 10; i++) {
-
-            issues.add(new IssueDTO(i, "issue " + i));
-        }
-    }
 
 
     public static void setIssueDetails() {
@@ -98,7 +47,7 @@ public class ControllerTMP {
 
         issuetmp.setTitle("titolo issue");
         issuetmp.setDescription("descrizione");
-        issuetmp.setType("Bug");
+        issuetmp.setTypeWithString("Bug");
         issuetmp.setPriority(3);
         issuetmp.setTags("tag1;tag2;tag3");
         issuetmp.setStatus(IssueStatusDTO.TODO);

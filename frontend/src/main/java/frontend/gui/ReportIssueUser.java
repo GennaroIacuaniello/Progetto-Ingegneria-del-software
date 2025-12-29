@@ -1,6 +1,5 @@
 package frontend.gui;
 
-import frontend.controller.ControllerTMP;
 import frontend.controller.IssueController;
 import frontend.dto.IssueDTO;
 
@@ -164,7 +163,7 @@ public class ReportIssueUser extends RoundedPanel{
 
         issue.setTitle(titleTextField.getText());
         issue.setDescription((descriptionTextArea.getText().equals(DESCRIPTION_PLACEHOLDER) ? "" : descriptionTextArea.getText()));
-        issue.setType((String) Objects.requireNonNull(typeComboBox.getSelectedItem()));
+        issue.setTypeWithString((String) Objects.requireNonNull(typeComboBox.getSelectedItem()));
 
         issue.setPriority(IssueController.getInstance().priorityStringToInt("Media"));
 
