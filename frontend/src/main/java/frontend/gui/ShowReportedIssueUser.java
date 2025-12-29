@@ -23,18 +23,16 @@ public class ShowReportedIssueUser extends JDialog {
         setBackButton();
         setTitleLabel();
         setDescriptionTextArea();
-        setTypeLabel();
+
+        setReportingUserLabel();
+        setReportDateLabel();
         setTagsList();
         setImageButton();
-        setStatusLabel();
-        setReportDateLabel();
-        setResolutionDateLabel();
-        setReportingUserLabel();
-        setAssignedDeveloperLabel();
 
-        pack();
-        setLocationRelativeTo(parent);
-        setVisible(true);
+        setAssignedDeveloperLabel();
+        setResolutionDateLabel();
+        setTypeLabel();
+        setStatusLabel();
     }
 
     private void setDialog() {
@@ -82,8 +80,8 @@ public class ShowReportedIssueUser extends JDialog {
 
         RoundedPanel tmp = ContainerFactory.createRoundedPanelContainer(titleLabel);
 
-        Constraints.setConstraints(0, 1, 4, 1, GridBagConstraints.NONE,
-                50, 0, GridBagConstraints.LINE_START, 0.1f, 0.1f,
+        Constraints.setConstraints(0, 1, 3, 1, GridBagConstraints.NONE,
+                0, 0, GridBagConstraints.LINE_START, 0.1f, 0.5f,
                 new Insets(10, 60, 10, 0));
         mainPanel.add(tmp, Constraints.getGridBagConstraints());
     }
@@ -121,7 +119,7 @@ public class ShowReportedIssueUser extends JDialog {
 
         RoundedPanel tmp = ContainerFactory.createRoundedPanelContainer(typeLabel);
 
-        Constraints.setConstraints(0, 3, 1, 1, GridBagConstraints.NONE,
+        Constraints.setConstraints(2, 4, 1, 1, GridBagConstraints.NONE,
                 0, 0, GridBagConstraints.CENTER, 0.1f, 0.1f,
                 new Insets(10, 10, 10, 10));
         mainPanel.add(tmp, Constraints.getGridBagConstraints());
@@ -147,7 +145,7 @@ public class ShowReportedIssueUser extends JDialog {
             }
         });
 
-        Constraints.setConstraints(1, 3, 1, 1, GridBagConstraints.NONE,
+        Constraints.setConstraints(2, 3, 1, 1, GridBagConstraints.NONE,
                 0, 0, GridBagConstraints.CENTER, 0.1f, 0.1f,
                 new Insets(10, 10, 10, 10));
         mainPanel.add(tagsButton, Constraints.getGridBagConstraints());
@@ -172,7 +170,7 @@ public class ShowReportedIssueUser extends JDialog {
             }
         });
 
-        Constraints.setConstraints(2, 3, 1, 1, GridBagConstraints.NONE,
+        Constraints.setConstraints(3, 3, 1, 1, GridBagConstraints.NONE,
                 0, 0, GridBagConstraints.CENTER, 0.1f, 0.1f,
                 new Insets(10, 10, 10, 10));
         mainPanel.add(imageButton, Constraints.getGridBagConstraints());
@@ -187,7 +185,7 @@ public class ShowReportedIssueUser extends JDialog {
 
         RoundedPanel tmp = ContainerFactory.createRoundedPanelContainer(statusLabel);
 
-        Constraints.setConstraints(3, 3, 1, 1, GridBagConstraints.NONE,
+        Constraints.setConstraints(3, 4, 1, 1, GridBagConstraints.NONE,
                 0, 0, GridBagConstraints.CENTER, 0.1f, 0.1f,
                 new Insets(10, 10, 10, 10));
         mainPanel.add(tmp, Constraints.getGridBagConstraints());
@@ -202,8 +200,8 @@ public class ShowReportedIssueUser extends JDialog {
 
         RoundedPanel tmp = ContainerFactory.createRoundedPanelContainer(reportDateLabel);
 
-        Constraints.setConstraints(0, 4, 1, 1, GridBagConstraints.NONE,
-                0, 0, GridBagConstraints.CENTER, 0.5f, 0.1f,
+        Constraints.setConstraints(1, 3, 1, 1, GridBagConstraints.NONE,
+                0, 0, GridBagConstraints.CENTER, 0.1f, 0.1f,
                 new Insets(10, 10, 10, 10));
         mainPanel.add(tmp, Constraints.getGridBagConstraints());
     }
@@ -219,7 +217,7 @@ public class ShowReportedIssueUser extends JDialog {
         RoundedPanel tmp = ContainerFactory.createRoundedPanelContainer(resolutionDateLabel);
 
         Constraints.setConstraints(1, 4, 1, 1, GridBagConstraints.NONE,
-                0, 0, GridBagConstraints.CENTER, 0.5f, 0.1f,
+                0, 0, GridBagConstraints.CENTER, 0.1f, 0.1f,
                 new Insets(10, 10, 10, 10));
         mainPanel.add(tmp, Constraints.getGridBagConstraints());
     }
@@ -233,8 +231,8 @@ public class ShowReportedIssueUser extends JDialog {
 
         RoundedPanel tmp = ContainerFactory.createRoundedPanelContainer(reportingUserLabel);
 
-        Constraints.setConstraints(2, 4, 1, 1, GridBagConstraints.NONE,
-                0, 0, GridBagConstraints.CENTER, 0.5f, 0.1f,
+        Constraints.setConstraints(0, 3, 1, 1, GridBagConstraints.NONE,
+                0, 0, GridBagConstraints.CENTER, 0.1f, 0.1f,
                 new Insets(10, 10, 10, 10));
         mainPanel.add(tmp, Constraints.getGridBagConstraints());
     }
@@ -249,8 +247,8 @@ public class ShowReportedIssueUser extends JDialog {
 
         RoundedPanel tmp = ContainerFactory.createRoundedPanelContainer(assignedDeveloperLabel);
 
-        Constraints.setConstraints(3, 4, 1, 1, GridBagConstraints.NONE,
-                0, 0, GridBagConstraints.CENTER, 0.5f, 0.1f,
+        Constraints.setConstraints(0, 4, 1, 1, GridBagConstraints.NONE,
+                0, 0, GridBagConstraints.CENTER, 0.1f, 0.1f,
                 new Insets(10, 10, 10, 10));
         mainPanel.add(tmp, Constraints.getGridBagConstraints());
     }

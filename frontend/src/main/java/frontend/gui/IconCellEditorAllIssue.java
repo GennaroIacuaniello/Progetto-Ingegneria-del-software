@@ -18,7 +18,10 @@ public class IconCellEditorAllIssue extends IconCellEditorAssignedIssue{
         IssueController.getInstance().setIssue(IssueController.getInstance().getIssueFromIndex(parentTable.getSelectedRow()));
         ControllerTMP.setIssueDetails();
 
-        new ShowIssueAdmin(mainFrame);
+        ShowReportedIssueUser dialog = new ShowIssueAdmin(mainFrame);
+        dialog.pack();
+        dialog.setLocationRelativeTo(mainFrame);
+        dialog.setVisible(true);
 
         return null;
     }

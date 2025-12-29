@@ -18,7 +18,10 @@ public class IconCellEditorReportedIssueDeveloper extends IconCellEditorReported
         IssueController.getInstance().setIssue(IssueController.getInstance().getIssueFromIndex(parentTable.getSelectedRow()));
         ControllerTMP.setIssueDetails();
 
-        new ShowReportedIssueDeveloper(mainFrame);
+        ShowReportedIssueUser dialog = new ShowReportedIssueDeveloper(mainFrame);
+        dialog.pack();
+        dialog.setLocationRelativeTo(mainFrame);
+        dialog.setVisible(true);
 
         return null;
     }
