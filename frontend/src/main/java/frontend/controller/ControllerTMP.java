@@ -144,4 +144,32 @@ public class ControllerTMP {
          */
 
     }
+
+    public static List<String> searchDevelopers(String email) {
+
+        /*
+            todo:
+            effettuare una query che restituisca le email di tutti i developers appartenenti al progetto
+            presente nel ProjectController e la cui email contenga la stringa passata come parametro,
+            nel caso non ce ne siano restituire una lista vuota
+         */
+
+        List<String> developers = new ArrayList<>();
+
+        for (int i = 0; i < 10; i++) {
+
+            developers.add("developer " + i);
+        }
+
+        return developers;
+    }
+
+    public static void assignIssueToDeveloper(String email) {
+
+        /*
+            todo:
+            effettuare una query che assegni l'issue presente in IssueController
+            al developer con email uguale a quella passata come parametro
+         */
+    }
 }
