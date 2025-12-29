@@ -56,7 +56,7 @@ public class IssueDAOImpl implements IssueDAO {
 
         List<IssueDTO> searchResult = null;
 
-        StringBuilder query = new StringBuilder("SELECT issue_id, title FROM issue WHERE ");
+        StringBuilder query = new StringBuilder("SELECT issue_id, title, issue_status FROM issue WHERE ");
         List<Object> searchParam = new ArrayList<>();
 
         query.append("project_id = ?");
@@ -114,6 +114,7 @@ public class IssueDAOImpl implements IssueDAO {
 
                 issueFounded.setId(rs.getInt("issue_id"));
                 issueFounded.setTitle(rs.getString("title"));
+                issueFounded.setStatus(IssueStatusDTO.valueOf(rs.getString("issue_status")));
 
 
                 searchResult.add(issueFounded);
