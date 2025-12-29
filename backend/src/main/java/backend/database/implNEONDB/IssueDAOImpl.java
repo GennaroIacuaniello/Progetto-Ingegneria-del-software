@@ -235,7 +235,7 @@ public class IssueDAOImpl implements IssueDAO {
     public UserDTO assignIssueToDeveloperByEmail(Integer id, String resolverEmail) throws SQLException{
 
         String query = "UPDATE Issue I " +
-                       "SET resolver_id = U.user_id " +
+                       "SET resolver_id = U.user_id, issue_status = 'ASSIGNED'::IssueStatus " +
                        "FROM User_ U " +
                        "WHERE I.issue_id = ? AND U.email = ? " +
                        "RETURNING U.user_id, U.email";
