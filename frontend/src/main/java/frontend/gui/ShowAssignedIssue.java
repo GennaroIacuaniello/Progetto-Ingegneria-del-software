@@ -1,6 +1,6 @@
 package frontend.gui;
 
-import frontend.controller.ControllerTMP;
+import frontend.controller.IssueController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -51,7 +51,7 @@ public class ShowAssignedIssue extends ShowReportedIssueDeveloper {
 
     private void resolve() {
 
-        ControllerTMP.setIssueAsResolved();
+        IssueController.getInstance().setIssueAsResolved();
 
         statusLabel.setText("Stato: Risolta");
         new FloatingMessage("Segnalazione avvenuta con successo", resolveButton, FloatingMessage.SUCCESS_MESSAGE);

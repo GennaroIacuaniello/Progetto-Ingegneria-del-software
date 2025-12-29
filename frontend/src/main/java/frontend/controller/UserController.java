@@ -1,64 +1,96 @@
 package frontend.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import frontend.dto.UserDTO;
+import frontend.exception.RequestError;
+
 import java.net.URI;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class UserController {
 
-    //ESEMPIO DI CONTROLLER REST DEL FRONTEND
+    private static UserController instance;
+    private final ApiClient client = ApiClient.getInstance();
 
-    /*
-    private final String SERVER_URL = "http://localhost:8080/api/users";
-    private final HttpClient client = HttpClient.newHttpClient();
-    private final ObjectMapper mapper = new ObjectMapper();
+    private ArrayList<UserDTO> users;
+    private UserDTO user;
 
-    // Logica per scaricare users (GET)
-    public List<User> getUsers() {
-        try {
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(SERVER_URL))
-                    .GET()
-                    .build();
 
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+    private UserController(){
 
-            // Converte il JSON ricevuto in una lista di oggetti User
-            User[] userArray = mapper.readValue(response.body(), User[].class);
-            return Arrays.asList(userArray);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
-    // Logica per inviare uno user (POST)
-    public void registerUser(String email, String hashedPassword) {
+    public static UserController getInstance() {
+        if (instance == null) {
+            instance = new UserController();
+        }
+        return instance;
+    }
+
+    public void searchDevOrAdminByEmailAndProject(String devEmail) {
+
         try {
-            User userToReg = new User();
-            userToReg.setEmail(email);
-            userToReg.setHashedPassword(hashedPassword);
 
-            String jsonBody = mapper.writeValueAsString(userToReg);
+            //Da utilizzare dato che non possono esserci spazi nei parametri search delle richieste HTTP
+            String encodedDevEmail = URLEncoder.encode(devEmail, StandardCharsets.UTF_8);
 
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(SERVER_URL))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
-                    .build();
+            HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+                    .uri(URI.create(client.getBaseUrl() + "/users/developers/search?email=" + devEmail +
+                                    "&projectId=" + ProjectController.getInstance().getProject().getId()))
+                    .GET();
 
-            client.send(request, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response = client.sendRequest(requestBuilder);
+
+            if (response.statusCode() == 200) {
+
+                this.users = client.getObjectMapper().readValue(response.body(), new TypeReference<>() {});
+
+
+            } else if (response.statusCode() == 204) {
+
+                //Nessun risultato, svuoto la cache
+                this.users = new ArrayList<>();
+
+            } else {
+
+                // CASO ERRORE (500, 400, ecc.)
+                System.err.println("Errore dal server. Codice: " + response.statusCode());
+                System.err.println("Dettaglio errore: " + response.body());
+                this.users = new ArrayList<>();
+
+            }
+
+        } catch (RequestError re) {
+
+            System.err.println("Backend offline: " + re.getMessage());
+            this.users = new ArrayList<>();
 
         } catch (Exception e) {
+
             e.printStackTrace();
+            this.users = new ArrayList<>();
         }
-    }*/
+
+    }
+
+    public List<String> getUsersEmails(){
+
+        ArrayList<String> emails = new ArrayList<>();
+
+        for(UserDTO u: users)
+            emails.add(u.getEmail());
+
+        return emails;
+
+    }
 
 
 }

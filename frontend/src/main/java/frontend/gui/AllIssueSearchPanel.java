@@ -1,6 +1,5 @@
 package frontend.gui;
 
-import frontend.controller.ControllerTMP;
 import frontend.controller.IssueController;
 
 import javax.swing.*;

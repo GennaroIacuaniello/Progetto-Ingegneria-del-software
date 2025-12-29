@@ -1,7 +1,7 @@
 package frontend.gui;
 
-import frontend.controller.ControllerTMP;
 import frontend.controller.IssueController;
+import frontend.controller.UserController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -61,8 +61,10 @@ public class ShowIssueAdmin extends ShowReportedIssueDeveloper {
 
     private List<String> search() {
 
-        return ControllerTMP.searchDevelopers((searchField.getText().equals(SEARCHFIELD_PLACEHOLDER) ?
+        UserController.getInstance().searchDevOrAdminByEmailAndProject((searchField.getText().equals(SEARCHFIELD_PLACEHOLDER) ?
                 "" : searchField.getText()));
+
+        return UserController.getInstance().getUsersEmails();
     }
 
     private void showPopupMenu(List<String> developers) {
@@ -77,7 +79,7 @@ public class ShowIssueAdmin extends ShowReportedIssueDeveloper {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    ControllerTMP.assignIssueToDeveloper(developer);
+                    IssueController.getInstance().assignIssueToDeveloper(developer);
                     statusLabel.setText("Stato: ASSIGNED");
                     tmpPanel.setVisible(false);
                 }

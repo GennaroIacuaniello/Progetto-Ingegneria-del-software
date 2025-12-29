@@ -105,7 +105,6 @@ public class IssueController {
         }
     }
 
-
     private void searchIssueGeneral(String issueTitle, String issueStatus, List<String> issueTags, String issueType, String issuePriority, String roleToSearch) {
 
         List<String> params = setUpSearchParams(issueTitle, issueStatus, issueTags, issueType, issuePriority);
@@ -218,6 +217,119 @@ public class IssueController {
 
     }
 
+    public void getIssueById() {
+
+        try {
+
+            HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+                    .uri(URI.create(client.getBaseUrl() + "/issues/" + issue.getId()))
+                    .GET();
+
+            HttpResponse<String> response = client.sendRequest(requestBuilder);
+
+            if (response.statusCode() == 200) {
+
+                this.issue = client.getObjectMapper().readValue(response.body(), new TypeReference<>() {});
+
+            } else if (response.statusCode() == 404) {
+
+                System.err.println("Issue non trovata (ID: " + issue.getId() + ")");
+                this.issue = null;
+
+            } else {
+                System.err.println("Errore server: " + response.statusCode());
+                this.issue = null;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+    }
+
+    public void setIssueAsResolved() {
+
+        try {
+
+            StatusUpdateRequest requestBody = new StatusUpdateRequest(IssueStatusDTO.RESOLVED);
+
+            String jsonBody = client.getObjectMapper().writeValueAsString(requestBody);
+
+            HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+                    .uri(URI.create(client.getBaseUrl() + "/issues/" + issue.getId() + "/status"))
+                    .header("Content-Type", "application/json")
+                    .PUT(HttpRequest.BodyPublishers.ofString(jsonBody));
+
+            HttpResponse<String> response = client.sendRequest(requestBuilder);
+
+            if (response.statusCode() == 200) {
+                issue.setStatus(IssueStatusDTO.RESOLVED);
+                System.out.println("Status update success: " + response.body());
+            } else {
+                System.err.println("Error in status update: " + response.statusCode());
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void assignIssueToDeveloper(String resolverEmail) {
+
+        try {
+
+            UserDTO resolver = new UserDTO();
+            resolver.setEmail(resolverEmail);
+
+            String jsonBody = client.getObjectMapper().writeValueAsString(resolver);
+
+            HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+                    .uri(URI.create(client.getBaseUrl() + "/issues/" + issue.getId() + "/resolver"))
+                    .header("Content-Type", "application/json")
+                    .PUT(HttpRequest.BodyPublishers.ofString(jsonBody));
+
+            HttpResponse<String> response = client.sendRequest(requestBuilder);
+
+            if (response.statusCode() == 200) {
+
+                UserDTO fullResolverInfo = client.getObjectMapper().readValue(response.body(), new TypeReference<>() {});
+
+                issue.setAssignedDeveloper(fullResolverInfo);
+
+                System.out.println("Issue assigned correctly to: " + fullResolverInfo.getEmail());
+
+            } else {
+                System.err.println("Error assigning issue. Code: " + response.statusCode());
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static class StatusUpdateRequest {
+
+        private IssueStatusDTO newStatus;
+
+        public StatusUpdateRequest() {
+            //Empty constructor needed for jackson
+        }
+
+        public StatusUpdateRequest(IssueStatusDTO newStatus) {
+            this.newStatus = newStatus;
+        }
+
+        public IssueStatusDTO getNewStatus() {
+            return newStatus;
+        }
+
+        public void setNewStatus(IssueStatusDTO newStatus) {
+            this.newStatus = newStatus;
+        }
+    }
 
     public List<String> getIssuesTitles () {
 
@@ -303,7 +415,7 @@ public class IssueController {
 
         return issues.get(index);
     }
-    
+
     public String priorityIntToString(int priority) {
 
         return switch (priority) {
@@ -319,52 +431,13 @@ public class IssueController {
     public int priorityStringToInt(String priority) {
 
         return switch (priority) {
-            case "Molto Bassa" -> 0;
+            case "Molto bassa" -> 0;
             case "Bassa" -> 1;
             case "Media" -> 2;
             case "Alta" -> 3;
-            case "Molto Alta" -> 4;
+            case "Molto alta" -> 4;
             default -> -1;
         };
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public void setIssueDetails() {
-
-        /*
-            Questo metodo deve settare tutti gli attributi della issue che si trova nel controller
-            (attualmente è questa classe, poi diventerà IssueController)
-            Attributi:
-            - title: c'è obbligatoriamente
-            - description: visto che io ti passo le stringhe vuote se non c'è
-                           la descrizione mi aspetto che tu fai lo stesso
-            - type: c'è obbligatoriamente
-            - tags: me li aspetto separati in un List<String>, se non ci
-                    sono tags mi aspetto la List<String> vuota ma non null
-            - image: mi aspetto l'immagine di tipo File (quando le metterai nel DB vedremo se
-                     effettivamente va bene o devo cambiare io qualcosa nel FileChooser) oppure null
-            - status: c'è obbligatoriamente
-            - reportDate: c'è obbligatoriamente
-            - resolutionDate: se non è stato ancora risolto mi aspetto null
-                              (se preferisci stringa vuota va bene basta che mi fai sapere)
-            - reportingUser: c'è obbligatoriamente
-            - assignedDeveloper: se non c'è mi aspetto null (se preferisci stringa
-                                 vuota va bene basta che mi fai sapere)
-            - priority: c'è obbligatoriamente
-         */
-    }
-
-
 
 }

@@ -65,6 +65,7 @@ public class ProjectController {
                 // CASO ERRORE (500, 400, ecc.)
                 System.err.println("Errore dal server. Codice: " + response.statusCode());
                 System.err.println("Dettaglio errore: " + response.body());
+                this.projects = new ArrayList<>();
 
             }
 
@@ -113,4 +114,5 @@ public class ProjectController {
     public void setProject(ProjectDTO project) {
         this.project = project;
     }
+
 }

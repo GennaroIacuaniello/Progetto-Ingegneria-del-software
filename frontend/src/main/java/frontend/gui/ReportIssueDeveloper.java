@@ -12,7 +12,7 @@ import java.util.Objects;
 public class ReportIssueDeveloper extends ReportIssueUser {
 
     private JComboBox<String> priorityComboBox;
-    private static final String[] options = {"Molto bassa", "Bassa", "Normale", "Alta", "Molto alta"};
+    private static final String[] options = {"Molto bassa", "Bassa", "Media", "Alta", "Molto alta"};
 
     public ReportIssueDeveloper(JFrame mainFrame, HomePanelUser homePanelUser) {
 

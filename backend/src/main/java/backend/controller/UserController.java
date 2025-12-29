@@ -2,10 +2,12 @@ package backend.controller;
 
 
 import backend.database.dao.UserDAO;
-import backend.model.User;
+import backend.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,22 +15,33 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
 
-    //ESEMPIO DI CONTROLLER REST
+    private final UserDAO userDAO;
 
 
-    private final UserDAO userDao;
-
-
-    public UserController(UserDAO userDao) {
-        this.userDao = userDao;
+    public UserController(UserDAO userDAO) {
+        this.userDAO = userDAO;
     }
 
-    @GetMapping
-    public List<User> getUsers() {
-        //return userDao.findAll();
-        return new ArrayList<>();
-    }
+    @GetMapping("/developers/search")
+    public ResponseEntity<List<UserDTO>> searchDevOrAdminByEmailAndProject(
+            @RequestParam String email,
+            @RequestParam int projectId) throws SQLException {
 
+        if (email == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        List<UserDTO> searchResults = userDAO.searchDevOrAdminByEmailAndProject(email, projectId);
+
+        if ( searchResults == null || searchResults.isEmpty()) {
+            // Se la lista è vuota, restituisce un 204 No Content
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(searchResults);
+
+
+    }
 
 
 }

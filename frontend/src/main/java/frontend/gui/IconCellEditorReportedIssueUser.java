@@ -1,6 +1,5 @@
 package frontend.gui;
 
-import frontend.controller.ControllerTMP;
 import frontend.controller.IssueController;
 
 import javax.swing.*;
@@ -45,7 +44,7 @@ public class IconCellEditorReportedIssueUser extends DefaultCellEditor {
     public Object getCellEditorValue() {
 
         IssueController.getInstance().setIssue(IssueController.getInstance().getIssueFromIndex(parentTable.getSelectedRow()));
-        ControllerTMP.setIssueDetails();
+        IssueController.getInstance().getIssueById();
 
         ShowReportedIssueUser dialog = new ShowReportedIssueUser(mainFrame);
         dialog.pack();

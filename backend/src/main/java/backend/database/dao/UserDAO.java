@@ -11,4 +11,6 @@ public interface UserDAO {
 
     UserDTO searchUserByMail(String email) throws SQLException;
 
+    List<UserDTO> searchDevOrAdminByEmailAndProject(String email, Integer projectId) throws SQLException;
+
 }

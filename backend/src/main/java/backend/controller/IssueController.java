@@ -4,6 +4,7 @@ import backend.database.dao.IssueDAO;
 import backend.database.dao.ProjectDAO;
 import backend.database.dao.UserDAO;
 import backend.dto.IssueDTO;
+import backend.dto.IssueStatusDTO;
 import backend.dto.ProjectDTO;
 import backend.dto.UserDTO;
 import backend.model.Project;
@@ -61,6 +62,87 @@ public class IssueController {
             //Se ci sono dati, restituisce 200 OK con il corpo (la lista)
             return ResponseEntity.ok(searchResults);
 
+
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<IssueDTO> getIssueById(@PathVariable("id") int id) throws SQLException{
+
+        IssueDTO issue = issueDAO.getIssueById(id);
+
+        if (issue != null) {
+
+            return ResponseEntity.ok(issue);
+
+        } else {
+
+            return ResponseEntity.notFound().build();
+
+        }
+
+    }
+
+    @PutMapping("/{id}/status")
+    public ResponseEntity<?> updateIssueStatus(
+            @PathVariable("id") int id,
+            @RequestBody StatusUpdateRequest request) throws SQLException{
+
+        IssueStatusDTO newStatus = request.getNewStatus();
+
+        if (newStatus == null || newStatus.toString().isEmpty()) {
+            return ResponseEntity.badRequest().body("Status error: missing");
+        }
+
+
+        boolean updated = issueDAO.updateStatus(id, newStatus);
+
+        if (updated) {
+            return ResponseEntity.ok("Status update success");
+        } else {
+            return ResponseEntity.status(404).body("Issue not found");
+        }
+
+    }
+
+    public static class StatusUpdateRequest {
+
+        private IssueStatusDTO newStatus;
+
+        public StatusUpdateRequest() {
+            //Empty constructor needed for jackson
+        }
+
+        public StatusUpdateRequest(IssueStatusDTO newStatus) {
+            this.newStatus = newStatus;
+        }
+
+        public IssueStatusDTO getNewStatus() {
+            return newStatus;
+        }
+
+        public void setNewStatus(IssueStatusDTO newStatus) {
+            this.newStatus = newStatus;
+        }
+    }
+
+    @PutMapping("/{id}/resolver")
+    public ResponseEntity<?> assignIssueToDeveloper(
+            @PathVariable("id") int id,
+            @RequestBody UserDTO resolver) throws SQLException{
+
+        String resolverEmail = resolver.getEmail();
+
+        if (resolverEmail == null || resolverEmail.isEmpty()) {
+            return ResponseEntity.badRequest().body("Assigning error: missing email");
+        }
+
+        UserDTO assignedUser = issueDAO.assignIssueToDeveloperByEmail(id, resolverEmail);
+
+        if (assignedUser != null) {
+            return ResponseEntity.ok(assignedUser);
+        } else {
+            return ResponseEntity.status(404).body("User with specified email not found or issue does not exist");
+        }
 
     }
 
