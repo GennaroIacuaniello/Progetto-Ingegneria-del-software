@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-public class ShowIssueAdmin extends ShowAssignedIssue {
+public class ShowIssueAdmin extends ShowReportedIssueDeveloper {
 
     private RoundedPanel tmpPanel;
     private JTextField searchField;
@@ -43,7 +43,7 @@ public class ShowIssueAdmin extends ShowAssignedIssue {
 
     private void setSearchButton() {
 
-        searchButton = new IconButton("searchButton.png", 30, 30);
+        searchButton = new IconButton("/frontend/gui/images/searchButton.png", 30, 30);
 
         searchButton.addActionListener(new ActionListener() {
 
@@ -55,7 +55,7 @@ public class ShowIssueAdmin extends ShowAssignedIssue {
         });
 
         Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.NONE,
-                0, 0, GridBagConstraints.LINE_END);
+                0, 0, GridBagConstraints.LINE_END, new Insets(5, 5, 5, 0));
         tmpPanel.add(searchButton, Constraints.getGridBagConstraints());
     }
 
@@ -78,7 +78,7 @@ public class ShowIssueAdmin extends ShowAssignedIssue {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     ControllerTMP.assignIssueToDeveloper(developer);
-                    statusLabel.setText("Stato: TODO");
+                    statusLabel.setText("Stato: ASSIGNED");
                     tmpPanel.setVisible(false);
                 }
             });
@@ -99,7 +99,7 @@ public class ShowIssueAdmin extends ShowAssignedIssue {
         TextComponentFocusBehaviour.setTextComponentFocusBehaviour(searchField, SEARCHFIELD_PLACEHOLDER);
 
         Constraints.setConstraints(1, 0, 1, 1, GridBagConstraints.NONE,
-                0, 0, GridBagConstraints.LINE_START);
+                0, 0, GridBagConstraints.LINE_START, new Insets(5, 0, 5, 5));
         tmpPanel.add(searchField, Constraints.getGridBagConstraints());
     }
 }
