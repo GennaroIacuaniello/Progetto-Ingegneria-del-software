@@ -1,10 +1,6 @@
 package backend.dto;
 
-import backend.caso.DeveloperDTO;
-
-import java.awt.*;
 import java.util.Date;
-import java.util.List;
 
 public class IssueDTO {
 

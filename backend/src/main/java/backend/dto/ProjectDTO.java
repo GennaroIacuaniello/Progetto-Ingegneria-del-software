@@ -1,6 +1,5 @@
 package backend.dto;
 
-import backend.caso.DeveloperDTO;
 import backend.exception.InvalidDeveloper;
 import backend.exception.InvalidTeam;
 
