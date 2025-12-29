@@ -34,11 +34,14 @@ public class FileChooserButton extends IconButton{
 
             String fileName = fileChooser.getSelectedFile().getName().toLowerCase();
 
-            if (fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") ||
-                    fileName.endsWith(".png") || fileName.endsWith(".gif"))
-                fileChooserPanel.setSelectedFile(fileChooser.getSelectedFile());
-            else
-                new FloatingMessage("Formato del file non supportato", this, FloatingMessage.ERROR_MESSAGE);
+            if (fileChooser.getSelectedFile().length() <= 2 * 1024 * 1024) {
+                if (fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") ||
+                        fileName.endsWith(".png") || fileName.endsWith(".gif"))
+                    fileChooserPanel.setSelectedFile(fileChooser.getSelectedFile());
+                else
+                    new FloatingMessage("Formato del file non supportato", this, FloatingMessage.ERROR_MESSAGE);
+            } else
+                new FloatingMessage("L'immagine è troppo pesante, selezionare un'immagine con dimensione non superiore a ", this, FloatingMessage.ERROR_MESSAGE);
         }
     }
 
