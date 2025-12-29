@@ -42,6 +42,9 @@ public class UserController {
             //Da utilizzare dato che non possono esserci spazi nei parametri search delle richieste HTTP
             String encodedDevEmail = URLEncoder.encode(devEmail, StandardCharsets.UTF_8);
 
+            System.out.println("Calling URL: " + client.getBaseUrl() + "/users/developers/search?email=" + devEmail +
+                    "&projectId=" + ProjectController.getInstance().getProject().getId());
+
             HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
                     .uri(URI.create(client.getBaseUrl() + "/users/developers/search?email=" + devEmail +
                                     "&projectId=" + ProjectController.getInstance().getProject().getId()))
@@ -78,6 +81,11 @@ public class UserController {
             e.printStackTrace();
             this.users = new ArrayList<>();
         }
+
+        for(UserDTO u: users)
+            System.out.println(u.getEmail());
+
+        System.out.println("ciao");
 
     }
 
