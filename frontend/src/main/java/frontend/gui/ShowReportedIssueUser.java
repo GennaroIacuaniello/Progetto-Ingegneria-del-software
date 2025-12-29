@@ -12,6 +12,7 @@ import java.io.IOException;
 public class ShowReportedIssueUser extends JDialog {
 
     protected RoundedPanel mainPanel;
+    protected JLabel statusLabel;
 
     public ShowReportedIssueUser(JFrame parent) {
 
@@ -178,7 +179,7 @@ public class ShowReportedIssueUser extends JDialog {
 
     protected void setStatusLabel() {
 
-        JLabel statusLabel = new JLabel("Stato: " + IssueController.getInstance().getIssueStatus());
+        statusLabel = new JLabel("Stato: " + IssueController.getInstance().getIssueStatus());
 
         statusLabel.setBorder(BorderFactory.createEmptyBorder());
         statusLabel.setBackground(ColorsList.EMPTY_COLOR);

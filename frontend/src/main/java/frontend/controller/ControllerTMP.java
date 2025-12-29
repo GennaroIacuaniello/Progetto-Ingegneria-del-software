@@ -134,4 +134,14 @@ public class ControllerTMP {
             issues.add(new IssueDTO(i, "issue " + i));
         }
     }
+
+    public static void setIssueAsResolved() {
+
+        /*
+            todo:
+            effettuare una query che imposti lo stato della issue indicata
+            dell'attributo issue dell'IssueController a Resolved
+         */
+
+    }
 }
