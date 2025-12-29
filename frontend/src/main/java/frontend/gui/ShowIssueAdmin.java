@@ -19,9 +19,12 @@ public class ShowIssueAdmin extends ShowAssignedIssue {
 
         super(parent);
 
-        setTmpPanel();
-        setSearchButton();
-        setSearchField();
+        if (statusLabel.getText().equals("Stato: TODO")) {
+
+            setTmpPanel();
+            setSearchButton();
+            setSearchField();
+        }
     }
 
     private void setTmpPanel() {
