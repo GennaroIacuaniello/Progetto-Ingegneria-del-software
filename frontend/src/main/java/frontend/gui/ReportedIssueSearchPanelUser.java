@@ -98,7 +98,7 @@ public class ReportedIssueSearchPanelUser extends RoundedPanel{
 
     protected void searchButtonActionListener(JFrame mainFrame) {
 
-        ControllerTMP.searchReportedIssues((titleTextField.getText().equals(TITLE_PLACEHOLDER) ? "" : titleTextField.getText()),
+        IssueController.getInstance().searchReportedIssues((titleTextField.getText().equals(TITLE_PLACEHOLDER) ? "" : titleTextField.getText()),
                 (String)statusComboBox.getSelectedItem(), tagsButton.getTags(), (String)typeComboBox.getSelectedItem(), null);
 
         new ReportedIssueSearchResultsPanelUser(mainFrame, searchPage, IssueController.getInstance().getIssuesTitles());

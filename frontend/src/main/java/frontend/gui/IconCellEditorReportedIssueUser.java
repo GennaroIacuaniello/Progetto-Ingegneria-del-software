@@ -45,7 +45,7 @@ public class IconCellEditorReportedIssueUser extends DefaultCellEditor {
     public Object getCellEditorValue() {
 
         IssueController.getInstance().setIssue(IssueController.getInstance().getIssueFromIndex(parentTable.getSelectedRow()));
-        ControllerTMP.setIssueDetails();
+        IssueController.getInstance().setIssueDetails();
 
         new ShowReportedIssueUser(mainFrame);
 

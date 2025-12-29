@@ -14,7 +14,7 @@ public class AssignedIssueSearchPanel extends ReportedIssueSearchPanelDeveloper 
     @Override
     protected void searchButtonActionListener(JFrame mainFrame) {
 
-        ControllerTMP.searchAssignedIssues((titleTextField.getText().equals(TITLE_PLACEHOLDER) ? "" : titleTextField.getText()),
+        IssueController.getInstance().searchAssignedIssues((titleTextField.getText().equals(TITLE_PLACEHOLDER) ? "" : titleTextField.getText()),
                 (String)statusComboBox.getSelectedItem(), tagsButton.getTags(), (String)typeComboBox.getSelectedItem(),
                 (String)priorityComboBox.getSelectedItem());
 
