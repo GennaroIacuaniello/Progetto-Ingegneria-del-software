@@ -93,6 +93,20 @@ public class ControllerTMP {
                                  vuota va bene basta che mi fai sapere)
             - priority: c'è obbligatoriamente
          */
+
+        IssueDTO issuetmp = new IssueDTO();
+
+        issuetmp.setTitle("titolo issue");
+        issuetmp.setDescription("descrizione");
+        issuetmp.setType("Bug");
+        issuetmp.setPriority(3);
+        issuetmp.setTags("tag1;tag2;tag3");
+        issuetmp.setReportDate(new Date("01/01/2016"));
+        issuetmp.setResolutionDate(new Date("05/01/2016"));
+        issuetmp.setReportingUser(new UserDTO("reportinguser@qualcosa", ""));
+        issuetmp.setAssignedDeveloper(new UserDTO("assigneddeveloper@qualcosa", ""));
+
+        IssueController.getInstance().setIssue(issuetmp);
     }
 
 
