@@ -101,6 +101,7 @@ public class ControllerTMP {
         issuetmp.setType("Bug");
         issuetmp.setPriority(3);
         issuetmp.setTags("tag1;tag2;tag3");
+        issuetmp.setStatus(IssueStatusDTO.ASSIGNED);
         issuetmp.setReportDate(new Date("01/01/2016"));
         issuetmp.setResolutionDate(new Date("05/01/2016"));
         issuetmp.setReportingUser(new UserDTO("reportinguser@qualcosa", ""));

@@ -16,7 +16,7 @@ public class IconCellEditorAllIssue extends IconCellEditorAssignedIssue{
     public Object getCellEditorValue() {
 
         IssueController.getInstance().setIssue(IssueController.getInstance().getIssueFromIndex(parentTable.getSelectedRow()));
-        IssueController.getInstance().setIssueDetails();
+        ControllerTMP.setIssueDetails();
 
         new ShowIssueAdmin(mainFrame);
 
