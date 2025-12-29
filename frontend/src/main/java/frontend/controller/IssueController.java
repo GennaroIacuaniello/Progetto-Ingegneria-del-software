@@ -1,7 +1,6 @@
 package frontend.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import frontend.dto.IssueDTO;
 import frontend.dto.IssueStatusDTO;
 import frontend.dto.ProjectDTO;
@@ -12,7 +11,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URLEncoder;
-import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
@@ -20,8 +18,6 @@ import java.nio.file.Files;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.Date;
-import java.time.Duration;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +29,10 @@ public class IssueController {
 
     private ArrayList<IssueDTO> issues;
     private IssueDTO issue;
+
+    private static final String RESOLVER_ID = "resolverId=";
+    private static final String REPORTER_ID = "reporterId=";
+    private static final String PROJECT_ID = "projectId=";
 
     private IssueController(){
 
@@ -108,114 +108,92 @@ public class IssueController {
 
     public void searchAssignedIssues(String issueTitle, String issueStatus, List<String> issueTags, String issueType, String issuePriority) {
 
-        try {
+        List<String> params = setUpSearchParams(issueTitle, issueStatus, issueTags, issueType, issuePriority);
 
-            List<String> params = new ArrayList<>();
+        params.add(RESOLVER_ID + AuthController.getInstance().getLoggedUser().getId());
+        params.add(PROJECT_ID + ProjectController.getInstance().getProject().getId());
 
-            if (issueTitle != null && !issueTitle.isEmpty()) {
-                //Encoder da utilizzare dato che non possono esserci spazi nei parametri search delle richieste HTTP
-                params.add("title=" + URLEncoder.encode(issueTitle, StandardCharsets.UTF_8));
-            }
-            if (issueStatus != null && !issueStatus.isEmpty()) {
-                params.add("status=" + URLEncoder.encode(issueStatus, StandardCharsets.UTF_8));
-            }
-            if (issueTags != null && !issueTags.isEmpty()) {
-                params.add("tags=" + URLEncoder.encode(String.join(";", issueTags), StandardCharsets.UTF_8));
-            }
-            if (issueType != null && !issueType.isEmpty()) {
-                params.add("type=" + URLEncoder.encode(issueType, StandardCharsets.UTF_8));
-            }
-            if (issuePriority != null && !issuePriority.isEmpty()) {
-                params.add("priority=" + priorityStringToInt(issuePriority));
-            }
+        String queryString = String.join("&", params);
 
-            params.add("resolverId=" + AuthController.getInstance().getLoggedUser().getId());
-            params.add("projectId=" + ProjectController.getInstance().getProject().getId());
+        HttpResponse<String> response = sendSearchRequest(queryString);
 
-            String queryString = String.join("&", params);
-
-            String fullUrl = client.getBaseUrl() + "/issues/search";
-
-            fullUrl += "?" + queryString;
-
-
-            System.out.println("Calling URL: " + fullUrl); // Debug utile
-
-            HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
-                    .uri(URI.create(fullUrl))
-                    .GET();
-
-            HttpResponse<String> response = client.sendRequest(requestBuilder);
-
-            if (response.statusCode() == 200) {
-
-                this.issues = client.getObjectMapper().readValue(response.body(), new TypeReference<>(){});
-
-            } else if (response.statusCode() == 204) {
-
-                this.issues = new ArrayList<>();
-
-            } else {
-
-                // CASO ERRORE (500, 400, ecc.)
-                System.err.println("Errore dal server. Codice: " + response.statusCode());
-                System.err.println("Dettaglio errore: " + response.body());
-
-            }
-
-        } catch (RequestError re) {
-
-            System.err.println("Backend offline: " + re.getMessage());
-            this.issues = new ArrayList<>();
-
-        } catch (Exception e) {
-
-            e.printStackTrace();
-            this.issues = new ArrayList<>();
-        }
+        handleSearchResponse(response);
 
     }
 
 
     public void searchAllIssues(String issueTitle, String issueStatus, List<String> issueTags, String issueType, String issuePriority) {
 
-        try {
+        List<String> params = setUpSearchParams(issueTitle, issueStatus, issueTags, issueType, issuePriority);
 
-            List<String> params = new ArrayList<>();
+        params.add(PROJECT_ID + ProjectController.getInstance().getProject().getId());
 
-            if (issueTitle != null && !issueTitle.isEmpty()) {
-                //Encoder da utilizzare dato che non possono esserci spazi nei parametri search delle richieste HTTP
-                params.add("title=" + URLEncoder.encode(issueTitle, StandardCharsets.UTF_8));
-            }
-            if (issueStatus != null && !issueStatus.isEmpty()) {
-                params.add("status=" + URLEncoder.encode(issueStatus, StandardCharsets.UTF_8));
-            }
-            if (issueTags != null && !issueTags.isEmpty()) {
-                params.add("tags=" + URLEncoder.encode(String.join(";", issueTags), StandardCharsets.UTF_8));
-            }
-            if (issueType != null && !issueType.isEmpty()) {
-                params.add("type=" + URLEncoder.encode(issueType, StandardCharsets.UTF_8));
-            }
-            if (issuePriority != null && !issuePriority.isEmpty()) {
-                params.add("priority=" + priorityStringToInt(issuePriority));
-            }
+        String queryString = String.join("&", params);
 
-            params.add("projectId=" + ProjectController.getInstance().getProject().getId());
+        HttpResponse<String> response = sendSearchRequest(queryString);
 
-            String queryString = String.join("&", params);
+        handleSearchResponse(response);
 
-            String fullUrl = client.getBaseUrl() + "/issues/search";
-
-            fullUrl += "?" + queryString;
+    }
 
 
-            System.out.println("Calling URL: " + fullUrl); // Debug utile
+    public void searchReportedIssues(String issueTitle, String issueStatus, List<String> issueTags, String issueType, String issuePriority) {
 
-            HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
-                    .uri(URI.create(fullUrl))
-                    .GET();
+        List<String> params = setUpSearchParams(issueTitle, issueStatus, issueTags, issueType, issuePriority);
 
-            HttpResponse<String> response = client.sendRequest(requestBuilder);
+        params.add(REPORTER_ID + AuthController.getInstance().getLoggedUser().getId());
+        params.add(PROJECT_ID + ProjectController.getInstance().getProject().getId());
+
+        String queryString = String.join("&", params);
+
+        HttpResponse<String> response = sendSearchRequest(queryString);
+
+        handleSearchResponse(response);
+
+    }
+
+    public List<String> setUpSearchParams(String issueTitle, String issueStatus, List<String> issueTags, String issueType, String issuePriority){
+
+        List<String> params = new ArrayList<>();
+
+        if (issueTitle != null && !issueTitle.isEmpty()) {
+            //Encoder da utilizzare dato che non possono esserci spazi nei parametri search delle richieste HTTP
+            params.add("title=" + URLEncoder.encode(issueTitle, StandardCharsets.UTF_8));
+        }
+        if (issueStatus != null && !issueStatus.isEmpty()) {
+            params.add("status=" + URLEncoder.encode(issueStatus, StandardCharsets.UTF_8));
+        }
+        if (issueTags != null && !issueTags.isEmpty()) {
+            params.add("tags=" + URLEncoder.encode(String.join(";", issueTags), StandardCharsets.UTF_8));
+        }
+        if (issueType != null && !issueType.isEmpty()) {
+            params.add("type=" + URLEncoder.encode(issueType, StandardCharsets.UTF_8));
+        }
+        if (issuePriority != null && !issuePriority.isEmpty()) {
+            params.add("priority=" + priorityStringToInt(issuePriority));
+        }
+        return params;
+    }
+
+    public HttpResponse<String> sendSearchRequest(String queryString){
+
+        String fullUrl = client.getBaseUrl() + "/issues/search";
+
+        fullUrl += "?" + queryString;
+
+        System.out.println("Calling URL: " + fullUrl); // Debug utile
+
+        HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+                .uri(URI.create(fullUrl))
+                .GET();
+
+        return client.sendRequest(requestBuilder);
+
+    }
+
+    public void handleSearchResponse(HttpResponse<String> response){
+
+        try{
 
             if (response.statusCode() == 200) {
 
@@ -230,7 +208,6 @@ public class IssueController {
                 // CASO ERRORE (500, 400, ecc.)
                 System.err.println("Errore dal server. Codice: " + response.statusCode());
                 System.err.println("Dettaglio errore: " + response.body());
-
             }
 
         } catch (RequestError re) {
@@ -395,27 +372,5 @@ public class IssueController {
     }
 
 
-    public void searchReportedIssues(String title, String status, List<String> tags, String type, String priority) {
 
-        /*  todo:
-            effettuare una query che restituisce le reportedIssue del loggedUser relative al project in ProjectController,
-            filtrate secondo i criteri passati come parametri,
-            di tali issue sono richiesti le chiavi primarie e i titoli.
-            Parametri:
-            - title: può essere stringa vuota
-            - status: != null
-            - tags: List<String> != null, ma può essere vuota (io passo tante stringhe, nel DB c'è la stringa unica)
-            - type: != null
-            - priority: può essere null
-            I risultati della query devono essere usati per creare una List<IssueDTO> da mettere come attributo al controller corrispondente
-        */
-
-        //behaviour per test (rimuovi dopo aver implementato versione Client-Server)
-        issues = new ArrayList<>();
-
-        for (int i = 0; i < 10; i++) {
-
-            issues.add(new IssueDTO(i, "issue " + i));
-        }
-    }
 }

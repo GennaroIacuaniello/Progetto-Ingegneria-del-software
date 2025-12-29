@@ -60,29 +60,7 @@ public class ControllerTMP {
     }
 
 
-    public static void searchReportedIssues(String title, String status, List<String> tags, String type, String priority) {
 
-        /*  todo:
-            effettuare una query che restituisce le reportedIssue del loggedUser relative al project in ProjectController,
-            filtrate secondo i criteri passati come parametri,
-            di tali issue sono richiesti le chiavi primarie e i titoli.
-            Parametri:
-            - title: può essere stringa vuota
-            - status: != null
-            - tags: List<String> != null, ma può essere vuota (io passo tante stringhe, nel DB c'è la stringa unica)
-            - type: != null
-            - priority: può essere null
-            I risultati della query devono essere usati per creare una List<IssueDTO> da mettere come attributo al controller corrispondente
-        */
-
-        //behaviour per test (rimuovi dopo aver implementato versione Client-Server)
-        issues = new ArrayList<>();
-
-        for (int i = 0; i < 10; i++) {
-
-            issues.add(new IssueDTO(i, "issue " + i));
-        }
-    }
 
     public static void setIssueAsResolved() {
 

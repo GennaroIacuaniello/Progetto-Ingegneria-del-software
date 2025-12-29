@@ -53,7 +53,7 @@ public class IssueDAOImpl implements IssueDAO {
 
     }
 
-    public List<IssueDTO> searchIssues(String title, String status, String tags, String type, Integer priority, Integer resolverId, Integer projectId) throws SQLException{
+    public List<IssueDTO> searchIssues(String title, String status, String tags, String type, Integer priority, Integer resolverId, Integer reporterId, Integer projectId) throws SQLException{
 
         List<IssueDTO> searchResult = null;
 
@@ -66,6 +66,11 @@ public class IssueDAOImpl implements IssueDAO {
         if(resolverId != null){
             query.append(" AND resolver_id = ?");
             searchParam.add(resolverId);
+        }
+
+        if(reporterId != null){
+            query.append(" AND reporter_id = ?");
+            searchParam.add(reporterId);
         }
 
         if (title != null && !title.isEmpty()) {

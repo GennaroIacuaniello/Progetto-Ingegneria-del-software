@@ -47,10 +47,11 @@ public class IssueController {
             @RequestParam(required = false) String type,
             @RequestParam(required = false) Integer priority,
             @RequestParam(required = false) Integer resolverId,
+            @RequestParam(required = false) Integer reporterId,
             @RequestParam Integer projectId
     ) throws SQLException{
 
-            List<IssueDTO> searchResults = issueDAO.searchIssues(title, status, tags, type, priority, resolverId, projectId);
+            List<IssueDTO> searchResults = issueDAO.searchIssues(title, status, tags, type, priority, resolverId, reporterId, projectId);
 
             if ( searchResults == null || searchResults.isEmpty()) {
                 // Se la lista è vuota, restituisce un 204 No Content
