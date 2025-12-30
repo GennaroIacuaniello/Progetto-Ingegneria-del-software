@@ -92,9 +92,9 @@ public class HomePage {
 
         setFlatLaf();
 
-        AuthController.getInstance().login("ciao@ciao.ciao", "ciao");
+        //AuthController.getInstance().login("ciao@ciao.ciao", "ciao");
 
-        //AuthController.getInstance().login("admin@admin.admin", "admin");
+        AuthController.getInstance().login("admin@admin.admin", "admin");
 
         HomePage homePage = new HomePage();
     }

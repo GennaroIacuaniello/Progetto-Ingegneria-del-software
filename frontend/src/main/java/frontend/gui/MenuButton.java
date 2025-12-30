@@ -1,10 +1,11 @@
 package frontend.gui;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class MenuButton extends IconButton {
 
-    private final String[] options = {"Crea nuova utenza",  "Visualizza DashBoard", "Visualizza Report"};
+    private final String[] options = {"Crea nuova utenza",  "Visualizza DashBoard", "Visualizza Report", "Gestisci progetti"};
 
     public MenuButton() {
 
@@ -50,6 +51,10 @@ public class MenuButton extends IconButton {
                     System.out.println("Visualizza Report");
                     break;
 
+                case "Gestisci progetti":
+                    JFrame owner = (JFrame) SwingUtilities.getWindowAncestor(this);
+                    ManageProjectsDialog manageProjectsDialog = new ManageProjectsDialog(owner);
+                    manageProjectsDialog.setVisible(true);
                 default:
                     break;
             }
