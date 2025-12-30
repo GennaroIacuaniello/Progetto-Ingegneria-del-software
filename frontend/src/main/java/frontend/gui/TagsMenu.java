@@ -49,7 +49,7 @@ public class TagsMenu extends MyDialog{
         Constraints.setConstraints(0, 0, 1, 1,
                 GridBagConstraints.BOTH, 0, 0, GridBagConstraints.CENTER,
                 new Insets(5, 5, 5, 5));
-        contentPanel.add(scrollPane, Constraints.getGridBagConstraints());
+        mainPanel.add(scrollPane, Constraints.getGridBagConstraints());
     }
 
     private void setAddButton() {

@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class MenuButton extends IconButton {
 
-    private final String[] options = {"Crea nuova utenza",  "Visualizza DashBoard", "Visualizza Report", "Gestisci progetti"};
+    private final String[] options = {"Crea nuova utenza",  "Visualizza DashBoard", "Gestisci progetti"};
 
     public MenuButton() {
 
@@ -44,11 +44,10 @@ public class MenuButton extends IconButton {
                     break;
 
                 case "Visualizza DashBoard":
-                    System.out.println("Visualizza DashBoard");
-                    break;
-
-                case "Visualizza Report":
-                    System.out.println("Visualizza Report");
+                    JDialog dialog = new DashBoard((JFrame)SwingUtilities.getAncestorOfClass(JFrame.class, this));
+                    dialog.pack();
+                    dialog.setLocationRelativeTo(SwingUtilities.getAncestorOfClass(JFrame.class, this));
+                    dialog.setVisible(true);
                     break;
 
                 case "Gestisci progetti":
