@@ -85,7 +85,7 @@ public class TeamDAOImpl implements TeamDAO {
 
     public boolean addMemberToTeam(Integer teamId, String email) throws SQLException{
 
-        String query = "INSERT INTO Works_in (team_name, user_id) VALUES "+
+        String query = "INSERT INTO Works_in (team_id, user_id) VALUES "+
                        "(?, (SELECT user_id FROM User_ U WHERE U.email = ?))";
 
 
