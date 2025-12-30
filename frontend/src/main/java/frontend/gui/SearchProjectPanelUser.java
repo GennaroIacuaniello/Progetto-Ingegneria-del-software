@@ -5,14 +5,6 @@ import java.awt.*;
 
 public class SearchProjectPanelUser {
 
-    //todo:
-    /*
-       deve contenere la barra di ricerca con JTextField per inserire il nome del progetto e JButton per effettuare la ricerca.
-       I risultati della ricerca devono essere inseriti in SearchProjectResults.
-       Le componenti devono essere inserite in un JPanel che la classe HomePanel prenderà tramite un metodo e inserirà nel JPanel apposito
-       Controllare se la classe può essere implementata tramite design pattern singleton
-    */
-
     protected final RoundedPanel searchProjectPanel;
     protected JTextField searchTextField;
     protected final String TEXTFIELD_PLACEHOLDER = "Inserire nome progetto";
