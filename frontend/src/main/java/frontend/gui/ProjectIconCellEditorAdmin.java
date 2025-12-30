@@ -41,6 +41,10 @@ public class ProjectIconCellEditorAdmin extends ProjectIconCellEditorDeveloper {
                 //todo: vedi cosa fare
                 System.out.println("vedi teams");
                 break;
+
+            case "REPORT MENSILE":
+                System.out.println("vedi report");
+                break;
         }
 
         return null;
