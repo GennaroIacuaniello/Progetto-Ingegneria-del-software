@@ -7,11 +7,11 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.time.Duration;
 
-public class ReportResults {
+public class TeamReportResults {
 
     private static final String[] columnNames = {"Developers", "Issue Aperte", "Issue Gestite", "Tempo Medio"};
 
-    public ReportResults(TeamReportPage searchPage) {
+    public TeamReportResults(TeamReportPage searchPage) {
 
         searchPage.updateReportViewResults(createTables());
     }
