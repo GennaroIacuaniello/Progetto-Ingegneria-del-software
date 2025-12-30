@@ -1,10 +1,15 @@
 package frontend.gui;
 
+import frontend.controller.ProjectController;
+import frontend.controller.TeamController;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Dialog per la gestione dei team all'interno di un progetto.
@@ -93,26 +98,32 @@ public class ManageTeamsDialog extends JDialog {
     }
 
     private void performSearch() {
-        // Qui andrebbe la chiamata al controller dei Team
-        updateTable();
+
+        String text = searchTextField.getText();
+        String teamName = text.equals(PLACEHOLDER) ? "" : text;
+
+        TeamController.getInstance().searchTeamsByNameAndProject(teamName);
+
+        ArrayList<Integer> ids = (ArrayList<Integer>) TeamController.getInstance().getTeamsIds();
+        ArrayList<String> names = (ArrayList<String>) TeamController.getInstance().getTeamsNames();
+
+        updateTable(ids, names);
+
     }
 
-    private void updateTable() {
+    private void updateTable(List<Integer> ids, List<String> names) {
         resultsPanel.removeAll();
+
+        Object[][] rowData = new Object[ids.size()][3];
+        for (int i = 0; i < ids.size(); i++) {
+            rowData[i][0] = ids.get(i);
+            rowData[i][1] = names.get(i);
+            rowData[i][2] = "Gestisci membri";
+        }
 
         String[] columnNames = {"ID Team", "Nome Team", "Azione"};
 
-        Object[][] data = {
-                {1, "Sviluppatori Backend", "Gestisci membri"},
-                {2, "Team UI/UX", "Gestisci membri"}
-        };
-
-        DefaultTableModel model = new DefaultTableModel(data, columnNames) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return column == 2; // Editabile solo la colonna del "tasto"
-            }
-        };
+        DefaultTableModel model = createTableModel(rowData, columnNames);
 
         JTable table = new JTable(model);
 
@@ -132,5 +143,15 @@ public class ManageTeamsDialog extends JDialog {
 
         resultsPanel.revalidate();
         resultsPanel.repaint();
+    }
+
+    private static DefaultTableModel createTableModel(Object[][] rowData, String[] columnNames) {
+
+        return new DefaultTableModel(rowData, columnNames) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return column == 2;
+            }
+        };
     }
 }

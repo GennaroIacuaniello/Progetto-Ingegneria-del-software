@@ -119,19 +119,13 @@ public class ManageProjectsDialog extends JDialog {
 
         String[] columnNames = {"ID Progetto", "Nome Progetto", "Azione"};
 
-        DefaultTableModel model = new DefaultTableModel(rowData, columnNames) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                // Rendiamo editabile solo la colonna 2 per permettere il click sul "tasto"
-                return column == 2;
-            }
-        };
+        DefaultTableModel model = createTableModel(rowData, columnNames);
 
         JTable table = new JTable(model);
 
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-        centerRenderer.setForeground(new Color(0, 120, 215)); // Colore blu per indicare che è cliccabile
+        centerRenderer.setForeground(new Color(0, 120, 215));
         table.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
 
 
@@ -145,5 +139,15 @@ public class ManageProjectsDialog extends JDialog {
 
         resultsPanel.revalidate();
         resultsPanel.repaint();
+    }
+
+    private static DefaultTableModel createTableModel(Object[][] rowData, String[] columnNames) {
+        return new DefaultTableModel(rowData, columnNames) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                // Rendiamo editabile solo la colonna 2 per permettere il click sul "tasto"
+                return column == 2;
+            }
+        };
     }
 }

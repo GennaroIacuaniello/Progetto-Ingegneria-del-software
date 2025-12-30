@@ -1,14 +1,19 @@
 package frontend.controller;
 
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import frontend.dto.ProjectDTO;
 import frontend.dto.TeamDTO;
 import frontend.dto.UserDTO;
+import frontend.exception.RequestError;
 
 import java.net.URI;
+import java.net.URLEncoder;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.List;
 
 public class TeamController {
 
@@ -61,6 +66,74 @@ public class TeamController {
         }
 
     }
+
+    public void searchTeamsByNameAndProject(String teamName) {
+
+        try {
+
+            //Da utilizzare dato che non possono esserci spazi nei parametri search delle richieste HTTP
+            String encodedTeamName = URLEncoder.encode(teamName, StandardCharsets.UTF_8);
+
+            HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+                    .uri(URI.create(client.getBaseUrl() + "/teams/search?teamName=" + encodedTeamName +
+                            "&projectId=" + ProjectController.getInstance().getProject().getId()))
+                    .GET();
+
+            HttpResponse<String> response = client.sendRequest(requestBuilder);
+
+            if (response.statusCode() == 200) {
+
+                this.teams = client.getObjectMapper().readValue(response.body(), new TypeReference<>() {});
+
+
+            } else if (response.statusCode() == 204) {
+
+                //Nessun risultato, svuoto la cache
+                this.teams = new ArrayList<>();
+
+            } else {
+
+                // CASO ERRORE (500, 400, ecc.)
+                System.err.println("Errore dal server. Codice: " + response.statusCode());
+                System.err.println("Dettaglio errore: " + response.body());
+                this.teams = new ArrayList<>();
+
+            }
+
+        } catch (RequestError re) {
+
+            System.err.println("Backend offline: " + re.getMessage());
+            this.teams = new ArrayList<>();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            this.teams = new ArrayList<>();
+        }
+
+    }
+
+
+    public List<Integer> getTeamsIds () {
+
+        List<Integer> ids = new ArrayList<>();
+
+        for (TeamDTO t : teams)
+            ids.add(t.getId());
+
+        return ids;
+    }
+
+    public List<String> getTeamsNames () {
+
+        List<String> names = new ArrayList<>();
+
+        for (TeamDTO t : teams)
+            names.add(t.getName());
+
+        return names;
+    }
+
 
 
 }
