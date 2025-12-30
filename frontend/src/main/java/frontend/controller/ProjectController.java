@@ -2,6 +2,7 @@ package frontend.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import frontend.dto.IssueStatusDTO;
 import frontend.dto.ProjectDTO;
 import frontend.dto.UserDTO;
 import frontend.exception.RequestError;
@@ -13,8 +14,11 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ProjectController {
@@ -78,6 +82,34 @@ public class ProjectController {
 
             e.printStackTrace();
             this.projects = new ArrayList<>();
+        }
+
+    }
+
+    public void createProject(String projectName){
+
+        try {
+
+           ProjectDTO projectToCreate = new ProjectDTO();
+           projectToCreate.setName(projectName);
+
+            String jsonBody = client.getObjectMapper().writeValueAsString(projectToCreate);
+
+            HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+                    .uri(URI.create(client.getBaseUrl() + "/projects"))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(jsonBody));
+
+            HttpResponse<String> response = client.sendRequest(requestBuilder);
+
+            if (response.statusCode() == 200) {
+                System.out.println("Project created successfully!");
+            } else {
+                System.err.println("Project creation failed. Code: " + response.statusCode());
+                System.err.println("Error body: " + response.body());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }
