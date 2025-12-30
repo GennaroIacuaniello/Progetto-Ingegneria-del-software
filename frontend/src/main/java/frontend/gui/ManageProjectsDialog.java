@@ -45,7 +45,7 @@ public class ManageProjectsDialog extends JDialog {
     }
 
     private void setupHeader(JPanel mainPanel) {
-        // Pulsante Torna Indietro
+
         IconButton backButton = new IconButton("/frontend/gui/images/backIconButton.png", 30, 30);
         backButton.addActionListener(e -> dispose());
 
@@ -53,7 +53,7 @@ public class ManageProjectsDialog extends JDialog {
                 0, 0, GridBagConstraints.LINE_START, 0.01f, 0.01f, new Insets(0, 0, 10, 0));
         mainPanel.add(backButton, Constraints.getGridBagConstraints());
 
-        // Pulsante Crea Nuovo Progetto
+
         JButton createButton = new JButton("Crea nuovo progetto");
         createButton.setFont(new Font("Segoe UI", Font.BOLD, 14));
         createButton.setBackground(new Color(0, 120, 215));
@@ -84,7 +84,6 @@ public class ManageProjectsDialog extends JDialog {
         IconButton searchButton = new IconButton("/frontend/gui/images/searchButton.png", 25, 25);
         searchButton.addActionListener(e -> performSearch());
 
-        // Layout interno barra di ricerca (Parametri int, int, int, int, int, int, int, int)
         Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER);
         searchWrapper.add(searchButton, Constraints.getGridBagConstraints());
 
@@ -111,7 +110,6 @@ public class ManageProjectsDialog extends JDialog {
     private void updateTable(List<Integer> ids, List<String> names) {
         resultsPanel.removeAll();
 
-        // 1. Definiamo i dati: l'ultima colonna contiene il testo del "pulsante"
         Object[][] rowData = new Object[ids.size()][3];
         for (int i = 0; i < ids.size(); i++) {
             rowData[i][0] = ids.get(i);
@@ -131,7 +129,6 @@ public class ManageProjectsDialog extends JDialog {
 
         JTable table = new JTable(model);
 
-        // 2. Centriamo il testo nella colonna "Azione" per farlo sembrare più un tasto
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         centerRenderer.setForeground(new Color(0, 120, 215)); // Colore blu per indicare che è cliccabile

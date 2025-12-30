@@ -34,7 +34,7 @@ public class ConfirmDeleteMemberDialog extends JDialog {
 
 
             parentDialog.performSearch();
-            
+
             dispose();
         });
 

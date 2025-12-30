@@ -25,13 +25,10 @@ public class ManageTeamTextCellEditor extends DefaultCellEditor {
         this.button.addActionListener(e -> {
             int row = table.getSelectedRow();
             if (row != -1) {
-                // Recupera l'ID del progetto dalla prima colonna della riga cliccata
                 int projectId = (int) table.getValueAt(row, 0);
 
-                // Importante: ferma l'animazione di editing della cella
                 fireEditingStopped();
 
-                // Crea e mostra il nuovo Dialog
                 ManageTeamsDialog teamsDialog = new ManageTeamsDialog(mainFrame, projectId);
                 teamsDialog.setVisible(true);
             }

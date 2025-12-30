@@ -28,7 +28,6 @@ public class CreateTeamDialog extends JDialog {
         confirmBtn.addActionListener(e -> {
             String teamName = nameField.getText().trim();
             if (!teamName.isEmpty()) {
-                // LOGICA: Chiamata al controller per il team collegato al progetto
                 // TeamController.getInstance().createTeam(teamName, projectId);
                 System.out.println("Team '" + teamName + "' creato per Progetto ID: " + projectId);
                 dispose();

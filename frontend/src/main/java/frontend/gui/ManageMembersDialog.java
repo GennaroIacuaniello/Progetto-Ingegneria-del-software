@@ -25,13 +25,13 @@ public class ManageMembersDialog extends JDialog {
         mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
         mainPanel.setBackground(Color.WHITE);
 
-        // 1. Header: Indietro e Aggiungi Membro
+
         setupHeader(mainPanel);
 
-        // 2. Search Bar
+
         setupSearchSection(mainPanel);
 
-        // 3. Risultati
+
         resultsPanel = new JPanel(new BorderLayout());
         resultsPanel.setOpaque(false);
 
@@ -43,7 +43,7 @@ public class ManageMembersDialog extends JDialog {
         this.setMinimumSize(new Dimension(700, 500));
         this.setLocationRelativeTo(owner);
 
-        // Eseguiamo una ricerca iniziale all'apertura
+
         performSearch();
     }
 
@@ -96,24 +96,22 @@ public class ManageMembersDialog extends JDialog {
         mainPanel.add(searchWrapper, Constraints.getGridBagConstraints());
     }
 
-    /**
-     * METODO LOGICO: Recupera i dati dal Controller filtrandoli se necessario.
-     */
+
     public void performSearch() {
         String query = searchTextField.getText();
         if (query.equals(PLACEHOLDER)) {
             query = "";
         }
 
-        // QUI CHIAMERAI IL CONTROLLER:
+
         // List<String> members = MemberController.getMembersByTeam(teamId, query);
 
-        // Per ora simuliamo una lista che viene dal "database"
+        // Dati simulati
         List<String> mockMembers = new ArrayList<>();
         mockMembers.add("mario.rossi@azienda.it");
         mockMembers.add("luigi.verdi@azienda.it");
 
-        // Passiamo la lista al metodo grafico
+
         updateTable(mockMembers);
     }
 

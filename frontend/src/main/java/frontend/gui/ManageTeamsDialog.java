@@ -57,7 +57,6 @@ public class ManageTeamsDialog extends JDialog {
                 0, 0, GridBagConstraints.LINE_START, 0.01f, 0.01f, new Insets(0, 0, 10, 0));
         mainPanel.add(backButton, Constraints.getGridBagConstraints());
 
-        // Pulsante Crea Nuovo Team (Destra) - Stile AddNewFlightDialog
         JButton createTeamButton = new JButton("Crea nuovo team");
         createTeamButton.setFont(new Font("Segoe UI", Font.BOLD, 14));
         createTeamButton.setBackground(new Color(0, 120, 215));
@@ -65,7 +64,6 @@ public class ManageTeamsDialog extends JDialog {
         createTeamButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         createTeamButton.addActionListener(e -> {
-            // Passiamo il projectId che la classe ManageTeamsDialog già possiede
             CreateTeamDialog dialog = new CreateTeamDialog(mainFrame, this.projectId);
             dialog.setVisible(true);
             performSearch(); // Aggiorna la lista dei team per mostrare quello nuovo
@@ -85,7 +83,6 @@ public class ManageTeamsDialog extends JDialog {
         searchTextField.setPreferredSize(new Dimension(250, 30));
         searchTextField.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
 
-        // Comportamento placeholder
         TextComponentFocusBehaviour.setTextComponentFocusBehaviour(searchTextField, PLACEHOLDER);
 
         IconButton searchButton = new IconButton("/frontend/gui/images/searchButton.png", 25, 25);
@@ -104,7 +101,6 @@ public class ManageTeamsDialog extends JDialog {
 
     private void performSearch() {
         // Qui andrebbe la chiamata al controller dei Team
-        // Per ora simuliamo dei dati
         updateTable();
     }
 
@@ -113,7 +109,6 @@ public class ManageTeamsDialog extends JDialog {
 
         String[] columnNames = {"ID Team", "Nome Team", "Azione"};
 
-        // Esempio dati simulati
         Object[][] data = {
                 {1, "Sviluppatori Backend", "Gestisci membri"},
                 {2, "Team UI/UX", "Gestisci membri"}
@@ -128,7 +123,6 @@ public class ManageTeamsDialog extends JDialog {
 
         JTable table = new JTable(model);
 
-        // Renderer per la colonna Azione (testo blu centrato)
         DefaultTableCellRenderer actionRenderer = new DefaultTableCellRenderer();
         actionRenderer.setHorizontalAlignment(JLabel.CENTER);
         actionRenderer.setForeground(new Color(0, 120, 215));
