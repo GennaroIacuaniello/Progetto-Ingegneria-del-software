@@ -56,7 +56,7 @@ public class ProjectDAOImpl implements ProjectDAO {
     public void createProject(ProjectDTO projectToCreate) throws SQLException{
 
         String query = "INSERT INTO Project (project_name) VALUES "+
-                "(?);";
+                       "(?);";
 
         try (Connection connection = DatabaseConnection.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {

@@ -1,5 +1,7 @@
 package frontend.gui;
 
+import frontend.controller.ProjectController;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -25,11 +27,11 @@ public class ManageTeamTextCellEditor extends DefaultCellEditor {
         this.button.addActionListener(e -> {
             int row = table.getSelectedRow();
             if (row != -1) {
-                int projectId = (int) table.getValueAt(row, 0);
+                ProjectController.getInstance().setProjectWithIndex((int) table.getValueAt(row, 0));
 
                 fireEditingStopped();
 
-                ManageTeamsDialog teamsDialog = new ManageTeamsDialog(mainFrame, projectId);
+                ManageTeamsDialog teamsDialog = new ManageTeamsDialog(mainFrame);
                 teamsDialog.setVisible(true);
             }
         });

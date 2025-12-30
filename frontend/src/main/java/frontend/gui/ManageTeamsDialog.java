@@ -16,29 +16,22 @@ public class ManageTeamsDialog extends JDialog {
     private JPanel resultsPanel;
     private final String PLACEHOLDER = "Cerca nome team...";
     private final JFrame mainFrame;
-    private final int projectId;
 
-    public ManageTeamsDialog(JFrame owner, int projectId) {
+    public ManageTeamsDialog(JFrame owner) {
         super(owner, "Gestione Team", true);
         this.mainFrame = owner;
-        this.projectId = projectId;
 
-        // Pannello principale con GridBagLayout
         JPanel mainPanel = new JPanel(new GridBagLayout());
         mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
         mainPanel.setBackground(Color.WHITE);
 
-        // 1. Header: Indietro e Nuovo Team
         setupHeader(mainPanel);
 
-        // 2. Search Bar
         setupSearchSection(mainPanel);
 
-        // 3. Area Risultati
         resultsPanel = new JPanel(new BorderLayout());
         resultsPanel.setOpaque(false);
 
-        // Vincoli per l'area risultati (weightx/y = 1.0 per espandersi)
         Constraints.setConstraints(0, 2, 2, 1, GridBagConstraints.BOTH,
                 0, 0, GridBagConstraints.CENTER, 1.0f, 1.0f, new Insets(20, 0, 0, 0));
         mainPanel.add(resultsPanel, Constraints.getGridBagConstraints());
@@ -49,7 +42,7 @@ public class ManageTeamsDialog extends JDialog {
     }
 
     private void setupHeader(JPanel mainPanel) {
-        // Pulsante Indietro (Sinistra)
+
         IconButton backButton = new IconButton("/frontend/gui/images/backIconButton.png", 30, 30);
         backButton.addActionListener(e -> dispose());
 
@@ -64,9 +57,9 @@ public class ManageTeamsDialog extends JDialog {
         createTeamButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         createTeamButton.addActionListener(e -> {
-            CreateTeamDialog dialog = new CreateTeamDialog(mainFrame, this.projectId);
+            CreateTeamDialog dialog = new CreateTeamDialog(mainFrame);
             dialog.setVisible(true);
-            performSearch(); // Aggiorna la lista dei team per mostrare quello nuovo
+            performSearch();
         });
 
         Constraints.setConstraints(1, 0, 1, 1, GridBagConstraints.NONE,

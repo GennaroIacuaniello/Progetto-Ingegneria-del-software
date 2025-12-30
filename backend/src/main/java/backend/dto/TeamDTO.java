@@ -17,9 +17,6 @@ public class TeamDTO {
 
     public TeamDTO(int id, String name, ProjectDTO project, List<UserDTO> developers) throws InvalidDeveloper {
 
-        if (developers == null || developers.isEmpty())
-            throw new InvalidDeveloper("Developers cannot be null or empty");
-
         this.id = id;
         this.name = name;
         this.project = project;
