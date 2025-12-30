@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +50,22 @@ public class ProjectDAOImpl implements ProjectDAO {
         }
 
         return searchResult;
+
+    }
+
+    public void createProject(ProjectDTO projectToCreate) throws SQLException{
+
+        String query = "INSERT INTO Project (project_name) VALUES "+
+                "(?);";
+
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, projectToCreate.getName());
+
+            statement.executeUpdate();
+
+        }
 
     }
 

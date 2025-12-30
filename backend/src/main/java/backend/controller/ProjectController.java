@@ -41,5 +41,14 @@ public class ProjectController {
         return ResponseEntity.ok(searchResults);
     }
 
+    @PostMapping
+    public ResponseEntity<String> createProject(@RequestBody ProjectDTO projectToCreate) throws SQLException {
+
+        projectDAO.createProject(projectToCreate);
+
+        return ResponseEntity.ok("Report success!");
+
+    }
+
 
 }
