@@ -8,7 +8,7 @@ public class ProjectTableModelAdmin extends ProjectTableModelDeveloper{
 
     protected void setColumnNames() {
 
-        columnNames = new String[]{"ID PROGETTO", "NOME PROGETTO", "SEGNALA ISSUE", "ISSUE SEGNALATE", "ISSUE ASSEGNATE", "VEDI TUTTE LE ISSUE", "VEDI TEAMS", "REPORT MENSILE"};
+        columnNames = new String[]{"ID PROGETTO", "NOME PROGETTO", "SEGNALA ISSUE", "ISSUE SEGNALATE", "ISSUE ASSEGNATE", "VEDI TUTTE LE ISSUE", "GESTISCI TEAMS", "REPORT MENSILE"};
     }
 
     @Override
