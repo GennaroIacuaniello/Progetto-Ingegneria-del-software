@@ -1,0 +1,66 @@
+package frontend.controller;
+
+import java.time.Duration;
+import java.util.List;
+
+public class ControllerTMP {
+
+    private static List<String> developers;
+    private static List<Integer> openIssues;
+    private static List<Integer> resolvedIssues;
+    private static List<Duration> averageResolvingDurations;
+    private static Duration totalAverageResolvingDuration;
+
+    public static void createReport(String month, String year) {
+
+        /*
+            todo:
+            query che cerca email dei developer del tema in TeamController
+            e per questi developers tenendo conto di mese e anno passati come parametri calcoli:
+                - numero di issue aperte,
+                - numero di issue risolte
+                - tempo medio di risoluzione
+            e li metta nelle rispettive list di questa classe. Inoltre calcolare il tempo medio di risoluzione aggregato.
+         */
+    }
+
+    public static List<String> getDevelopers() {
+        return developers;
+    }
+
+    public static List<Integer> getOpenIssues() {
+        return openIssues;
+    }
+
+    public static List<Integer> getResolvedIssues() {
+        return resolvedIssues;
+    }
+
+    public static List<Duration> getAverageResolvingDurations() {
+        return averageResolvingDurations;
+    }
+
+    public static int getTotalOpenIssues() {
+
+        int total = 0;
+
+        for (Integer i : openIssues)
+            total += i;
+
+        return total;
+    }
+
+    public static int getTotalResolvedIssues() {
+
+        int total = 0;
+
+        for (Integer i : resolvedIssues)
+            total += i;
+
+        return total;
+    }
+
+    public static Duration getTotalAverageResolvingDuration() {
+        return totalAverageResolvingDuration;
+    }
+}

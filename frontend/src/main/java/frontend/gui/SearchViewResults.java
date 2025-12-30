@@ -12,6 +12,9 @@ public class SearchViewResults {
         per visualizzare i risultati. Il JScrollPane deve essere contenuto in HomePanel della classe HomePanel.
      */
     private final JScrollPane scrollPane;
+    private static final String TMPPANEL_PLACEHOLDER = "<html><center>Effettua una ricerca<br>" +
+                                                       "per visualizzare i risultati<br>" +
+                                                       "e le azioni disponibili</center></html>";
 
     public SearchViewResults() {
 
@@ -20,10 +23,20 @@ public class SearchViewResults {
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         scrollPane.getViewport().setBackground(ColorsList.EMPTY_COLOR);
 
-        scrollPane.setViewportView(createTmpViewPanel());
+        scrollPane.setViewportView(createTmpViewPanel(TMPPANEL_PLACEHOLDER));
     }
 
-    private JPanel createTmpViewPanel() {
+    public SearchViewResults(String placeHolder) {
+
+        scrollPane = new JScrollPane();
+
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
+        scrollPane.getViewport().setBackground(ColorsList.EMPTY_COLOR);
+
+        scrollPane.setViewportView(createTmpViewPanel(placeHolder));
+    }
+
+    private JPanel createTmpViewPanel(String placeHolder) {
 
         RoundedPanel tmpViewPanel = new RoundedPanel(new GridBagLayout());
 
@@ -33,16 +46,14 @@ public class SearchViewResults {
         Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.BOTH,
                 0, 0, GridBagConstraints.CENTER,
                 new Insets(10, 10, 10, 10));
-        tmpViewPanel.add(createTmpViewLabel(), Constraints.getGridBagConstraints());
+        tmpViewPanel.add(createTmpViewLabel(placeHolder), Constraints.getGridBagConstraints());
 
         return tmpViewPanel;
     }
 
-    private JLabel createTmpViewLabel() {
+    private JLabel createTmpViewLabel(String placeHolder) {
 
-        JLabel tmpViewLabel = new JLabel("<html><center>Effettua una ricerca<br>" +
-                "per visualizzare i risultati<br>" +
-                "e le azioni disponibili</center></html>");
+        JLabel tmpViewLabel = new JLabel(placeHolder);
 
         tmpViewLabel.setHorizontalAlignment(SwingConstants.CENTER);
         tmpViewLabel.setVerticalAlignment(SwingConstants.CENTER);
