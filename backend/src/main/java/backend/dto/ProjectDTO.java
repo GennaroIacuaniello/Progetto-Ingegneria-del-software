@@ -21,17 +21,12 @@ public class ProjectDTO {
 
     public ProjectDTO(int id, String name, List<TeamDTO> teams, List<UserDTO> developers) throws InvalidTeam, InvalidDeveloper {
 
-        if( teams == null || teams.isEmpty() )
-            throw new InvalidTeam("Teams cannot be null or empty");
-
-        if( developers == null || developers.isEmpty() )
-            throw new InvalidDeveloper("Developers cannot be null or empty");
-
         this.id = id;
         this.name = name;
         this.issues = null;
         this.teams = teams;
         this.developers = developers;
+
     }
 
     public ProjectDTO(int id, String name, List<IssueDTO> issues, List<TeamDTO> teams, List<UserDTO> developers) throws InvalidTeam, InvalidDeveloper {

@@ -1,11 +1,14 @@
 package frontend.gui;
 
+import frontend.controller.ProjectController;
+import frontend.controller.TeamController;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class CreateTeamDialog extends JDialog {
-    public CreateTeamDialog(JFrame owner, int projectId) {
+    public CreateTeamDialog(JFrame owner) {
         super(owner, "Nuovo Team", true);
 
         JPanel panel = new JPanel(new GridBagLayout());
@@ -21,20 +24,7 @@ public class CreateTeamDialog extends JDialog {
         Constraints.setConstraints(0, 1, 1, 1, GridBagConstraints.HORIZONTAL, 0, 0, GridBagConstraints.CENTER, new Insets(0, 0, 20, 0));
         panel.add(nameField, Constraints.getGridBagConstraints());
 
-        JButton confirmBtn = new JButton("Conferma");
-        confirmBtn.setBackground(new Color(0, 120, 215));
-        confirmBtn.setForeground(Color.WHITE);
-
-        confirmBtn.addActionListener(e -> {
-            String teamName = nameField.getText().trim();
-            if (!teamName.isEmpty()) {
-                // TeamController.getInstance().createTeam(teamName, projectId);
-                System.out.println("Team '" + teamName + "' creato per Progetto ID: " + projectId);
-                dispose();
-            } else {
-                JOptionPane.showMessageDialog(this, "Il nome del team è obbligatorio");
-            }
-        });
+        JButton confirmBtn = getConfirmBtn(nameField);
 
         Constraints.setConstraints(0, 2, 1, 1, GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER);
         panel.add(confirmBtn, Constraints.getGridBagConstraints());
@@ -42,5 +32,23 @@ public class CreateTeamDialog extends JDialog {
         this.setContentPane(panel);
         this.pack();
         this.setLocationRelativeTo(owner);
+    }
+
+    private JButton getConfirmBtn(JTextField nameField) {
+        JButton confirmBtn = new JButton("Conferma");
+        confirmBtn.setBackground(new Color(0, 120, 215));
+        confirmBtn.setForeground(Color.WHITE);
+
+        confirmBtn.addActionListener(e -> {
+            String teamName = nameField.getText().trim();
+            if (!teamName.isEmpty()) {
+                TeamController.getInstance().createTeam(teamName);
+                System.out.println("Team '" + teamName + "' creato per Progetto ID: " + ProjectController.getInstance().getProject().getId());
+                dispose();
+            } else {
+                new FloatingMessage("Il nome del team è obbligatorio", confirmBtn, FloatingMessage.ERROR_MESSAGE);
+            }
+        });
+        return confirmBtn;
     }
 }
