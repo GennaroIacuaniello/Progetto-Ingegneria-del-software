@@ -8,21 +8,15 @@ import java.awt.event.ActionListener;
 public class MyDialog extends JDialog {
 
     protected RoundedPanel mainPanel;
-    protected RoundedPanel contentPanel;
-    protected RoundedPanel buttonsPanel;
-    private IconButton confirmButton;
 
-    public MyDialog(JFrame owner) {
+    public MyDialog(JFrame parent) {
 
-        super(owner, true);
+        super(parent, true);
 
         setDialog();
-        setMainPanel();
-        setContentPanel();
-        setButtonsPanel();
-        setOkButton();
+        setMainPanel(parent);
 
-        pack();
+        setBackButton();
     }
 
     private void setDialog() {
@@ -31,56 +25,33 @@ public class MyDialog extends JDialog {
         setBackground(ColorsList.EMPTY_COLOR);
     }
 
-    private void setMainPanel() {
+    private void setMainPanel(JFrame parent) {
 
         mainPanel = new RoundedPanel(new GridBagLayout());
 
-        mainPanel.setBackground(ColorsList.BACKGROUND_COLOR);
         mainPanel.setRoundBorderColor(ColorsList.BORDER_COLOR);
+        mainPanel.setBackground(ColorsList.BACKGROUND_COLOR);
+
+        mainPanel.setMinimumSize(new Dimension((int)(parent.getWidth() * 0.75), (int)(parent.getHeight() * 0.75)));
+        mainPanel.setPreferredSize(new Dimension((int)(parent.getWidth() * 0.75), (int)(parent.getHeight() * 0.75)));
 
         setContentPane(mainPanel);
     }
 
-    private void setContentPanel() {
+    protected void setBackButton() {
 
-        contentPanel = new RoundedPanel(new GridBagLayout());
+        IconButton backButton = new IconButton("/frontend/gui/images/backIconButton.png", 30, 30);
 
-        contentPanel.setBackground(ColorsList.EMPTY_COLOR);
-        contentPanel.setRoundBorderColor(ColorsList.EMPTY_COLOR);
-
-        Constraints.setConstraints(0, 0, 1, 1,
-                GridBagConstraints.BOTH, 0, 0, GridBagConstraints.CENTER);
-        mainPanel.add(contentPanel, Constraints.getGridBagConstraints());
-    }
-
-    private void setButtonsPanel() {
-
-        buttonsPanel = new RoundedPanel(new GridBagLayout());
-
-        buttonsPanel.setBackground(Color.WHITE);
-        buttonsPanel.setRoundBorderColor(ColorsList.BORDER_COLOR);
-
-        Constraints.setConstraints(0, 1, 1, 1,
-                GridBagConstraints.HORIZONTAL, 0, 0, GridBagConstraints.CENTER,
-                new Insets(5, 5, 5, 5));
-        mainPanel.add(buttonsPanel, Constraints.getGridBagConstraints());
-    }
-
-    private void setOkButton() {
-
-        confirmButton = new IconButton("/frontend/gui/images/confirmButtonIcon.png", 30, 30);
-
-        confirmButton.addActionListener(new ActionListener() {
+        backButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                setVisible(false);
+                dispose();
             }
         });
 
-        Constraints.setConstraints(0, 0, 1, 1,
-                GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
-                new Insets(5, 5, 5, 5));
-        buttonsPanel.add(confirmButton, Constraints.getGridBagConstraints());
+        Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.NONE,
+                0, 0, GridBagConstraints.LINE_START, new Insets(5, 5, 5, 5));
+        mainPanel.add(backButton, Constraints.getGridBagConstraints());
     }
 }

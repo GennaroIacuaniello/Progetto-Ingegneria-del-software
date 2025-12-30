@@ -24,6 +24,18 @@ public class ControllerTMP {
          */
     }
 
+    public static void createDashBoard() {
+
+        /*
+            todo:
+            query che cerca email dei developer di tutto il sistema e per ognuno di essi calcoli:
+                - numero di issue aperte,
+                - numero di issue risolte
+                - tempo medio di risoluzione
+            e li metta nelle rispettive list di questa classe. Inoltre calcolare il tempo medio di risoluzione aggregato.
+         */
+    }
+
     public static List<String> getDevelopers() {
         return developers;
     }

@@ -79,7 +79,7 @@ public class TeamReportSearchPanel extends RoundedPanel{
 
             ControllerTMP.createReport(Objects.requireNonNull(monthComboBox.getSelectedItem()).toString(), yearTextField.getText());
 
-            new TeamReportResults(searchPage);
+            new ReportResults(searchPage);
         } else
             new FloatingMessage("L'anno inserito non è valido", searchButton, JOptionPane.ERROR_MESSAGE);
     }
