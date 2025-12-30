@@ -62,8 +62,6 @@ public class ReportResults {
         JTable table = new JTable(developersModel);
         table.getTableHeader().setReorderingAllowed(false);
         table.getTableHeader().setResizingAllowed(false);
-        table.getTableHeader().setReorderingAllowed(false);
-        table.getTableHeader().setResizingAllowed(false);
         table.setEnabled(false);
 
         return table;
@@ -83,8 +81,6 @@ public class ReportResults {
 
         JTable table = new JTable(totalsModel);
         table.setTableHeader(null);
-        table.getTableHeader().setReorderingAllowed(false);
-        table.getTableHeader().setResizingAllowed(false);
         table.setBackground(Color.LIGHT_GRAY);
         table.setEnabled(false);
 

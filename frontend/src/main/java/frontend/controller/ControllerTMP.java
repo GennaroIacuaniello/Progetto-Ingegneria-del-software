@@ -1,6 +1,7 @@
 package frontend.controller;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ControllerTMP {
@@ -21,6 +22,7 @@ public class ControllerTMP {
                 - numero di issue risolte
                 - tempo medio di risoluzione
             e li metta nelle rispettive list di questa classe. Inoltre calcolare il tempo medio di risoluzione aggregato.
+            Se la ricerca non produce risultati lasciare le liste vuote ma non null, per totalAverageResolvingDuration impostare la minima durata possibile
          */
     }
 
@@ -33,7 +35,23 @@ public class ControllerTMP {
                 - numero di issue risolte
                 - tempo medio di risoluzione
             e li metta nelle rispettive list di questa classe. Inoltre calcolare il tempo medio di risoluzione aggregato.
+            Se la ricerca non produce risultati lasciare le liste vuote ma non null
          */
+
+        developers = new ArrayList<>();
+        openIssues = new ArrayList<>();
+        resolvedIssues = new ArrayList<>();
+        averageResolvingDurations = new ArrayList<>();
+
+        for (int i = 0; i < 10; i++) {
+
+            developers.add("Developer " + i);
+            openIssues.add(i);
+            resolvedIssues.add(i);
+            averageResolvingDurations.add(Duration.ofDays(i).ofHours(i).ofMinutes(i));
+        }
+
+        totalAverageResolvingDuration = Duration.ofDays(0).ofHours(4).ofMinutes(2);
     }
 
     public static List<String> getDevelopers() {
