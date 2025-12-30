@@ -3,9 +3,7 @@ package frontend.gui;
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * Editor per la cella "Aggiungi" nella tabella di ricerca nuovi utenti.
- */
+
 public class AddMemberActionCellEditor extends DefaultCellEditor {
     private final JButton button;
     private final JFrame mainFrame;
@@ -24,19 +22,19 @@ public class AddMemberActionCellEditor extends DefaultCellEditor {
         this.button.setOpaque(true);
         this.button.setBorderPainted(false);
         this.button.setContentAreaFilled(false);
-        this.button.setForeground(new Color(0, 120, 215)); // Blu per l'aggiunta
+        this.button.setForeground(new Color(0, 120, 215));
         this.button.setFont(new Font("Segoe UI", Font.BOLD, 12));
         this.button.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         button.addActionListener(e -> {
             int row = table.getSelectedRow();
             if (row != -1) {
-                // Recupera l'email dell'utente selezionato dalla prima colonna
+
                 String email = (String) table.getValueAt(row, 0);
 
-                fireEditingStopped(); // Chiude l'editor nella tabella
+                fireEditingStopped();
 
-                // Apre il dialog di conferma finale
+
                 ConfirmAddDialog confirm = new ConfirmAddDialog(mainFrame, email, teamId, parentDialog);
                 confirm.setVisible(true);
             }

@@ -6,7 +6,6 @@ import java.awt.*;
 
 public class ConfirmDeleteMemberDialog extends JDialog {
 
-    // Aggiunto teamId al costruttore per permettere la rimozione effettiva nel DB
     public ConfirmDeleteMemberDialog(JFrame owner, String email, int teamId, ManageMembersDialog parentDialog) {
         super(owner, "Conferma Rimozione", true);
 
@@ -26,17 +25,16 @@ public class ConfirmDeleteMemberDialog extends JDialog {
         confirmBtn.setForeground(Color.WHITE);
         confirmBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        // Unico ActionListener che gestisce tutto il processo
+
         confirmBtn.addActionListener(e -> {
-            // 1. Chiamata al controller (quando la implementerai)
+
             // teamController.removeMemberFromTeam(teamId, email);
 
             System.out.println("Rimosso utente " + email + " dal team " + teamId);
 
-            // 2. Chiamata al metodo del padre per ricaricare i dati dal DB
-            parentDialog.performSearch();
 
-            // 3. Chiude il dialog di conferma
+            parentDialog.performSearch();
+            
             dispose();
         });
 

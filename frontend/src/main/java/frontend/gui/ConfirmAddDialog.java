@@ -20,14 +20,14 @@ public class ConfirmAddDialog extends JDialog {
         panel.add(label, Constraints.getGridBagConstraints());
 
         JButton confirmBtn = new JButton("Conferma");
-        confirmBtn.setBackground(new Color(40, 167, 69)); // Verde per indicare successo/aggiunta
+        confirmBtn.setBackground(new Color(40, 167, 69));
         confirmBtn.setForeground(Color.WHITE);
 
         confirmBtn.addActionListener(e -> {
-            // 1. Chiamata al controller per aggiungere il membro
+
             System.out.println("Utente aggiunto: " + email);
 
-            // 2. Chiude se stesso e il dialog di ricerca
+
             parentDialog.dispose();
             dispose();
         });

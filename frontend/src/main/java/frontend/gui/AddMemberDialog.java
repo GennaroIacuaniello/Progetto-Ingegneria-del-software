@@ -22,7 +22,7 @@ public class AddMemberDialog extends JDialog {
         mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
         mainPanel.setBackground(Color.WHITE);
 
-        // Barra di ricerca (Stile SearchProjectPanelUser)
+
         setupSearchSection(mainPanel);
 
         resultsPanel = new JPanel(new BorderLayout());
@@ -72,7 +72,7 @@ public class AddMemberDialog extends JDialog {
         renderer.setForeground(new Color(0, 120, 215)); // Blu per l'aggiunta
         table.getColumnModel().getColumn(1).setCellRenderer(renderer);
 
-        // Editor che apre il dialog di conferma finale
+
         table.getColumnModel().getColumn(1).setCellEditor(new AddMemberActionCellEditor(mainFrame, table, teamId, this));
 
         resultsPanel.add(new JScrollPane(table), BorderLayout.CENTER);
