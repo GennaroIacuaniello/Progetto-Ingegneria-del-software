@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class IssueController {
     }
 
     @PostMapping
-    public ResponseEntity<?> reportIssue(@RequestBody IssueDTO issueToReport) throws SQLException {
+    public ResponseEntity<String> reportIssue(@RequestBody IssueDTO issueToReport) throws SQLException {
 
         issueDAO.reportIssue(issueToReport);
 
@@ -83,7 +84,7 @@ public class IssueController {
     }
 
     @PutMapping("/{id}/status")
-    public ResponseEntity<?> updateIssueStatus(
+    public ResponseEntity<String> updateIssueStatus(
             @PathVariable("id") int id,
             @RequestBody StatusUpdateRequest request) throws SQLException{
 
@@ -126,14 +127,14 @@ public class IssueController {
     }
 
     @PutMapping("/{id}/resolver")
-    public ResponseEntity<?> assignIssueToDeveloper(
+    public ResponseEntity<UserDTO> assignIssueToDeveloper(
             @PathVariable("id") int id,
             @RequestBody UserDTO resolver) throws SQLException{
 
         String resolverEmail = resolver.getEmail();
 
         if (resolverEmail == null || resolverEmail.isEmpty()) {
-            return ResponseEntity.badRequest().body("Assigning error: missing email");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Assigning error: missing email");
         }
 
         UserDTO assignedUser = issueDAO.assignIssueToDeveloperByEmail(id, resolverEmail);
@@ -141,7 +142,7 @@ public class IssueController {
         if (assignedUser != null) {
             return ResponseEntity.ok(assignedUser);
         } else {
-            return ResponseEntity.status(404).body("User with specified email not found or issue does not exist");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User with specified email not found or issue does not exist");
         }
 
     }

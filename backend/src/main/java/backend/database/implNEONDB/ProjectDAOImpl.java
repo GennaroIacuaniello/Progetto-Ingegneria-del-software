@@ -17,8 +17,11 @@ import java.util.List;
 @Repository
 public class ProjectDAOImpl implements ProjectDAO {
 
-    @Autowired
-    private DataSource dataSource;
+    private final DataSource dataSource;
+
+    public ProjectDAOImpl(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     public List<ProjectDTO> searchProjectsByName(String projectName) throws SQLException{
 

@@ -15,8 +15,11 @@ import java.util.List;
 @Repository
 public class IssueDAOImpl implements IssueDAO {
 
-    @Autowired
-    private DataSource dataSource;
+    private final DataSource dataSource;
+
+    public IssueDAOImpl(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     public void reportIssue(IssueDTO issueToReport) throws SQLException{
 

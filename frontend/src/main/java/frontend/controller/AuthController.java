@@ -48,6 +48,7 @@ public class AuthController {
                 return true;
             } else {
                 System.err.println("Login fallito. Codice: " + response.statusCode());
+                System.err.println("Dettaglio server: " + response.body());
             }
         } catch (Exception e) {
             e.printStackTrace();

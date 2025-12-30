@@ -17,8 +17,11 @@ import java.util.List;
 @Repository
 public class UserDAOImpl implements UserDAO {
 
-    @Autowired
-    private DataSource dataSource;
+    private final DataSource dataSource;
+
+    public UserDAOImpl(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     public UserDTO searchUserByMail(String email) throws SQLException{
 

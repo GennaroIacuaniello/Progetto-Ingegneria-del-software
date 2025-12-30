@@ -9,9 +9,11 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.sql.SQLException;
 import java.util.Date;
@@ -33,7 +35,7 @@ public class AuthController {
     }
 
     @PostMapping("/auth/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest request) throws SQLException {
+    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) throws SQLException {
 
         Optional<UserDTO> userOpt = Optional.ofNullable(userDao.searchUserByMail(request.getEmail()));
 
@@ -55,7 +57,7 @@ public class AuthController {
             }
         }
 
-        return ResponseEntity.status(401).body("Invalid credentials");
+        throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
 
     }
 
@@ -90,7 +92,7 @@ public class AuthController {
 
 
     @PostMapping("/auth/register")
-    public ResponseEntity<?> register(@RequestBody RegisterRequest request) throws SQLException {
+    public ResponseEntity<String> register(@RequestBody RegisterRequest request) throws SQLException {
 
         if (userDao.searchUserByMail(request.getEmail()) != null) {
             return ResponseEntity.badRequest().body("Error: email already used!");
