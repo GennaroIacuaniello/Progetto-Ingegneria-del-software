@@ -7,8 +7,12 @@ import java.util.List;
 
 public interface TeamDAO {
 
-    List<TeamDTO> searchTeamsByName(String teamName) throws SQLException;
+    List<TeamDTO> searchTeamsByNameAndProject(String teamName, Integer projectId) throws SQLException;
 
     void createTeam(TeamDTO teamToCreate) throws SQLException;
+
+    boolean addMemberToTeam(Integer teamId, String email) throws SQLException;
+
+    boolean removeMemberFromTeam(Integer teamId, String email) throws SQLException;
 
 }

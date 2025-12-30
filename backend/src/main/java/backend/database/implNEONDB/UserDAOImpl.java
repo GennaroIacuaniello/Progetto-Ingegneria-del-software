@@ -113,5 +113,82 @@ public class UserDAOImpl implements UserDAO {
 
     }
 
+    public List<UserDTO> searchDevOrAdminByEmailAndTeam(String email, Integer teamId) throws SQLException{
+
+        List<UserDTO> searchResult = null;
+
+        String query = "SELECT * FROM User_ U NATURAL JOIN Works_in W " +
+                "WHERE U.email ILIKE ? AND W.team_id = ?;";
+
+        String emailToSearch = "%" + email + "%";
+
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, emailToSearch);
+            statement.setInt(2, teamId);
+
+            ResultSet rs = statement.executeQuery();
+
+            searchResult = new ArrayList<>();
+
+            while (rs.next()) {
+
+                UserDTO foundedUser = new UserDTO();
+
+                foundedUser.setId(rs.getInt("user_id"));
+                foundedUser.setEmail(rs.getString("email") );
+
+                searchResult.add(foundedUser);
+
+
+            }
+
+            rs.close();
+
+        }
+
+        return searchResult;
+
+
+    }
+
+    public List<UserDTO> searchDevOrAdminByEmail(String email) throws SQLException{
+
+        List<UserDTO> searchResult = null;
+
+        String query = "SELECT * FROM User_ U " +
+                       "WHERE U.email ILIKE ? AND U.user_type > 0;";
+
+        String emailToSearch = "%" + email + "%";
+
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, emailToSearch);
+
+            ResultSet rs = statement.executeQuery();
+
+            searchResult = new ArrayList<>();
+
+            while (rs.next()) {
+
+                UserDTO foundedUser = new UserDTO();
+
+                foundedUser.setId(rs.getInt("user_id"));
+                foundedUser.setEmail(rs.getString("email") );
+
+                searchResult.add(foundedUser);
+
+            }
+
+            rs.close();
+
+        }
+
+        return searchResult;
+
+    }
+
 
 }

@@ -1,14 +1,19 @@
 package frontend.controller;
 
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import frontend.dto.ProjectDTO;
 import frontend.dto.TeamDTO;
 import frontend.dto.UserDTO;
+import frontend.exception.RequestError;
 
 import java.net.URI;
+import java.net.URLEncoder;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.List;
 
 public class TeamController {
 
@@ -62,5 +67,137 @@ public class TeamController {
 
     }
 
+    public void searchTeamsByNameAndProject(String teamName) {
+
+        try {
+
+            //Da utilizzare dato che non possono esserci spazi nei parametri search delle richieste HTTP
+            String encodedTeamName = URLEncoder.encode(teamName, StandardCharsets.UTF_8);
+
+            HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+                    .uri(URI.create(client.getBaseUrl() + "/teams/search?teamName=" + encodedTeamName +
+                            "&projectId=" + ProjectController.getInstance().getProject().getId()))
+                    .GET();
+
+            HttpResponse<String> response = client.sendRequest(requestBuilder);
+
+            if (response.statusCode() == 200) {
+
+                this.teams = client.getObjectMapper().readValue(response.body(), new TypeReference<>() {});
+
+
+            } else if (response.statusCode() == 204) {
+
+                //Nessun risultato, svuoto la cache
+                this.teams = new ArrayList<>();
+
+            } else {
+
+                // CASO ERRORE (500, 400, ecc.)
+                System.err.println("Errore dal server. Codice: " + response.statusCode());
+                System.err.println("Dettaglio errore: " + response.body());
+                this.teams = new ArrayList<>();
+
+            }
+
+        } catch (RequestError re) {
+
+            System.err.println("Backend offline: " + re.getMessage());
+            this.teams = new ArrayList<>();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            this.teams = new ArrayList<>();
+        }
+
+    }
+
+    public void removeMemberFromSelectedTeam(String emailUserToRemove){
+
+        try {
+
+            //Da utilizzare dato che non possono esserci spazi nei parametri search delle richieste HTTP
+            String encodedUserEmail = URLEncoder.encode(emailUserToRemove, StandardCharsets.UTF_8);
+
+            HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+                    .uri(URI.create(client.getBaseUrl() + "/teams/remove-member?teamId=" + TeamController.getInstance().getTeam().getId() + "&email=" + encodedUserEmail))
+                    .DELETE();
+
+            HttpResponse<String> response = client.sendRequest(requestBuilder);
+
+            if (response.statusCode() == 200) {
+                System.out.println("Member deleted successfully!");
+            } else {
+                System.err.println("Member deletion error. Code: " + response.statusCode());
+                System.err.println("Error body: " + response.body());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    public void addMemberToSelectedTeam(String emailUserToAdd) {
+
+        try {
+
+            //Da utilizzare dato che non possono esserci spazi nei parametri search delle richieste HTTP
+            String encodedUserEmail = URLEncoder.encode(emailUserToAdd, StandardCharsets.UTF_8);
+
+            HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+                    .uri(URI.create(client.getBaseUrl() + "/teams/add-member?teamId=" + TeamController.getInstance().getTeam().getId() + "&email=" + encodedUserEmail))
+                    .POST(HttpRequest.BodyPublishers.noBody());
+
+            HttpResponse<String> response = client.sendRequest(requestBuilder);
+
+            if (response.statusCode() == 200) {
+                System.out.println("Member addedd successfully!");
+            } else {
+                System.err.println("Member adding error. Code: " + response.statusCode());
+                System.err.println("Error body: " + response.body());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    public TeamDTO getTeam(){
+        return this.team;
+    }
+
+    public List<Integer> getTeamsIds () {
+
+        List<Integer> ids = new ArrayList<>();
+
+        for (TeamDTO t : teams)
+            ids.add(t.getId());
+
+        return ids;
+    }
+
+    public List<String> getTeamsNames () {
+
+        List<String> names = new ArrayList<>();
+
+        for (TeamDTO t : teams)
+            names.add(t.getName());
+
+        return names;
+    }
+
+    public void setTeamWithId(int id) {
+
+        for(TeamDTO t: teams)
+            if(t.getId() == id){
+                this.team = t;
+                break;
+            }
+
+
+    }
 
 }

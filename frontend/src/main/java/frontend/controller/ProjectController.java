@@ -130,7 +130,7 @@ public class ProjectController {
         this.project = new ProjectDTO(id, name);
     }
 
-    public void setProjectWithIndex(int id) {
+    public void setProjectWithId(int id) {
 
         for(ProjectDTO p: projects)
             if(p.getId() == id){

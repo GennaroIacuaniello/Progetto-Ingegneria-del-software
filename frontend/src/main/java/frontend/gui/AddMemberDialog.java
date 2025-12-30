@@ -1,27 +1,28 @@
 package frontend.gui;
 
+import frontend.controller.UserController;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
+import java.util.List;
 
 public class AddMemberDialog extends JDialog {
+
     private JTextField searchTextField;
     private JPanel resultsPanel;
     private final String PLACEHOLDER = "Cerca email utente...";
     private final JFrame mainFrame;
-    private final int teamId;
 
-    public AddMemberDialog(JFrame owner, int teamId) {
+    public AddMemberDialog(JFrame owner) {
         super(owner, "Aggiungi Nuovo Membro", true);
         this.mainFrame = owner;
-        this.teamId = teamId;
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
         mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
         mainPanel.setBackground(Color.WHITE);
-
 
         setupSearchSection(mainPanel);
 
@@ -31,8 +32,10 @@ public class AddMemberDialog extends JDialog {
         mainPanel.add(resultsPanel, Constraints.getGridBagConstraints());
 
         this.setContentPane(mainPanel);
-        this.setSize(500, 400);
+        this.setSize(600, 450);
         this.setLocationRelativeTo(owner);
+
+        performSearch();
     }
 
     private void setupSearchSection(JPanel mainPanel) {
@@ -41,41 +44,69 @@ public class AddMemberDialog extends JDialog {
         searchWrapper.setRoundBorderColor(ColorsList.BORDER_COLOR);
 
         searchTextField = new JTextField(PLACEHOLDER);
-        searchTextField.setPreferredSize(new Dimension(200, 30));
-        searchTextField.setBorder(BorderFactory.createEmptyBorder());
-        TextComponentFocusBehaviour.setTextComponentFocusBehaviour(searchTextField, PLACEHOLDER); //
+        searchTextField.setPreferredSize(new Dimension(250, 30));
+        searchTextField.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
+        TextComponentFocusBehaviour.setTextComponentFocusBehaviour(searchTextField, PLACEHOLDER);
 
         IconButton searchButton = new IconButton("/frontend/gui/images/searchButton.png", 25, 25);
-        searchButton.addActionListener(e -> updateResultsTable());
+        searchButton.addActionListener(e -> performSearch());
 
         Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER);
         searchWrapper.add(searchButton, Constraints.getGridBagConstraints());
-        Constraints.setConstraints(1, 0, 1, 1, GridBagConstraints.HORIZONTAL, 0, 0, GridBagConstraints.CENTER);
+        Constraints.setConstraints(1, 0, 1, 1, GridBagConstraints.HORIZONTAL, 1, 0, GridBagConstraints.CENTER);
         searchWrapper.add(searchTextField, Constraints.getGridBagConstraints());
 
         Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.HORIZONTAL, 1, 0, GridBagConstraints.CENTER);
         mainPanel.add(searchWrapper, Constraints.getGridBagConstraints());
     }
 
-    public void updateResultsTable() {
+
+    public void performSearch() {
+
+        String text = searchTextField.getText();
+        String userEmail = text.equals(PLACEHOLDER) ? "" : text;
+
+        UserController.getInstance().searchDevOrAdminByEmail(userEmail);
+
+        updateResultsTable(UserController.getInstance().getUsersEmails());
+    }
+
+
+    public void updateResultsTable(List<String> emails) {
+
         resultsPanel.removeAll();
+
         String[] cols = {"Email", "Azione"};
-        Object[][] data = {{"nuovo.utente@test.it", "Aggiungi"}}; // Dati simulati
+        Object[][] data = new Object[emails.size()][2];
+
+        for (int i = 0; i < emails.size(); i++) {
+            data[i][0] = emails.get(i);
+            data[i][1] = "Aggiungi";
+        }
 
         DefaultTableModel model = new DefaultTableModel(data, cols) {
             @Override public boolean isCellEditable(int r, int c) { return c == 1; }
         };
 
         JTable table = new JTable(model);
+
         DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
         renderer.setHorizontalAlignment(JLabel.CENTER);
-        renderer.setForeground(new Color(0, 120, 215)); // Blu per l'aggiunta
+        renderer.setForeground(new Color(0, 120, 215));
+        renderer.setFont(new Font("Segoe UI", Font.BOLD, 12));
         table.getColumnModel().getColumn(1).setCellRenderer(renderer);
 
+        table.getColumnModel().getColumn(1).setCellEditor(
+                new AddMemberActionCellEditor(mainFrame, table, this)
+                //
+                 //
+                 //
+                 //
+        );
 
-        table.getColumnModel().getColumn(1).setCellEditor(new AddMemberActionCellEditor(mainFrame, table, teamId, this));
-
+        table.setRowHeight(35);
         resultsPanel.add(new JScrollPane(table), BorderLayout.CENTER);
+
         resultsPanel.revalidate();
         resultsPanel.repaint();
     }

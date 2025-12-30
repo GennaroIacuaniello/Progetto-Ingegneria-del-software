@@ -25,13 +25,26 @@ public class UserController {
     @GetMapping("/developers/search")
     public ResponseEntity<List<UserDTO>> searchDevOrAdminByEmailAndProject(
             @RequestParam String email,
-            @RequestParam int projectId) throws SQLException {
+            @RequestParam(required = false) Integer projectId,
+            @RequestParam(required = false) Integer teamId) throws SQLException {
 
         if (email == null) {
             return ResponseEntity.badRequest().build();
         }
 
-        List<UserDTO> searchResults = userDAO.searchDevOrAdminByEmailAndProject(email, projectId);
+        List<UserDTO> searchResults = null;
+
+        if (projectId != null) {
+
+            searchResults = userDAO.searchDevOrAdminByEmailAndProject(email, projectId);
+
+        } else if (teamId != null) {
+
+            searchResults = userDAO.searchDevOrAdminByEmailAndTeam(email, teamId);
+
+        } else {
+            searchResults = userDAO.searchDevOrAdminByEmail(email);
+        }
 
         if ( searchResults == null || searchResults.isEmpty()) {
             // Se la lista è vuota, restituisce un 204 No Content

@@ -1,5 +1,7 @@
 package frontend.gui;
 
+import frontend.controller.UserController;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
@@ -14,12 +16,11 @@ public class ManageMembersDialog extends JDialog {
     private JPanel resultsPanel;
     private final String PLACEHOLDER = "Cerca email membro...";
     private final JFrame mainFrame;
-    private final int teamId;
 
-    public ManageMembersDialog(JFrame owner, int teamId) {
+    public ManageMembersDialog(JFrame owner) {
+
         super(owner, "Gestione Membri Team", true);
         this.mainFrame = owner;
-        this.teamId = teamId;
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
         mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -48,6 +49,7 @@ public class ManageMembersDialog extends JDialog {
     }
 
     private void setupHeader(JPanel mainPanel) {
+
         IconButton backButton = new IconButton("/frontend/gui/images/backIconButton.png", 30, 30);
         backButton.addActionListener(e -> dispose());
 
@@ -62,9 +64,9 @@ public class ManageMembersDialog extends JDialog {
         addMemberButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         addMemberButton.addActionListener(e -> {
-            AddMemberDialog dialog = new AddMemberDialog(mainFrame, teamId);
+            AddMemberDialog dialog = new AddMemberDialog(mainFrame);
             dialog.setVisible(true);
-            performSearch(); // Aggiorna la lista membri per mostrare l'utente aggiunto
+            performSearch();
         });
 
         Constraints.setConstraints(1, 0, 1, 1, GridBagConstraints.NONE,
@@ -98,43 +100,32 @@ public class ManageMembersDialog extends JDialog {
 
 
     public void performSearch() {
-        String query = searchTextField.getText();
-        if (query.equals(PLACEHOLDER)) {
-            query = "";
-        }
+
+        String text = searchTextField.getText();
+        String userMail = text.equals(PLACEHOLDER) ? "" : text;
 
 
-        // List<String> members = MemberController.getMembersByTeam(teamId, query);
+        UserController.getInstance().searchDevOrAdminByEmailAndTeam(userMail);
 
-        // Dati simulati
-        List<String> mockMembers = new ArrayList<>();
-        mockMembers.add("mario.rossi@azienda.it");
-        mockMembers.add("luigi.verdi@azienda.it");
+        ArrayList<String> emails = (ArrayList<String>) UserController.getInstance().getUsersEmails();
 
-
-        updateTable(mockMembers);
+        updateTable(emails);
     }
 
-    /**
-     * METODO GRAFICO: Disegna fisicamente la tabella con i dati ricevuti.
-     */
-    public void updateTable(List<String> members) {
+
+    public void updateTable(List<String> emails) {
+
         resultsPanel.removeAll();
 
-        String[] columnNames = {"Email", "Azione"};
-        Object[][] data = new Object[members.size()][2];
-
-        for (int i = 0; i < members.size(); i++) {
-            data[i][0] = members.get(i);
-            data[i][1] = "Rimuovi membro";
+        Object[][] rowData = new Object[emails.size()][3];
+        for (int i = 0; i < emails.size(); i++) {
+            rowData[i][0] = emails.get(i);
+            rowData[i][1] = "Rimuovi membro";
         }
 
-        DefaultTableModel model = new DefaultTableModel(data, columnNames) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return column == 1;
-            }
-        };
+        String[] columnNames = {"Email", "Azione"};
+
+        DefaultTableModel model = createTableModel(rowData, columnNames);
 
         JTable table = new JTable(model);
 
@@ -144,8 +135,7 @@ public class ManageMembersDialog extends JDialog {
         actionRenderer.setFont(new Font("Segoe UI", Font.BOLD, 12));
         table.getColumnModel().getColumn(1).setCellRenderer(actionRenderer);
 
-        // Passiamo 'this' e 'teamId' affinché il CellEditor possa richiamare performSearch()
-        table.getColumnModel().getColumn(1).setCellEditor(new RemoveMemberCellEditor(mainFrame, table, this, teamId));
+        table.getColumnModel().getColumn(1).setCellEditor(new RemoveMemberCellEditor(mainFrame, table, this));
 
         table.setRowHeight(35);
         table.getTableHeader().setReorderingAllowed(false);
@@ -155,5 +145,14 @@ public class ManageMembersDialog extends JDialog {
 
         resultsPanel.revalidate();
         resultsPanel.repaint();
+    }
+
+    private static DefaultTableModel createTableModel(Object[][] rowData, String[] columnNames) {
+        return new DefaultTableModel(rowData, columnNames) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return column == 1;
+            }
+        };
     }
 }
