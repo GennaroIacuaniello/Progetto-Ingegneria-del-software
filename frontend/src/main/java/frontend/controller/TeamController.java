@@ -113,6 +113,61 @@ public class TeamController {
 
     }
 
+    public void removeMemberFromSelectedTeam(String emailUserToRemove){
+
+        try {
+
+            //Da utilizzare dato che non possono esserci spazi nei parametri search delle richieste HTTP
+            String encodedUserEmail = URLEncoder.encode(emailUserToRemove, StandardCharsets.UTF_8);
+
+            HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+                    .uri(URI.create(client.getBaseUrl() + "/teams/remove-member?teamId=" + TeamController.getInstance().getTeam().getId() + "&email=" + encodedUserEmail))
+                    .DELETE();
+
+            HttpResponse<String> response = client.sendRequest(requestBuilder);
+
+            if (response.statusCode() == 200) {
+                System.out.println("Member deleted successfully!");
+            } else {
+                System.err.println("Member deletion error. Code: " + response.statusCode());
+                System.err.println("Error body: " + response.body());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    public void addMemberToSelectedTeam(String emailUserToAdd) {
+
+        try {
+
+            //Da utilizzare dato che non possono esserci spazi nei parametri search delle richieste HTTP
+            String encodedUserEmail = URLEncoder.encode(emailUserToAdd, StandardCharsets.UTF_8);
+
+            HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+                    .uri(URI.create(client.getBaseUrl() + "/teams/add-member?teamId=" + TeamController.getInstance().getTeam().getId() + "&email=" + encodedUserEmail))
+                    .POST(HttpRequest.BodyPublishers.noBody());
+
+            HttpResponse<String> response = client.sendRequest(requestBuilder);
+
+            if (response.statusCode() == 200) {
+                System.out.println("Member addedd successfully!");
+            } else {
+                System.err.println("Member adding error. Code: " + response.statusCode());
+                System.err.println("Error body: " + response.body());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    public TeamDTO getTeam(){
+        return this.team;
+    }
 
     public List<Integer> getTeamsIds () {
 
@@ -134,6 +189,15 @@ public class TeamController {
         return names;
     }
 
+    public void setTeamWithId(int id) {
 
+        for(TeamDTO t: teams)
+            if(t.getId() == id){
+                this.team = t;
+                break;
+            }
+
+
+    }
 
 }

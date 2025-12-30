@@ -27,7 +27,7 @@ public class ManageTeamTextCellEditor extends DefaultCellEditor {
         this.button.addActionListener(e -> {
             int row = table.getSelectedRow();
             if (row != -1) {
-                ProjectController.getInstance().setProjectWithIndex((int) table.getValueAt(row, 0));
+                ProjectController.getInstance().setProjectWithId((int) table.getValueAt(row, 0));
 
                 fireEditingStopped();
 

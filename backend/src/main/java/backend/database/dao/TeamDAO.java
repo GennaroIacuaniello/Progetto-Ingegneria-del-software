@@ -11,4 +11,8 @@ public interface TeamDAO {
 
     void createTeam(TeamDTO teamToCreate) throws SQLException;
 
+    boolean addMemberToTeam(Integer teamId, String email) throws SQLException;
+
+    boolean removeMemberFromTeam(Integer teamId, String email) throws SQLException;
+
 }

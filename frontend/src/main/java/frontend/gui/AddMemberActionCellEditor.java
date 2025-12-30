@@ -8,14 +8,12 @@ public class AddMemberActionCellEditor extends DefaultCellEditor {
     private final JButton button;
     private final JFrame mainFrame;
     private final JTable table;
-    private final int teamId;
     private final AddMemberDialog parentDialog;
 
-    public AddMemberActionCellEditor(JFrame mainFrame, JTable table, int teamId, AddMemberDialog parentDialog) {
+    public AddMemberActionCellEditor(JFrame mainFrame, JTable table, AddMemberDialog parentDialog) {
         super(new JCheckBox());
         this.mainFrame = mainFrame;
         this.table = table;
-        this.teamId = teamId;
         this.parentDialog = parentDialog;
 
         this.button = new JButton();
@@ -35,7 +33,7 @@ public class AddMemberActionCellEditor extends DefaultCellEditor {
                 fireEditingStopped();
 
 
-                ConfirmAddDialog confirm = new ConfirmAddDialog(mainFrame, email, teamId, parentDialog);
+                ConfirmAddDialog confirm = new ConfirmAddDialog(mainFrame, email, parentDialog);
                 confirm.setVisible(true);
             }
         });

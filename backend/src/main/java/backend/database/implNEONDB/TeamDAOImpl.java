@@ -83,5 +83,44 @@ public class TeamDAOImpl implements TeamDAO {
 
     }
 
+    public boolean addMemberToTeam(Integer teamId, String email) throws SQLException{
+
+        String query = "INSERT INTO Works_in (team_name, user_id) VALUES "+
+                       "(?, (SELECT user_id FROM User_ U WHERE U.email = ?))";
+
+
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setInt(1, teamId);
+            statement.setString(2, email);
+
+            int rowsAdded = statement.executeUpdate();
+
+            return rowsAdded > 0;
+        }
+
+    }
+
+
+
+    public boolean removeMemberFromTeam(Integer teamId, String email) throws SQLException{
+
+        String query = "DELETE FROM Works_in W NATURAL JOIN User_ U WHERE W.team_id = ? AND U.email = ?";
+
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setInt(1, teamId);
+            statement.setString(2, email);
+
+            int rowsDeleted = statement.executeUpdate();
+
+            return rowsDeleted > 0;
+        }
+
+    }
+
+
 
 }

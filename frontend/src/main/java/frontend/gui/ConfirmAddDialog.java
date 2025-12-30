@@ -1,12 +1,14 @@
 package frontend.gui;
 
+import frontend.controller.TeamController;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class ConfirmAddDialog extends JDialog {
 
-    public ConfirmAddDialog(JFrame owner, String email, int teamId, AddMemberDialog parentDialog) {
+    public ConfirmAddDialog(JFrame owner, String email, AddMemberDialog parentDialog) {
         super(owner, "Conferma Aggiunta", true);
 
         JPanel panel = new JPanel(new GridBagLayout());
@@ -19,18 +21,7 @@ public class ConfirmAddDialog extends JDialog {
         Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.CENTER, 0, 0, GridBagConstraints.CENTER, new Insets(0, 0, 20, 0));
         panel.add(label, Constraints.getGridBagConstraints());
 
-        JButton confirmBtn = new JButton("Conferma");
-        confirmBtn.setBackground(new Color(40, 167, 69));
-        confirmBtn.setForeground(Color.WHITE);
-
-        confirmBtn.addActionListener(e -> {
-
-            System.out.println("Utente aggiunto: " + email);
-
-
-            parentDialog.dispose();
-            dispose();
-        });
+        JButton confirmBtn = getConfirmBtn(email, parentDialog);
 
         Constraints.setConstraints(0, 1, 1, 1, GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER);
         panel.add(confirmBtn, Constraints.getGridBagConstraints());
@@ -38,5 +29,24 @@ public class ConfirmAddDialog extends JDialog {
         this.setContentPane(panel);
         this.pack();
         this.setLocationRelativeTo(owner);
+    }
+
+    private JButton getConfirmBtn(String email, AddMemberDialog parentDialog) {
+
+        JButton confirmBtn = new JButton("Conferma");
+        confirmBtn.setBackground(new Color(40, 167, 69));
+        confirmBtn.setForeground(Color.WHITE);
+
+        confirmBtn.addActionListener(e -> {
+
+            TeamController.getInstance().addMemberToSelectedTeam(email);
+
+            System.out.println("User added: " + email);
+
+            parentDialog.dispose();
+
+            dispose();
+        });
+        return confirmBtn;
     }
 }

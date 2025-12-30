@@ -1,18 +1,15 @@
 package frontend.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import frontend.dto.UserDTO;
 import frontend.exception.RequestError;
 
 import java.net.URI;
 import java.net.URLEncoder;
-import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class UserController {
@@ -37,18 +34,60 @@ public class UserController {
 
     public void searchDevOrAdminByEmailAndProject(String devEmail) {
 
+
+        //Da utilizzare dato che non possono esserci spazi nei parametri search delle richieste HTTP
+        String encodedDevEmail = URLEncoder.encode(devEmail, StandardCharsets.UTF_8);
+
+        System.out.println("Calling URL: " + client.getBaseUrl() + "/users/developers/search?email=" + encodedDevEmail +
+                "&projectId=" + ProjectController.getInstance().getProject().getId());
+
+        HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+                .uri(URI.create(client.getBaseUrl() + "/users/developers/search?email=" + encodedDevEmail +
+                                "&projectId=" + ProjectController.getInstance().getProject().getId()))
+                .GET();
+
+        handleHttpRequest(requestBuilder);
+
+    }
+
+
+    public void searchDevOrAdminByEmailAndTeam(String devEmail) {
+
+        //Da utilizzare dato che non possono esserci spazi nei parametri search delle richieste HTTP
+        String encodedDevEmail = URLEncoder.encode(devEmail, StandardCharsets.UTF_8);
+
+        System.out.println("Calling URL: " + client.getBaseUrl() + "/users/developers/search?email=" + encodedDevEmail +
+                "&teamId=" + TeamController.getInstance().getTeam().getId());
+
+        HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+                .uri(URI.create(client.getBaseUrl() + "/users/developers/search?email=" + encodedDevEmail +
+                        "&teamId=" + TeamController.getInstance().getTeam().getId() ))
+                .GET();
+
+        handleHttpRequest(requestBuilder);
+
+    }
+
+    public void searchDevOrAdminByEmail(String devEmail) {
+
+
+        //Da utilizzare dato che non possono esserci spazi nei parametri search delle richieste HTTP
+        String encodedDevEmail = URLEncoder.encode(devEmail, StandardCharsets.UTF_8);
+
+        System.out.println("Calling URL: " + client.getBaseUrl() + "/users/developers/search?email=" + encodedDevEmail);
+
+        HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+                .uri(URI.create(client.getBaseUrl() + "/users/developers/search?email=" + encodedDevEmail))
+                .GET();
+
+        handleHttpRequest(requestBuilder);
+
+    }
+
+
+    private void handleHttpRequest(HttpRequest.Builder requestBuilder){
+
         try {
-
-            //Da utilizzare dato che non possono esserci spazi nei parametri search delle richieste HTTP
-            String encodedDevEmail = URLEncoder.encode(devEmail, StandardCharsets.UTF_8);
-
-            System.out.println("Calling URL: " + client.getBaseUrl() + "/users/developers/search?email=" + devEmail +
-                    "&projectId=" + ProjectController.getInstance().getProject().getId());
-
-            HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
-                    .uri(URI.create(client.getBaseUrl() + "/users/developers/search?email=" + devEmail +
-                                    "&projectId=" + ProjectController.getInstance().getProject().getId()))
-                    .GET();
 
             HttpResponse<String> response = client.sendRequest(requestBuilder);
 
@@ -81,11 +120,6 @@ public class UserController {
             e.printStackTrace();
             this.users = new ArrayList<>();
         }
-
-        for(UserDTO u: users)
-            System.out.println(u.getEmail());
-
-        System.out.println("ciao");
 
     }
 

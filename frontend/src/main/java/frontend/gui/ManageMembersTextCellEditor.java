@@ -1,5 +1,8 @@
 package frontend.gui;
 
+import frontend.controller.ProjectController;
+import frontend.controller.TeamController;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -10,6 +13,7 @@ public class ManageMembersTextCellEditor extends DefaultCellEditor {
     private final JTable table;
 
     public ManageMembersTextCellEditor(JFrame mainFrame, JTable table) {
+
         super(new JCheckBox());
         this.mainFrame = mainFrame;
         this.table = table;
@@ -29,12 +33,11 @@ public class ManageMembersTextCellEditor extends DefaultCellEditor {
             int row = table.getSelectedRow();
             if (row != -1) {
 
-                int teamId = (int) table.getValueAt(row, 0);
-
+                TeamController.getInstance().setTeamWithId((int) table.getValueAt(row, 0));
 
                 fireEditingStopped();
 
-                ManageMembersDialog membersDialog = new ManageMembersDialog(mainFrame, teamId);
+                ManageMembersDialog membersDialog = new ManageMembersDialog(mainFrame);
                 membersDialog.setVisible(true);
             }
         });

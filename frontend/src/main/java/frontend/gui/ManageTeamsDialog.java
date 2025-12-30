@@ -23,6 +23,7 @@ public class ManageTeamsDialog extends JDialog {
     private final JFrame mainFrame;
 
     public ManageTeamsDialog(JFrame owner) {
+
         super(owner, "Gestione Team", true);
         this.mainFrame = owner;
 

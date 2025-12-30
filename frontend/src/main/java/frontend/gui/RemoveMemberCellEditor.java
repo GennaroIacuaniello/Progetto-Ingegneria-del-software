@@ -8,17 +8,15 @@ public class RemoveMemberCellEditor extends DefaultCellEditor {
     private final JFrame mainFrame;
     private final JTable table;
     private final ManageMembersDialog parentDialog;
-    private final int teamId;
 
-    public RemoveMemberCellEditor(JFrame mainFrame, JTable table, ManageMembersDialog parentDialog, int teamId) {
+    public RemoveMemberCellEditor(JFrame mainFrame, JTable table, ManageMembersDialog parentDialog) {
+
         super(new JCheckBox());
         this.mainFrame = mainFrame;
         this.table = table;
         this.parentDialog = parentDialog;
-        this.teamId = teamId;
         this.button = new JButton();
 
-        // Stile invisibile per sembrare semplice testo
         this.button.setOpaque(true);
         this.button.setBorderPainted(false);
         this.button.setContentAreaFilled(false);
@@ -31,8 +29,7 @@ public class RemoveMemberCellEditor extends DefaultCellEditor {
                 String email = (String) table.getValueAt(row, 0);
                 fireEditingStopped();
 
-                // Passa il parentDialog al costruttore della conferma
-                ConfirmDeleteMemberDialog confirm = new ConfirmDeleteMemberDialog(mainFrame, email, teamId, parentDialog);
+                ConfirmDeleteMemberDialog confirm = new ConfirmDeleteMemberDialog(mainFrame, email, parentDialog);
                 confirm.setVisible(true);
             }
         });
