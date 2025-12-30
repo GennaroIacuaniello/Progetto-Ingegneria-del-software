@@ -20,22 +20,21 @@ public class SearchProjectResultsAdmin extends SearchProjectResultsDeveloper{
                 "Reported", "/frontend/gui/images/reportedIssues.png",
                 "Assigned", "/frontend/gui/images/assignedIssues.png",
                 "View", "/frontend/gui/images/viewIssues.png",
-                "Teams", "/frontend/gui/images/teamsIconButton.png",
-                "TeamReport", "/frontend/gui/images/teamReportIconButton.png"
+                "Teams", "/frontend/gui/images/teamsIconButton.png"
         );
     }
 
     @Override
     protected void setButtonActions() {
 
-        buttonActions = new String[]{"Report", "Reported", "Assigned", "View", "Teams", "TeamReport"};
+        buttonActions = new String[]{"Report", "Reported", "Assigned", "View", "Teams"};
     }
 
     @Override
     protected ProjectTableModelUser createTableModel(List<Integer> projectIds, List<String> projectNames) {
 
         int numRows = projectIds.size();
-        Object[][] rowData = new Object[numRows][8];
+        Object[][] rowData = new Object[numRows][7];
 
         for (int i = 0; i < numRows; i++) {
             rowData[i][0] = projectIds.get(i);
@@ -45,7 +44,6 @@ public class SearchProjectResultsAdmin extends SearchProjectResultsDeveloper{
             rowData[i][4] = "Assigned";
             rowData[i][5] = "View";
             rowData[i][6] = "Teams";
-            rowData[i][7] = "TeamReport";
         }
 
         return new ProjectTableModelAdmin(rowData);

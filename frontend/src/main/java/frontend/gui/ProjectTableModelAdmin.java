@@ -8,13 +8,13 @@ public class ProjectTableModelAdmin extends ProjectTableModelDeveloper{
 
     protected void setColumnNames() {
 
-        columnNames = new String[]{"ID PROGETTO", "NOME PROGETTO", "SEGNALA ISSUE", "ISSUE SEGNALATE", "ISSUE ASSEGNATE", "VEDI TUTTE LE ISSUE", "GESTISCI TEAMS", "REPORT MENSILE"};
+        columnNames = new String[]{"ID PROGETTO", "NOME PROGETTO", "SEGNALA ISSUE", "ISSUE SEGNALATE", "ISSUE ASSEGNATE", "VEDI TUTTE LE ISSUE", "GESTISCI TEAMS"};
     }
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
 
-        if (columnIndex >= 2 && columnIndex <= 7)
+        if (columnIndex >= 2 && columnIndex <= 6)
             return IconButton.class;
         else
             return super.getColumnClass(columnIndex);
@@ -22,6 +22,6 @@ public class ProjectTableModelAdmin extends ProjectTableModelDeveloper{
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return columnIndex >= 2 && columnIndex <= 7;
+        return columnIndex >= 2 && columnIndex <= 6;
     }
 }
