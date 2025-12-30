@@ -16,6 +16,9 @@ public class TagsMenu extends MyDialog{
 
         super(owner);
 
+        mainPanel.setMinimumSize(new Dimension(200, 400));
+        mainPanel.setPreferredSize(new Dimension(200, 400));
+
         setTagsPanel();
         setScrollPane();
         setAddButton();
@@ -44,11 +47,11 @@ public class TagsMenu extends MyDialog{
 
         scrollPane.setViewportView(tagsPanel);
 
-        scrollPane.setPreferredSize(new Dimension(300, 500));
+        scrollPane.setPreferredSize(new Dimension(200, 350));
 
-        Constraints.setConstraints(0, 0, 1, 1,
-                GridBagConstraints.BOTH, 0, 0, GridBagConstraints.CENTER,
-                new Insets(5, 5, 5, 5));
+        Constraints.setConstraints(0, 1, 2, 1,
+                GridBagConstraints.BOTH, 0, 0, GridBagConstraints.PAGE_START,
+                1f, 1f, new Insets(5, 5, 5, 5));
         mainPanel.add(scrollPane, Constraints.getGridBagConstraints());
     }
 
@@ -66,9 +69,9 @@ public class TagsMenu extends MyDialog{
         });
 
         Constraints.setConstraints(1, 0, 1, 1,
-                GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
+                GridBagConstraints.NONE, 0, 0, GridBagConstraints.FIRST_LINE_END,
                 new Insets(5, 5, 5, 5));
-        buttonsPanel.add(addButton, Constraints.getGridBagConstraints());
+        mainPanel.add(addButton, Constraints.getGridBagConstraints());
     }
 
     private void addTagPanel() {
@@ -97,5 +100,11 @@ public class TagsMenu extends MyDialog{
 
     public ArrayList<TagPanel> getTagPanels() {
         return tagPanels;
+    }
+
+    @Override
+    protected void backActionListener() {
+
+        setVisible(false);
     }
 }

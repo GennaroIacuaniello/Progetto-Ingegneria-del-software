@@ -46,12 +46,17 @@ public class MyDialog extends JDialog {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose();
+                backActionListener();
             }
         });
 
         Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.NONE,
-                0, 0, GridBagConstraints.LINE_START, new Insets(5, 5, 5, 5));
+                0, 0, GridBagConstraints.FIRST_LINE_START, new Insets(5, 5, 5, 5));
         mainPanel.add(backButton, Constraints.getGridBagConstraints());
+    }
+
+    protected void backActionListener() {
+
+        dispose();
     }
 }
