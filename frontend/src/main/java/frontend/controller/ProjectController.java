@@ -1,24 +1,15 @@
 package frontend.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import frontend.dto.IssueStatusDTO;
 import frontend.dto.ProjectDTO;
-import frontend.dto.UserDTO;
 import frontend.exception.RequestError;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.URLEncoder;
-import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.time.Duration;
-import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class ProjectController {
@@ -134,16 +125,27 @@ public class ProjectController {
         return names;
     }
 
-    public void setProject(int id, String name) {
+    public void setProjectWithValues(int id, String name) {
 
         this.project = new ProjectDTO(id, name);
+    }
+
+    public void setProjectWithIndex(int id) {
+
+        for(ProjectDTO p: projects)
+            if(p.getId() == id){
+                this.project = p;
+                break;
+            }
+
+
     }
 
     public ProjectDTO getProject() {
         return project;
     }
 
-    public void setProject(ProjectDTO project) {
+    public void setProjectWithValues(ProjectDTO project) {
         this.project = project;
     }
 

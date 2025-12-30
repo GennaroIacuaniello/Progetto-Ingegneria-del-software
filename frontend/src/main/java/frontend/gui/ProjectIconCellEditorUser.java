@@ -49,7 +49,7 @@ class ProjectIconCellEditorUser extends DefaultCellEditor {
 
         String action = parentTable.getColumnName(parentTable.getEditingColumn());
 
-        ProjectController.getInstance().setProject((Integer)parentTable.getValueAt(selectedRow, 0),
+        ProjectController.getInstance().setProjectWithValues((Integer)parentTable.getValueAt(selectedRow, 0),
                 (String)parentTable.getValueAt(selectedRow, 1));
 
         switch (action) {

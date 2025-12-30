@@ -9,4 +9,6 @@ public interface ProjectDAO {
 
     List<ProjectDTO> searchProjectsByName(String projectName) throws SQLException;
 
+    void createProject(ProjectDTO projectToCreate) throws SQLException;
+
 }
