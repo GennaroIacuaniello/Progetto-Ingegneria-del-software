@@ -36,6 +36,11 @@ public class ProjectIconCellEditorAdmin extends ProjectIconCellEditorDeveloper {
             case "VEDI TUTTE LE ISSUE":
                 homePanel.setContentPanel(new SearchAllIssuePage(mainFrame, homePanel));
                 break;
+
+            case "VEDI TEAMS":
+                //todo: vedi cosa fare
+                System.out.println("vedi teams");
+                break;
         }
 
         return null;
