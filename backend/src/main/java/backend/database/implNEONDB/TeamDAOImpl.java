@@ -106,7 +106,9 @@ public class TeamDAOImpl implements TeamDAO {
 
     public boolean removeMemberFromTeam(Integer teamId, String email) throws SQLException{
 
-        String query = "DELETE FROM Works_in W NATURAL JOIN User_ U WHERE W.team_id = ? AND U.email = ?";
+        String query = "DELETE FROM Works_in " +
+                       "WHERE team_id = ? " +
+                       "AND user_id = (SELECT user_id FROM User_ WHERE email = ?)";
 
         try (Connection connection = DatabaseConnection.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
