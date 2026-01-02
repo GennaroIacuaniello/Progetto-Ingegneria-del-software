@@ -14,7 +14,7 @@ public class TeamReportSearchPanel extends RoundedPanel{
     private IconButton searchButton;
     private JComboBox<String> monthComboBox;
     private JTextField yearTextField;
-    private static final String YEARTEXTFIELD_PLACEHOLDER = "Inserisci anno";
+    private static final String YEAR_TEXTFIELD_PLACEHOLDER = "Inserisci anno";
 
     public TeamReportSearchPanel(TeamReportPage searchPage) {
 
@@ -74,7 +74,7 @@ public class TeamReportSearchPanel extends RoundedPanel{
 
     private void search() {
 
-        if(!yearTextField.getText().equals(YEARTEXTFIELD_PLACEHOLDER) &&
+        if(!yearTextField.getText().equals(YEAR_TEXTFIELD_PLACEHOLDER) &&
         yearTextField.getText().matches("\\d+")) {
 
             ControllerTMP.createReport(Objects.requireNonNull(monthComboBox.getSelectedItem()).toString(), yearTextField.getText());
@@ -113,12 +113,12 @@ public class TeamReportSearchPanel extends RoundedPanel{
 
     private void setYearTextField() {
 
-        yearTextField = new JTextField(YEARTEXTFIELD_PLACEHOLDER);
+        yearTextField = new JTextField(YEAR_TEXTFIELD_PLACEHOLDER);
 
         yearTextField.setBackground(ColorsList.EMPTY_COLOR);
         yearTextField.setBorder(BorderFactory.createEmptyBorder());
 
-        TextComponentFocusBehaviour.setTextComponentFocusBehaviour(yearTextField, YEARTEXTFIELD_PLACEHOLDER);
+        TextComponentFocusBehaviour.setTextComponentFocusBehaviour(yearTextField, YEAR_TEXTFIELD_PLACEHOLDER);
 
         RoundedPanel tmpPanel = ContainerFactory.createRoundedPanelContainer(yearTextField);
 

@@ -11,10 +11,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Dialog per la gestione dei team all'interno di un progetto.
- * Permette di cercare team e accedere alla gestione dei membri.
- */
+
 public class ManageTeamsDialog extends JDialog {
 
     private JTextField searchTextField;
@@ -43,7 +40,7 @@ public class ManageTeamsDialog extends JDialog {
         mainPanel.add(resultsPanel, Constraints.getGridBagConstraints());
 
         this.setContentPane(mainPanel);
-        this.setMinimumSize(new Dimension(650, 500));
+        this.setMinimumSize(new Dimension(850, 500));
         this.setLocationRelativeTo(owner);
     }
 
@@ -115,26 +112,32 @@ public class ManageTeamsDialog extends JDialog {
     private void updateTable(List<Integer> ids, List<String> names) {
         resultsPanel.removeAll();
 
-        Object[][] rowData = new Object[ids.size()][3];
+        Object[][] rowData = new Object[ids.size()][4];
         for (int i = 0; i < ids.size(); i++) {
             rowData[i][0] = ids.get(i);
             rowData[i][1] = names.get(i);
             rowData[i][2] = "Gestisci membri";
+            rowData[i][3] = "Visualizza Report mensile";
         }
 
-        String[] columnNames = {"ID Team", "Nome Team", "Azione"};
+        String[] columnNames = {"ID Team", "Nome Team", "Membri", "Report"};
 
         DefaultTableModel model = createTableModel(rowData, columnNames);
-
         JTable table = new JTable(model);
 
         DefaultTableCellRenderer actionRenderer = new DefaultTableCellRenderer();
         actionRenderer.setHorizontalAlignment(JLabel.CENTER);
         actionRenderer.setForeground(new Color(0, 120, 215));
         actionRenderer.setFont(new Font("Segoe UI", Font.BOLD, 12));
+
         table.getColumnModel().getColumn(2).setCellRenderer(actionRenderer);
+        table.getColumnModel().getColumn(3).setCellRenderer(actionRenderer);
+
 
         table.getColumnModel().getColumn(2).setCellEditor(new ManageMembersTextCellEditor(mainFrame, table));
+
+
+        table.getColumnModel().getColumn(3).setCellEditor(new ViewReportCellEditor(mainFrame, table));
 
         table.setRowHeight(35);
         table.getTableHeader().setReorderingAllowed(false);
@@ -147,11 +150,11 @@ public class ManageTeamsDialog extends JDialog {
     }
 
     private static DefaultTableModel createTableModel(Object[][] rowData, String[] columnNames) {
-
         return new DefaultTableModel(rowData, columnNames) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return column == 2;
+
+                return column == 2 || column == 3;
             }
         };
     }
