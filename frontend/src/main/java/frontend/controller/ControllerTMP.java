@@ -6,11 +6,11 @@ import java.util.List;
 
 public class ControllerTMP {
 
-    private static List<String> developers;
-    private static List<Integer> openIssues;
-    private static List<Integer> resolvedIssues;
-    private static List<Duration> averageResolvingDurations;
-    private static Duration totalAverageResolvingDuration;
+    private static List<String> developers = new ArrayList<>();
+    private static List<Integer> openIssues = new ArrayList<>();
+    private static List<Integer> resolvedIssues = new ArrayList<>();
+    private static List<Duration> averageResolvingDurations = new ArrayList<>();
+    private static Duration totalAverageResolvingDuration = Duration.ZERO;
 
     public static void createReport(String month, String year) {
 
