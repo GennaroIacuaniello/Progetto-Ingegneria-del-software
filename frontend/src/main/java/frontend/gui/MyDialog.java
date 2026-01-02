@@ -40,7 +40,7 @@ public class MyDialog extends JDialog {
 
     protected void setBackButton() {
 
-        IconButton backButton = new IconButton("/frontend/gui/images/backIconButton.png", 30, 30);
+        IconButton backButton = new IconButton("/frontend/gui/images/backIconButton.png", 32, 32);
 
         backButton.addActionListener(new ActionListener() {
 

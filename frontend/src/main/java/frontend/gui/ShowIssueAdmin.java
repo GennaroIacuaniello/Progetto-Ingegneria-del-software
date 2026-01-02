@@ -43,7 +43,7 @@ public class ShowIssueAdmin extends ShowReportedIssueDeveloper {
 
     private void setSearchButton() {
 
-        searchButton = new IconButton("/frontend/gui/images/searchButton.png", 30, 30);
+        searchButton = new IconButton("/frontend/gui/images/searchButton.png", 32, 32);
 
         searchButton.addActionListener(new ActionListener() {
 

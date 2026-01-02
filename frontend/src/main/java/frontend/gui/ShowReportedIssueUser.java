@@ -86,7 +86,7 @@ public class ShowReportedIssueUser extends MyDialog {
 
     private void setTagsList() {
 
-        IconButton tagsButton = new IconButton("/frontend/gui/images/tagsButton.png", 30, 30);
+        IconButton tagsButton = new IconButton("/frontend/gui/images/tagsButton.png", 32, 32);
 
         JPopupMenu menu = new JPopupMenu();
 
@@ -112,7 +112,7 @@ public class ShowReportedIssueUser extends MyDialog {
 
     private void setImageButton() {
 
-        IconButton imageButton = new IconButton("/frontend/gui/images/imageButton.png", 30, 30);
+        IconButton imageButton = new IconButton("/frontend/gui/images/imageButton.png", 32, 32);
 
         imageButton.addActionListener(new ActionListener() {
 

@@ -13,25 +13,29 @@ public class HomePage {
 
     public HomePage() {
 
+        double scale = GraphicsEnvironment.getLocalGraphicsEnvironment()
+                .getDefaultScreenDevice().getDefaultConfiguration()
+                .getDefaultTransform().getScaleX();
+        System.out.println("Current Scaling: " + (scale * 100) + "%");
+
         setMainFrame();
         setPanels();
 
         mainFrame.setVisible(true);
     }
 
-    protected static void setFlatLaf() {
+    public static void setFlatLaf() {
+
+        System.setProperty("flatlaf.uiScale", "1.25");
+        System.setProperty("flatlaf.useTextAntialiasing", "true");
 
         try {
+
             UIManager.setLookAndFeel(new FlatLightLaf());
-        } catch (UnsupportedLookAndFeelException e) {
-            String[] options = {"Continua", "Chiudi"};
-            int action = JOptionPane.showOptionDialog(null, "<html><center>Il tuo device non supporta FlatLaf,<br>" +
-                            "utilizzerai un'altra versione dell'app,<br>" +
-                            "tutte le funzioni rimarranno invariate.</center></html>",
-                    "Errore nel caricamento grafica", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, null);
-            if (action == 1 || action == JOptionPane.CLOSED_OPTION) {
-                return;
-            }
+            UIManager.put("Component.graphicsAntialiasing", true);
+
+        } catch (Exception ex) {
+            System.err.println("Errore nell'inizializzazione di FlatLaf: " + ex.getMessage());
         }
     }
 

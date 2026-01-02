@@ -10,7 +10,7 @@ public class SearchProjectsButtonUser extends IconButton {
 
     public SearchProjectsButtonUser(JFrame mainFrame, HomePanelUser homePanel, JTextField searchTextField, String placeholder) {
 
-        super("/frontend/gui/images/searchButton.png", 30, 30);
+        super("/frontend/gui/images/searchButton.png", 32, 32);
 
         setActionListener(mainFrame, homePanel, searchTextField, placeholder);
     }

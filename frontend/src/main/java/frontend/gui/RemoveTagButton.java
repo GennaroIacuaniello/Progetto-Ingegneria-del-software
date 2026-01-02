@@ -8,7 +8,7 @@ public class RemoveTagButton extends IconButton{
 
     public RemoveTagButton(TagsMenu menu, TagPanel tagPanel) {
 
-        super("/frontend/gui/images/trashButtonIcon.png", 30 ,30);
+        super("/frontend/gui/images/trashButtonIcon.png", 32 ,32);
 
         addActionListener(new ActionListener() {
 
