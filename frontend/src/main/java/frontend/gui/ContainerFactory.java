@@ -13,7 +13,7 @@ public class ContainerFactory {
 
         Constraints.setConstraints(0, 0, 1, 1,
                 GridBagConstraints.BOTH, 0, 0, GridBagConstraints.CENTER,
-                1f, 1f, new Insets(5, 5, 5, 5));
+                1f, 1f, new Insets(10, 10, 10, 10));
         tmpPanel.add(component, Constraints.getGridBagConstraints());
 
         return tmpPanel;
