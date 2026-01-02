@@ -114,7 +114,7 @@ public class ManageProjectsDialog extends JDialog {
         for (int i = 0; i < ids.size(); i++) {
             rowData[i][0] = ids.get(i);
             rowData[i][1] = names.get(i);
-            rowData[i][2] = "Gestisci team"; // Testo che apparirà nella cella
+            rowData[i][2] = "Gestisci team";
         }
 
         String[] columnNames = {"ID Progetto", "Nome Progetto", "Azione"};
@@ -145,7 +145,7 @@ public class ManageProjectsDialog extends JDialog {
         return new DefaultTableModel(rowData, columnNames) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                // Rendiamo editabile solo la colonna 2 per permettere il click sul "tasto"
+                // Rende editabile solo la colonna 2 per permettere il click sul "tasto"
                 return column == 2;
             }
         };

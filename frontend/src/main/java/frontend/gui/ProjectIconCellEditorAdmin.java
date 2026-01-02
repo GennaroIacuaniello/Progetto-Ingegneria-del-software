@@ -16,8 +16,10 @@ public class ProjectIconCellEditorAdmin extends ProjectIconCellEditorDeveloper {
 
         String action = parentTable.getColumnName(parentTable.getEditingColumn());
 
-        ProjectController.getInstance().setProjectWithValues((Integer)parentTable.getValueAt(selectedRow, 0),
-                (String)parentTable.getValueAt(selectedRow, 1));
+        //ProjectController.getInstance().setProjectWithValues((Integer)parentTable.getValueAt(selectedRow, 0),
+        //        (String)parentTable.getValueAt(selectedRow, 1));
+
+        ProjectController.getInstance().setProjectWithId((Integer)parentTable.getValueAt(selectedRow, 0));
 
         switch (action) {
 
@@ -37,8 +39,10 @@ public class ProjectIconCellEditorAdmin extends ProjectIconCellEditorDeveloper {
                 homePanel.setContentPanel(new SearchAllIssuePage(mainFrame, homePanel));
                 break;
 
-            case "GESTISCI TEAMS":
-                //todo: vedi cosa fare
+            case "GESTISCI TEAM":
+
+                ManageTeamsDialog teamsDialog = new ManageTeamsDialog(mainFrame);
+                teamsDialog.setVisible(true);
                 System.out.println("vedi teams");
                 break;
         }

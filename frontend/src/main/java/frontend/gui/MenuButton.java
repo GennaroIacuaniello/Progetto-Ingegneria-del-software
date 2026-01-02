@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class MenuButton extends IconButton {
 
-    private final String[] options = {"Crea nuova utenza",  "Visualizza DashBoard", "Gestisci progetti"};
+    private final String[] options = {"Crea nuova utenza",  "Visualizza DashBoard", "Crea nuovo progetto"};
 
     public MenuButton() {
 
@@ -50,10 +50,12 @@ public class MenuButton extends IconButton {
                     dialog.setVisible(true);
                     break;
 
-                case "Gestisci progetti":
+                case "Crea nuovo progetto":
                     JFrame owner = (JFrame) SwingUtilities.getWindowAncestor(this);
-                    ManageProjectsDialog manageProjectsDialog = new ManageProjectsDialog(owner);
-                    manageProjectsDialog.setVisible(true);
+                    //ManageProjectsDialog manageProjectsDialog = new ManageProjectsDialog(owner);
+                    //manageProjectsDialog.setVisible(true);
+                    CreateProjectDialog createProjectDialog = new CreateProjectDialog(owner);
+                    createProjectDialog.setVisible(true);
                 default:
                     break;
             }
