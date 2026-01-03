@@ -4,7 +4,7 @@ public class LogOutButton extends IconButton {
 
     public LogOutButton() {
 
-        super("/frontend/gui/images/logOutButtonIcon.png", 50, 50);
+        super("/frontend/gui/images/logOutButtonIcon.svg", 50, 50);
 
         setActionListener();
     }

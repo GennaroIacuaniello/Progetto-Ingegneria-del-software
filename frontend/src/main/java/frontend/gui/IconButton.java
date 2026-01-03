@@ -1,5 +1,6 @@
 package frontend.gui;
 
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -8,6 +9,7 @@ import java.net.URL;
 public class IconButton extends JButton {
 
     private Image originalImage;
+    private FlatSVGIcon svgIcon;
     private final int targetWidth;
     private final int targetHeight;
 
@@ -15,16 +17,81 @@ public class IconButton extends JButton {
 
         super();
 
-        targetWidth = width;
-        targetHeight = height;
+        this.targetWidth = width;
+        this.targetHeight = height;
 
         removeListeners();
         setImageIcon(url);
         setupStyle();
     }
 
-    private void removeListeners() {
+    private void setImageIcon(String url) {
 
+        if (url.toLowerCase().endsWith(".svg")) {
+
+            URL res = getClass().getResource(url);
+
+            if (res != null)
+                svgIcon = new FlatSVGIcon(res);
+        } else {
+
+            URL imageURL = getClass().getResource(url);
+
+            if (imageURL != null)
+                this.originalImage = new ImageIcon(imageURL).getImage();
+        }
+
+        int padding = 2;
+
+        Dimension d = new Dimension(targetWidth + padding, targetHeight + padding);
+
+        setPreferredSize(d);
+        setMinimumSize(d);
+
+        setBorder(BorderFactory.createEmptyBorder());
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+
+        Graphics2D g2 = (Graphics2D) g.create();
+
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+
+        int w = getWidth();
+        int h = getHeight();
+
+        int margin = 2; //se l'immagine è troppo grande o tagliata modifica questo
+        int finalW = Math.min(targetWidth, w - margin);
+        int finalH = Math.min(targetHeight, h - margin);
+
+        int x = (w - finalW) / 2;
+        int y = (h - finalH) / 2;
+
+        if (svgIcon != null) {
+
+            Image svgImage = svgIcon.derive(finalW, finalH).getImage();
+
+            if (svgImage != null)
+                g2.drawImage(svgImage, x, y, finalW, finalH, null);
+
+        } else if (originalImage != null)
+            g2.drawImage(originalImage, x, y, finalW, finalH, this);
+
+        g2.dispose();
+    }
+
+    private void setupStyle() {
+        setContentAreaFilled(false);
+        setBorderPainted(false);
+        setFocusPainted(false);
+        setCursor(new Cursor(Cursor.HAND_CURSOR));
+        setMargin(new Insets(0, 0, 0, 0));
+        setBorder(null);
+    }
+
+    private void removeListeners() {
         for (FocusListener focusListener : getFocusListeners())
             this.removeFocusListener(focusListener);
 
@@ -42,52 +109,5 @@ public class IconButton extends JButton {
                 }
             }
         });
-    }
-
-    private void setImageIcon(String url) {
-
-        URL imageURL = getClass().getResource(url);
-
-        if (imageURL != null) {
-
-            ImageIcon tempIcon = new ImageIcon(imageURL);
-            originalImage = tempIcon.getImage();
-
-            Dimension d = new Dimension(targetWidth, targetHeight);
-            setPreferredSize(d);
-            setMinimumSize(d);
-            setMaximumSize(d);
-        }
-    }
-
-    private void setupStyle() {
-
-        setContentAreaFilled(false);
-        setBorderPainted(false);
-        setFocusPainted(false);
-        setCursor(new Cursor(Cursor.HAND_CURSOR));
-        setMargin(new Insets(0, 0, 0, 0));
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-
-        super.paintComponent(g);
-
-        if (originalImage != null) {
-
-            Graphics2D g2 = (Graphics2D) g.create();
-
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-            g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-
-            int x = (getWidth() - targetWidth) / 2;
-            int y = (getHeight() - targetHeight) / 2;
-
-            g2.drawImage(originalImage, x, y, targetWidth, targetHeight, this);
-
-            g2.dispose();
-        }
     }
 }

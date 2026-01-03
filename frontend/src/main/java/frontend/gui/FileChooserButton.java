@@ -12,7 +12,7 @@ public class FileChooserButton extends IconButton{
 
     public FileChooserButton(FileChooserPanel fileChooserPanel) {
 
-        super("/frontend/gui/images/fileChooserIcon.png", 40, 40);
+        super("/frontend/gui/images/fileChooserIcon.svg", 40, 40);
 
         this.fileChooserPanel = fileChooserPanel;
 

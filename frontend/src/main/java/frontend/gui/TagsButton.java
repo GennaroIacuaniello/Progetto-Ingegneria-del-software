@@ -12,7 +12,7 @@ public class TagsButton extends IconButton {
 
     public TagsButton(JFrame mainFrame) {
 
-        super("/frontend/gui/images/tagsButton.png", 40, 40);
+        super("/frontend/gui/images/tagsButton.svg", 40, 40);
 
         tagsMenu = new TagsMenu(mainFrame);
         tagsMenu.setLocationRelativeTo(mainFrame);

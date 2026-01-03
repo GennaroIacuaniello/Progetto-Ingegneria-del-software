@@ -48,7 +48,7 @@ public class ReportedIssueSearchPanelUser extends RoundedPanel{
 
     private void setBackButton(SearchReportedIssuePageUser searchPage) {
 
-        backButton = new IconButton("/frontend/gui/images/backIconButton.png", 32, 32);
+        backButton = new IconButton("/frontend/gui/images/backIconButton.svg", 32, 32);
 
         backButton.addActionListener(new ActionListener() {
 
@@ -80,7 +80,7 @@ public class ReportedIssueSearchPanelUser extends RoundedPanel{
 
     private void setSearchButton(JFrame mainFrame) {
 
-        IconButton searchIssuesButton = new IconButton("/frontend/gui/images/searchButton.png", 32, 32);
+        IconButton searchIssuesButton = new IconButton("/frontend/gui/images/searchButton.svg", 32, 32);
 
         searchIssuesButton.addActionListener(new ActionListener() {
 

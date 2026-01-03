@@ -1,7 +1,6 @@
 package frontend.gui;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class MenuButton extends IconButton {
 
@@ -9,7 +8,7 @@ public class MenuButton extends IconButton {
 
     public MenuButton() {
 
-        super("/frontend/gui/images/menuIcon.png", 50, 50);
+        super("/frontend/gui/images/menuIcon.svg", 50, 50);
 
         setActionListener();
     }

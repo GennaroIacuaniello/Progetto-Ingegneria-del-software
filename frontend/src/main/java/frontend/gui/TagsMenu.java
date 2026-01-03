@@ -57,7 +57,7 @@ public class TagsMenu extends MyDialog{
 
     private void setAddButton() {
 
-        IconButton addButton = new IconButton("/frontend/gui/images/addButtonIcon.png", 32, 32);
+        IconButton addButton = new IconButton("/frontend/gui/images/addButtonIcon.svg", 32, 32);
 
         addButton.addActionListener(new ActionListener() {
 

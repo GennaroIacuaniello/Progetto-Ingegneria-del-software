@@ -48,7 +48,7 @@ public class AddMemberDialog extends JDialog {
         searchTextField.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
         TextComponentFocusBehaviour.setTextComponentFocusBehaviour(searchTextField, PLACEHOLDER);
 
-        IconButton searchButton = new IconButton("/frontend/gui/images/searchButton.png", 25, 25);
+        IconButton searchButton = new IconButton("/frontend/gui/images/searchButton.svg", 25, 25);
         searchButton.addActionListener(e -> performSearch());
 
         Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER);
