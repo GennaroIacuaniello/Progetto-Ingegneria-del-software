@@ -36,7 +36,8 @@ public class ManageTeamsPanel extends RoundedPanel {
         resultsPanel.setOpaque(false);
 
         Constraints.setConstraints(0, 2, 2, 1, GridBagConstraints.BOTH,
-                0, 0, GridBagConstraints.CENTER, 1.0f, 1.0f, new Insets(20, 0, 0, 0));
+                0, 0, GridBagConstraints.CENTER, 1.0f, 1.0f, // weighty = 1.0f attira lo spazio
+                new Insets(20, 0, 0, 0));
         this.add(resultsPanel, Constraints.getGridBagConstraints());
 
         performSearch();
@@ -69,12 +70,21 @@ public class ManageTeamsPanel extends RoundedPanel {
     }
 
     private void setupSearchSection(JPanel mainPanel) {
+
         RoundedPanel searchWrapper = new RoundedPanel(new GridBagLayout());
         searchWrapper.setBackground(Color.WHITE);
         searchWrapper.setRoundBorderColor(ColorsList.BORDER_COLOR);
 
+        searchWrapper.setPreferredSize(new Dimension(350, 45));
+
+
         searchTextField = new JTextField(PLACEHOLDER);
-        searchTextField.setPreferredSize(new Dimension(250, 30));
+
+        Dimension textDim = new Dimension(250, 30);
+        searchTextField.setPreferredSize(textDim);
+        searchTextField.setMinimumSize(textDim);
+        searchTextField.setMaximumSize(textDim);
+
         searchTextField.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
 
         TextComponentFocusBehaviour.setTextComponentFocusBehaviour(searchTextField, PLACEHOLDER);
@@ -82,15 +92,24 @@ public class ManageTeamsPanel extends RoundedPanel {
         IconButton searchButton = new IconButton("/frontend/gui/images/searchButton.svg", 25, 25);
         searchButton.addActionListener(e -> performSearch());
 
-        Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER);
+        Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.NONE,
+                0, 0, GridBagConstraints.CENTER, 0.0f, 0.0f, new Insets(0, 10, 0, 0));
         searchWrapper.add(searchButton, Constraints.getGridBagConstraints());
 
-        Constraints.setConstraints(1, 0, 1, 1, GridBagConstraints.HORIZONTAL, 0, 0, GridBagConstraints.CENTER);
+
+        Constraints.setConstraints(1, 0, 1, 1, GridBagConstraints.HORIZONTAL,
+                0, 0, GridBagConstraints.CENTER, 1.0f, 0.0f, new Insets(0, 5, 0, 10));
         searchWrapper.add(searchTextField, Constraints.getGridBagConstraints());
 
+
+        JPanel searchContainer = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        searchContainer.setOpaque(false);
+        searchContainer.add(searchWrapper);
+
         Constraints.setConstraints(0, 1, 2, 1, GridBagConstraints.HORIZONTAL,
-                0, 0, GridBagConstraints.CENTER, 1.0f, 0.0f, new Insets(10, 0, 10, 0));
-        mainPanel.add(searchWrapper, Constraints.getGridBagConstraints());
+                0, 0, GridBagConstraints.CENTER, 1.0f, 0.0f,
+                new Insets(10, 0, 10, 0));
+        mainPanel.add(searchContainer, Constraints.getGridBagConstraints());
     }
 
     private void performSearch() {

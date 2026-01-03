@@ -10,6 +10,8 @@ public class AddMemberActionCellEditor extends DefaultCellEditor {
     private final JTable table;
     private final AddMemberDialog parentDialog;
 
+    private String label;
+
     public AddMemberActionCellEditor(JFrame mainFrame, JTable table, AddMemberDialog parentDialog) {
         super(new JCheckBox());
         this.mainFrame = mainFrame;
@@ -41,7 +43,13 @@ public class AddMemberActionCellEditor extends DefaultCellEditor {
 
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-        button.setText(value != null ? value.toString() : "");
+        label = (value == null) ? "" : value.toString();
+        button.setText(label);
         return button;
+    }
+
+    @Override
+    public Object getCellEditorValue() {
+        return label;
     }
 }

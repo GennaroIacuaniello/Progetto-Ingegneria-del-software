@@ -9,6 +9,8 @@ public class RemoveMemberCellEditor extends DefaultCellEditor {
     private final JTable table;
     private final ManageMembersDialog parentDialog;
 
+    private String label;
+
     public RemoveMemberCellEditor(JFrame mainFrame, JTable table, ManageMembersDialog parentDialog) {
 
         super(new JCheckBox());
@@ -26,9 +28,10 @@ public class RemoveMemberCellEditor extends DefaultCellEditor {
         button.addActionListener(e -> {
             int row = table.getSelectedRow();
             if (row != -1) {
-                String email = (String) table.getValueAt(row, 0);
+
                 fireEditingStopped();
 
+                String email = (String) table.getValueAt(row, 0);
                 ConfirmDeleteMemberDialog confirm = new ConfirmDeleteMemberDialog(mainFrame, email, parentDialog);
                 confirm.setVisible(true);
             }
@@ -37,7 +40,13 @@ public class RemoveMemberCellEditor extends DefaultCellEditor {
 
     @Override
     public Component getTableCellEditorComponent(JTable t, Object v, boolean s, int r, int c) {
-        button.setText(v.toString());
+        label = (v == null) ? "" : v.toString();
+        button.setText(label);
         return button;
+    }
+
+    @Override
+    public Object getCellEditorValue() {
+        return label;
     }
 }

@@ -39,25 +39,54 @@ public class AddMemberDialog extends JDialog {
     }
 
     private void setupSearchSection(JPanel mainPanel) {
+
         RoundedPanel searchWrapper = new RoundedPanel(new GridBagLayout());
+
+        Dimension wrapperDim = new Dimension(350, 50);
+        searchWrapper.setPreferredSize(wrapperDim);
+        searchWrapper.setMinimumSize(wrapperDim);
+        searchWrapper.setMaximumSize(wrapperDim);
+
         searchWrapper.setBackground(Color.WHITE);
         searchWrapper.setRoundBorderColor(ColorsList.BORDER_COLOR);
 
+
+        searchWrapper.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+
         searchTextField = new JTextField(PLACEHOLDER);
-        searchTextField.setPreferredSize(new Dimension(250, 30));
+        Dimension textDim = new Dimension(250, 30);
+        searchTextField.setPreferredSize(textDim);
+        searchTextField.setMinimumSize(textDim);
+        searchTextField.setMaximumSize(textDim);
+
+
         searchTextField.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
+
         TextComponentFocusBehaviour.setTextComponentFocusBehaviour(searchTextField, PLACEHOLDER);
+
 
         IconButton searchButton = new IconButton("/frontend/gui/images/searchButton.svg", 25, 25);
         searchButton.addActionListener(e -> performSearch());
 
-        Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER);
+
+        Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.NONE,
+                0, 0, GridBagConstraints.CENTER, 0.0f, 0.0f, new Insets(0, 5, 0, 0));
         searchWrapper.add(searchButton, Constraints.getGridBagConstraints());
-        Constraints.setConstraints(1, 0, 1, 1, GridBagConstraints.HORIZONTAL, 1, 0, GridBagConstraints.CENTER);
+
+        Constraints.setConstraints(1, 0, 1, 1, GridBagConstraints.HORIZONTAL,
+                0, 0, GridBagConstraints.CENTER, 1.0f, 0.0f, new Insets(0, 5, 0, 10));
         searchWrapper.add(searchTextField, Constraints.getGridBagConstraints());
 
-        Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.HORIZONTAL, 1, 0, GridBagConstraints.CENTER);
-        mainPanel.add(searchWrapper, Constraints.getGridBagConstraints());
+
+        JPanel searchContainer = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        searchContainer.setOpaque(false);
+        searchContainer.add(searchWrapper);
+
+
+        Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.HORIZONTAL,
+                1, 0, GridBagConstraints.CENTER, new Insets(0, 0, 10, 0));
+        mainPanel.add(searchContainer, Constraints.getGridBagConstraints());
     }
 
 
