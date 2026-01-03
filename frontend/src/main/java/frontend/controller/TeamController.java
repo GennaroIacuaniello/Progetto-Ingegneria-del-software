@@ -4,6 +4,7 @@ package frontend.controller;
 import com.fasterxml.jackson.core.type.TypeReference;
 import frontend.dto.ProjectDTO;
 import frontend.dto.TeamDTO;
+import frontend.dto.TeamReportDTO;
 import frontend.dto.UserDTO;
 import frontend.exception.RequestError;
 
@@ -22,6 +23,8 @@ public class TeamController {
 
     private ArrayList<TeamDTO> teams;
     private TeamDTO team;
+
+    private TeamReportDTO teamReport;
 
 
     private TeamController(){
@@ -164,6 +167,36 @@ public class TeamController {
 
 
     }
+
+
+    public void createReport(String month, String year) {
+        try {
+
+            String encodedMonth = URLEncoder.encode(month, StandardCharsets.UTF_8);
+            String encodedYear = URLEncoder.encode(year, StandardCharsets.UTF_8);
+
+            HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+                    .uri(URI.create(client.getBaseUrl() + "/teams/" + this.team.getId() + "/report?month=" + encodedMonth + "&year=" + encodedYear))
+                    .GET();
+
+            HttpResponse<String> response = client.sendRequest(requestBuilder);
+
+            if (response.statusCode() == 200) {
+
+                this.teamReport = client.getObjectMapper().readValue(response.body(), TeamReportDTO.class);
+
+                System.out.println("Report generated successfully!");
+
+            } else {
+                System.err.println("Error report generation. Code: " + response.statusCode());
+                System.err.println("Error body: " + response.body());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     public TeamDTO getTeam(){
         return this.team;
