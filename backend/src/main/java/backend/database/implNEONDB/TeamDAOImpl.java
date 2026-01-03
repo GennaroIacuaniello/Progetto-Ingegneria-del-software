@@ -1,18 +1,17 @@
 package backend.database.implNEONDB;
 
 import backend.database.DatabaseConnection;
+import backend.database.dao.IssueDAO;
 import backend.database.dao.ProjectDAO;
 import backend.database.dao.TeamDAO;
-import backend.dto.ProjectDTO;
-import backend.dto.TeamDTO;
+import backend.dto.*;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -123,6 +122,179 @@ public class TeamDAOImpl implements TeamDAO {
 
     }
 
+    public TeamReportDTO generateMonthlyReport(Integer teamId, String month, String year) throws SQLException{
 
+        TeamReportDTO reportGenerated = null;
+
+        String query = "SELECT DISTINCT I.*, U1.email AS resolver_email " +
+                       "FROM Team T " +
+                       "JOIN Project P ON T.project_id = P.project_id " +
+                       "JOIN Works_in W ON T.team_id = W.team_id " +
+                       "JOIN User_ U1 ON W.user_id = U1.user_id " +
+                       "JOIN Issue I ON (I.project_id = P.project_id AND I.resolver_id = U1.user_id) " +
+                       "WHERE T.team_id = ? " +
+                       "AND ( " +
+                       "  (EXTRACT(MONTH FROM I.report_time) = ? AND EXTRACT(YEAR FROM I.report_time) = ?) " +
+                       "  OR " +
+                       "  (EXTRACT(MONTH FROM I.resolution_time) = ? AND EXTRACT(YEAR FROM I.resolution_time) = ?) " +
+                       ")";
+
+        ArrayList<Integer> numIssueSolvedForDev = new ArrayList<>();
+        ArrayList<Integer> durationsDevIds = new ArrayList<>();
+        ArrayList<Integer> devAlreadyFoundedIds = new ArrayList<>();
+
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setInt(1, teamId);
+            statement.setInt(2, stringMonthToDBInt(month));
+            statement.setInt(3, Integer.parseInt(year));
+            statement.setInt(4, stringMonthToDBInt(month));
+            statement.setInt(5, Integer.parseInt(year));
+
+
+            ResultSet rs = statement.executeQuery();
+
+            reportGenerated = new TeamReportDTO();
+
+            Duration totalDuration = Duration.ZERO;
+
+            int resolvedCount = 0;
+
+            while (rs.next()) {
+
+                IssueDTO foundedIssue = new IssueDTO();
+
+                foundedIssue.setId(rs.getInt("issue_id"));
+                foundedIssue.setTitle(rs.getString("title"));
+                foundedIssue.setDescription(rs.getString("issue_description"));
+                foundedIssue.setPriority(rs.getInt("issue_priority"));
+                foundedIssue.setImage(rs.getBytes("issue_image"));
+                foundedIssue.setType(IssueTypeDTO.valueOf(rs.getString("issue_type")));
+                foundedIssue.setStatus(IssueStatusDTO.valueOf(rs.getString("issue_status")));
+                foundedIssue.setTags(rs.getString("tags"));
+
+
+                int resolverId = rs.getInt("resolver_id");
+
+                //rs.wasNull() controlla se l'ultima colonna letta era NULL
+                if (!rs.wasNull() && resolverId >= 0) {
+
+                    if(devAlreadyFoundedIds.contains(resolverId)){
+                        for(UserDTO dev: reportGenerated.getDevelopers())
+                            if(dev.getId() == resolverId){
+                                foundedIssue.setAssignedDeveloper(dev);
+                                break;
+                            }
+                    } else {
+
+                        UserDTO resolver = new UserDTO();
+                        resolver.setId(resolverId);
+                        resolver.setEmail(rs.getString("resolver_email"));
+
+                        foundedIssue.setAssignedDeveloper(resolver);
+                        devAlreadyFoundedIds.add(resolverId);
+
+
+                        reportGenerated.getDevelopers().add(resolver);
+
+                        reportGenerated.getAverageResolutionDurations().add(Duration.ZERO);
+
+
+                        numIssueSolvedForDev.add(0);
+                    }
+
+
+                } else {
+
+                    foundedIssue.setAssignedDeveloper(null);
+
+                }
+
+
+                Timestamp reportTimestamp = rs.getTimestamp("report_time");
+                Timestamp resolutionTimestamp = rs.getTimestamp("resolution_time");
+
+                foundedIssue.setReportDate(new Date(reportTimestamp.getTime()));
+
+                if (resolutionTimestamp != null) {
+
+                    foundedIssue.setResolutionDate(new Date(resolutionTimestamp.getTime()));
+
+                    Duration issueDuration = Duration.between(reportTimestamp.toInstant(), resolutionTimestamp.toInstant());
+                    totalDuration = totalDuration.plus(issueDuration);
+                    resolvedCount++;
+
+                    reportGenerated.getClosedIssues().add(foundedIssue);
+
+                    int devIndex = reportGenerated.getDevelopers().indexOf(foundedIssue.getAssignedDeveloper());
+
+                    if (devIndex != -1) {
+
+                        Duration currentSum = reportGenerated.getAverageResolutionDurations().get(devIndex);
+
+                        reportGenerated.getAverageResolutionDurations().set(devIndex, currentSum.plus(issueDuration));
+
+
+                        numIssueSolvedForDev.set(devIndex, numIssueSolvedForDev.get(devIndex) + 1);
+
+                    }
+
+                }else{
+
+                    foundedIssue.setResolutionDate(null);
+                    reportGenerated.getOpenIssues().add(foundedIssue);
+
+                }
+
+
+            }
+
+            for (int i = 0; i < reportGenerated.getAverageResolutionDurations().size(); i++) {
+
+                int count = numIssueSolvedForDev.get(i);
+
+                if (count > 0) {
+                    Duration totalSum = reportGenerated.getAverageResolutionDurations().get(i);
+                    reportGenerated.getAverageResolutionDurations().set(i, totalSum.dividedBy(count));
+                }
+
+            }
+
+            if (resolvedCount > 0) {
+
+                Duration averageDuration = totalDuration.dividedBy(resolvedCount);
+
+                reportGenerated.setTotalAverageResolutionDuration(averageDuration);
+            }
+
+
+            rs.close();
+
+        }
+
+
+        return reportGenerated;
+
+    }
+
+    private int stringMonthToDBInt(String monthName) {
+
+        return switch(monthName.toLowerCase()) {
+            case "gennaio" -> 1;
+            case "febbraio" -> 2;
+            case "marzo" -> 3;
+            case "aprile" -> 4;
+            case "maggio" -> 5;
+            case "giugno" -> 6;
+            case "luglio" -> 7;
+            case "agosto" -> 8;
+            case "settembre" -> 9;
+            case "ottobre" -> 10;
+            case "novembre" -> 11;
+            case "dicembre" -> 12;
+            default -> 0;
+        };
+    }
 
 }
