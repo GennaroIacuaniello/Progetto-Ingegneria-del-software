@@ -54,43 +54,5 @@ public class ControllerTMP {
         totalAverageResolvingDuration = Duration.ofDays(0).ofHours(4).ofMinutes(2);
     }
 
-    public static List<String> getDevelopers() {
-        return developers;
-    }
 
-    public static List<Integer> getOpenIssues() {
-        return openIssues;
-    }
-
-    public static List<Integer> getResolvedIssues() {
-        return resolvedIssues;
-    }
-
-    public static List<Duration> getAverageResolvingDurations() {
-        return averageResolvingDurations;
-    }
-
-    public static int getTotalOpenIssues() {
-
-        int total = 0;
-
-        for (Integer i : openIssues)
-            total += i;
-
-        return total;
-    }
-
-    public static int getTotalResolvedIssues() {
-
-        int total = 0;
-
-        for (Integer i : resolvedIssues)
-            total += i;
-
-        return total;
-    }
-
-    public static Duration getTotalAverageResolvingDuration() {
-        return totalAverageResolvingDuration;
-    }
 }

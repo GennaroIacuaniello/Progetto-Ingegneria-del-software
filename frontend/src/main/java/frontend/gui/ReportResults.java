@@ -1,6 +1,7 @@
 package frontend.gui;
 
 import frontend.controller.ControllerTMP;
+import frontend.controller.TeamController;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -48,14 +49,14 @@ public class ReportResults {
 
         DefaultTableModel developersModel = new DefaultTableModel(columnNames, 0);
 
-        for (int i = 0; i < ControllerTMP.getDevelopers().size(); i++) {
+        for (int i = 0; i < TeamController.getInstance().getDevelopersEmails().size(); i++) {
 
             developersModel.addRow(new Object[] {
 
-                    ControllerTMP.getDevelopers().get(i),
-                    ControllerTMP.getOpenIssues().get(i),
-                    ControllerTMP.getResolvedIssues().get(i),
-                    formatDuration(ControllerTMP.getAverageResolvingDurations().get(i))
+                    TeamController.getInstance().getDevelopersEmails().get(i),
+                    TeamController.getInstance().getOpenIssues().get(i),
+                    TeamController.getInstance().getResolvedIssues().get(i),
+                    formatDuration(TeamController.getInstance().getAverageResolvingDurations().get(i))
             });
         }
 
@@ -74,9 +75,9 @@ public class ReportResults {
         totalsModel.addRow(new Object[] {
 
                 "TOTALE",
-                ControllerTMP.getTotalOpenIssues(),
-                ControllerTMP.getTotalResolvedIssues(),
-                formatDuration(ControllerTMP.getTotalAverageResolvingDuration())
+                TeamController.getInstance().getTotalOpenIssues(),
+                TeamController.getInstance().getTotalResolvedIssues(),
+                formatDuration(TeamController.getInstance().getTotalAverageResolvingDuration())
         });
 
         JTable table = new JTable(totalsModel);

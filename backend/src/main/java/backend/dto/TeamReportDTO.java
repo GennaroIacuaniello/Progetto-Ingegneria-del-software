@@ -11,6 +11,8 @@ public class TeamReportDTO {
     private List<UserDTO> developers = new ArrayList<>();
     private List<IssueDTO> openIssues = new ArrayList<>();
     private List<IssueDTO> closedIssues = new ArrayList<>();
+    private List<Integer> numOpenIssues = new ArrayList<>();
+    private List<Integer> numClosedIssues = new ArrayList<>();
 
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private List<Duration> averageResolutionDurations = new ArrayList<>();
@@ -44,6 +46,22 @@ public class TeamReportDTO {
 
     public void setClosedIssues(List<IssueDTO> closedIssues) {
         this.closedIssues = closedIssues;
+    }
+
+    public List<Integer> getNumOpenIssues() {
+        return numOpenIssues;
+    }
+
+    public void setNumOpenIssues(List<Integer> numOpenIssues) {
+        this.numOpenIssues = numOpenIssues;
+    }
+
+    public List<Integer> getNumClosedIssues() {
+        return numClosedIssues;
+    }
+
+    public void setNumClosedIssues(List<Integer> numClosedIssues) {
+        this.numClosedIssues = numClosedIssues;
     }
 
     public List<Duration> getAverageResolutionDurations() {

@@ -200,6 +200,9 @@ public class TeamDAOImpl implements TeamDAO {
 
                         reportGenerated.getAverageResolutionDurations().add(Duration.ZERO);
 
+                        reportGenerated.getNumClosedIssues().add(0);
+                        reportGenerated.getNumOpenIssues().add(0);
+
 
                         numIssueSolvedForDev.add(0);
                     }
@@ -235,12 +238,21 @@ public class TeamDAOImpl implements TeamDAO {
 
                         reportGenerated.getAverageResolutionDurations().set(devIndex, currentSum.plus(issueDuration));
 
-
                         numIssueSolvedForDev.set(devIndex, numIssueSolvedForDev.get(devIndex) + 1);
 
                     }
 
                 }else{
+
+                    int devIndex = reportGenerated.getDevelopers().indexOf(foundedIssue.getAssignedDeveloper());
+
+                    if (devIndex != -1) {
+
+                        Integer prevNumOpenIssues = reportGenerated.getNumOpenIssues().get(devIndex);
+
+                        reportGenerated.getNumOpenIssues().set(devIndex, prevNumOpenIssues + 1);
+
+                    }
 
                     foundedIssue.setResolutionDate(null);
                     reportGenerated.getOpenIssues().add(foundedIssue);
@@ -253,6 +265,8 @@ public class TeamDAOImpl implements TeamDAO {
             for (int i = 0; i < reportGenerated.getAverageResolutionDurations().size(); i++) {
 
                 int count = numIssueSolvedForDev.get(i);
+
+                reportGenerated.getNumClosedIssues().set(i, count);
 
                 if (count > 0) {
                     Duration totalSum = reportGenerated.getAverageResolutionDurations().get(i);

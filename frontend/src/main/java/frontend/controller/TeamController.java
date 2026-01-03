@@ -13,6 +13,7 @@ import java.net.URLEncoder;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -231,6 +232,53 @@ public class TeamController {
             }
 
 
+    }
+
+    public List<String> getDevelopersEmails() {
+
+        ArrayList<String> emails = new ArrayList<>();
+
+        for(UserDTO dev : this.teamReport.getDevelopers())
+            emails.add(dev.getEmail());
+
+        return emails;
+
+    }
+
+    public List<Integer> getOpenIssues() {
+        return this.teamReport.getNumOpenIssues();
+    }
+
+    public List<Integer> getResolvedIssues() {
+        return this.teamReport.getNumClosedIssues();
+    }
+
+    public List<Duration> getAverageResolvingDurations() {
+        return this.teamReport.getAverageResolutionDurations();
+    }
+
+    public int getTotalOpenIssues() {
+
+        int total = 0;
+
+        for (Integer i : this.teamReport.getNumOpenIssues())
+            total += i;
+
+        return total;
+    }
+
+    public int getTotalResolvedIssues() {
+
+        int total = 0;
+
+        for (Integer i : this.teamReport.getNumClosedIssues())
+            total += i;
+
+        return total;
+    }
+
+    public Duration getTotalAverageResolvingDuration() {
+        return this.teamReport.getTotalAverageResolutionDuration();
     }
 
 }
