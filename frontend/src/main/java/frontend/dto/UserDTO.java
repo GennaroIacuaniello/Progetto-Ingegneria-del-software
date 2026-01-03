@@ -5,7 +5,7 @@ import java.util.List;
 
 public class UserDTO {
 
-    private int id;
+    private Integer id;
     private String email;
     private String password; // Solo per invio login, sarà null in ricezione
     private int role; // 0=User, 1=Dev, 2=Admin
@@ -30,7 +30,7 @@ public class UserDTO {
         this.password = password;
     }
 
-    public int getId() { return id; }
+    public Integer getId() { return id; }
     public void setId(int id) { this.id = id; }
 
     public String getEmail() { return email; }
@@ -54,7 +54,23 @@ public class UserDTO {
     public List<TeamDTO> getTeams() { return teams; }
     public void setTeams(List<TeamDTO> teams) { this.teams = teams; }
 
-    // Helper utili per l'UI
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        UserDTO userDTO = (UserDTO) o;
+
+
+        return id != null && id.equals(userDTO.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
+    // Helper utili per la gui
     public boolean isAdmin() { return role == 2; }
     public boolean isDeveloper() { return role == 1 || role == 2; }
 }

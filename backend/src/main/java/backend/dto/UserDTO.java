@@ -5,7 +5,7 @@ import java.util.List;
 
 public class UserDTO {
 
-    private int id;
+    private Integer id;
     private String email;
     private String password;
 
@@ -36,8 +36,7 @@ public class UserDTO {
     }
 
 
-
-    public int getId(){
+    public Integer getId(){
         return this.id;
     }
 
@@ -99,6 +98,22 @@ public class UserDTO {
 
     public void setTeams(List<TeamDTO> teams) {
         this.teams = teams;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        UserDTO userDTO = (UserDTO) o;
+
+
+        return id != null && id.equals(userDTO.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 
 }
