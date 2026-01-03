@@ -2,6 +2,7 @@ package backend.controller;
 
 import backend.database.dao.ProjectDAO;
 import backend.dto.ProjectDTO;
+import backend.dto.StatisticDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +19,8 @@ public class ProjectController {
         this.projectDAO = projectDAO;
     }
 
-    @GetMapping
-    public ResponseEntity<List<ProjectDTO>> searchProjects(@RequestParam("search") String projectName) throws SQLException {
+    @GetMapping("/search")
+    public ResponseEntity<List<ProjectDTO>> searchProjects(@RequestParam("name") String projectName) throws SQLException {
 
         List<ProjectDTO> searchResults = projectDAO.searchProjectsByName(projectName);
 
@@ -38,6 +39,20 @@ public class ProjectController {
         projectDAO.createProject(projectToCreate);
 
         return ResponseEntity.ok("Project created successfully!");
+
+    }
+
+    @GetMapping("/dashboard")
+    public ResponseEntity<StatisticDTO> generateDashboard( ) throws SQLException {
+
+
+        StatisticDTO dashboardData = projectDAO.generateDashboard();
+
+        if (dashboardData != null) {
+            return ResponseEntity.ok(dashboardData);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
 
     }
 

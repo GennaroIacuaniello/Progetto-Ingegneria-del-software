@@ -2,9 +2,8 @@ package backend.controller;
 
 
 import backend.database.dao.TeamDAO;
-import backend.dto.ProjectDTO;
 import backend.dto.TeamDTO;
-import backend.dto.TeamReportDTO;
+import backend.dto.StatisticDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -78,13 +77,13 @@ public class TeamController {
 
 
     @GetMapping("/{teamId}/report")
-    public ResponseEntity<TeamReportDTO> getTeamReport(
+    public ResponseEntity<StatisticDTO> getTeamReport(
             @PathVariable Integer teamId,
             @RequestParam String month,
             @RequestParam String year) throws SQLException {
 
 
-        TeamReportDTO report = teamDAO.generateMonthlyReport(teamId, month, year);
+        StatisticDTO report = teamDAO.generateMonthlyReport(teamId, month, year);
 
         if (report != null) {
             return ResponseEntity.ok(report);

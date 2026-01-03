@@ -40,10 +40,7 @@ public class ProjectIconCellEditorAdmin extends ProjectIconCellEditorDeveloper {
                 break;
 
             case "GESTISCI TEAM":
-
-                ManageTeamsDialog teamsDialog = new ManageTeamsDialog(mainFrame);
-                teamsDialog.setVisible(true);
-                System.out.println("vedi teams");
+                homePanel.setContentPanel(new ManageTeamsPanel(mainFrame, homePanel));
                 break;
         }
 

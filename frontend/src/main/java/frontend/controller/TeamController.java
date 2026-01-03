@@ -2,9 +2,8 @@ package frontend.controller;
 
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import frontend.dto.ProjectDTO;
 import frontend.dto.TeamDTO;
-import frontend.dto.TeamReportDTO;
+import frontend.dto.StatisticDTO;
 import frontend.dto.UserDTO;
 import frontend.exception.RequestError;
 
@@ -25,7 +24,7 @@ public class TeamController {
     private ArrayList<TeamDTO> teams;
     private TeamDTO team;
 
-    private TeamReportDTO teamReport;
+    private StatisticDTO teamReport;
 
 
     private TeamController(){
@@ -184,7 +183,7 @@ public class TeamController {
 
             if (response.statusCode() == 200) {
 
-                this.teamReport = client.getObjectMapper().readValue(response.body(), TeamReportDTO.class);
+                this.teamReport = client.getObjectMapper().readValue(response.body(), StatisticDTO.class);
 
                 System.out.println("Report generated successfully!");
 
@@ -196,7 +195,6 @@ public class TeamController {
             e.printStackTrace();
         }
     }
-
 
 
     public TeamDTO getTeam(){

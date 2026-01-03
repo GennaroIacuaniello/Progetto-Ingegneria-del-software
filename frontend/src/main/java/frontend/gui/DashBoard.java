@@ -1,12 +1,10 @@
 package frontend.gui;
 
-import frontend.controller.ControllerTMP;
+import frontend.controller.ProjectController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Objects;
+
 
 public class DashBoard extends MyDialog {
 
@@ -18,7 +16,7 @@ public class DashBoard extends MyDialog {
 
         super(parent);
 
-        ControllerTMP.createDashBoard();
+        ProjectController.getInstance().createDashBoard();
 
         setSearchViewResults();
 

@@ -31,8 +31,8 @@ public class ManageTeamTextCellEditor extends DefaultCellEditor {
 
                 fireEditingStopped();
 
-                ManageTeamsDialog teamsDialog = new ManageTeamsDialog(mainFrame);
-                teamsDialog.setVisible(true);
+                //ManageTeamsPanel teamsDialog = new ManageTeamsPanel(mainFrame);
+                //teamsDialog.setVisible(true);
             }
         });
     }

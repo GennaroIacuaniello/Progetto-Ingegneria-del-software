@@ -1,8 +1,6 @@
 package backend.database.implNEONDB;
 
 import backend.database.DatabaseConnection;
-import backend.database.dao.IssueDAO;
-import backend.database.dao.ProjectDAO;
 import backend.database.dao.TeamDAO;
 import backend.dto.*;
 import org.springframework.stereotype.Repository;
@@ -122,11 +120,11 @@ public class TeamDAOImpl implements TeamDAO {
 
     }
 
-    public TeamReportDTO generateMonthlyReport(Integer teamId, String month, String year) throws SQLException{
+    public StatisticDTO generateMonthlyReport(Integer teamId, String month, String year) throws SQLException{
 
-        TeamReportDTO reportGenerated = null;
+        StatisticDTO reportGenerated = null;
 
-        String query = "SELECT DISTINCT I.*, U1.email AS resolver_email " +
+        String query = "SELECT DISTINCT I.issue_id, I.resolver_id, I.report_time, I.resolution_time, U1.email AS resolver_email " +
                        "FROM Team T " +
                        "JOIN Project P ON T.project_id = P.project_id " +
                        "JOIN Works_in W ON T.team_id = W.team_id " +
@@ -155,7 +153,7 @@ public class TeamDAOImpl implements TeamDAO {
 
             ResultSet rs = statement.executeQuery();
 
-            reportGenerated = new TeamReportDTO();
+            reportGenerated = new StatisticDTO();
 
             Duration totalDuration = Duration.ZERO;
 
@@ -166,13 +164,13 @@ public class TeamDAOImpl implements TeamDAO {
                 IssueDTO foundedIssue = new IssueDTO();
 
                 foundedIssue.setId(rs.getInt("issue_id"));
-                foundedIssue.setTitle(rs.getString("title"));
+                /*foundedIssue.setTitle(rs.getString("title"));
                 foundedIssue.setDescription(rs.getString("issue_description"));
                 foundedIssue.setPriority(rs.getInt("issue_priority"));
                 foundedIssue.setImage(rs.getBytes("issue_image"));
                 foundedIssue.setType(IssueTypeDTO.valueOf(rs.getString("issue_type")));
                 foundedIssue.setStatus(IssueStatusDTO.valueOf(rs.getString("issue_status")));
-                foundedIssue.setTags(rs.getString("tags"));
+                foundedIssue.setTags(rs.getString("tags"));*/
 
 
                 int resolverId = rs.getInt("resolver_id");

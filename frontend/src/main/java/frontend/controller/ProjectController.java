@@ -2,6 +2,8 @@ package frontend.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import frontend.dto.ProjectDTO;
+import frontend.dto.StatisticDTO;
+import frontend.dto.UserDTO;
 import frontend.exception.RequestError;
 
 import java.net.URI;
@@ -9,6 +11,7 @@ import java.net.URLEncoder;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +22,8 @@ public class ProjectController {
 
     private ArrayList<ProjectDTO> projects;
     private ProjectDTO project;
+
+    private StatisticDTO dashbordData;
 
 
     private ProjectController(){
@@ -40,7 +45,7 @@ public class ProjectController {
             String encodedProjectName = URLEncoder.encode(projectName, StandardCharsets.UTF_8);
 
             HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
-                    .uri(URI.create(client.getBaseUrl() + "/projects?search=" + encodedProjectName))
+                    .uri(URI.create(client.getBaseUrl() + "/projects/search?name=" + encodedProjectName))
                     .GET();
 
             HttpResponse<String> response = client.sendRequest(requestBuilder);
@@ -105,6 +110,32 @@ public class ProjectController {
 
     }
 
+    public void createDashBoard() {
+
+        try {
+
+            HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+                    .uri(URI.create(client.getBaseUrl() + "/projects/dashboard"))
+                    .GET();
+
+            HttpResponse<String> response = client.sendRequest(requestBuilder);
+
+            if (response.statusCode() == 200) {
+
+                this.dashbordData = client.getObjectMapper().readValue(response.body(), StatisticDTO.class);
+
+                System.out.println("Dashboard generated successfully!");
+
+            } else {
+                System.err.println("Error dashboard generation. Code: " + response.statusCode());
+                System.err.println("Error body: " + response.body());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public List<Integer> getProjectsIds () {
 
         List<Integer> ids = new ArrayList<>();
@@ -147,6 +178,57 @@ public class ProjectController {
 
     public void setProjectWithValues(ProjectDTO project) {
         this.project = project;
+    }
+
+    public List<String> getDevelopersEmails() {
+
+        ArrayList<String> emails = new ArrayList<>();
+
+        for(UserDTO dev : this.dashbordData.getDevelopers())
+            emails.add(dev.getEmail());
+
+        return emails;
+
+    }
+
+    public List<Integer> getOpenIssues() {
+        return this.dashbordData.getNumOpenIssues();
+    }
+
+    public List<Integer> getResolvedIssues() {
+        return this.dashbordData.getNumClosedIssues();
+    }
+
+    public List<Duration> getAverageResolvingDurations() {
+        return this.dashbordData.getAverageResolutionDurations();
+    }
+
+    public int getTotalOpenIssues() {
+
+        int total = 0;
+
+        for (Integer i : this.dashbordData.getNumOpenIssues())
+            total += i;
+
+        return total;
+    }
+
+    public int getTotalResolvedIssues() {
+
+        int total = 0;
+
+        for (Integer i : this.dashbordData.getNumClosedIssues())
+            total += i;
+
+        return total;
+    }
+
+    public Duration getTotalAverageResolvingDuration() {
+        return this.dashbordData.getTotalAverageResolutionDuration();
+    }
+
+    public Integer getNumIssuesNotAssigned(){
+        return this.dashbordData.getNumIssuesNotAssigned();
     }
 
 }

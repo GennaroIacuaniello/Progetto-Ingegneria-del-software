@@ -1,4 +1,4 @@
-package backend.dto;
+package frontend.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -6,13 +6,14 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TeamReportDTO {
+public class StatisticDTO {
 
     private List<UserDTO> developers = new ArrayList<>();
     private List<IssueDTO> openIssues = new ArrayList<>();
     private List<IssueDTO> closedIssues = new ArrayList<>();
     private List<Integer> numOpenIssues = new ArrayList<>();
     private List<Integer> numClosedIssues = new ArrayList<>();
+    private Integer numIssuesNotAssigned = 0;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private List<Duration> averageResolutionDurations = new ArrayList<>();
@@ -20,7 +21,7 @@ public class TeamReportDTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Duration totalAverageResolutionDuration = Duration.ZERO;
 
-    public TeamReportDTO(){
+    public StatisticDTO(){
         //Empty constructor needed for Jackson
     }
 
@@ -70,6 +71,14 @@ public class TeamReportDTO {
 
     public void setAverageResolutionDurations(List<Duration> averageResolutionDurations) {
         this.averageResolutionDurations = averageResolutionDurations;
+    }
+
+    public Integer getNumIssuesNotAssigned() {
+        return numIssuesNotAssigned;
+    }
+
+    public void setNumIssuesNotAssigned(Integer numIssuesNotAssigned) {
+        this.numIssuesNotAssigned = numIssuesNotAssigned;
     }
 
     public Duration getTotalAverageResolutionDuration() {

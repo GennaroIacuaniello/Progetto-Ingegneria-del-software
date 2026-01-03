@@ -1,6 +1,6 @@
 package frontend.gui;
 
-import frontend.controller.ControllerTMP;
+import frontend.controller.TeamController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -77,7 +77,7 @@ public class TeamReportSearchPanel extends RoundedPanel{
         if(!yearTextField.getText().equals(YEAR_TEXTFIELD_PLACEHOLDER) &&
         yearTextField.getText().matches("\\d+")) {
 
-            ControllerTMP.createReport(Objects.requireNonNull(monthComboBox.getSelectedItem()).toString(), yearTextField.getText());
+            TeamController.getInstance().createReport(Objects.requireNonNull(monthComboBox.getSelectedItem()).toString(), yearTextField.getText());
 
             new ReportResults(searchPage);
         } else

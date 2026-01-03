@@ -11,42 +11,41 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ManageTeamsDialog extends JDialog {
+public class ManageTeamsPanel extends RoundedPanel {
 
     private JTextField searchTextField;
     private JPanel resultsPanel;
     private final String PLACEHOLDER = "Cerca nome team...";
     private final JFrame mainFrame;
+    private final HomePanelUser homePanel;
 
-    public ManageTeamsDialog(JFrame owner) {
+    public ManageTeamsPanel(JFrame owner, HomePanelUser homePanel) {
 
-        super(owner, "Gestione Team", true);
+        super(new GridBagLayout());
         this.mainFrame = owner;
+        this.homePanel = homePanel;
 
-        JPanel mainPanel = new JPanel(new GridBagLayout());
-        mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
-        mainPanel.setBackground(Color.WHITE);
+        this.setBackground(Color.WHITE);
+        this.setRoundBorderColor(ColorsList.BORDER_COLOR);
+        this.setBorder(new EmptyBorder(20, 20, 20, 20));
 
-        setupHeader(mainPanel);
-
-        setupSearchSection(mainPanel);
+        setupHeader(this);
+        setupSearchSection(this);
 
         resultsPanel = new JPanel(new BorderLayout());
         resultsPanel.setOpaque(false);
 
         Constraints.setConstraints(0, 2, 2, 1, GridBagConstraints.BOTH,
                 0, 0, GridBagConstraints.CENTER, 1.0f, 1.0f, new Insets(20, 0, 0, 0));
-        mainPanel.add(resultsPanel, Constraints.getGridBagConstraints());
+        this.add(resultsPanel, Constraints.getGridBagConstraints());
 
-        this.setContentPane(mainPanel);
-        this.setMinimumSize(new Dimension(850, 500));
-        this.setLocationRelativeTo(owner);
+        performSearch();
     }
 
     private void setupHeader(JPanel mainPanel) {
 
         IconButton backButton = new IconButton("/frontend/gui/images/backIconButton.svg", 30, 30);
-        backButton.addActionListener(e -> dispose());
+        backButton.addActionListener(e -> homePanel.returnToDefaultContentPanel());
 
         Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.NONE,
                 0, 0, GridBagConstraints.LINE_START, 0.01f, 0.01f, new Insets(0, 0, 10, 0));
@@ -122,6 +121,7 @@ public class ManageTeamsDialog extends JDialog {
         String[] columnNames = {"ID Team", "Nome Team", "Membri", "Report"};
 
         DefaultTableModel model = createTableModel(rowData, columnNames);
+
         JTable table = new JTable(model);
 
         DefaultTableCellRenderer actionRenderer = new DefaultTableCellRenderer();

@@ -1,7 +1,7 @@
 package backend.database.dao;
 
 import backend.dto.TeamDTO;
-import backend.dto.TeamReportDTO;
+import backend.dto.StatisticDTO;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -16,6 +16,6 @@ public interface TeamDAO {
 
     boolean removeMemberFromTeam(Integer teamId, String email) throws SQLException;
 
-    TeamReportDTO generateMonthlyReport(Integer teamId, String month, String year) throws SQLException;
+    StatisticDTO generateMonthlyReport(Integer teamId, String month, String year) throws SQLException;
 
 }
