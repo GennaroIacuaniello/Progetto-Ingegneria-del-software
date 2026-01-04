@@ -94,6 +94,8 @@ public class ManageTeamsPanel extends RoundedPanel {
 
         TextComponentFocusBehaviour.setTextComponentFocusBehaviour(searchTextField, PLACEHOLDER);
 
+        searchTextField.addActionListener(e -> performSearch());
+
         IconButton searchButton = new IconButton("/frontend/gui/images/searchButton.svg", 25, 25);
         searchButton.addActionListener(e -> performSearch());
 

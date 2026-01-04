@@ -91,6 +91,8 @@ public class ManageMembersDialog extends JDialog {
 
         TextComponentFocusBehaviour.setTextComponentFocusBehaviour(searchTextField, PLACEHOLDER);
 
+        searchTextField.addActionListener(e -> performSearch());
+
         IconButton searchButton = new IconButton("/frontend/gui/images/searchButton.svg", 25, 25);
         searchButton.addActionListener(e -> performSearch());
 
