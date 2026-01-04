@@ -7,6 +7,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ShowReportedIssueUser extends MyDialog {
 
@@ -47,19 +49,12 @@ public class ShowReportedIssueUser extends MyDialog {
 
     private void setDescriptionTextArea() {
 
-        JTextArea descriptionTextArea = new JTextArea(IssueController.getInstance().getIssueDescription(), 8, 40);
-
-        descriptionTextArea.setBorder(BorderFactory.createEmptyBorder());
-        descriptionTextArea.setBackground(Color.WHITE);
-        descriptionTextArea.setFont(new Font("JetBrains Mono", Font.PLAIN, 16));
-        descriptionTextArea.setEditable(false);
-        descriptionTextArea.setFocusable(false);
+        JTextArea descriptionTextArea = getJTextArea();
 
         JScrollPane tmpScrollPane = new JScrollPane(descriptionTextArea);
 
         tmpScrollPane.setBorder(BorderFactory.createEmptyBorder());
         tmpScrollPane.setBackground(ColorsList.EMPTY_COLOR);
-        //tmpScrollPane.getViewport().setBackground(ColorsList.EMPTY_COLOR);
         tmpScrollPane.setViewportView(descriptionTextArea);
 
         RoundedPanel tmpPanel = ContainerFactory.createRoundedPanelContainer(tmpScrollPane);
@@ -68,6 +63,21 @@ public class ShowReportedIssueUser extends MyDialog {
                 GridBagConstraints.BOTH, 0, 0, GridBagConstraints.CENTER,
                 1f, 1f, new Insets(10, 60, 10, 60));
         mainPanel.add(tmpPanel, Constraints.getGridBagConstraints());
+    }
+
+    private static JTextArea getJTextArea() {
+
+        String description = IssueController.getInstance().getIssueDescription().isEmpty() ?
+                "Nessuna descrizione fornita pr questa issue" : IssueController.getInstance().getIssueDescription();
+
+        JTextArea descriptionTextArea = new JTextArea(description, 8, 40);
+
+        descriptionTextArea.setBorder(BorderFactory.createEmptyBorder());
+        descriptionTextArea.setBackground(Color.WHITE);
+        descriptionTextArea.setFont(new Font("JetBrains Mono", Font.PLAIN, 16));
+        descriptionTextArea.setEditable(false);
+        descriptionTextArea.setFocusable(false);
+        return descriptionTextArea;
     }
 
     private void setTypeLabel() {
@@ -157,7 +167,7 @@ public class ShowReportedIssueUser extends MyDialog {
 
     private void setReportDateLabel() {
 
-        JLabel reportDateLabel = new JLabel("Segnalazione: " + IssueController.getInstance().getIssueReportDate().toString());
+        JLabel reportDateLabel = new JLabel("Segnalazione: " + formatDate(IssueController.getInstance().getIssueReportDate()));
 
         reportDateLabel.setBorder(BorderFactory.createEmptyBorder());
         reportDateLabel.setBackground(ColorsList.EMPTY_COLOR);
@@ -173,7 +183,7 @@ public class ShowReportedIssueUser extends MyDialog {
     private void setResolutionDateLabel() {
 
         JLabel resolutionDateLabel = new JLabel("Risoluzione: " + (IssueController.getInstance().getIssueResolutionDate() != null ?
-                IssueController.getInstance().getIssueResolutionDate().toString() : "questa issue non è ancora stata risolta"));
+                formatDate(IssueController.getInstance().getIssueResolutionDate()) : "questa issue non è ancora stata risolta"));
 
         resolutionDateLabel.setBorder(BorderFactory.createEmptyBorder());
         resolutionDateLabel.setBackground(ColorsList.EMPTY_COLOR);
@@ -184,6 +194,11 @@ public class ShowReportedIssueUser extends MyDialog {
                 0, 0, GridBagConstraints.CENTER, 0.1f, 0.1f,
                 new Insets(10, 10, 10, 10));
         mainPanel.add(tmp, Constraints.getGridBagConstraints());
+    }
+
+    private String formatDate(Date date) {
+
+        return new SimpleDateFormat("dd/MM/yyyy").format(date);
     }
 
     private void setReportingUserLabel() {
