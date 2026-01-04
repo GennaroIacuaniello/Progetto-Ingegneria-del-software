@@ -170,32 +170,7 @@ public class TeamDAOImpl implements TeamDAO {
                 //rs.wasNull() checks if last column was NULL
                 if (!rs.wasNull() && resolverId >= 0) {
 
-                    if(devAlreadyFoundedIds.contains(resolverId)){
-                        for(UserDTO dev: reportGenerated.getDevelopers())
-                            if(dev.getId() == resolverId){
-                                foundedIssue.setAssignedDeveloper(dev);
-                                break;
-                            }
-                    } else {
-
-                        UserDTO resolver = new UserDTO();
-                        resolver.setId(resolverId);
-                        resolver.setEmail(rs.getString("resolver_email"));
-
-                        foundedIssue.setAssignedDeveloper(resolver);
-                        devAlreadyFoundedIds.add(resolverId);
-
-
-                        reportGenerated.getDevelopers().add(resolver);
-
-                        reportGenerated.getAverageResolutionDurations().add(Duration.ZERO);
-
-                        reportGenerated.getNumClosedIssues().add(0);
-                        reportGenerated.getNumOpenIssues().add(0);
-
-
-                        numIssueSolvedForDev.add(0);
-                    }
+                    ProjectDAOImpl.resolverHandler(devAlreadyFoundedIds, resolverId, reportGenerated, foundedIssue, rs, numIssueSolvedForDev);
 
 
                 } else {

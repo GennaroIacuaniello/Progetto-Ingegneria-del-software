@@ -81,7 +81,6 @@ public class ProjectDAOImpl implements ProjectDAO {
                        "FROM Issue I LEFT JOIN User_ U1 ON  I.resolver_id = U1.user_id ";
 
         ArrayList<Integer> numIssueSolvedForDev = new ArrayList<>();
-        ArrayList<Integer> durationsDevIds = new ArrayList<>();
         ArrayList<Integer> devAlreadyFoundedIds = new ArrayList<>();
 
         try (Connection connection = dataSource.getConnection();
@@ -107,32 +106,7 @@ public class ProjectDAOImpl implements ProjectDAO {
                 //rs.wasNull() checks if last column was NULL
                 if (!rs.wasNull() && resolverId >= 0) {
 
-                    if(devAlreadyFoundedIds.contains(resolverId)){
-                        for(UserDTO dev: dashboardData.getDevelopers())
-                            if(dev.getId() == resolverId){
-                                foundedIssue.setAssignedDeveloper(dev);
-                                break;
-                            }
-                    } else {
-
-                        UserDTO resolver = new UserDTO();
-                        resolver.setId(resolverId);
-                        resolver.setEmail(rs.getString("resolver_email"));
-
-                        foundedIssue.setAssignedDeveloper(resolver);
-                        devAlreadyFoundedIds.add(resolverId);
-
-
-                        dashboardData.getDevelopers().add(resolver);
-
-                        dashboardData.getAverageResolutionDurations().add(Duration.ZERO);
-
-                        dashboardData.getNumClosedIssues().add(0);
-                        dashboardData.getNumOpenIssues().add(0);
-
-
-                        numIssueSolvedForDev.add(0);
-                    }
+                    resolverHandler(devAlreadyFoundedIds, resolverId, dashboardData, foundedIssue, rs, numIssueSolvedForDev);
 
 
                 } else {
@@ -221,6 +195,36 @@ public class ProjectDAOImpl implements ProjectDAO {
         return dashboardData;
 
 
+    }
+
+    public static void resolverHandler(ArrayList<Integer> devAlreadyFoundedIds, int resolverId, StatisticDTO dashboardData, IssueDTO foundedIssue, ResultSet rs, ArrayList<Integer> numIssueSolvedForDev) throws SQLException {
+
+        if(devAlreadyFoundedIds.contains(resolverId)){
+            for(UserDTO dev: dashboardData.getDevelopers())
+                if(dev.getId() == resolverId){
+                    foundedIssue.setAssignedDeveloper(dev);
+                    break;
+                }
+        } else {
+
+            UserDTO resolver = new UserDTO();
+            resolver.setId(resolverId);
+            resolver.setEmail(rs.getString("resolver_email"));
+
+            foundedIssue.setAssignedDeveloper(resolver);
+            devAlreadyFoundedIds.add(resolverId);
+
+
+            dashboardData.getDevelopers().add(resolver);
+
+            dashboardData.getAverageResolutionDurations().add(Duration.ZERO);
+
+            dashboardData.getNumClosedIssues().add(0);
+            dashboardData.getNumOpenIssues().add(0);
+
+
+            numIssueSolvedForDev.add(0);
+        }
     }
 
 }
