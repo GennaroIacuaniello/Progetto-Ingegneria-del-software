@@ -22,6 +22,7 @@ public class TitlePanel {
     private void addTitleLabel() {
 
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 48));
+        titleLabel.setForeground(ColorsList.PRIMARY_COLOR);
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.BOTH,

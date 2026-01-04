@@ -16,4 +16,6 @@ public class ColorsList {
     public static final Color YELLOW_BACKGROUND_COLOR = new Color (240, 220, 50);
     public static final Color TABLE_HEADER_BACKGROUND_COLOR = new Color (204, 229, 255);
     public static final Color TITLE_BACKGROUND_COLOR = new Color(153, 201, 255);
+    public static final Color PRIMARY_COLOR = new Color(0, 120, 215);
+    public static final Color TEXT_COLOR = new Color(50, 50, 50);
 }

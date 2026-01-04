@@ -18,8 +18,6 @@ public class LogInPage extends JFrame {
     private JPasswordField passwordField;
 
     private final Dimension INPUT_DIMENSION = new Dimension(300, 45);
-    private final Color PRIMARY_COLOR = new Color(0, 120, 215);
-    private final Color TEXT_COLOR = new Color(50, 50, 50);
 
     public LogInPage() {
         super("Login - BugBoard26");
@@ -43,7 +41,7 @@ public class LogInPage extends JFrame {
 
         JLabel titleLabel = new JLabel("BugBoard26");
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 48));
-        titleLabel.setForeground(PRIMARY_COLOR);
+        titleLabel.setForeground(ColorsList.PRIMARY_COLOR);
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.NONE,
@@ -68,7 +66,7 @@ public class LogInPage extends JFrame {
 
         JLabel label = new JLabel(labelText);
         label.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        label.setForeground(TEXT_COLOR);
+        label.setForeground(ColorsList.TEXT_COLOR);
         label.setHorizontalAlignment(SwingConstants.RIGHT); // Allinea a destra vicino al campo
 
         Constraints.setConstraints(0, gridY, 1, 1, GridBagConstraints.NONE,
@@ -172,7 +170,7 @@ public class LogInPage extends JFrame {
 
             if (passwordField.getEchoChar() == '•') {
                 passwordField.setEchoChar((char) 0);
-                eyeButton.setForeground(PRIMARY_COLOR);
+                eyeButton.setForeground(ColorsList.PRIMARY_COLOR);
             } else {
                 passwordField.setEchoChar('•');
                 eyeButton.setForeground(Color.GRAY);
@@ -199,7 +197,7 @@ public class LogInPage extends JFrame {
         JButton loginButton = new JButton("Accedi");
         loginButton.setFont(new Font("Segoe UI", Font.BOLD, 18));
         loginButton.setForeground(Color.WHITE);
-        loginButton.setBackground(PRIMARY_COLOR);
+        loginButton.setBackground(ColorsList.PRIMARY_COLOR);
         loginButton.setFocusPainted(false);
         loginButton.setBorderPainted(false);
         loginButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
