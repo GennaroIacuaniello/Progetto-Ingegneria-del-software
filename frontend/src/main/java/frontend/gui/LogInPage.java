@@ -111,6 +111,9 @@ public class LogInPage extends JFrame {
         JPanel cushion = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         cushion.setOpaque(false);
         cushion.add(wrapper);
+
+        emailField.addActionListener(e -> performLogin());
+
         return cushion;
     }
 
@@ -183,6 +186,9 @@ public class LogInPage extends JFrame {
         JPanel cushion = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         cushion.setOpaque(false);
         cushion.add(wrapper);
+
+        passwordField.addActionListener(e -> performLogin());
+
         return cushion;
     }
 

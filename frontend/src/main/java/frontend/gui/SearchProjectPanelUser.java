@@ -31,13 +31,9 @@ public class SearchProjectPanelUser {
         searchTextField.setBorder(BorderFactory.createEmptyBorder());
 
         Constraints.setConstraints(1, 0, 1, 1,
-                GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
+                GridBagConstraints.NONE, 10, 0, GridBagConstraints.CENTER,
                 new Insets(5, 0, 5, 5));
         searchProjectPanel.add(searchTextField, Constraints.getGridBagConstraints());
-    }
-
-    public JTextField getSearchTextField() {
-        return searchTextField;
     }
 
     protected void setSearchButton(JFrame mainFrame, HomePanelUser homePanel) {
