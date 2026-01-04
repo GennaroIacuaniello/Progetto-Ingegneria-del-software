@@ -81,7 +81,7 @@ public class TeamReportSearchPanel extends RoundedPanel{
 
             new ReportResults(searchPage);
         } else
-            new FloatingMessage("L'anno inserito non è valido", searchButton, JOptionPane.ERROR_MESSAGE);
+            new FloatingMessage("L'anno inserito non è valido", searchButton, FloatingMessage.ERROR_MESSAGE);
     }
 
     private void setMonthComboBox() {

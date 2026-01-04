@@ -68,6 +68,9 @@ public class SearchViewResults {
     public void updateViewportView (Component component) {
 
         scrollPane.setViewportView(component);
+
+        scrollPane.revalidate();
+        scrollPane.repaint();
     }
 
     public JScrollPane getViewportScrollPane() {
