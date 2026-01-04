@@ -101,6 +101,8 @@ public class RegistrationPage extends JFrame {
 
         TextComponentFocusBehaviour.setTextComponentFocusBehaviour(emailField, placeholder);
 
+        emailField.addActionListener(e -> performRegistration());
+
         Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.HORIZONTAL,
                 1, 1, GridBagConstraints.CENTER, new Insets(0, 0, 0, 0));
         wrapper.add(emailField, Constraints.getGridBagConstraints());
@@ -145,6 +147,8 @@ public class RegistrationPage extends JFrame {
                 }
             }
         });
+
+        passwordField.addActionListener(e -> performRegistration());
 
         Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.HORIZONTAL,
                 1, 1, GridBagConstraints.CENTER, new Insets(0, 0, 0, 5));
