@@ -23,7 +23,7 @@ public class ShowReportedIssueDeveloper extends ShowReportedIssueUser {
         RoundedPanel tmp = ContainerFactory.createRoundedPanelContainer(priorityLabel);
 
         Constraints.setConstraints(3, 1, 1, 1, GridBagConstraints.NONE,
-                0, 0, GridBagConstraints.LINE_END, new Insets(5, 5, 5, 5));
+                0, 0, GridBagConstraints.LINE_END, new Insets(5, 5, 5, 60));
         mainPanel.add(tmp, Constraints.getGridBagConstraints());
     }
 }

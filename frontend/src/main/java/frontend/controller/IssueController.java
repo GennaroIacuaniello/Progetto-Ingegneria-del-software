@@ -383,6 +383,9 @@ public class IssueController {
 
         String tagsString = issue.getTags();
 
+        if (tagsString == null)
+            tagsString = "";
+
         String[] tagsArray = tagsString.split(";");
 
         return Arrays.asList(tagsArray);

@@ -1,6 +1,7 @@
 package frontend.gui;
 
 import javax.swing.*;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import java.util.List;
 import java.util.Map;
@@ -51,7 +52,11 @@ public class SearchProjectResultsUser {
 
         resultsTable.setRowHeight(ICON_HEIGHT + 4);
 
-        resultsTable.getTableHeader().setReorderingAllowed(false);
+        JTableHeader header = resultsTable.getTableHeader();
+
+        header.setReorderingAllowed(false);
+        header.setResizingAllowed(false);
+        header.setBackground(ColorsList.TABLE_HEADER_BACKGROUND_COLOR);
 
         return resultsTable;
     }
