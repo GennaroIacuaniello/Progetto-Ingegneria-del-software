@@ -35,14 +35,19 @@ public class MenuButton extends IconButton {
     private void setMenuItemActionListener(JMenuItem menuItem) {
 
         menuItem.addActionListener(actionEvent -> {
-
+            JFrame owner;
             switch (menuItem.getText()) {
 
                 case "Crea nuova utenza":
-                    System.out.println("Crea nuova utenza");
+
+                    owner = (JFrame) SwingUtilities.getWindowAncestor(this);
+
+                    DevOrAdminCreationDialog devOrAdminCreationDialog = new DevOrAdminCreationDialog(owner);
+                    devOrAdminCreationDialog.setVisible(true);
                     break;
 
                 case "Visualizza DashBoard":
+
                     JDialog dialog = new DashBoard((JFrame)SwingUtilities.getAncestorOfClass(JFrame.class, this));
                     dialog.pack();
                     dialog.setLocationRelativeTo(SwingUtilities.getAncestorOfClass(JFrame.class, this));
@@ -50,9 +55,9 @@ public class MenuButton extends IconButton {
                     break;
 
                 case "Crea nuovo progetto":
-                    JFrame owner = (JFrame) SwingUtilities.getWindowAncestor(this);
-                    //ManageProjectsDialog manageProjectsDialog = new ManageProjectsDialog(owner);
-                    //manageProjectsDialog.setVisible(true);
+
+                    owner = (JFrame) SwingUtilities.getWindowAncestor(this);
+
                     CreateProjectDialog createProjectDialog = new CreateProjectDialog(owner);
                     createProjectDialog.setVisible(true);
                 default:
