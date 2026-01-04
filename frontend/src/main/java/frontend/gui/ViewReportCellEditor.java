@@ -10,6 +10,8 @@ public class ViewReportCellEditor extends DefaultCellEditor {
     private final JFrame mainFrame;
     private final JTable table;
 
+    private String label;
+
     public ViewReportCellEditor(JFrame mainFrame, JTable table, HomePanelUser homePanel, ManageTeamsPanel manageTeamsPanel) {
         super(new JCheckBox());
         this.mainFrame = mainFrame;
@@ -28,7 +30,6 @@ public class ViewReportCellEditor extends DefaultCellEditor {
 
                 fireEditingStopped();
 
-                //TODO: vedi come aprire questa pagina
 
                 homePanel.setContentPanel(new TeamReportPage(manageTeamsPanel));
 
@@ -37,8 +38,15 @@ public class ViewReportCellEditor extends DefaultCellEditor {
     }
 
     @Override
-    public Component getTableCellEditorComponent(JTable t, Object v, boolean s, int r, int c) {
-        button.setText(v.toString());
+    public Component getTableCellEditorComponent(JTable table, Object value,
+                                                 boolean isSelected, int row, int column) {
+        label = (value == null) ? "" : value.toString();
+        button.setText(label);
         return button;
+    }
+
+    @Override
+    public Object getCellEditorValue() {
+        return label;
     }
 }
