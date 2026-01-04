@@ -1,22 +1,50 @@
 package frontend.gui;
 
+import frontend.controller.ProjectController;
 import frontend.controller.TeamController;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.time.Duration;
+import java.util.List;
 
 public class ReportResults {
+
+    private final List<String> developers;
+    private final List<Integer> openIssues;
+    private final List<Integer> resolvedIssues;
+    private final List<Duration> averageResolvingDurations;
+    private final int totalOpenIssues;
+    private final int totalResolvedIssues;
+    private final Duration totalAverageResolvingDuration;
 
     private static final String[] columnNames = {"Developers", "Issue Aperte", "Issue Gestite", "Tempo Medio"};
 
     public ReportResults(TeamReportPage searchPage) {
 
+        developers = TeamController.getInstance().getDevelopersEmails();
+        openIssues = TeamController.getInstance().getOpenIssues();
+        resolvedIssues = TeamController.getInstance().getResolvedIssues();
+        averageResolvingDurations = TeamController.getInstance().getAverageResolvingDurations();
+
+        totalOpenIssues = TeamController.getInstance().getTotalOpenIssues();
+        totalResolvedIssues = TeamController.getInstance().getTotalResolvedIssues();
+        totalAverageResolvingDuration = TeamController.getInstance().getTotalAverageResolvingDuration();
+
         searchPage.updateReportViewResults(createTables());
     }
 
     public ReportResults(DashBoard searchPage) {
+
+        developers = ProjectController.getInstance().getDevelopersEmails();
+        openIssues = ProjectController.getInstance().getOpenIssues();
+        resolvedIssues = ProjectController.getInstance().getResolvedIssues();
+        averageResolvingDurations = ProjectController.getInstance().getAverageResolvingDurations();
+
+        totalOpenIssues = ProjectController.getInstance().getTotalOpenIssues();
+        totalResolvedIssues = ProjectController.getInstance().getTotalResolvedIssues();
+        totalAverageResolvingDuration = ProjectController.getInstance().getTotalAverageResolvingDuration();
 
         searchPage.setDashBoardViewResults(createTables());
     }
@@ -53,14 +81,14 @@ public class ReportResults {
 
         DefaultTableModel developersModel = new DefaultTableModel(columnNames, 0);
 
-        for (int i = 0; i < TeamController.getInstance().getDevelopersEmails().size(); i++) {
+        for (int i = 0; i < developers.size(); i++) {
 
             developersModel.addRow(new Object[] {
 
-                    TeamController.getInstance().getDevelopersEmails().get(i),
-                    TeamController.getInstance().getOpenIssues().get(i),
-                    TeamController.getInstance().getResolvedIssues().get(i),
-                    formatDuration(TeamController.getInstance().getAverageResolvingDurations().get(i))
+                    developers.get(i),
+                    openIssues.get(i),
+                    resolvedIssues.get(i),
+                    formatDuration(averageResolvingDurations.get(i))
             });
         }
 
@@ -79,9 +107,9 @@ public class ReportResults {
         totalsModel.addRow(new Object[] {
 
                 "TOTALE",
-                TeamController.getInstance().getTotalOpenIssues(),
-                TeamController.getInstance().getTotalResolvedIssues(),
-                formatDuration(TeamController.getInstance().getTotalAverageResolvingDuration())
+                totalOpenIssues,
+                totalResolvedIssues,
+                formatDuration(totalAverageResolvingDuration),
         });
 
         JTable table = new JTable(totalsModel);
