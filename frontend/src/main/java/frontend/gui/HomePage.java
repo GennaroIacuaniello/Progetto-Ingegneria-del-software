@@ -92,16 +92,4 @@ public class HomePage {
         mainFrame.repaint();
     }
 
-    public static void main(String[] args) {
-
-        setFlatLaf();
-
-        //AuthController.getInstance().registration("ciao@ciao.ciao", "ciao", 2);
-        //AuthController.getInstance().login("ciao@ciao.ciao", "ciao");
-
-        //AuthController.getInstance().registration("admin@admin.admin", "admin", 2);
-        AuthController.getInstance().login("admin@admin.admin", "admin");
-
-        HomePage homePage = new HomePage();
-    }
 }
