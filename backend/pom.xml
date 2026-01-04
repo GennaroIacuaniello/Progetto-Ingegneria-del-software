@@ -31,7 +31,7 @@
 		<java.version>21</java.version>
 		<sonar.organization>gennaroiacuaniello</sonar.organization>
 		<java.version>17</java.version> <sonar.coverage.exclusions>**/*</sonar.coverage.exclusions>
-		
+
 	</properties>
 	<dependencies>
 

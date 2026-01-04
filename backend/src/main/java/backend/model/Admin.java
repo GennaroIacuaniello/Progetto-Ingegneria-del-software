@@ -1,11 +1,10 @@
 package backend.model;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@NoArgsConstructor
+
 @AllArgsConstructor
 public class Admin extends Developer{
 
