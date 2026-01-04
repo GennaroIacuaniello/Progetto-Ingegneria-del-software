@@ -5,14 +5,14 @@ import java.awt.*;
 
 public class TeamReportPage extends RoundedPanel{
 
-    HomePanelUser homePanel;
+    ManageTeamsPanel manageTeamsPanel;
     SearchViewResults searchViewResults;
 
-    public TeamReportPage(HomePanelUser homePanel) {
+    public TeamReportPage(ManageTeamsPanel manageTeamsPanel) {
 
         super(new GridBagLayout());
 
-        this.homePanel = homePanel;
+        this.manageTeamsPanel = manageTeamsPanel;
 
         setPanel();
         setTeamReportSearchPanel();
@@ -29,8 +29,8 @@ public class TeamReportPage extends RoundedPanel{
 
         TeamReportSearchPanel teamReportSearchPanel = new TeamReportSearchPanel(this);
 
-        Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.BOTH,
-                0, 0, GridBagConstraints.CENTER, 0.5f, 0.5f,
+        Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.HORIZONTAL,
+                32, 32, GridBagConstraints.CENTER, 0.5f, 0.5f,
                 new Insets(10, 80, 10, 80));
         this.add(teamReportSearchPanel, Constraints.getGridBagConstraints());
     }
@@ -51,8 +51,8 @@ public class TeamReportPage extends RoundedPanel{
         searchViewResults.updateViewportView(component);
     }
 
-    public void homePanelReturnToDefaultContentPane() {
+    public void returnToManageTeamsPanel() {
 
-        homePanel.returnToDefaultContentPanel();
+        manageTeamsPanel.returnToManageTeamsPanel();
     }
 }

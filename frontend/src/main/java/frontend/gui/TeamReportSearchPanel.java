@@ -44,7 +44,7 @@ public class TeamReportSearchPanel extends RoundedPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                searchPage.homePanelReturnToDefaultContentPane();
+                searchPage.returnToManageTeamsPanel();
             }
         });
 
