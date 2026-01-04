@@ -75,8 +75,12 @@ public class ManageTeamsPanel extends RoundedPanel {
         searchWrapper.setBackground(Color.WHITE);
         searchWrapper.setRoundBorderColor(ColorsList.BORDER_COLOR);
 
-        searchWrapper.setPreferredSize(new Dimension(350, 45));
+        Dimension wrapperDim = new Dimension(350, 50);
+        searchWrapper.setPreferredSize(wrapperDim);
+        searchWrapper.setMinimumSize(wrapperDim);
+        searchWrapper.setMaximumSize(wrapperDim);
 
+        searchWrapper.setBorder(new EmptyBorder(5, 5, 5, 5));
 
         searchTextField = new JTextField(PLACEHOLDER);
 
@@ -93,14 +97,12 @@ public class ManageTeamsPanel extends RoundedPanel {
         searchButton.addActionListener(e -> performSearch());
 
         Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.NONE,
-                0, 0, GridBagConstraints.CENTER, 0.0f, 0.0f, new Insets(0, 10, 0, 0));
+                0, 0, GridBagConstraints.CENTER, 0.0f, 0.0f, new Insets(0, 5, 0, 0));
         searchWrapper.add(searchButton, Constraints.getGridBagConstraints());
-
 
         Constraints.setConstraints(1, 0, 1, 1, GridBagConstraints.HORIZONTAL,
                 0, 0, GridBagConstraints.CENTER, 1.0f, 0.0f, new Insets(0, 5, 0, 10));
         searchWrapper.add(searchTextField, Constraints.getGridBagConstraints());
-
 
         JPanel searchContainer = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         searchContainer.setOpaque(false);
