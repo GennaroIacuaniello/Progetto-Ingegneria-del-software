@@ -4,7 +4,7 @@ import java.util.List;
 
 public class TeamDTO {
 
-    private int id;
+    private Integer id;
     private String name;
     private ProjectDTO project;
     private List<UserDTO> developers;
@@ -21,11 +21,11 @@ public class TeamDTO {
 
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

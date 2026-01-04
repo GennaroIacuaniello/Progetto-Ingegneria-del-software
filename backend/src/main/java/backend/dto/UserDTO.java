@@ -9,7 +9,7 @@ public class UserDTO {
     private String email;
     private String password;
 
-    private int role; //0 guest, 1 developer, 2 admin;
+    private Integer role; //0 guest, 1 developer, 2 admin;
 
     private List<IssueDTO> reportedIssues;
 
@@ -26,7 +26,7 @@ public class UserDTO {
 
     }
 
-    public UserDTO(int id, String email, String password, List<IssueDTO> reportedIssues) {
+    public UserDTO(Integer id, String email, String password, List<IssueDTO> reportedIssues) {
 
         this.id = id;
         this.email = email;
@@ -60,11 +60,11 @@ public class UserDTO {
         this.password = password;
     }
 
-    public int getRole() {
+    public Integer getRole() {
         return role;
     }
 
-    public void setRole(int role) {
+    public void setRole(Integer role) {
         this.role = role;
     }
 

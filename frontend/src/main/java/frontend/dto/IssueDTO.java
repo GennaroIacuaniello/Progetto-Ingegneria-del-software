@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class IssueDTO {
 
-    private int id;
+    private Integer id;
     private String title;
     private String description;
     private IssueTypeDTO type;
@@ -15,7 +15,7 @@ public class IssueDTO {
     private UserDTO reportingUser;
     private ProjectDTO relatedProject;
 
-    private int priority;
+    private Integer priority;
     private byte[] image;
     private UserDTO assignedDeveloper;
 
@@ -33,11 +33,11 @@ public class IssueDTO {
         this.title = title;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -57,11 +57,11 @@ public class IssueDTO {
         this.description = description;
     }
 
-    public int getPriority() {
+    public Integer getPriority() {
         return priority;
     }
 
-    public void setPriority(int priority) {
+    public void setPriority(Integer priority) {
         this.priority = priority;
     }
 

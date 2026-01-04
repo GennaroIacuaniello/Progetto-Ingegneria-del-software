@@ -7,7 +7,7 @@ import java.util.List;
 
 public class ProjectDTO {
 
-    private int id;
+    private Integer id;
     private String name;
     private List<IssueDTO> issues;
     private List<TeamDTO> teams;
@@ -19,7 +19,7 @@ public class ProjectDTO {
 
     }
 
-    public ProjectDTO(int id, String name, List<TeamDTO> teams, List<UserDTO> developers) throws InvalidTeam, InvalidDeveloper {
+    public ProjectDTO(Integer id, String name, List<TeamDTO> teams, List<UserDTO> developers) throws InvalidTeam, InvalidDeveloper {
 
         this.id = id;
         this.name = name;
@@ -29,24 +29,24 @@ public class ProjectDTO {
 
     }
 
-    public ProjectDTO(int id, String name, List<IssueDTO> issues, List<TeamDTO> teams, List<UserDTO> developers) throws InvalidTeam, InvalidDeveloper {
+    public ProjectDTO(Integer id, String name, List<IssueDTO> issues, List<TeamDTO> teams, List<UserDTO> developers) throws InvalidTeam, InvalidDeveloper {
 
         this(id, name, teams, developers);
 
         this.issues = issues;
     }
 
-    public ProjectDTO(int id, String name) {
+    public ProjectDTO(Integer id, String name) {
 
         this.id = id;
         this.name = name;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
