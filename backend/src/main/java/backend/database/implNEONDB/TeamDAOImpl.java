@@ -1,6 +1,5 @@
-package backend.database.implNEONDB;
+package backend.database.implneondb;
 
-import backend.database.DatabaseConnection;
 import backend.database.dao.TeamDAO;
 import backend.dto.*;
 import org.springframework.stereotype.Repository;
@@ -30,7 +29,7 @@ public class TeamDAOImpl implements TeamDAO {
 
         String toSearch = "%" + teamName + "%";
 
-        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, toSearch);
@@ -68,7 +67,7 @@ public class TeamDAOImpl implements TeamDAO {
         String query = "INSERT INTO Team (team_name, project_id) VALUES "+
                        "(?, ?);";
 
-        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, teamToCreate.getName());
@@ -86,7 +85,7 @@ public class TeamDAOImpl implements TeamDAO {
                        "(?, (SELECT user_id FROM User_ U WHERE U.email = ?))";
 
 
-        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, teamId);
@@ -107,7 +106,7 @@ public class TeamDAOImpl implements TeamDAO {
                        "WHERE team_id = ? " +
                        "AND user_id = (SELECT user_id FROM User_ WHERE email = ?)";
 
-        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, teamId);
@@ -141,7 +140,7 @@ public class TeamDAOImpl implements TeamDAO {
         ArrayList<Integer> durationsDevIds = new ArrayList<>();
         ArrayList<Integer> devAlreadyFoundedIds = new ArrayList<>();
 
-        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, teamId);
@@ -164,18 +163,11 @@ public class TeamDAOImpl implements TeamDAO {
                 IssueDTO foundedIssue = new IssueDTO();
 
                 foundedIssue.setId(rs.getInt("issue_id"));
-                /*foundedIssue.setTitle(rs.getString("title"));
-                foundedIssue.setDescription(rs.getString("issue_description"));
-                foundedIssue.setPriority(rs.getInt("issue_priority"));
-                foundedIssue.setImage(rs.getBytes("issue_image"));
-                foundedIssue.setType(IssueTypeDTO.valueOf(rs.getString("issue_type")));
-                foundedIssue.setStatus(IssueStatusDTO.valueOf(rs.getString("issue_status")));
-                foundedIssue.setTags(rs.getString("tags"));*/
 
 
                 int resolverId = rs.getInt("resolver_id");
 
-                //rs.wasNull() controlla se l'ultima colonna letta era NULL
+                //rs.wasNull() checks if last column was NULL
                 if (!rs.wasNull() && resolverId >= 0) {
 
                     if(devAlreadyFoundedIds.contains(resolverId)){

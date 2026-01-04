@@ -1,6 +1,6 @@
-package backend.database.implNEONDB;
+package backend.database.implneondb;
 
-import backend.database.DatabaseConnection;
+
 import backend.database.dao.ProjectDAO;
 import backend.dto.IssueDTO;
 import backend.dto.ProjectDTO;
@@ -27,13 +27,13 @@ public class ProjectDAOImpl implements ProjectDAO {
     public List<ProjectDTO> searchProjectsByName(String projectName) throws SQLException{
 
 
-        List<ProjectDTO> searchResult = null;
+        List<ProjectDTO> searchResult;
 
-        String query = "SELECT * FROM Project P WHERE project_name ILIKE ?;";
+        String query = "SELECT P.* FROM Project P WHERE project_name ILIKE ?;";
 
         String toSearch = "%" + projectName + "%";
 
-        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, toSearch);
@@ -62,7 +62,7 @@ public class ProjectDAOImpl implements ProjectDAO {
         String query = "INSERT INTO Project (project_name) VALUES "+
                        "(?);";
 
-        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, projectToCreate.getName());
@@ -84,7 +84,7 @@ public class ProjectDAOImpl implements ProjectDAO {
         ArrayList<Integer> durationsDevIds = new ArrayList<>();
         ArrayList<Integer> devAlreadyFoundedIds = new ArrayList<>();
 
-        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
             ResultSet rs = statement.executeQuery();
@@ -100,18 +100,11 @@ public class ProjectDAOImpl implements ProjectDAO {
                 IssueDTO foundedIssue = new IssueDTO();
 
                 foundedIssue.setId(rs.getInt("issue_id"));
-                /*foundedIssue.setTitle(rs.getString("title"));
-                foundedIssue.setDescription(rs.getString("issue_description"));
-                foundedIssue.setPriority(rs.getInt("issue_priority"));
-                foundedIssue.setImage(rs.getBytes("issue_image"));
-                foundedIssue.setType(IssueTypeDTO.valueOf(rs.getString("issue_type")));
-                foundedIssue.setStatus(IssueStatusDTO.valueOf(rs.getString("issue_status")));
-                foundedIssue.setTags(rs.getString("tags"));*/
 
 
                 int resolverId = rs.getInt("resolver_id");
 
-                //rs.wasNull() controlla se l'ultima colonna letta era NULL
+                //rs.wasNull() checks if last column was NULL
                 if (!rs.wasNull() && resolverId >= 0) {
 
                     if(devAlreadyFoundedIds.contains(resolverId)){
