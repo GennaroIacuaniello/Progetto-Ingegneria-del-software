@@ -5,15 +5,14 @@ import java.awt.*;
 
 public class TitlePanel {
 
-    private final RoundedPanel titlePanel = new RoundedPanel(new GridBagLayout());
-    private final JLabel titleLabel = new JLabel("titolo");
-    private final Color bgColor = new Color(153, 201, 255);
-    private final Color BorderColor = new Color (77, 133, 255);
+    private static TitlePanel instance;
+    private static final RoundedPanel titlePanel = new RoundedPanel(new GridBagLayout());
+    private static final JLabel titleLabel = new JLabel("titolo");
 
-    public TitlePanel() {
+    private TitlePanel() {
 
-        titlePanel.setBackground(bgColor);
-        titlePanel.setRoundBorderColor(BorderColor);
+        titlePanel.setBackground(ColorsList.TITLE_BACKGROUND_COLOR);
+        titlePanel.setRoundBorderColor(ColorsList.BORDER_COLOR);
 
         addTitleLabel();
 
@@ -22,6 +21,7 @@ public class TitlePanel {
 
     private void addTitleLabel() {
 
+        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 48));
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.BOTH,
@@ -31,5 +31,18 @@ public class TitlePanel {
 
     public JPanel getTitlePanel() {
         return titlePanel;
+    }
+
+    public void setTitle(String title) {
+
+        titleLabel.setText(title);
+    }
+
+    public static TitlePanel getInstance() {
+
+        if (instance == null)
+            instance = new TitlePanel();
+
+        return instance;
     }
 }

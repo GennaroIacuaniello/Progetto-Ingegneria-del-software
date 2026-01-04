@@ -9,6 +9,7 @@ public class HomePanelUser {
     protected RoundedPanel contentPanel;
     protected RoundedPanel homePanel;
     protected SearchViewResults searchViewResults;
+    private static final String TITLE_PLACEHOLDER = "PROGETTI";
 
     protected HomePanelUser(JFrame mainFrame) {
 
@@ -46,6 +47,7 @@ public class HomePanelUser {
 
         setContentPanel(contentPanel);
         defaultContentPanel = contentPanel;
+        TitlePanel.getInstance().setTitle(TITLE_PLACEHOLDER);
     }
 
     protected void setSearchProjectPanel(JFrame  mainFrame) {
@@ -93,5 +95,6 @@ public class HomePanelUser {
     public void returnToDefaultContentPanel() {
 
         setContentPanel(defaultContentPanel);
+        TitlePanel.getInstance().setTitle(TITLE_PLACEHOLDER);
     }
 }

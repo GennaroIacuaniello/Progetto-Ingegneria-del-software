@@ -5,8 +5,8 @@ import java.awt.*;
 
 public class SearchReportedIssuePageUser extends RoundedPanel{
 
-    SearchViewResults searchViewResults;
-    HomePanelUser homePanelUser;
+    private SearchViewResults searchViewResults;
+    private final HomePanelUser homePanelUser;
 
     public SearchReportedIssuePageUser(JFrame mainFrame, HomePanelUser homePanel) {
 
@@ -17,6 +17,12 @@ public class SearchReportedIssuePageUser extends RoundedPanel{
         setPanel();
         setIssueSearchPanel(mainFrame);
         setIssueSearchResultsPanel();
+        setTitlePanel();
+    }
+
+    protected void setTitlePanel() {
+
+        TitlePanel.getInstance().setTitle("ISSUE REPORTATE");
     }
 
     private void setPanel() {

@@ -29,6 +29,8 @@ public class ReportIssueUser extends RoundedPanel{
         setRoundedPanel();
         setComponents(mainFrame, homePanelUser);
 
+        TitlePanel.getInstance().setTitle("SEGNALA ISSUE");
+
         setVisible(true);
 
         revalidate();

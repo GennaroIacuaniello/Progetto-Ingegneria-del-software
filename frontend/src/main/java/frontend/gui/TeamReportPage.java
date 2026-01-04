@@ -17,6 +17,8 @@ public class TeamReportPage extends RoundedPanel{
         setPanel();
         setTeamReportSearchPanel();
         setSearchViewResults();
+
+        TitlePanel.getInstance().setTitle("REPORT MENSILE");
     }
 
     private void setPanel() {

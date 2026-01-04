@@ -1,7 +1,6 @@
 package frontend.gui;
 
 import com.formdev.flatlaf.FlatLightLaf;
-import frontend.controller.AuthController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -58,7 +57,7 @@ public class HomePage {
 
     private void setTitlePanel() {
 
-        TitlePanel titlePanel = new TitlePanel();
+        TitlePanel titlePanel = TitlePanel.getInstance();
 
         Constraints.setConstraints(0, 0, 3, 1,
                 GridBagConstraints.BOTH, 0, 50,

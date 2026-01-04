@@ -19,6 +19,7 @@ public class ManageTeamsPanel extends RoundedPanel {
     private final String PLACEHOLDER = "Cerca nome team...";
     private final JFrame mainFrame;
     private final HomePanelUser homePanel;
+    private final String TITLE_PLACEHOLDER = "GESTISCI TEAMS";
 
     public ManageTeamsPanel(JFrame owner, HomePanelUser homePanel) {
 
@@ -40,6 +41,8 @@ public class ManageTeamsPanel extends RoundedPanel {
                 0, 0, GridBagConstraints.CENTER, 1.0f, 1.0f, // weighty = 1.0f attira lo spazio
                 new Insets(20, 0, 0, 0));
         this.add(resultsPanel, Constraints.getGridBagConstraints());
+
+        TitlePanel.getInstance().setTitle(TITLE_PLACEHOLDER);
 
         performSearch();
     }
@@ -188,6 +191,8 @@ public class ManageTeamsPanel extends RoundedPanel {
     }
 
     public void returnToManageTeamsPanel() {
+
         homePanel.setContentPanel(this);
+        TitlePanel.getInstance().setTitle(TITLE_PLACEHOLDER);
     }
 }
