@@ -14,17 +14,11 @@ public class SearchProjectsButtonAdmin extends SearchProjectsButtonDeveloper {
     }
 
     @Override
-    protected void setActionListener(JFrame mainFrame, HomePanelUser homePanel,  JTextField searchTextField, String placeholder) {
+    protected void search(JFrame mainFrame, HomePanelUser homePanel,  JTextField searchTextField, String placeholder) {
 
-        this.addActionListener(new ActionListener() {
+        ProjectController.getInstance().searchProjectsByName((searchTextField.getText().equals(placeholder) ?
+                "" : searchTextField.getText()));
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                ProjectController.getInstance().searchProjectsByName((searchTextField.getText().equals(placeholder) ? "" : searchTextField.getText()));
-
-                new SearchProjectResultsAdmin(mainFrame, homePanel, ProjectController.getInstance().getProjectsIds(), ProjectController.getInstance().getProjectsNames());
-            }
-        });
+        new SearchProjectResultsAdmin(mainFrame, homePanel, ProjectController.getInstance().getProjectsIds(), ProjectController.getInstance().getProjectsNames());
     }
 }

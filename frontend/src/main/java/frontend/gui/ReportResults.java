@@ -5,6 +5,7 @@ import frontend.controller.TeamController;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.time.Duration;
 import java.util.List;
@@ -93,8 +94,13 @@ public class ReportResults {
         }
 
         JTable table = new JTable(developersModel);
-        table.getTableHeader().setReorderingAllowed(false);
-        table.getTableHeader().setResizingAllowed(false);
+
+        JTableHeader header = table.getTableHeader();
+
+        header.setReorderingAllowed(false);
+        header.setResizingAllowed(false);
+        header.setBackground(ColorsList.TABLE_HEADER_BACKGROUND_COLOR);
+
         table.setEnabled(false);
 
         return table;

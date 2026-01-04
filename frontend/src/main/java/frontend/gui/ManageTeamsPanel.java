@@ -6,6 +6,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -93,6 +94,8 @@ public class ManageTeamsPanel extends RoundedPanel {
 
         TextComponentFocusBehaviour.setTextComponentFocusBehaviour(searchTextField, PLACEHOLDER);
 
+        searchTextField.addActionListener(e -> performSearch());
+
         IconButton searchButton = new IconButton("/frontend/gui/images/searchButton.svg", 25, 25);
         searchButton.addActionListener(e -> performSearch());
 
@@ -160,7 +163,12 @@ public class ManageTeamsPanel extends RoundedPanel {
         table.getColumnModel().getColumn(3).setCellEditor(new ViewReportCellEditor(mainFrame, table, homePanel, this));
 
         table.setRowHeight(35);
-        table.getTableHeader().setReorderingAllowed(false);
+
+        JTableHeader header = table.getTableHeader();
+
+        header.setReorderingAllowed(false);
+        header.setResizingAllowed(false);
+        header.setBackground(ColorsList.TABLE_HEADER_BACKGROUND_COLOR);
 
         JScrollPane scrollPane = new JScrollPane(table);
         resultsPanel.add(scrollPane, BorderLayout.CENTER);

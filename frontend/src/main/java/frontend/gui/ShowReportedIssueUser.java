@@ -92,6 +92,7 @@ public class ShowReportedIssueUser extends MyDialog {
 
         for (String tag : IssueController.getInstance().getIssueTagsAsList()) {
 
+            System.out.println(tag);
             JLabel tmpLabel = new JLabel(tag);
             tmpLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
             menu.add(tmpLabel);
@@ -100,7 +101,11 @@ public class ShowReportedIssueUser extends MyDialog {
         tagsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                menu.show(tagsButton, 0, tagsButton.getHeight());
+
+                if (IssueController.getInstance().getIssueTagsAsList().getFirst().isEmpty())
+                    new FloatingMessage("Non ci sono etichette per questa issue",  tagsButton, FloatingMessage.WARNING_MESSAGE);
+                else
+                    menu.show(tagsButton, 0, tagsButton.getHeight());
             }
         });
 

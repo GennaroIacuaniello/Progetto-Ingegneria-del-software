@@ -22,11 +22,25 @@ public class SearchProjectsButtonUser extends IconButton {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                ProjectController.getInstance().searchProjectsByName((searchTextField.getText().equals(placeholder) ?
-                        "" : searchTextField.getText()));
-
-                new SearchProjectResultsUser(mainFrame, homePanel, ProjectController.getInstance().getProjectsIds(), ProjectController.getInstance().getProjectsNames());
+                search(mainFrame, homePanel, searchTextField, placeholder);
             }
         });
+
+        searchTextField.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                search(mainFrame, homePanel, searchTextField, placeholder);
+            }
+        });
+    }
+
+    protected void search(JFrame mainFrame, HomePanelUser homePanel,  JTextField searchTextField, String placeholder) {
+
+        ProjectController.getInstance().searchProjectsByName((searchTextField.getText().equals(placeholder) ?
+                "" : searchTextField.getText()));
+
+        new SearchProjectResultsUser(mainFrame, homePanel, ProjectController.getInstance().getProjectsIds(), ProjectController.getInstance().getProjectsNames());
     }
 }
