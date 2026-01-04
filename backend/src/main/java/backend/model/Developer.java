@@ -1,8 +1,15 @@
 package backend.model;
 
+import lombok.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
+
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Developer extends User {
 
     private List<Issue> assignedIssues;
@@ -30,42 +37,5 @@ public class Developer extends User {
             this.teams.addAll(teams);
 
     }
-
-    public List<Issue> getAssignedIssues() {
-        return assignedIssues;
-    }
-
-    public void setAssignedIssues(List<Issue> assignedIssues) {
-        this.assignedIssues = assignedIssues;
-    }
-
-    public List<Project> getProjects() {
-        return projects;
-    }
-
-    public void setProjects(List<Project> projects) {
-        this.projects = projects;
-    }
-
-    public List<Team> getTeams() {
-        return teams;
-    }
-
-    public void setTeams(List<Team> teams) {
-        this.teams = teams;
-    }
-
-    public void addAssignedIssue (Issue assignedIssue){
-        this.assignedIssues.add(assignedIssue);
-    }
-
-    public void addProject (Project project){
-        this.projects.add(project);
-    }
-
-    public void addTeam (Team team){
-        this.teams.add(team);
-    }
-
 
 }

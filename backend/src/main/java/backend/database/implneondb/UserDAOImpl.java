@@ -17,6 +17,9 @@ public class UserDAOImpl implements UserDAO {
 
     private final DataSource dataSource;
 
+    private static final String USER_ID = "user_id";
+    private static final String EMAIL = "email";
+
     public UserDAOImpl(DataSource dataSource) {
         this.dataSource = dataSource;
     }
@@ -25,7 +28,7 @@ public class UserDAOImpl implements UserDAO {
 
         UserDTO foundedUser = null;
 
-        String query = "SELECT * FROM User_ U WHERE email LIKE ?;";
+        String query = "SELECT U.* FROM User_ U WHERE email LIKE ?;";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
@@ -38,8 +41,8 @@ public class UserDAOImpl implements UserDAO {
 
                 foundedUser = new UserDTO();
 
-                foundedUser.setId(rs.getInt("user_id"));
-                foundedUser.setEmail(rs.getString("email"));
+                foundedUser.setId(rs.getInt(USER_ID));
+                foundedUser.setEmail(rs.getString(EMAIL));
                 foundedUser.setPassword(rs.getString("hashed_password"));
                 foundedUser.setRole(rs.getInt("user_type"));
 
@@ -73,38 +76,12 @@ public class UserDAOImpl implements UserDAO {
 
     public List<UserDTO> searchDevOrAdminByEmailAndProject(String email, Integer projectId) throws SQLException{
 
-        List<UserDTO> searchResult = null;
+        List<UserDTO> searchResult;
 
         String query = "SELECT * FROM User_ U NATURAL JOIN Works_on W " +
                        "WHERE U.email ILIKE ? AND U.user_type > 0 AND W.project_id = ?;";
 
-        String emailToSearch = "%" + email + "%";
-
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
-
-            statement.setString(1, emailToSearch);
-            statement.setInt(2, projectId);
-
-            ResultSet rs = statement.executeQuery();
-
-            searchResult = new ArrayList<>();
-
-            while (rs.next()) {
-
-                UserDTO foundedUser = new UserDTO();
-
-                foundedUser.setId(rs.getInt("user_id"));
-                foundedUser.setEmail(rs.getString("email") );
-
-                searchResult.add(foundedUser);
-
-
-            }
-
-            rs.close();
-
-        }
+        searchResult = performSearch(email, projectId, query);
 
         return searchResult;
 
@@ -113,18 +90,28 @@ public class UserDAOImpl implements UserDAO {
 
     public List<UserDTO> searchDevOrAdminByEmailAndTeam(String email, Integer teamId) throws SQLException{
 
-        List<UserDTO> searchResult = null;
+        List<UserDTO> searchResult;
 
         String query = "SELECT * FROM User_ U NATURAL JOIN Works_in W " +
                 "WHERE U.email ILIKE ? AND W.team_id = ?;";
 
+        searchResult = performSearch(email, teamId, query);
+
+        return searchResult;
+
+
+    }
+
+    private List<UserDTO> performSearch(String email, Integer objectId, String query) throws SQLException {
+
+        List<UserDTO> searchResult;
         String emailToSearch = "%" + email + "%";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, emailToSearch);
-            statement.setInt(2, teamId);
+            statement.setInt(2, objectId);
 
             ResultSet rs = statement.executeQuery();
 
@@ -134,8 +121,8 @@ public class UserDAOImpl implements UserDAO {
 
                 UserDTO foundedUser = new UserDTO();
 
-                foundedUser.setId(rs.getInt("user_id"));
-                foundedUser.setEmail(rs.getString("email") );
+                foundedUser.setId(rs.getInt(USER_ID));
+                foundedUser.setEmail(rs.getString(EMAIL) );
 
                 searchResult.add(foundedUser);
 
@@ -145,15 +132,12 @@ public class UserDAOImpl implements UserDAO {
             rs.close();
 
         }
-
         return searchResult;
-
-
     }
 
     public List<UserDTO> searchDevOrAdminByEmail(String email) throws SQLException{
 
-        List<UserDTO> searchResult = null;
+        List<UserDTO> searchResult;
 
         String query = "SELECT * FROM User_ U " +
                        "WHERE U.email ILIKE ? AND U.user_type > 0;";
@@ -173,8 +157,8 @@ public class UserDAOImpl implements UserDAO {
 
                 UserDTO foundedUser = new UserDTO();
 
-                foundedUser.setId(rs.getInt("user_id"));
-                foundedUser.setEmail(rs.getString("email") );
+                foundedUser.setId(rs.getInt(USER_ID));
+                foundedUser.setEmail(rs.getString(EMAIL) );
 
                 searchResult.add(foundedUser);
 

@@ -1,12 +1,19 @@
 package backend.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
     private String email;
-    private final String password;
+    private String password;
     private ArrayList<Issue> reportedIssues;
 
     public User(String email, String password, List<Issue> reportedIssues) {
@@ -18,30 +25,7 @@ public class User {
 
         if(reportedIssues != null)
             this.reportedIssues.addAll(reportedIssues);
-    }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public List<Issue> getReportedIssues() {
-        return reportedIssues;
-    }
-
-    public void setReportedIssues (List<Issue> reportedIssues) {
-        this.reportedIssues = (ArrayList<Issue>) reportedIssues;
-    }
-
-    public void addReportedIssue (Issue reportedIssue){
-        this.reportedIssues.add(reportedIssue);
     }
 
 }

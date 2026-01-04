@@ -1,40 +1,21 @@
 package backend.exception;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDateTime;
 
+@Setter
+@Getter
 public class ErrorResponse {
-    private String messaggio;
+    private String message;
     private LocalDateTime data;
     private int codiceStatus;
 
-    public ErrorResponse(String messaggio, int codiceStatus) {
-        this.messaggio = messaggio;
+    public ErrorResponse(String message, int codiceStatus) {
+        this.message = message;
         this.codiceStatus = codiceStatus;
         this.data = LocalDateTime.now();
-    }
-
-    public String getMessaggio() {
-        return messaggio;
-    }
-
-    public void setMessaggio(String messaggio) {
-        this.messaggio = messaggio;
-    }
-
-    public LocalDateTime getData() {
-        return data;
-    }
-
-    public void setData(LocalDateTime data) {
-        this.data = data;
-    }
-
-    public int getCodiceStatus() {
-        return codiceStatus;
-    }
-
-    public void setCodiceStatus(int codiceStatus) {
-        this.codiceStatus = codiceStatus;
     }
 
 }

@@ -1,5 +1,7 @@
 package backend.exception;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -9,6 +11,9 @@ import java.sql.SQLException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGenericException(Exception e) {
@@ -26,11 +31,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(SQLException.class)
     public ResponseEntity<ErrorResponse> handleSQLException(SQLException e) {
 
-
-        System.err.println("Database error");
-        e.printStackTrace();
-
         String errorMessage = "Database error";
+
+        logger.error(errorMessage, e);
 
         ErrorResponse error = new ErrorResponse(
                 errorMessage,
