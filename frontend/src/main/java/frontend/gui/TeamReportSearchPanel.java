@@ -49,14 +49,14 @@ public class TeamReportSearchPanel extends RoundedPanel{
         });
 
         Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.NONE,
-                0, 0, GridBagConstraints.LINE_START, 0.1f, 0.1f,
-                new Insets(5, 5, 5, 5));
+                0, 0, GridBagConstraints.FIRST_LINE_START, 0.1f, 0.1f,
+                new Insets(10, 10, 0, 0));
         this.add(backButton, Constraints.getGridBagConstraints());
     }
 
     private void setSearchButton() {
 
-        searchButton = new IconButton("/frontend/gui/images/searchButton.svg", 32, 32);
+        searchButton = new IconButton("/frontend/gui/images/searchButton.svg", 64, 64);
 
         searchButton.addActionListener(new ActionListener() {
 
@@ -67,7 +67,7 @@ public class TeamReportSearchPanel extends RoundedPanel{
             }
         });
 
-        Constraints.setConstraints(1, 1, 1, 1, GridBagConstraints.NONE,
+        Constraints.setConstraints(0, 1, 1, 1, GridBagConstraints.NONE,
                 0, 0, GridBagConstraints.CENTER, 0.1f, 0.1f);
         this.add(searchButton, Constraints.getGridBagConstraints());
     }
@@ -106,7 +106,7 @@ public class TeamReportSearchPanel extends RoundedPanel{
 
         RoundedPanel tmpPanel = ContainerFactory.createRoundedPanelContainer(monthComboBox);
 
-        Constraints.setConstraints(2, 1, 1, 1, GridBagConstraints.NONE,
+        Constraints.setConstraints(1, 1, 1, 1, GridBagConstraints.NONE,
                 0, 0, GridBagConstraints.CENTER, 0.1f, 0.1f);
         this.add(tmpPanel, Constraints.getGridBagConstraints());
     }
@@ -122,7 +122,7 @@ public class TeamReportSearchPanel extends RoundedPanel{
 
         RoundedPanel tmpPanel = ContainerFactory.createRoundedPanelContainer(yearTextField);
 
-        Constraints.setConstraints(3, 1, 1, 1, GridBagConstraints.NONE,
+        Constraints.setConstraints(2, 1, 1, 1, GridBagConstraints.NONE,
                 0, 0, GridBagConstraints.CENTER, 0.1f, 0.1f);
         this.add(tmpPanel, Constraints.getGridBagConstraints());
     }

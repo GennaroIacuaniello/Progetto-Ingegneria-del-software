@@ -155,7 +155,7 @@ public class ManageTeamsPanel extends RoundedPanel {
         table.getColumnModel().getColumn(2).setCellEditor(new ManageMembersTextCellEditor(mainFrame, table));
 
 
-        table.getColumnModel().getColumn(3).setCellEditor(new ViewReportCellEditor(mainFrame, table));
+        table.getColumnModel().getColumn(3).setCellEditor(new ViewReportCellEditor(mainFrame, table, homePanel));
 
         table.setRowHeight(35);
         table.getTableHeader().setReorderingAllowed(false);

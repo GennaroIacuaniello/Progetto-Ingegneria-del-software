@@ -29,7 +29,7 @@ public class TeamReportPage extends RoundedPanel{
 
         TeamReportSearchPanel teamReportSearchPanel = new TeamReportSearchPanel(this);
 
-        Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.NONE,
+        Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.BOTH,
                 0, 0, GridBagConstraints.CENTER, 0.5f, 0.5f,
                 new Insets(10, 80, 10, 80));
         this.add(teamReportSearchPanel, Constraints.getGridBagConstraints());
@@ -41,8 +41,8 @@ public class TeamReportPage extends RoundedPanel{
                                                               "per visualizzare i risultati</html>");
 
         Constraints.setConstraints(0, 1, 1, 1,
-                GridBagConstraints.VERTICAL, 0, 0, GridBagConstraints.CENTER,
-                1f, 1f);
+                GridBagConstraints.BOTH, 0, 0, GridBagConstraints.CENTER,
+                1f, 1f, new  Insets(10, 180, 10, 180));
         this.add(searchViewResults.getViewportScrollPane(), Constraints.getGridBagConstraints());
     }
 

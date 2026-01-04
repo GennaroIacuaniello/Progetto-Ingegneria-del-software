@@ -10,7 +10,7 @@ public class ViewReportCellEditor extends DefaultCellEditor {
     private final JFrame mainFrame;
     private final JTable table;
 
-    public ViewReportCellEditor(JFrame mainFrame, JTable table) {
+    public ViewReportCellEditor(JFrame mainFrame, JTable table, HomePanelUser homePanel) {
         super(new JCheckBox());
         this.mainFrame = mainFrame;
         this.table = table;
@@ -30,9 +30,8 @@ public class ViewReportCellEditor extends DefaultCellEditor {
 
                 //TODO: vedi come aprire questa pagina
 
-                //TeamReportPage teamReportPage = new TeamReportPage( mainFrame);
+                homePanel.setContentPanel(new TeamReportPage(homePanel));
 
-                //teamReportPage.setVisible(true);
             }
         });
     }
