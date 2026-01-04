@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserDAO {
 
-    void resisterNewUser(UserDTO newUser) throws SQLException;
+    void registerNewUser(UserDTO newUser) throws SQLException;
 
     UserDTO searchUserByMail(String email) throws SQLException;
 

@@ -1,9 +1,7 @@
-package backend.database.implNEONDB;
+package backend.database.implneondb;
 
-import backend.database.DatabaseConnection;
 import backend.database.dao.IssueDAO;
 import backend.dto.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -26,7 +24,7 @@ public class IssueDAOImpl implements IssueDAO {
         String query = "INSERT INTO Issue (title, issue_description, issue_priority, issue_image, issue_type, issue_status, tags, report_time, reporter_id, resolver_id, project_id) VALUES "+
                         "(?, ?, ?, ?, ?::IssueType, ?::IssueStatus, ?, ?, ?, ?, ?);";
 
-        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, issueToReport.getTitle());
@@ -55,9 +53,9 @@ public class IssueDAOImpl implements IssueDAO {
 
     }
 
-    public List<IssueDTO> searchIssues(String title, String status, String tags, String type, Integer priority, Integer resolverId, Integer reporterId, Integer projectId) throws SQLException{
+    public List<IssueDTO> searchIssues(IssueDTO issueToSearch, Integer resolverId, Integer reporterId, Integer projectId) throws SQLException{
 
-        List<IssueDTO> searchResult = null;
+        List<IssueDTO> searchResult;
 
         StringBuilder query = new StringBuilder("SELECT issue_id, title, issue_status FROM issue WHERE ");
         List<Object> searchParam = new ArrayList<>();
@@ -75,29 +73,29 @@ public class IssueDAOImpl implements IssueDAO {
             searchParam.add(reporterId);
         }
 
-        if (title != null && !title.isEmpty()) {
+        if (issueToSearch.getTitle() != null && !issueToSearch.getTitle().isEmpty()) {
             query.append(" AND title ILIKE ?");
-            searchParam.add("%" + title + "%");
+            searchParam.add("%" + issueToSearch.getTitle() + "%");
         }
-        if (status != null && !status.isEmpty()) {
+        if (issueToSearch.getStatus() != null) {
             query.append(" AND status = ?::IssueStatus");
-            searchParam.add(status);
+            searchParam.add(issueToSearch.getStatus().toString());
         }
-        if (type != null && !type.isEmpty()) {
+        if (issueToSearch.getType() != null) {
             query.append(" AND type = ?");
-            searchParam.add(type);
+            searchParam.add(issueToSearch.getType().toString());
         }
-        if (priority != null) {
+        if (issueToSearch.getPriority() != null) {
             query.append(" AND priority = ?");
-            searchParam.add(priority);
+            searchParam.add(issueToSearch.getPriority());
         }
-        if (tags != null && !tags.isEmpty()) {
+        if (issueToSearch.getTags() != null && !issueToSearch.getTags().isEmpty()) {
             query.append(" AND tags ILIKE ?");
-            searchParam.add("%" + tags + "%");
+            searchParam.add("%" + issueToSearch.getTags() + "%");
         }
 
 
-        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query.toString())) {
 
 
@@ -137,7 +135,7 @@ public class IssueDAOImpl implements IssueDAO {
 
         IssueDTO searchResult = null;
 
-        String query = "SELECT I.*, " + // I.* prende tutte le colonne della issue
+        String query = "SELECT I.*, " + // I.* to take all columns of table issues
                 "U1.email AS reporter_email, " +
                 "U2.email AS resolver_email, " +
                 "P.project_name " +
@@ -148,7 +146,7 @@ public class IssueDAOImpl implements IssueDAO {
                 "WHERE issue_id = ?;";
 
 
-        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, issueId);
@@ -186,7 +184,7 @@ public class IssueDAOImpl implements IssueDAO {
 
                 int resolverId = rs.getInt("resolver_id");
 
-                //rs.wasNull() controlla se l'ultima colonna letta era NULL
+                //rs.wasNull() checks if last column was NULL
                 if (!rs.wasNull() && resolverId >= 0) {
 
                     UserDTO resolver = new UserDTO();
@@ -222,7 +220,7 @@ public class IssueDAOImpl implements IssueDAO {
 
         String query = "UPDATE Issue SET issue_status = ?::IssueStatus WHERE issue_id = ?";
 
-        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, newStatus.toString());
@@ -244,7 +242,7 @@ public class IssueDAOImpl implements IssueDAO {
                        "WHERE I.issue_id = ? AND U.email = ? " +
                        "RETURNING U.user_id, U.email";
 
-        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, id);

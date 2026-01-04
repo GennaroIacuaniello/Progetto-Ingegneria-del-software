@@ -3,12 +3,10 @@ package backend.controller;
 
 import backend.database.dao.UserDAO;
 import backend.dto.UserDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -32,7 +30,7 @@ public class UserController {
             return ResponseEntity.badRequest().build();
         }
 
-        List<UserDTO> searchResults = null;
+        List<UserDTO> searchResults;
 
         if (projectId != null) {
 
@@ -47,10 +45,11 @@ public class UserController {
         }
 
         if ( searchResults == null || searchResults.isEmpty()) {
-            // Se la lista è vuota, restituisce un 204 No Content
+            // If searchResults is null or empty, return 204 No Content
             return ResponseEntity.noContent().build();
         }
 
+        //If there are data, return 200 OK with searchResult
         return ResponseEntity.ok(searchResults);
 
 

@@ -1,6 +1,8 @@
 package frontend.controller;
 
 import frontend.dto.UserDTO;
+import lombok.*;
+
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -10,6 +12,8 @@ public class AuthController {
     private static AuthController instance;
     private final ApiClient client = ApiClient.getInstance();
 
+    @Setter
+    @Getter
     private UserDTO loggedUser;
 
     private AuthController(){
@@ -56,32 +60,24 @@ public class AuthController {
         return false;
     }
 
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class LoginRequest {
+
         private String email;
         private String password;
 
-        public LoginRequest(String email, String password) {
-            this.email = email;
-            this.password = password;
-        }
-
-        public String getEmail() { return email; }
-        public String getPassword() { return password; }
     }
 
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class AuthResponse {
+
         private String token;
         private UserDTO user;
 
-        public AuthResponse() {
-            // Empty costructor needed for Jackson
-        }
-
-        public String getToken() { return token; }
-        public void setToken(String token) { this.token = token; }
-
-        public UserDTO getUser() { return user; }
-        public void setUser(UserDTO user) { this.user = user; }
     }
 
     public boolean registration(String email, String password, int role) {
@@ -112,37 +108,15 @@ public class AuthController {
         return false;
     }
 
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class RegisterRequest {
+
         private String email;
         private String password;
         private int role;
 
-        public RegisterRequest(String email, String password, int role) {
-            this.email = email;
-            this.password = password;
-            this.role = role;
-        }
-
-        public String getEmail() { return email; }
-        public void setEmail(String email) { this.email = email; }
-        public String getPassword() { return password; }
-        public void setPassword(String password) { this.password = password; }
-
-        public int getRole() {
-            return role;
-        }
-
-        public void setRole(int role) {
-            this.role = role;
-        }
     }
 
-
-    public UserDTO getLoggedUser() {
-        return loggedUser;
-    }
-
-    public void setLoggedUser(UserDTO loggedUser) {
-        this.loggedUser = loggedUser;
-    }
 }

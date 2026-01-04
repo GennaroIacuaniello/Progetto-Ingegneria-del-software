@@ -25,11 +25,11 @@ public class ProjectController {
         List<ProjectDTO> searchResults = projectDAO.searchProjectsByName(projectName);
 
         if ( searchResults == null || searchResults.isEmpty()) {
-            // Se la lista è vuota, restituisce un 204 No Content
+            // If searchResults is null or empty, return 204 No Content
             return ResponseEntity.noContent().build();
         }
 
-        //Se ci sono dati, restituisce 200 OK con il corpo (la lista)
+        //If there are data, return 200 OK with searchResult
         return ResponseEntity.ok(searchResults);
     }
 

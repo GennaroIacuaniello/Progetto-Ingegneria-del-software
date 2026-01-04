@@ -1,9 +1,7 @@
-package backend.database.implNEONDB;
+package backend.database.implneondb;
 
-import backend.database.DatabaseConnection;
 import backend.database.dao.UserDAO;
 import backend.dto.UserDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -29,7 +27,7 @@ public class UserDAOImpl implements UserDAO {
 
         String query = "SELECT * FROM User_ U WHERE email LIKE ?;";
 
-        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, email);
@@ -54,12 +52,12 @@ public class UserDAOImpl implements UserDAO {
         return foundedUser;
     }
 
-    public void resisterNewUser(UserDTO newUser) throws SQLException{
+    public void registerNewUser(UserDTO newUser) throws SQLException{
 
         String query = "INSERT INTO User_ (email, hashed_password, user_type) VALUES "+
                 "(?, ?, ?);";
 
-        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, newUser.getEmail());
@@ -82,7 +80,7 @@ public class UserDAOImpl implements UserDAO {
 
         String emailToSearch = "%" + email + "%";
 
-        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, emailToSearch);
@@ -122,7 +120,7 @@ public class UserDAOImpl implements UserDAO {
 
         String emailToSearch = "%" + email + "%";
 
-        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, emailToSearch);
@@ -162,7 +160,7 @@ public class UserDAOImpl implements UserDAO {
 
         String emailToSearch = "%" + email + "%";
 
-        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, emailToSearch);

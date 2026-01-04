@@ -7,6 +7,9 @@ import backend.dto.UserDTO;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -60,33 +63,24 @@ public class AuthController {
 
     }
 
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class LoginRequest {
+
         private String email;
         private String password;
 
-        public LoginRequest() {
-            //Empty constructor needed for jackson
-        }
-
-        public String getEmail() { return email; }
-        public void setEmail(String email) { this.email = email; }
-        public String getPassword() { return password; }
-        public void setPassword(String password) { this.password = password; }
     }
 
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class AuthResponse {
+
         private String token;
         private UserDTO user;
 
-        public AuthResponse(String token, UserDTO user) {
-            this.token = token;
-            this.user = user;
-        }
-
-        public String getToken() { return token; }
-        public void setToken(String token) { this.token = token; }
-        public UserDTO getUser() { return user; }
-        public void setUser(UserDTO user) { this.user = user; }
     }
 
 
@@ -103,32 +97,20 @@ public class AuthController {
         newUser.setEmail(request.getEmail());
         newUser.setPassword(hashedPassword);
         newUser.setRole(request.getRole());
-        userDao.resisterNewUser(newUser);
+        userDao.registerNewUser(newUser);
 
         return ResponseEntity.ok("Registration success!");
 
     }
 
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class RegisterRequest {
+
         private String email;
         private String password;
         private int role;
 
-        public RegisterRequest() {
-            //Empty constructor needed for jackson
-        }
-
-        public String getEmail() { return email; }
-        public void setEmail(String email) { this.email = email; }
-        public String getPassword() { return password; }
-        public void setPassword(String password) { this.password = password; }
-
-        public int getRole() {
-            return role;
-        }
-
-        public void setRole(int role) {
-            this.role = role;
-        }
     }
 }

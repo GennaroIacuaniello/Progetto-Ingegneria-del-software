@@ -1,26 +1,24 @@
 package backend.controller;
 
 import backend.database.dao.IssueDAO;
-import backend.database.dao.ProjectDAO;
-import backend.database.dao.UserDAO;
+
 import backend.dto.IssueDTO;
 import backend.dto.IssueStatusDTO;
-import backend.dto.ProjectDTO;
+
+import backend.dto.IssueTypeDTO;
 import backend.dto.UserDTO;
-import backend.model.Project;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/issues")
@@ -53,14 +51,32 @@ public class IssueController {
             @RequestParam Integer projectId
     ) throws SQLException{
 
-            List<IssueDTO> searchResults = issueDAO.searchIssues(title, status, tags, type, priority, resolverId, reporterId, projectId);
+            IssueDTO issueToSearch = new IssueDTO();
+            issueToSearch.setTitle(title);
+            if(status != null && !status.isEmpty())
+                issueToSearch.setStatus(IssueStatusDTO.valueOf(status));
+            else
+                issueToSearch.setStatus(null);
+
+            issueToSearch.setTags(tags);
+
+            if(type != null && !type.isEmpty())
+                issueToSearch.setType(IssueTypeDTO.valueOf(type));
+            else
+                issueToSearch.setType(null);
+
+            issueToSearch.setPriority(priority);
+
+
+
+            List<IssueDTO> searchResults = issueDAO.searchIssues(issueToSearch, resolverId, reporterId, projectId);
 
             if ( searchResults == null || searchResults.isEmpty()) {
-                // Se la lista è vuota, restituisce un 204 No Content
+                // If searchResults is null or empty, return 204 No Content
                 return ResponseEntity.noContent().build();
             }
 
-            //Se ci sono dati, restituisce 200 OK con il corpo (la lista)
+            //If there are data, return 200 OK with searchResult
             return ResponseEntity.ok(searchResults);
 
 
@@ -105,25 +121,13 @@ public class IssueController {
 
     }
 
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class StatusUpdateRequest {
 
         private IssueStatusDTO newStatus;
 
-        public StatusUpdateRequest() {
-            //Empty constructor needed for jackson
-        }
-
-        public StatusUpdateRequest(IssueStatusDTO newStatus) {
-            this.newStatus = newStatus;
-        }
-
-        public IssueStatusDTO getNewStatus() {
-            return newStatus;
-        }
-
-        public void setNewStatus(IssueStatusDTO newStatus) {
-            this.newStatus = newStatus;
-        }
     }
 
     @PutMapping("/{id}/resolver")

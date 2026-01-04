@@ -30,11 +30,11 @@ public class TeamController {
         List<TeamDTO> searchResults = teamDAO.searchTeamsByNameAndProject(teamName, projectId);
 
         if ( searchResults == null || searchResults.isEmpty()) {
-            // Se la lista è vuota, restituisce un 204 No Content
+            // If searchResults is null or empty, return 204 No Content
             return ResponseEntity.noContent().build();
         }
 
-        //Se ci sono dati, restituisce 200 OK con il corpo (la lista)
+        //If there are data, return 200 OK with searchResult
         return ResponseEntity.ok(searchResults);
     }
 
@@ -55,7 +55,7 @@ public class TeamController {
         boolean added = teamDAO.addMemberToTeam(teamId, email);
 
         if (added) {
-            return ResponseEntity.ok("Member addedd successfully!");
+            return ResponseEntity.ok("Member added successfully!");
         } else {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("User already in team or user not found!");
         }

@@ -11,7 +11,7 @@ public interface IssueDAO {
 
     void reportIssue(IssueDTO issueToReport) throws SQLException;
 
-    List<IssueDTO> searchIssues(String title, String status, String tags, String type, Integer priority, Integer resolver_id, Integer reporterId, Integer project_id) throws SQLException;
+    List<IssueDTO> searchIssues(IssueDTO issueToSearch, Integer resolverId, Integer reporterId, Integer projectId) throws SQLException;
 
     IssueDTO getIssueById(Integer issueId) throws SQLException;
 
