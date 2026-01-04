@@ -13,7 +13,7 @@ public class HomePanelUser {
     protected HomePanelUser(JFrame mainFrame) {
 
         setHomePanel();
-        setLogOutButton();
+        setLogOutButton(mainFrame);
         setDefaultContentPanel(mainFrame);
     }
 
@@ -25,10 +25,9 @@ public class HomePanelUser {
         homePanel.setRoundBorderColor(ColorsList.BORDER_COLOR);
     }
 
-    private void setLogOutButton() {
-        //todo aggiungi action listener
+    private void setLogOutButton(JFrame  mainFrame) {
 
-        LogOutButton logOutButton = new LogOutButton();
+        LogOutButton logOutButton = new LogOutButton(mainFrame);
 
         Constraints.setConstraints(1, 0, 1, 1,
                 GridBagConstraints.NONE, 0, 0, GridBagConstraints.FIRST_LINE_END,
