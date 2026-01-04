@@ -26,19 +26,24 @@ public class ReportResults {
         JPanel tablesPanel = new JPanel();
         tablesPanel.setLayout(new GridBagLayout());
         tablesPanel.setBorder(BorderFactory.createEmptyBorder());
-        tablesPanel.setBackground(ColorsList.EMPTY_COLOR);
+        tablesPanel.setOpaque(true);
+        tablesPanel.setBackground(Color.WHITE);
 
         JTable developersTable = createDevelopersTable();
 
-        Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.BOTH,
-                0, 0, GridBagConstraints.PAGE_END);
+        Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.HORIZONTAL,
+                0, 0, GridBagConstraints.PAGE_START, 1f, 0.01f);
+        tablesPanel.add(developersTable.getTableHeader(), Constraints.getGridBagConstraints());
+
+        Constraints.setConstraints(0, 1, 1, 1, GridBagConstraints.BOTH,
+                0, 0, GridBagConstraints.CENTER, 1f, 1f);
         tablesPanel.add(developersTable, Constraints.getGridBagConstraints());
 
         JTable totalTable = createTotalsTable();
         totalTable.setColumnModel(developersTable.getColumnModel());
 
-        Constraints.setConstraints(0, 1, 1, 1, GridBagConstraints.HORIZONTAL,
-                0, 0, GridBagConstraints.PAGE_START);
+        Constraints.setConstraints(0, 2, 1, 1, GridBagConstraints.HORIZONTAL,
+                0, 0, GridBagConstraints.PAGE_END, 1f, 0.01f);
         tablesPanel.add(totalTable, Constraints.getGridBagConstraints());
 
         return tablesPanel;
