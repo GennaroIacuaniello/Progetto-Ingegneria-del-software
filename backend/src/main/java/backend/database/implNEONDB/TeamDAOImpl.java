@@ -23,9 +23,9 @@ public class TeamDAOImpl implements TeamDAO {
     public List<TeamDTO> searchTeamsByNameAndProject(String teamName, Integer projectId) throws SQLException{
 
 
-        List<TeamDTO> searchResult = null;
+        List<TeamDTO> searchResult;
 
-        String query = "SELECT * FROM Team T WHERE team_name ILIKE ? AND project_id = ?;";
+        String query = "SELECT T.* FROM Team T WHERE team_name ILIKE ? AND project_id = ?;";
 
         String toSearch = "%" + teamName + "%";
 
@@ -121,7 +121,7 @@ public class TeamDAOImpl implements TeamDAO {
 
     public StatisticDTO generateMonthlyReport(Integer teamId, String month, String year) throws SQLException{
 
-        StatisticDTO reportGenerated = null;
+        StatisticDTO reportGenerated;
 
         String query = "SELECT DISTINCT I.issue_id, I.resolver_id, I.report_time, I.resolution_time, U1.email AS resolver_email " +
                        "FROM Team T " +
@@ -137,7 +137,6 @@ public class TeamDAOImpl implements TeamDAO {
                        ")";
 
         ArrayList<Integer> numIssueSolvedForDev = new ArrayList<>();
-        ArrayList<Integer> durationsDevIds = new ArrayList<>();
         ArrayList<Integer> devAlreadyFoundedIds = new ArrayList<>();
 
         try (Connection connection = dataSource.getConnection();
@@ -195,58 +194,18 @@ public class TeamDAOImpl implements TeamDAO {
 
                     reportGenerated.getClosedIssues().add(foundedIssue);
 
-                    int devIndex = reportGenerated.getDevelopers().indexOf(foundedIssue.getAssignedDeveloper());
-
-                    if (devIndex != -1) {
-
-                        Duration currentSum = reportGenerated.getAverageResolutionDurations().get(devIndex);
-
-                        reportGenerated.getAverageResolutionDurations().set(devIndex, currentSum.plus(issueDuration));
-
-                        numIssueSolvedForDev.set(devIndex, numIssueSolvedForDev.get(devIndex) + 1);
-
-                    }
+                    ProjectDAOImpl.manageDevAverageDuration(reportGenerated, foundedIssue, issueDuration, numIssueSolvedForDev);
 
                 }else{
 
-                    int devIndex = reportGenerated.getDevelopers().indexOf(foundedIssue.getAssignedDeveloper());
-
-                    if (devIndex != -1) {
-
-                        Integer prevNumOpenIssues = reportGenerated.getNumOpenIssues().get(devIndex);
-
-                        reportGenerated.getNumOpenIssues().set(devIndex, prevNumOpenIssues + 1);
-
-                    }
-
-                    foundedIssue.setResolutionDate(null);
-                    reportGenerated.getOpenIssues().add(foundedIssue);
+                    ProjectDAOImpl.manageDevNumOpenIssues(reportGenerated, foundedIssue);
 
                 }
 
 
             }
 
-            for (int i = 0; i < reportGenerated.getAverageResolutionDurations().size(); i++) {
-
-                int count = numIssueSolvedForDev.get(i);
-
-                reportGenerated.getNumClosedIssues().set(i, count);
-
-                if (count > 0) {
-                    Duration totalSum = reportGenerated.getAverageResolutionDurations().get(i);
-                    reportGenerated.getAverageResolutionDurations().set(i, totalSum.dividedBy(count));
-                }
-
-            }
-
-            if (resolvedCount > 0) {
-
-                Duration averageDuration = totalDuration.dividedBy(resolvedCount);
-
-                reportGenerated.setTotalAverageResolutionDuration(averageDuration);
-            }
-
+            ProjectDAOImpl.countingAndAverageCalculation(reportGenerated, numIssueSolvedForDev, resolvedCount, totalDuration);
 
             rs.close();
 

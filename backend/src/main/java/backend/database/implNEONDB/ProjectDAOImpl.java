@@ -75,7 +75,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 
     public StatisticDTO generateDashboard() throws SQLException{
 
-        StatisticDTO dashboardData = null;
+        StatisticDTO dashboardData;
 
         String query = "SELECT DISTINCT I.issue_id, I.resolver_id, I.report_time, I.resolution_time, U1.email AS resolver_email " +
                        "FROM Issue I LEFT JOIN User_ U1 ON  I.resolver_id = U1.user_id ";
@@ -120,71 +120,32 @@ public class ProjectDAOImpl implements ProjectDAO {
 
 
                 Timestamp reportTimestamp = rs.getTimestamp("report_time");
-                Timestamp resolutionTimestamp = rs.getTimestamp("resolution_time");
+                Timestamp foundedResolutionTimestamp = rs.getTimestamp("resolution_time");
 
                 foundedIssue.setReportDate(new java.util.Date(reportTimestamp.getTime()));
 
-                if (resolutionTimestamp != null) {
+                if (foundedResolutionTimestamp != null) {
 
-                    foundedIssue.setResolutionDate(new Date(resolutionTimestamp.getTime()));
-
-                    Duration issueDuration = Duration.between(reportTimestamp.toInstant(), resolutionTimestamp.toInstant());
-                    totalDuration = totalDuration.plus(issueDuration);
-                    resolvedCount++;
+                    foundedIssue.setResolutionDate(new Date(foundedResolutionTimestamp.getTime()));
 
                     dashboardData.getClosedIssues().add(foundedIssue);
 
-                    int devIndex = dashboardData.getDevelopers().indexOf(foundedIssue.getAssignedDeveloper());
+                    Duration issueDuration = Duration.between(reportTimestamp.toInstant(), foundedResolutionTimestamp.toInstant());
+                    totalDuration = totalDuration.plus(issueDuration);
+                    resolvedCount++;
 
-                    if (devIndex != -1) {
-
-                        Duration currentSum = dashboardData.getAverageResolutionDurations().get(devIndex);
-
-                        dashboardData.getAverageResolutionDurations().set(devIndex, currentSum.plus(issueDuration));
-
-                        numIssueSolvedForDev.set(devIndex, numIssueSolvedForDev.get(devIndex) + 1);
-
-                    }
+                    manageDevAverageDuration(dashboardData, foundedIssue, issueDuration, numIssueSolvedForDev);
 
                 }else{
 
-                    int devIndex = dashboardData.getDevelopers().indexOf(foundedIssue.getAssignedDeveloper());
-
-                    if (devIndex != -1) {
-
-                        Integer prevNumOpenIssues = dashboardData.getNumOpenIssues().get(devIndex);
-
-                        dashboardData.getNumOpenIssues().set(devIndex, prevNumOpenIssues + 1);
-
-                    }
-
-                    foundedIssue.setResolutionDate(null);
-                    dashboardData.getOpenIssues().add(foundedIssue);
+                    manageDevNumOpenIssues(dashboardData, foundedIssue);
 
                 }
 
 
             }
 
-            for (int i = 0; i < dashboardData.getAverageResolutionDurations().size(); i++) {
-
-                int count = numIssueSolvedForDev.get(i);
-
-                dashboardData.getNumClosedIssues().set(i, count);
-
-                if (count > 0) {
-                    Duration totalSum = dashboardData.getAverageResolutionDurations().get(i);
-                    dashboardData.getAverageResolutionDurations().set(i, totalSum.dividedBy(count));
-                }
-
-            }
-
-            if (resolvedCount > 0) {
-
-                Duration averageDuration = totalDuration.dividedBy(resolvedCount);
-
-                dashboardData.setTotalAverageResolutionDuration(averageDuration);
-            }
+            countingAndAverageCalculation(dashboardData, numIssueSolvedForDev, resolvedCount, totalDuration);
 
 
             rs.close();
@@ -197,7 +158,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 
     }
 
-    public static void resolverHandler(ArrayList<Integer> devAlreadyFoundedIds, int resolverId, StatisticDTO dashboardData, IssueDTO foundedIssue, ResultSet rs, ArrayList<Integer> numIssueSolvedForDev) throws SQLException {
+    public static void resolverHandler(List<Integer> devAlreadyFoundedIds, int resolverId, StatisticDTO dashboardData, IssueDTO foundedIssue, ResultSet rs, List<Integer> numIssueSolvedForDev) throws SQLException {
 
         if(devAlreadyFoundedIds.contains(resolverId)){
             for(UserDTO dev: dashboardData.getDevelopers())
@@ -224,6 +185,57 @@ public class ProjectDAOImpl implements ProjectDAO {
 
 
             numIssueSolvedForDev.add(0);
+        }
+    }
+
+    public static void manageDevAverageDuration(StatisticDTO dashboardData, IssueDTO foundedIssue, Duration issueDuration, List<Integer> numIssueSolvedForDev) {
+        int devIndex = dashboardData.getDevelopers().indexOf(foundedIssue.getAssignedDeveloper());
+
+        if (devIndex != -1) {
+
+            Duration currentSum = dashboardData.getAverageResolutionDurations().get(devIndex);
+
+            dashboardData.getAverageResolutionDurations().set(devIndex, currentSum.plus(issueDuration));
+
+            numIssueSolvedForDev.set(devIndex, numIssueSolvedForDev.get(devIndex) + 1);
+
+        }
+    }
+
+    public static void manageDevNumOpenIssues(StatisticDTO dashboardData, IssueDTO foundedIssue) {
+        int devIndex = dashboardData.getDevelopers().indexOf(foundedIssue.getAssignedDeveloper());
+
+        if (devIndex != -1) {
+
+            Integer prevNumOpenIssues = dashboardData.getNumOpenIssues().get(devIndex);
+
+            dashboardData.getNumOpenIssues().set(devIndex, prevNumOpenIssues + 1);
+
+        }
+
+        foundedIssue.setResolutionDate(null);
+        dashboardData.getOpenIssues().add(foundedIssue);
+    }
+
+    public static void countingAndAverageCalculation(StatisticDTO dashboardData, List<Integer> numIssueSolvedForDev, int resolvedCount, Duration totalDuration) {
+        for (int i = 0; i < dashboardData.getAverageResolutionDurations().size(); i++) {
+
+            int count = numIssueSolvedForDev.get(i);
+
+            dashboardData.getNumClosedIssues().set(i, count);
+
+            if (count > 0) {
+                Duration totalSum = dashboardData.getAverageResolutionDurations().get(i);
+                dashboardData.getAverageResolutionDurations().set(i, totalSum.dividedBy(count));
+            }
+
+        }
+
+        if (resolvedCount > 0) {
+
+            Duration averageDuration = totalDuration.dividedBy(resolvedCount);
+
+            dashboardData.setTotalAverageResolutionDuration(averageDuration);
         }
     }
 
