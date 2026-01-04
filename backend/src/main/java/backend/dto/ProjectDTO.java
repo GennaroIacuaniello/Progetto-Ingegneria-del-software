@@ -1,10 +1,14 @@
 package backend.dto;
 
-import backend.exception.InvalidDeveloper;
-import backend.exception.InvalidTeam;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProjectDTO {
 
     private Integer id;
@@ -13,28 +17,6 @@ public class ProjectDTO {
     private List<TeamDTO> teams;
     private List<UserDTO> developers;
 
-    public ProjectDTO() {
-
-        //Empty constructor needed for jackson
-
-    }
-
-    public ProjectDTO(Integer id, String name, List<TeamDTO> teams, List<UserDTO> developers) throws InvalidTeam, InvalidDeveloper {
-
-        this.id = id;
-        this.name = name;
-        this.issues = null;
-        this.teams = teams;
-        this.developers = developers;
-
-    }
-
-    public ProjectDTO(Integer id, String name, List<IssueDTO> issues, List<TeamDTO> teams, List<UserDTO> developers) throws InvalidTeam, InvalidDeveloper {
-
-        this(id, name, teams, developers);
-
-        this.issues = issues;
-    }
 
     public ProjectDTO(Integer id, String name) {
 
@@ -42,43 +24,4 @@ public class ProjectDTO {
         this.name = name;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<IssueDTO> getIssues() {
-        return issues;
-    }
-
-    public void setIssues(List<IssueDTO> issues) {
-        this.issues = issues;
-    }
-
-    public List<TeamDTO> getTeams() {
-        return teams;
-    }
-
-    public void setTeams(List<TeamDTO> teams) {
-        this.teams = teams;
-    }
-
-    public List<UserDTO> getDevelopers() {
-        return developers;
-    }
-
-    public void setDevelopers(List<UserDTO> developers) {
-        this.developers = developers;
-    }
 }

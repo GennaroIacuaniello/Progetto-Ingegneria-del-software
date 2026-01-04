@@ -2,12 +2,11 @@ package backend.controller;
 
 import backend.database.dao.UserDAO;
 import backend.dto.UserDTO;
-import backend.controller.AuthController.LoginRequest; // O import statico se preferisci
-import backend.controller.AuthController.AuthResponse;
+
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,7 +46,7 @@ public class AuthController {
                 String token = Jwts.builder()
                         .setSubject(userDto.getEmail())
                         .setIssuedAt(new Date())
-                        .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 24 ore
+                        .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 24 hours
                         .signWith(Keys.hmacShaKeyFor(secret.getBytes()))
                         .compact();
 

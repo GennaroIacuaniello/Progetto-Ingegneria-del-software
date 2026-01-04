@@ -3,12 +3,17 @@ package frontend.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import frontend.exception.RequestError;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
+
+import frontend.gui.LogInPage;
+
+import javax.swing.*;
 
 public class ApiClient {
 
@@ -50,12 +55,21 @@ public class ApiClient {
     public HttpResponse<String> sendRequest(HttpRequest.Builder requestBuilder) {
 
         try {
+
             if (jwtToken != null) {
                 requestBuilder.header("Authorization", "Bearer " + jwtToken);
             }
 
             HttpRequest request = requestBuilder.build();
-            return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() == 401 || response.statusCode() == 403) {
+                handleSessionExpiration();
+                throw new RequestError("Sessione scaduta. Effettua nuovamente il login.");
+            }
+
+            return response;
+
 
         }catch (IOException e) {
 
@@ -68,6 +82,25 @@ public class ApiClient {
             Thread.currentThread().interrupt();
             throw new RequestError("Richiesta interrotta dal sistema.");
         }
+    }
+
+    private void handleSessionExpiration() {
+
+        this.jwtToken = null;
+
+        SwingUtilities.invokeLater(() -> {
+
+            for (Window window : Window.getWindows()) {
+                window.dispose();
+            }
+
+            JOptionPane.showMessageDialog(null,
+                    "La sessione è scaduta o il token non è valido.\nVerrai reindirizzato al login.",
+                    "Sessione Scaduta",
+                    JOptionPane.WARNING_MESSAGE);
+
+            new LogInPage().setVisible(true);
+        });
     }
 
 }

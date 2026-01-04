@@ -1,11 +1,17 @@
 package backend.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class StatisticDTO {
 
     private List<UserDTO> developers = new ArrayList<>();
@@ -20,73 +26,5 @@ public class StatisticDTO {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Duration totalAverageResolutionDuration = Duration.ZERO;
-
-    public StatisticDTO(){
-        //Empty constructor needed for Jackson
-    }
-
-    public List<UserDTO> getDevelopers() {
-        return developers;
-    }
-
-    public void setDevelopers(List<UserDTO> developers) {
-        this.developers = developers;
-    }
-
-    public List<IssueDTO> getOpenIssues() {
-        return openIssues;
-    }
-
-    public void setOpenIssues(List<IssueDTO> openIssues) {
-        this.openIssues = openIssues;
-    }
-
-    public List<IssueDTO> getClosedIssues() {
-        return closedIssues;
-    }
-
-    public void setClosedIssues(List<IssueDTO> closedIssues) {
-        this.closedIssues = closedIssues;
-    }
-
-    public List<Integer> getNumOpenIssues() {
-        return numOpenIssues;
-    }
-
-    public void setNumOpenIssues(List<Integer> numOpenIssues) {
-        this.numOpenIssues = numOpenIssues;
-    }
-
-    public List<Integer> getNumClosedIssues() {
-        return numClosedIssues;
-    }
-
-    public void setNumClosedIssues(List<Integer> numClosedIssues) {
-        this.numClosedIssues = numClosedIssues;
-    }
-
-    public Integer getNumIssuesNotAssigned() {
-        return numIssuesNotAssigned;
-    }
-
-    public void setNumIssuesNotAssigned(Integer numIssuesNotAssigned) {
-        this.numIssuesNotAssigned = numIssuesNotAssigned;
-    }
-
-    public List<Duration> getAverageResolutionDurations() {
-        return averageResolutionDurations;
-    }
-
-    public void setAverageResolutionDurations(List<Duration> averageResolutionDurations) {
-        this.averageResolutionDurations = averageResolutionDurations;
-    }
-
-    public Duration getTotalAverageResolutionDuration() {
-        return totalAverageResolutionDuration;
-    }
-
-    public void setTotalAverageResolutionDuration(Duration totalAverageResolutionDuration) {
-        this.totalAverageResolutionDuration = totalAverageResolutionDuration;
-    }
 
 }
