@@ -257,7 +257,8 @@ public class LogInPage extends JFrame {
         boolean success = AuthController.getInstance().login(email, password);
 
         if (success) {
-            new HomePage();
+            HomePage homePage = new HomePage();
+            homePage.getMainFrame().setExtendedState(Frame.MAXIMIZED_BOTH);
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Credenziali non valide o errore di connessione.", "Errore Login", JOptionPane.ERROR_MESSAGE);

@@ -1,6 +1,7 @@
 package frontend.gui;
 
 import com.formdev.flatlaf.FlatLightLaf;
+import frontend.controller.AuthController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -67,7 +68,21 @@ public class HomePage {
 
     private void setHomePanel() {
 
-        homePanel = new HomePanelAdmin(mainFrame);
+        switch (AuthController.getInstance().getLoggedUser().getRole()) {
+
+            case 0:
+                homePanel = new HomePanelUser(mainFrame);
+                break;
+
+            case 1:
+                homePanel = new HomePanelDeveloper(mainFrame);
+                break;
+
+            case 2:
+                homePanel = new HomePanelAdmin(mainFrame);
+                break;
+        }
+
 
         mainFrame.addComponentListener(new java.awt.event.ComponentAdapter() {
             @Override
@@ -91,4 +106,7 @@ public class HomePage {
         mainFrame.repaint();
     }
 
+    public JFrame getMainFrame() {
+        return mainFrame;
+    }
 }
