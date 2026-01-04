@@ -40,8 +40,8 @@ public class SearchReportedIssuePageUser extends RoundedPanel{
         searchViewResults = new SearchViewResults();
 
         Constraints.setConstraints(0, 1, 1, 1,
-                GridBagConstraints.VERTICAL, 0, 0, GridBagConstraints.CENTER,
-                1f, 1f);
+                GridBagConstraints.BOTH, 0, 0, GridBagConstraints.CENTER,
+                1f, 1f, new  Insets(10, 180, 10, 180));
         this.add(searchViewResults.getViewportScrollPane(), Constraints.getGridBagConstraints());
     }
 
