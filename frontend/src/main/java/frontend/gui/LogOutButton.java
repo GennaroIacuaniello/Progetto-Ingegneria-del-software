@@ -3,8 +3,6 @@ package frontend.gui;
 import frontend.controller.AuthController;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class LogOutButton extends IconButton {
 
@@ -17,14 +15,19 @@ public class LogOutButton extends IconButton {
 
     private void setActionListener(JFrame  mainFrame) {
 
-        this.addActionListener(new ActionListener() {
+        this.addActionListener(e -> {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
+            int response = JOptionPane.showConfirmDialog(mainFrame,
+                    "Sei sicuro di voler uscire?", "Conferma LogOut",
+                    JOptionPane.YES_NO_OPTION);
 
-                AuthController.getInstance().setLoggedUser(null);
-                new LogInPage();
-                mainFrame.dispose();
+            if (response == JOptionPane.YES_OPTION) {
+
+                SwingUtilities.invokeLater(() -> {
+                    AuthController.getInstance().setLoggedUser(null);
+                    mainFrame.dispose();
+                    new LogInPage().setVisible(true);
+                });
             }
         });
     }
