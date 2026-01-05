@@ -13,6 +13,7 @@ import java.util.Date;
 public class ShowReportedIssueUser extends MyDialog {
 
     protected JLabel statusLabel;
+    protected JLabel assignedDeveloperLabel;
 
     public ShowReportedIssueUser(JFrame parent) {
 
@@ -218,7 +219,7 @@ public class ShowReportedIssueUser extends MyDialog {
 
     private void setAssignedDeveloperLabel() {
 
-        JLabel assignedDeveloperLabel = new JLabel("Developer assegnato: " + ((IssueController.getInstance().getIssueAssignedDeveloper() != null) ?
+        assignedDeveloperLabel = new JLabel("Developer assegnato: " + ((IssueController.getInstance().getIssueAssignedDeveloper() != null) ?
                 IssueController.getInstance().getIssueAssignedDeveloper().getEmail() : "questa issue non è ancora stata assegnata"));
 
         assignedDeveloperLabel.setBorder(BorderFactory.createEmptyBorder());

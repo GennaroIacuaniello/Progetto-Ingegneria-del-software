@@ -75,14 +75,14 @@ public class ShowIssueAdmin extends ShowReportedIssueDeveloper {
 
             JMenuItem item = new JMenuItem(developer);
 
-            item.addActionListener(new ActionListener() {
+            item.addActionListener(e -> {
 
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    IssueController.getInstance().assignIssueToDeveloper(developer);
-                    statusLabel.setText("Stato: ASSIGNED");
-                    tmpPanel.setVisible(false);
-                }
+                IssueController.getInstance().assignIssueToDeveloper(developer);
+                statusLabel.setText("Stato: ASSIGNED");
+                assignedDeveloperLabel.setText("Developer assegnato: " + developer);
+                new FloatingMessage("Assegnazione avvenuta con successo", searchButton, FloatingMessage.SUCCESS_MESSAGE);
+
+                tmpPanel.setVisible(false);
             });
 
             popupMenu.add(item);
