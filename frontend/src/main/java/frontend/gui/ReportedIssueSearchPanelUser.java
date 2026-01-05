@@ -98,8 +98,7 @@ public class ReportedIssueSearchPanelUser extends RoundedPanel{
     protected void searchButtonActionListener(JFrame mainFrame) {
 
         IssueController.getInstance().searchReportedIssues((titleTextField.getText().equals(TITLE_PLACEHOLDER) ? "" : titleTextField.getText()),
-                (Objects.equals(statusComboBox.getSelectedItem(), ALL_PLACEHOLDER) ? null : (String)statusComboBox.getSelectedItem()),
-                tagsButton.getTags(), (Objects.equals(typeComboBox.getSelectedItem(), ALL_PLACEHOLDER)) ? null : (String)typeComboBox.getSelectedItem(), null);
+                formatIssueStatus(Objects.requireNonNull(statusComboBox.getSelectedItem())), tagsButton.getTags(), formatIssueType(Objects.requireNonNull(typeComboBox.getSelectedItem())), null);
 
         new ReportedIssueSearchResultsPanelUser(mainFrame, searchPage, IssueController.getInstance().getIssuesTitles());
     }
@@ -166,5 +165,26 @@ public class ReportedIssueSearchPanelUser extends RoundedPanel{
                 GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
                 0.5f, 0.5f);
         this.add(tmpPanel, Constraints.getGridBagConstraints());
+    }
+
+    protected String formatIssueType(Object issueType) {
+
+        return switch (issueType.toString()) {
+            case "Bug" -> "BUG";
+            case "Documentation" -> "DOCUMENTATION";
+            case "Feature" -> "FEATURE";
+            case "Domanda" -> "QUESTION";
+            default -> null;
+        };
+    }
+
+    protected String formatIssueStatus(Object issueStatus) {
+
+        return switch (issueStatus.toString()) {
+            case "Assegnate" -> "ASSIGNED";
+            case "Risolte" -> "RESOLVED";
+            case "To do" -> "TODO";
+            default -> null;
+        };
     }
 }
