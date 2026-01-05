@@ -78,15 +78,15 @@ public class IssueDAOImpl implements IssueDAO {
             searchParam.add("%" + issueToSearch.getTitle() + "%");
         }
         if (issueToSearch.getStatus() != null) {
-            query.append(" AND status = ?::IssueStatus");
+            query.append(" AND issue_status = ?::IssueStatus");
             searchParam.add(issueToSearch.getStatus().toString());
         }
         if (issueToSearch.getType() != null) {
-            query.append(" AND type = ?");
+            query.append(" AND issue_type = ?");
             searchParam.add(issueToSearch.getType().toString());
         }
         if (issueToSearch.getPriority() != null) {
-            query.append(" AND priority = ?");
+            query.append(" AND issue_priority = ?");
             searchParam.add(issueToSearch.getPriority());
         }
         if (issueToSearch.getTags() != null && !issueToSearch.getTags().isEmpty()) {
