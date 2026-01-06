@@ -69,7 +69,7 @@ public class ShowReportedIssueUser extends MyDialog {
     private static JTextArea getJTextArea() {
 
         String description = IssueController.getInstance().getIssueDescription().isEmpty() ?
-                "Nessuna descrizione fornita pr questa issue" : IssueController.getInstance().getIssueDescription();
+                "Nessuna descrizione fornita per questa issue" : IssueController.getInstance().getIssueDescription();
 
         JTextArea descriptionTextArea = new JTextArea(description, 8, 40);
 

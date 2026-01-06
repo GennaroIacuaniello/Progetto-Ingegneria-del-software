@@ -108,8 +108,8 @@ public class ShowIssueAdmin extends ShowReportedIssueDeveloper {
             }
         });
 
-        Constraints.setConstraints(1, 0, 1, 1, GridBagConstraints.NONE,
-                0, 0, GridBagConstraints.LINE_START, new Insets(5, 0, 5, 5));
+        Constraints.setConstraints(1, 0, 1, 1, GridBagConstraints.HORIZONTAL,
+                192, 0, GridBagConstraints.LINE_START, new Insets(5, 0, 5, 5));
         tmpPanel.add(searchField, Constraints.getGridBagConstraints());
     }
 }

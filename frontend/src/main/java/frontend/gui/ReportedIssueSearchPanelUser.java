@@ -4,10 +4,7 @@ import frontend.controller.IssueController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Objects;
-import java.util.List;
 
 public class ReportedIssueSearchPanelUser extends RoundedPanel{
 
@@ -49,14 +46,7 @@ public class ReportedIssueSearchPanelUser extends RoundedPanel{
 
         IconButton backButton = new IconButton("/frontend/gui/images/backIconButton.svg", 32, 32);
 
-        backButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                searchPage.homePanelReturnToDefaultContentPane();
-            }
-        });
+        backButton.addActionListener(e -> searchPage.homePanelReturnToDefaultContentPane());
 
         Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.NONE,
                 0, 0, GridBagConstraints.LINE_START, 0.01f, 0.01f,
@@ -71,7 +61,7 @@ public class ReportedIssueSearchPanelUser extends RoundedPanel{
         titlePanel.setRoundBorderColor(ColorsList.BORDER_COLOR);
         titlePanel.setBackground(Color.WHITE);
 
-        Constraints.setConstraints(0, 1, 4, 1,
+        Constraints.setConstraints(0, 1, 7, 1,
                 GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
                 1f, 0.5f);
         this.add(titlePanel, Constraints.getGridBagConstraints());
@@ -81,13 +71,7 @@ public class ReportedIssueSearchPanelUser extends RoundedPanel{
 
         IconButton searchIssuesButton = new IconButton("/frontend/gui/images/searchButton.svg", 32, 32);
 
-        searchIssuesButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                searchButtonActionListener(mainFrame);
-            }
-        });
+        searchIssuesButton.addActionListener(e -> searchButtonActionListener(mainFrame));
 
         Constraints.setConstraints(0, 0, 1, 1,
                 GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
@@ -113,13 +97,7 @@ public class ReportedIssueSearchPanelUser extends RoundedPanel{
         titleTextField.setMinimumSize(new Dimension(150, 20));
         titleTextField.setBorder(BorderFactory.createEmptyBorder());
 
-        titleTextField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                searchButtonActionListener(mainFrame);
-            }
-        });
+        titleTextField.addActionListener(e -> searchButtonActionListener(mainFrame));
 
         Constraints.setConstraints(1, 0, 1, 1,
                 GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
@@ -137,7 +115,12 @@ public class ReportedIssueSearchPanelUser extends RoundedPanel{
         RoundedPanel tmpPanel = ContainerFactory.createRoundedPanelContainer(statusComboBox);
 
         Constraints.setConstraints(0, 2, 1, 1,
-                GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
+                GridBagConstraints.NONE, 0, 0, GridBagConstraints.LINE_END,
+                0.5f, 0.5f);
+        this.add(createTransparentLabel("Stato: "), Constraints.getGridBagConstraints());
+
+        Constraints.setConstraints(1, 2, 1, 1,
+                GridBagConstraints.NONE, 0, 0, GridBagConstraints.LINE_START,
                 0.5f, 0.5f);
         this.add(tmpPanel, Constraints.getGridBagConstraints());
     }
@@ -146,7 +129,7 @@ public class ReportedIssueSearchPanelUser extends RoundedPanel{
 
         tagsButton = new TagsButton(mainFrame);
 
-        Constraints.setConstraints(1, 2, 1, 1,
+        Constraints.setConstraints(2, 2, 1, 1,
                 GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
                 0.5f, 0.5f);
         this.add(tagsButton, Constraints.getGridBagConstraints());
@@ -156,13 +139,18 @@ public class ReportedIssueSearchPanelUser extends RoundedPanel{
 
         typeComboBox = new JComboBox<>(typeOptions);
 
-        typeComboBox.setBorder(BorderFactory.createEmptyBorder());
         typeComboBox.setBackground(ColorsList.EMPTY_COLOR);
+        typeComboBox.setBorder(BorderFactory.createEmptyBorder());
 
         RoundedPanel tmpPanel = ContainerFactory.createRoundedPanelContainer(typeComboBox);
 
-        Constraints.setConstraints(2, 2, 1, 1,
-                GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
+        Constraints.setConstraints(3, 2, 1, 1,
+                GridBagConstraints.NONE, 0, 0, GridBagConstraints.LINE_END,
+                0.5f, 0.5f);
+        this.add(createTransparentLabel("Tipo: "), Constraints.getGridBagConstraints());
+
+        Constraints.setConstraints(4, 2, 1, 1,
+                GridBagConstraints.NONE, 0, 0, GridBagConstraints.LINE_START,
                 0.5f, 0.5f);
         this.add(tmpPanel, Constraints.getGridBagConstraints());
     }
@@ -186,5 +174,15 @@ public class ReportedIssueSearchPanelUser extends RoundedPanel{
             case "To do" -> "TODO";
             default -> null;
         };
+    }
+
+    protected JLabel createTransparentLabel(String text) {
+
+        JLabel label = new JLabel(text);
+
+        label.setBackground(ColorsList.EMPTY_COLOR);
+        label.setBorder(BorderFactory.createEmptyBorder());
+
+        return label;
     }
 }
