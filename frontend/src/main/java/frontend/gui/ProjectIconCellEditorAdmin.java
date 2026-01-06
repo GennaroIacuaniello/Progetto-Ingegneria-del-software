@@ -16,9 +16,6 @@ public class ProjectIconCellEditorAdmin extends ProjectIconCellEditorDeveloper {
 
         String action = parentTable.getColumnName(parentTable.getEditingColumn());
 
-        //ProjectController.getInstance().setProjectWithValues((Integer)parentTable.getValueAt(selectedRow, 0),
-        //        (String)parentTable.getValueAt(selectedRow, 1));
-
         ProjectController.getInstance().setProjectWithId((Integer)parentTable.getValueAt(selectedRow, 0));
 
         switch (action) {

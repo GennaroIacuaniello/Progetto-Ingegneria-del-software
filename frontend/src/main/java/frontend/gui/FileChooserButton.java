@@ -2,8 +2,6 @@ package frontend.gui;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class FileChooserButton extends IconButton{
 
@@ -16,14 +14,7 @@ public class FileChooserButton extends IconButton{
 
         this.fileChooserPanel = fileChooserPanel;
 
-        addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                openFileChooser();
-            }
-        });
+        addActionListener(e -> openFileChooser());
     }
 
     private void openFileChooser() {

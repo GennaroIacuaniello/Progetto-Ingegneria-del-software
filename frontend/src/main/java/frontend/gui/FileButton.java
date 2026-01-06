@@ -2,8 +2,6 @@ package frontend.gui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -32,13 +30,7 @@ public class FileButton extends JPanel {
 
         removeButton = new IconButton("/frontend/gui/images/xIconButton.png", 10, 10);
 
-        removeButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                parentPanel.removeFile();
-            }
-        });
+        removeButton.addActionListener(e -> parentPanel.removeFile());
 
         add(removeButton);
     }

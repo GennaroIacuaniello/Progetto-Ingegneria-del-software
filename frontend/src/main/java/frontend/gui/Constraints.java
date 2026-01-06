@@ -1,5 +1,7 @@
 package frontend.gui;
 
+import lombok.Getter;
+
 import java.awt.*;
 
 /**
@@ -41,7 +43,16 @@ public class Constraints {
      * distribution, and margin settings. The constraints are configured through
      * the various setConstraints methods and retrieved via getGridBagConstraints.
      * </p>
+     * -- GETTER --
+     *  Retrieves the configured GridBagConstraints object for layout manager use.
+     *  <p>
+     *  This method provides access to the underlying
+     *  object that contains all configuration parameters set through the various
+     *  setConstraints methods. The returned object can be used directly with
+     *  for component positioning.
+     *  </p>
      */
+    @Getter
     private static final GridBagConstraints gridBagConstraints;
 
     static {
@@ -182,20 +193,5 @@ public class Constraints {
 
         Constraints.setConstraints(gridx, gridy, gridwidth, gridheight, fill,
                 ipadx, ipady, anchor, 0.01f, 0.01f, new Insets(0, 0, 0, 0));
-    }
-
-    /**
-     * Retrieves the configured GridBagConstraints object for layout manager use.
-     * <p>
-     * This method provides access to the underlying {@link GridBagConstraints}
-     * object that contains all configuration parameters set through the various
-     * setConstraints methods. The returned object can be used directly with
-     * {@link GridBagLayout} for component positioning.
-     * </p>
-     *
-     * @return the configured GridBagConstraints object containing all layout parameters
-     */
-    public static GridBagConstraints getGridBagConstraints() {
-        return gridBagConstraints;
     }
 }

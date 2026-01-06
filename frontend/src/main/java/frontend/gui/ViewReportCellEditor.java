@@ -7,15 +7,11 @@ import java.awt.*;
 
 public class ViewReportCellEditor extends DefaultCellEditor {
     private final JButton button;
-    private final JFrame mainFrame;
-    private final JTable table;
 
     private String label;
 
-    public ViewReportCellEditor(JFrame mainFrame, JTable table, HomePanelUser homePanel, ManageTeamsPanel manageTeamsPanel) {
+    public ViewReportCellEditor(JTable table, HomePanelUser homePanel, ManageTeamsPanel manageTeamsPanel) {
         super(new JCheckBox());
-        this.mainFrame = mainFrame;
-        this.table = table;
         this.button = new JButton();
 
         button.setOpaque(false);

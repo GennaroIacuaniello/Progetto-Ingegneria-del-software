@@ -1,5 +1,7 @@
 package frontend.gui;
 
+import lombok.Getter;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -7,6 +9,7 @@ public class HomePanelUser {
 
     protected RoundedPanel defaultContentPanel;
     protected RoundedPanel contentPanel;
+    @Getter
     protected RoundedPanel homePanel;
     protected SearchViewResults searchViewResults;
     private static final String TITLE_PLACEHOLDER = "PROGETTI";
@@ -71,10 +74,6 @@ public class HomePanelUser {
     public void updateSearchProjectViewResults(Component component) {
 
         searchViewResults.updateViewportView(component);
-    }
-
-    public RoundedPanel getHomePanel() {
-        return homePanel;
     }
 
     public void setContentPanel(RoundedPanel panel) {

@@ -5,8 +5,6 @@ import frontend.controller.UserController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 
 public class ShowIssueAdmin extends ShowReportedIssueDeveloper {
@@ -45,14 +43,7 @@ public class ShowIssueAdmin extends ShowReportedIssueDeveloper {
 
         searchButton = new IconButton("/frontend/gui/images/searchButton.svg", 32, 32);
 
-        searchButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                showPopupMenu(search());
-            }
-        });
+        searchButton.addActionListener(e -> showPopupMenu(search()));
 
         Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.NONE,
                 0, 0, GridBagConstraints.LINE_END, new Insets(5, 5, 5, 0));
@@ -100,13 +91,7 @@ public class ShowIssueAdmin extends ShowReportedIssueDeveloper {
 
         TextComponentFocusBehaviour.setTextComponentFocusBehaviour(searchField, SEARCHFIELD_PLACEHOLDER);
 
-        searchField.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                showPopupMenu(search());
-            }
-        });
+        searchField.addActionListener(e -> showPopupMenu(search()));
 
         Constraints.setConstraints(1, 0, 1, 1, GridBagConstraints.HORIZONTAL,
                 192, 0, GridBagConstraints.LINE_START, new Insets(5, 0, 5, 5));

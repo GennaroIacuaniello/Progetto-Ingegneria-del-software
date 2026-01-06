@@ -1,11 +1,14 @@
 package frontend.gui;
 
+import lombok.Getter;
+
 import java.awt.*;
 import java.io.File;
 
 public class FileChooserPanel extends RoundedPanel {
 
     FileChooserButton fileChooserButton;
+    @Getter
     File selectedFile;
     FileButton fileButton;
 
@@ -50,9 +53,5 @@ public class FileChooserPanel extends RoundedPanel {
 
         this.selectedFile = null;
         fileButton.updateFile(null);
-    }
-
-    public File getSelectedFile() {
-        return this.selectedFile;
     }
 }

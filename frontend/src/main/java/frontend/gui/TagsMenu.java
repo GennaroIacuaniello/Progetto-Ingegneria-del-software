@@ -1,11 +1,12 @@
 package frontend.gui;
 
+import lombok.Getter;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+@Getter
 public class TagsMenu extends MyDialog{
 
     private final ArrayList<TagPanel> tagPanels = new ArrayList<>();
@@ -59,14 +60,7 @@ public class TagsMenu extends MyDialog{
 
         IconButton addButton = new IconButton("/frontend/gui/images/addButtonIcon.svg", 32, 32);
 
-        addButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                addTagPanel();
-            }
-        });
+        addButton.addActionListener(e -> addTagPanel());
 
         Constraints.setConstraints(1, 0, 1, 1,
                 GridBagConstraints.NONE, 0, 0, GridBagConstraints.FIRST_LINE_END,
@@ -88,18 +82,6 @@ public class TagsMenu extends MyDialog{
 
         scrollPane.revalidate();
         scrollPane.repaint();
-    }
-
-    public JScrollPane getScrollPane() {
-        return scrollPane;
-    }
-
-    public JPanel getTagsPanel() {
-        return tagsPanel;
-    }
-
-    public ArrayList<TagPanel> getTagPanels() {
-        return tagPanels;
     }
 
     @Override

@@ -4,8 +4,6 @@ import frontend.controller.IssueController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -109,15 +107,12 @@ public class ShowReportedIssueUser extends MyDialog {
             menu.add(tmpLabel);
         }
 
-        tagsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        tagsButton.addActionListener(e -> {
 
-                if (IssueController.getInstance().getIssueTagsAsList().getFirst().isEmpty())
-                    new FloatingMessage("Non ci sono etichette per questa issue",  tagsButton, FloatingMessage.WARNING_MESSAGE);
-                else
-                    menu.show(tagsButton, 0, tagsButton.getHeight());
-            }
+            if (IssueController.getInstance().getIssueTagsAsList().getFirst().isEmpty())
+                new FloatingMessage("Non ci sono etichette per questa issue",  tagsButton, FloatingMessage.WARNING_MESSAGE);
+            else
+                menu.show(tagsButton, 0, tagsButton.getHeight());
         });
 
         Constraints.setConstraints(2, 3, 1, 1, GridBagConstraints.NONE,
@@ -130,18 +125,14 @@ public class ShowReportedIssueUser extends MyDialog {
 
         IconButton imageButton = new IconButton("/frontend/gui/images/imageButton.svg", 32, 32);
 
-        imageButton.addActionListener(new ActionListener() {
+        imageButton.addActionListener(e -> {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                try {
-                    Desktop.getDesktop().open(IssueController.getInstance().getIssueImageAsFile());
-                } catch (IOException ex) {
-                    new FloatingMessage("Impossibile aprire il file.", imageButton, FloatingMessage.ERROR_MESSAGE);
-                } catch (NullPointerException ex) {
-                    new FloatingMessage("Nessuna immagine è stata allegata per questa issue", imageButton, FloatingMessage.WARNING_MESSAGE);
-                }
+            try {
+                Desktop.getDesktop().open(IssueController.getInstance().getIssueImageAsFile());
+            } catch (IOException ex) {
+                new FloatingMessage("Impossibile aprire il file.", imageButton, FloatingMessage.ERROR_MESSAGE);
+            } catch (NullPointerException ex) {
+                new FloatingMessage("Nessuna immagine è stata allegata per questa issue", imageButton, FloatingMessage.WARNING_MESSAGE);
             }
         });
 

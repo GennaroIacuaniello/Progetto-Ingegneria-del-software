@@ -1,12 +1,14 @@
 package frontend.gui;
 
+import lombok.Getter;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class TagPanel extends RoundedPanel{
 
     private JTextField tagField;
-    private RemoveTagButton removetagButton;
+    @Getter
     private int index;
     private static final String TAGFIELD_PLACEHOLDER = "Inserisci etichetta";
 
@@ -40,16 +42,12 @@ public class TagPanel extends RoundedPanel{
 
     private void setRemoveTagButton(TagsMenu menu) {
 
-        removetagButton = new RemoveTagButton(menu, this);
+        RemoveTagButton removetagButton = new RemoveTagButton(menu, this);
 
         Constraints.setConstraints(1, 0, 1, 1,
                 GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
                 new Insets(5, 5, 5, 5));
         add(removetagButton, Constraints.getGridBagConstraints());
-    }
-
-    public int getIndex() {
-        return index;
     }
 
     public void decrement() {

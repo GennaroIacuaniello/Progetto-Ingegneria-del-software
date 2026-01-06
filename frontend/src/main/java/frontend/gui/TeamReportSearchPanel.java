@@ -4,8 +4,6 @@ import frontend.controller.TeamController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Objects;
 
 public class TeamReportSearchPanel extends RoundedPanel{
@@ -39,14 +37,7 @@ public class TeamReportSearchPanel extends RoundedPanel{
 
         IconButton backButton = new IconButton("/frontend/gui/images/backIconButton.svg", 32, 32);
 
-        backButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                searchPage.returnToManageTeamsPanel();
-            }
-        });
+        backButton.addActionListener(e -> searchPage.returnToManageTeamsPanel());
 
         Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.NONE,
                 0, 0, GridBagConstraints.FIRST_LINE_START, 0.1f, 0.1f,
@@ -58,14 +49,7 @@ public class TeamReportSearchPanel extends RoundedPanel{
 
         searchButton = new IconButton("/frontend/gui/images/searchButton.svg", 64, 64);
 
-        searchButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                search();
-            }
-        });
+        searchButton.addActionListener(e -> search());
 
         Constraints.setConstraints(0, 1, 1, 1, GridBagConstraints.NONE,
                 0, 0, GridBagConstraints.CENTER, 0.1f, 0.1f);

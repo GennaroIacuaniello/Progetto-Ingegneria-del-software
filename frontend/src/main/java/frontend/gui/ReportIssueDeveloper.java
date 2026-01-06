@@ -5,8 +5,6 @@ import frontend.dto.IssueDTO;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Objects;
 
 public class ReportIssueDeveloper extends ReportIssueUser {
@@ -44,15 +42,11 @@ public class ReportIssueDeveloper extends ReportIssueUser {
         reportButton.setBorder(BorderFactory.createEmptyBorder());
         reportButton.setBackground(ColorsList.EMPTY_COLOR);
 
-        reportButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (titleTextField.getText().equals(TITLE_PLACEHOLDER))
-                    new FloatingMessage("Inserire il titolo per segnalare una issue", reportButton, FloatingMessage.ERROR_MESSAGE);
-                else
-                    report(homePanelUser);
-            }
+        reportButton.addActionListener(e -> {
+            if (titleTextField.getText().equals(TITLE_PLACEHOLDER))
+                new FloatingMessage("Inserire il titolo per segnalare una issue", reportButton, FloatingMessage.ERROR_MESSAGE);
+            else
+                report(homePanelUser);
         });
 
         RoundedPanel tmpPanel = ContainerFactory.createRoundedPanelContainer(reportButton);
@@ -92,13 +86,7 @@ public class ReportIssueDeveloper extends ReportIssueUser {
         cancelButton.setBorder(BorderFactory.createEmptyBorder());
         cancelButton.setBackground(ColorsList.EMPTY_COLOR);
 
-        cancelButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cancel(homePanelUser);
-            }
-        });
+        cancelButton.addActionListener(e -> cancel(homePanelUser));
 
         RoundedPanel tmpPanel = ContainerFactory.createRoundedPanelContainer(cancelButton);
 

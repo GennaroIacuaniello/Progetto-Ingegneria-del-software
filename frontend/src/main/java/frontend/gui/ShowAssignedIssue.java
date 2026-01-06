@@ -4,8 +4,6 @@ import frontend.controller.IssueController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class ShowAssignedIssue extends ShowReportedIssueDeveloper {
 
@@ -28,14 +26,7 @@ public class ShowAssignedIssue extends ShowReportedIssueDeveloper {
         resolveButton.setBorder(BorderFactory.createEmptyBorder());
         resolveButton.setBackground(ColorsList.EMPTY_COLOR);
 
-        resolveButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                resolve();
-            }
-        });
+        resolveButton.addActionListener(e -> resolve());
 
         tmpPanel = ContainerFactory.createRoundedPanelContainer(resolveButton);
 

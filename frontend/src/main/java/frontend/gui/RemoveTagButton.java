@@ -1,8 +1,6 @@
 package frontend.gui;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class RemoveTagButton extends IconButton{
 
@@ -10,13 +8,7 @@ public class RemoveTagButton extends IconButton{
 
         super("/frontend/gui/images/trashButtonIcon.png", 32 ,32);
 
-        addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                removePanel(menu, tagPanel);
-            }
-        });
+        addActionListener(e -> removePanel(menu, tagPanel));
     }
 
     private void removePanel(TagsMenu menu, TagPanel tagPanel) {

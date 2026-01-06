@@ -3,7 +3,6 @@ package frontend.gui;
 import javax.swing.*;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
-import java.awt.*;
 import java.util.List;
 
 public class ReportedIssueSearchResultsPanelUser {

@@ -15,7 +15,7 @@ import java.util.List;
 public class ManageTeamsPanel extends RoundedPanel {
 
     private JTextField searchTextField;
-    private JPanel resultsPanel;
+    private final JPanel resultsPanel;
     private final String PLACEHOLDER = "Cerca nome team...";
     private final JFrame mainFrame;
     private final HomePanelUser homePanel;
@@ -55,7 +55,6 @@ public class ManageTeamsPanel extends RoundedPanel {
         Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.NONE,
                 0, 0, GridBagConstraints.LINE_START, 0.01f, 0.01f, new Insets(0, 0, 10, 0));
         mainPanel.add(backButton, Constraints.getGridBagConstraints());
-
         JButton createTeamButton = new JButton("Crea nuovo team");
         createTeamButton.setFont(new Font("Segoe UI", Font.BOLD, 14));
         createTeamButton.setBackground(new Color(0, 120, 215));
@@ -163,7 +162,7 @@ public class ManageTeamsPanel extends RoundedPanel {
         table.getColumnModel().getColumn(2).setCellEditor(new ManageMembersTextCellEditor(mainFrame, table));
 
 
-        table.getColumnModel().getColumn(3).setCellEditor(new ViewReportCellEditor(mainFrame, table, homePanel, this));
+        table.getColumnModel().getColumn(3).setCellEditor(new ViewReportCellEditor(table, homePanel, this));
 
         table.setRowHeight(35);
 

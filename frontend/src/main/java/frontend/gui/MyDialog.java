@@ -2,8 +2,6 @@ package frontend.gui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class MyDialog extends JDialog {
 
@@ -42,13 +40,7 @@ public class MyDialog extends JDialog {
 
         IconButton backButton = new IconButton("/frontend/gui/images/backIconButton.svg", 32, 32);
 
-        backButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                backActionListener();
-            }
-        });
+        backButton.addActionListener(e -> backActionListener());
 
         Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.NONE,
                 0, 0, GridBagConstraints.FIRST_LINE_START, new Insets(5, 5, 5, 5));

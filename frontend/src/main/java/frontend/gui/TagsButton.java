@@ -1,14 +1,12 @@
 package frontend.gui;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TagsButton extends IconButton {
 
-    private TagsMenu tagsMenu;
+    private final TagsMenu tagsMenu;
 
     public TagsButton(JFrame mainFrame) {
 
@@ -23,14 +21,10 @@ public class TagsButton extends IconButton {
 
     private void setActionListener(JFrame mainFrame) {
 
-        this.addActionListener(new ActionListener() {
+        this.addActionListener(e -> {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                tagsMenu.setLocationRelativeTo(mainFrame);
-                tagsMenu.setVisible(true);
-            }
+            tagsMenu.setLocationRelativeTo(mainFrame);
+            tagsMenu.setVisible(true);
         });
     }
 

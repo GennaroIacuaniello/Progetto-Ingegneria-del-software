@@ -3,8 +3,6 @@ package frontend.gui;
 import frontend.controller.ProjectController;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class SearchProjectsButtonAdmin extends SearchProjectsButtonDeveloper {
 

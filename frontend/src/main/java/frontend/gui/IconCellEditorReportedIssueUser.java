@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class IconCellEditorReportedIssueUser extends DefaultCellEditor {
 
-    private IconButton button;
+    private final IconButton button;
     protected final JTable parentTable;
     protected JFrame  mainFrame;
 
@@ -23,9 +23,7 @@ public class IconCellEditorReportedIssueUser extends DefaultCellEditor {
         button = new IconButton(url, width, height);
 
 
-        button.addActionListener(e -> {
-            fireEditingStopped();
-        });
+        button.addActionListener(e -> fireEditingStopped());
     }
 
     @Override

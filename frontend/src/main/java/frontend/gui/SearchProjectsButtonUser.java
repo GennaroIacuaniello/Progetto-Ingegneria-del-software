@@ -3,8 +3,6 @@ package frontend.gui;
 import frontend.controller.ProjectController;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class SearchProjectsButtonUser extends IconButton {
 
@@ -17,23 +15,9 @@ public class SearchProjectsButtonUser extends IconButton {
 
     protected void setActionListener(JFrame mainFrame, HomePanelUser homePanel,  JTextField searchTextField, String placeholder) {
 
-        this.addActionListener(new ActionListener() {
+        this.addActionListener(e -> search(mainFrame, homePanel, searchTextField, placeholder));
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                search(mainFrame, homePanel, searchTextField, placeholder);
-            }
-        });
-
-        searchTextField.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                search(mainFrame, homePanel, searchTextField, placeholder);
-            }
-        });
+        searchTextField.addActionListener(e -> search(mainFrame, homePanel, searchTextField, placeholder));
     }
 
     protected void search(JFrame mainFrame, HomePanelUser homePanel,  JTextField searchTextField, String placeholder) {

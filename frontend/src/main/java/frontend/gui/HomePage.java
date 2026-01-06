@@ -2,12 +2,14 @@ package frontend.gui;
 
 import com.formdev.flatlaf.FlatLightLaf;
 import frontend.controller.AuthController;
+import lombok.Getter;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class HomePage {
 
+    @Getter
     protected JFrame mainFrame;
     private HomePanelUser homePanel;
 
@@ -104,9 +106,5 @@ public class HomePage {
 
         mainFrame.revalidate();
         mainFrame.repaint();
-    }
-
-    public JFrame getMainFrame() {
-        return mainFrame;
     }
 }
