@@ -15,7 +15,6 @@ public class ReportIssueUser extends RoundedPanel{
     protected TagsButton tagsButton;
     protected FileChooserPanel fileChooserPanel;
     protected JButton reportButton;
-    protected JButton cancelButton;
     protected static final String TITLE_PLACEHOLDER = "Inserisci titolo";
     protected static final String DESCRIPTION_PLACEHOLDER = "Inserisci descrizione";
     protected static final String[] options = {"Bug", "Documentation", "Feature", "Question"};
@@ -37,19 +36,31 @@ public class ReportIssueUser extends RoundedPanel{
 
     protected void setComponents(JFrame mainFrame, HomePanelUser  homePanelUser) {
 
+        setBackButton(homePanelUser);
         setTitleTextField();
         setDescriptionTextArea();
         setTypeComboBox();
         setTagsButton(mainFrame);
         setFileChooserPanel();
         setReportButton(homePanelUser);
-        setCancelButton(homePanelUser);
     }
 
     private void setRoundedPanel() {
 
         setRoundBorderColor(ColorsList.EMPTY_COLOR);
         setBackground(ColorsList.EMPTY_COLOR);
+    }
+
+    protected void setBackButton(HomePanelUser homePanelUser) {
+
+        IconButton backButton = new IconButton("/frontend/gui/images/backIconButton.svg", 32, 32);
+
+        backButton.addActionListener(e -> homePanelUser.returnToDefaultContentPanel());
+
+        Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.NONE,
+                0, 0, GridBagConstraints.LINE_START, 0.01f, 0.01f,
+                new Insets(5, 5, 5, 5));
+        this.add(backButton, Constraints.getGridBagConstraints());
     }
 
     protected void setTitleTextField() {
@@ -100,8 +111,13 @@ public class ReportIssueUser extends RoundedPanel{
 
         RoundedPanel tmpPanel = ContainerFactory.createRoundedPanelContainer(typeComboBox);
 
-        Constraints.setConstraints(0, 3, 1, 1,
-                GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
+        Constraints.setConstraints(0, 4, 1, 1,
+                GridBagConstraints.NONE, 0, 0, GridBagConstraints.LINE_END,
+                0.5f, 0.5f);
+        this.add(createTransparentLabel("Tipo: "), Constraints.getGridBagConstraints());
+
+        Constraints.setConstraints(1, 4, 1, 1,
+                GridBagConstraints.NONE, 0, 0, GridBagConstraints.LINE_START,
                 0.5f, 0.5f);
         this.add(tmpPanel, Constraints.getGridBagConstraints());
     }
@@ -110,9 +126,8 @@ public class ReportIssueUser extends RoundedPanel{
 
         tagsButton = new TagsButton(mainFrame);
 
-        Constraints.setConstraints(1, 3, 1, 1,
-                GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
-                0.5f, 0.5f);
+        setTagsButtonConstraints();
+
         this.add(tagsButton, Constraints.getGridBagConstraints());
     }
 
@@ -120,9 +135,8 @@ public class ReportIssueUser extends RoundedPanel{
 
         fileChooserPanel = new FileChooserPanel();
 
-        Constraints.setConstraints(2, 3, 1, 1,
-                GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
-                0.5f, 0.5f);
+        setFileChooserPanelConstraints();
+
         this.add(fileChooserPanel, Constraints.getGridBagConstraints());
     }
 
@@ -143,11 +157,11 @@ public class ReportIssueUser extends RoundedPanel{
 
         RoundedPanel tmpPanel = ContainerFactory.createRoundedPanelContainer(reportButton);
 
-        tmpPanel.setRoundBorderColor(ColorsList.GREEN_BORDER_COLOR);
         tmpPanel.setBackground(ColorsList.GREEN_BACKGROUND_COLOR);
+        tmpPanel.setRoundBorderColor(ColorsList.GREEN_BORDER_COLOR);
         tmpPanel.setCursor(new  Cursor(Cursor.HAND_CURSOR));
 
-        Constraints.setConstraints(0, 4, 2, 1,
+        Constraints.setConstraints(0, 5, 4, 1,
                 GridBagConstraints.NONE, 40, 20, GridBagConstraints.CENTER,
                 0.5f, 0.5f, new Insets(5, 5, 5, 5));
         this.add(tmpPanel, Constraints.getGridBagConstraints());
@@ -168,30 +182,27 @@ public class ReportIssueUser extends RoundedPanel{
         homePanelUser.returnToDefaultContentPanel();
     }
 
-    protected void setCancelButton(HomePanelUser homePanelUser) {
+    protected JLabel createTransparentLabel(String text) {
 
-        cancelButton = new JButton("Cancel");
+        JLabel label = new JLabel(text);
 
-        cancelButton.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
-        cancelButton.setBorder(BorderFactory.createEmptyBorder());
-        cancelButton.setBackground(ColorsList.EMPTY_COLOR);
+        label.setBorder(BorderFactory.createEmptyBorder());
+        label.setBackground(ColorsList.EMPTY_COLOR);
 
-        cancelButton.addActionListener(e -> cancel(homePanelUser));
-
-        RoundedPanel tmpPanel = ContainerFactory.createRoundedPanelContainer(cancelButton);
-
-        tmpPanel.setRoundBorderColor(ColorsList.RED_BORDER_COLOR);
-        tmpPanel.setBackground(ColorsList.RED_BACKGROUND_COLOR);
-        tmpPanel.setCursor(new  Cursor(Cursor.HAND_CURSOR));
-
-        Constraints.setConstraints(1, 4, 2, 1,
-                GridBagConstraints.NONE, 40, 20, GridBagConstraints.CENTER,
-                0.5f, 0.5f, new Insets(5, 5, 5, 5));
-        this.add(tmpPanel, Constraints.getGridBagConstraints());
+        return label;
     }
 
-    protected void cancel(HomePanelUser homePanelUser) {
+    protected void setTagsButtonConstraints() {
 
-        homePanelUser.returnToDefaultContentPanel();
+        Constraints.setConstraints(0, 3, 1, 1,
+                GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
+                0.5f, 0.5f);
+    }
+
+    protected void setFileChooserPanelConstraints() {
+
+        Constraints.setConstraints(1, 3, 1, 1,
+                GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
+                0.5f, 0.5f);
     }
 }
