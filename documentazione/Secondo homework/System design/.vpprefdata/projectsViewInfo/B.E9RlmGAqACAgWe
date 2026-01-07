@@ -2,11 +2,9 @@
 <ProjectsViewInfo>
 	<DiagramOpenInfos activeDiagramId="Fi81GdmGAqACAgmK">
 		<Info bounds="Re:0.0,0.0,1298.0,868.0" diagramId="Fi81GdmGAqACAgmK" maximized="true" offsetX="0" offsetY="0"/>
-		<Info bounds="Re:0.0,0.0,0.0,0.0" diagramId="Ym_VGdmGAqACAgfR" maximized="true" offsetX="0" offsetY="0"/>
 	</DiagramOpenInfos>
 	<DiagramLastActivated>
-		<Diagram id="Fi81GdmGAqACAgmK" time="1767795599492"/>
-		<Diagram id="Ym_VGdmGAqACAgfR" time="1767795599457"/>
+		<Diagram id="Fi81GdmGAqACAgmK" time="1767797227149"/>
 		<Diagram id="Use Case Statement" time="0"/>
 		<Diagram id="Use Case" time="0"/>
 		<Diagram id="User Story" time="0"/>
