@@ -82,7 +82,7 @@ public class IssueDAOImpl implements IssueDAO {
             searchParam.add(issueToSearch.getStatus().toString());
         }
         if (issueToSearch.getType() != null) {
-            query.append(" AND issue_type = ?");
+            query.append(" AND issue_type = ?::IssueType");
             searchParam.add(issueToSearch.getType().toString());
         }
         if (issueToSearch.getPriority() != null) {
