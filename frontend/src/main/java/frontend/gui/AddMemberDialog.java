@@ -12,7 +12,7 @@ import java.util.List;
 public class AddMemberDialog extends JDialog {
 
     private JTextField searchTextField;
-    private JPanel resultsPanel;
+    private final JPanel resultsPanel;
     private final String PLACEHOLDER = "Cerca email utente...";
     private final JFrame mainFrame;
 

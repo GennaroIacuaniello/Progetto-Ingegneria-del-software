@@ -5,18 +5,12 @@ import java.awt.*;
 
 
 public class AddMemberActionCellEditor extends DefaultCellEditor {
-    private final JButton button;
-    private final JFrame mainFrame;
-    private final JTable table;
-    private final AddMemberDialog parentDialog;
 
+    private final JButton button;
     private String label;
 
     public AddMemberActionCellEditor(JFrame mainFrame, JTable table, AddMemberDialog parentDialog) {
         super(new JCheckBox());
-        this.mainFrame = mainFrame;
-        this.table = table;
-        this.parentDialog = parentDialog;
 
         this.button = new JButton();
         this.button.setOpaque(true);
