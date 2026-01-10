@@ -173,7 +173,7 @@ public class FloatingMessage {
 
         messageWindow.setAlwaysOnTop(true);
         messageWindow.setOpacity(0.75f);
-        messageWindow.setBackground(new Color(0, 0, 0, 0));
+        messageWindow.setBackground(ColorsList.EMPTY_COLOR);
 
         JPanel contentPanel = (JPanel) messageWindow.getContentPane();
         contentPanel.setOpaque(false);

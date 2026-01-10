@@ -10,7 +10,6 @@ import java.awt.event.FocusEvent;
 
 public class DevOrAdminCreationDialog extends JDialog {
 
-    private final JFrame mainFrame;
     private JTextField emailField;
     private JPasswordField passwordField;
     private JCheckBox adminCheckBox;
@@ -20,7 +19,6 @@ public class DevOrAdminCreationDialog extends JDialog {
 
     public DevOrAdminCreationDialog(JFrame owner) {
         super(owner, "Crea Nuova Utenza", true);
-        this.mainFrame = owner;
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
         mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
