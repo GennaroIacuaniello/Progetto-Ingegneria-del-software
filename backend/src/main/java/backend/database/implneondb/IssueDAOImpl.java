@@ -22,7 +22,7 @@ public class IssueDAOImpl implements IssueDAO {
     public void reportIssue(IssueDTO issueToReport) throws SQLException{
 
         String query = "INSERT INTO Issue (title, issue_description, issue_priority, issue_image, issue_type, issue_status, tags, report_time, reporter_id, resolver_id, project_id) VALUES "+
-                        "(?, ?, ?, ?, ?::IssueType, ?::IssueStatus, ?, ?, ?, ?, ?);";
+                        "(?, ?, ?, ?, ?::IssueType, ?::IssueStatus, ?, CURRENT_TIMESTAMP, ?, ?, ?);";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
@@ -40,10 +40,9 @@ public class IssueDAOImpl implements IssueDAO {
             statement.setString(5, issueToReport.getType().toString());
             statement.setString(6, issueToReport.getStatus().toString());
             statement.setString(7, issueToReport.getTags());
-            statement.setTimestamp(8, new Timestamp(issueToReport.getReportDate().getTime()));
-            statement.setInt(9, issueToReport.getReportingUser().getId());
-            statement.setNull(10, Types.INTEGER);
-            statement.setInt(11, issueToReport.getRelatedProject().getId());
+            statement.setInt(8, issueToReport.getReportingUser().getId());
+            statement.setNull(9, Types.INTEGER);
+            statement.setInt(10, issueToReport.getRelatedProject().getId());
 
 
             statement.executeUpdate();

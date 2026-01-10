@@ -1,5 +1,6 @@
 package frontend.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import frontend.exception.RequestError;
 
@@ -101,6 +102,20 @@ public class ApiClient {
 
             new LogInPage().setVisible(true);
         });
+    }
+
+    public String getErrorMessageFromResponse(HttpResponse<String> response) {
+        try {
+
+            JsonNode node = objectMapper.readTree(response.body());
+            if (node.has("message")) {
+                return node.get("message").asText();
+            }
+        } catch (Exception e) {
+            // If error, basic error message
+        }
+        //Basic error message
+        return "Errore " + response.statusCode() + ": " + response.body();
     }
 
 }

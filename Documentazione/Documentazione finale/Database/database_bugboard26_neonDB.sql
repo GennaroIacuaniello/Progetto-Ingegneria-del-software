@@ -93,7 +93,8 @@ CREATE TABLE Issue (
 	CONSTRAINT reporter_FK FOREIGN KEY(reporter_id) REFERENCES User_(user_id) ON DELETE SET DEFAULT ON UPDATE CASCADE,
 	CONSTRAINT resolver_FK FOREIGN KEY(resolver_id) REFERENCES User_(user_id) ON DELETE SET DEFAULT ON UPDATE CASCADE,
 	CONSTRAINT project_FK FOREIGN KEY(project_id) REFERENCES Project(project_id) ON DELETE CASCADE ON UPDATE CASCADE,
-	CONSTRAINT resolution_after_report CHECK( (resolution_time IS NULL) OR (resolution_time > report_time)),
+	CONSTRAINT really_assigned CHECK( ( resolver_id IS NULL AND issue_status = 'TODO' ) OR ( resolver_id IS NOT NULL AND ( issue_status = 'ASSIGNED' OR  issue_status = 'RESOLVED') ) ),
+	CONSTRAINT resolution_after_report CHECK( (resolution_time IS NULL) OR (resolution_time >= report_time) ),
 	CONSTRAINT issue_priority_not_negative CHECK(issue_priority >= 0)
 
 );
