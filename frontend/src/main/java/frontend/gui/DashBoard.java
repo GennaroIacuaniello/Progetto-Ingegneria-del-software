@@ -16,7 +16,10 @@ public class DashBoard extends MyDialog {
 
         super(parent);
 
-        ProjectController.getInstance().createDashBoard();
+        boolean success = ProjectController.getInstance().createDashBoard();
+
+        if(!success)
+            return;
 
         setSearchViewResults();
 

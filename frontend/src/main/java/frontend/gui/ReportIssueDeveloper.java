@@ -46,6 +46,10 @@ public class ReportIssueDeveloper extends ReportIssueUser {
 
         boolean success = IssueController.getInstance().reportIssue(issue, tagsButton.getTags(), fileChooserPanel.getSelectedFile());
 
+        if(!success)
+            return;
+
+
         homePanelUser.returnToDefaultContentPanel();
     }
 

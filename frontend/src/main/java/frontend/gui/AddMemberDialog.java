@@ -95,7 +95,10 @@ public class AddMemberDialog extends JDialog {
         String text = searchTextField.getText();
         String userEmail = text.equals(PLACEHOLDER) ? "" : text;
 
-        UserController.getInstance().searchDevOrAdminByEmail(userEmail);
+        boolean success = UserController.getInstance().searchDevOrAdminByEmail(userEmail);
+
+        if(!success)
+            return;
 
         updateResultsTable(UserController.getInstance().getUsersEmails());
     }

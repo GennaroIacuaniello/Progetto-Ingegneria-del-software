@@ -5,8 +5,12 @@ import frontend.controller.ProjectController;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CreateProjectDialog extends JDialog {
+
+    static final Logger logger = Logger.getLogger(CreateProjectDialog.class.getName());
 
     public CreateProjectDialog(JFrame owner) {
 
@@ -45,9 +49,15 @@ public class CreateProjectDialog extends JDialog {
             String projectName = nameField.getText().trim();
             if (!projectName.isEmpty()) {
 
-                ProjectController.getInstance().createProject(projectName);
-                System.out.println("Progetto creato: " + projectName);
-                dispose();
+                boolean success = ProjectController.getInstance().createProject(projectName);
+
+                if(!success)
+                    return;
+
+                JOptionPane.showMessageDialog(this, "Progetto creato con successo!", "Creazione avvenuta", JOptionPane.INFORMATION_MESSAGE);
+                logger.log(Level.FINE, "Progetto creato: {0}", projectName);
+                this.dispose();
+
             } else {
                 new FloatingMessage("Il nome del progetto è obbligatorio", confirmBtn, FloatingMessage.ERROR_MESSAGE);
             }

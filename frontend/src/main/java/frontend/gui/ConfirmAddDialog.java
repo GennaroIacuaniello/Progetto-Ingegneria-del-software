@@ -5,8 +5,12 @@ import frontend.controller.TeamController;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ConfirmAddDialog extends JDialog {
+
+    static final Logger logger = Logger.getLogger(ConfirmAddDialog.class.getName());
 
     public ConfirmAddDialog(JFrame owner, String email, AddMemberDialog parentDialog) {
         super(owner, "Conferma Aggiunta", true);
@@ -39,9 +43,12 @@ public class ConfirmAddDialog extends JDialog {
 
         confirmBtn.addActionListener(e -> {
 
-            TeamController.getInstance().addMemberToSelectedTeam(email);
+            boolean success = TeamController.getInstance().addMemberToSelectedTeam(email);
 
-            System.out.println("User added: " + email);
+            if(!success)
+                return;
+
+            logger.log(Level.FINE, "Aggiunto utente: {0}, al team con ID: {1}", new Object[]{email, TeamController.getInstance().getTeam().getId()});
 
             parentDialog.dispose();
 

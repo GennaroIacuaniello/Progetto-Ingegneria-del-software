@@ -15,9 +15,10 @@ public class ReportedIssueSearchPanelUser extends RoundedPanel{
     protected TagsButton tagsButton;
     protected JComboBox<String> typeComboBox;
     protected static final String TITLE_PLACEHOLDER = "Inserisci titolo";
-    private static final String[] statusOptions = {"Tutte", "To do", "Assegnate", "Risolte"};
-    private static final String[] typeOptions = {"Tutte", "Bug", "Documentazione", "Feature", "Domanda"};
     protected static final String ALL_PLACEHOLDER = "Tutte";
+    private static final String[] statusOptions = {ALL_PLACEHOLDER , "To do", "Assegnate", "Risolte"};
+    private static final String[] typeOptions = {ALL_PLACEHOLDER, "Bug", "Documentazione", "Feature", "Domanda"};
+
 
     public ReportedIssueSearchPanelUser(JFrame mainFrame, SearchReportedIssuePageUser searchPage) {
 
@@ -83,6 +84,9 @@ public class ReportedIssueSearchPanelUser extends RoundedPanel{
 
         boolean success = IssueController.getInstance().searchReportedIssues((titleTextField.getText().equals(TITLE_PLACEHOLDER) ? "" : titleTextField.getText()),
                 formatIssueStatus(Objects.requireNonNull(statusComboBox.getSelectedItem())), tagsButton.getTags(), formatIssueType(Objects.requireNonNull(typeComboBox.getSelectedItem())), null);
+
+        if(!success)
+            return;
 
         new ReportedIssueSearchResultsPanelUser(mainFrame, searchPage, IssueController.getInstance().getIssuesTitles());
     }

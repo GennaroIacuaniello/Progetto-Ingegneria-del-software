@@ -124,7 +124,10 @@ public class ManageTeamsPanel extends RoundedPanel {
         String text = searchTextField.getText();
         String teamName = text.equals(PLACEHOLDER) ? "" : text;
 
-        TeamController.getInstance().searchTeamsByNameAndProject(teamName);
+        boolean success = TeamController.getInstance().searchTeamsByNameAndProject(teamName);
+
+        if(!success)
+            return;
 
         ArrayList<Integer> ids = (ArrayList<Integer>) TeamController.getInstance().getTeamsIds();
         ArrayList<String> names = (ArrayList<String>) TeamController.getInstance().getTeamsNames();

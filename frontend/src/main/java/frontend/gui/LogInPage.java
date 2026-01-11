@@ -1,6 +1,8 @@
 package frontend.gui;
 
 import frontend.controller.AuthController;
+import frontend.controller.IssueController;
+import frontend.exception.RequestError;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -9,6 +11,8 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static frontend.gui.HomePage.setFlatLaf;
 
@@ -268,6 +272,15 @@ public class LogInPage extends JFrame {
     public static void main(String[] args) {
 
         setFlatLaf();
+        final Logger logger = Logger.getLogger(LogInPage.class.getName());
+        Thread.setDefaultUncaughtExceptionHandler((thread, throwable) -> {
+
+            if (throwable instanceof RequestError) {
+                return;
+            }
+
+            logger.log(Level.SEVERE, throwable.getMessage());
+        });
 
         SwingUtilities.invokeLater(() -> new LogInPage().setVisible(true));
     }

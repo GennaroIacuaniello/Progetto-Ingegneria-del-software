@@ -1,6 +1,7 @@
 package frontend.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import frontend.config.ApiPaths;
 import frontend.dto.UserDTO;
 import frontend.exception.RequestError;
 
@@ -11,6 +12,8 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @SuppressWarnings("java:S6548")
 public class UserController {
@@ -18,9 +21,12 @@ public class UserController {
     private static UserController instance;
     private final ApiClient client = ApiClient.getInstance();
 
-    private ArrayList<UserDTO> users;
-    private UserDTO user;
+    private static final Logger logger = Logger.getLogger(UserController.class.getName());
 
+    private ArrayList<UserDTO> users;
+
+    private static final String USERS_PATH = ApiPaths.USERS;
+    private static final String DEVELOPER_SEARCH_PATH = "developers/search?email=";
 
     private UserController(){
 
@@ -33,60 +39,49 @@ public class UserController {
         return instance;
     }
 
-    public void searchDevOrAdminByEmailAndProject(String devEmail) {
+    public boolean searchDevOrAdminByEmailAndProject(String devEmail) {
 
-
-        //Da utilizzare dato che non possono esserci spazi nei parametri search delle richieste HTTP
+        //Encoder to use since there cannot be spaces in search parameters of HTTP requests
         String encodedDevEmail = URLEncoder.encode(devEmail, StandardCharsets.UTF_8);
 
-        System.out.println("Calling URL: " + client.getBaseUrl() + "/users/developers/search?email=" + encodedDevEmail +
-                "&projectId=" + ProjectController.getInstance().getProject().getId());
-
         HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
-                .uri(URI.create(client.getBaseUrl() + "/users/developers/search?email=" + encodedDevEmail +
+                .uri(URI.create(client.getBaseUrl() + USERS_PATH + DEVELOPER_SEARCH_PATH + encodedDevEmail +
                                 "&projectId=" + ProjectController.getInstance().getProject().getId()))
                 .GET();
 
-        handleHttpRequest(requestBuilder);
+        return handleHttpRequest(requestBuilder);
 
     }
 
+    public boolean searchDevOrAdminByEmailAndTeam(String devEmail) {
 
-    public void searchDevOrAdminByEmailAndTeam(String devEmail) {
-
-        //Da utilizzare dato che non possono esserci spazi nei parametri search delle richieste HTTP
+        //Encoder to use since there cannot be spaces in search parameters of HTTP requests
         String encodedDevEmail = URLEncoder.encode(devEmail, StandardCharsets.UTF_8);
 
-        System.out.println("Calling URL: " + client.getBaseUrl() + "/users/developers/search?email=" + encodedDevEmail +
-                "&teamId=" + TeamController.getInstance().getTeam().getId());
-
         HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
-                .uri(URI.create(client.getBaseUrl() + "/users/developers/search?email=" + encodedDevEmail +
+                .uri(URI.create(client.getBaseUrl() + USERS_PATH + DEVELOPER_SEARCH_PATH + encodedDevEmail +
                         "&teamId=" + TeamController.getInstance().getTeam().getId() ))
                 .GET();
 
-        handleHttpRequest(requestBuilder);
+        return handleHttpRequest(requestBuilder);
 
     }
 
-    public void searchDevOrAdminByEmail(String devEmail) {
+    public boolean searchDevOrAdminByEmail(String devEmail) {
 
 
-        //Da utilizzare dato che non possono esserci spazi nei parametri search delle richieste HTTP
+        //Encoder to use since there cannot be spaces in search parameters of HTTP requests
         String encodedDevEmail = URLEncoder.encode(devEmail, StandardCharsets.UTF_8);
 
-        System.out.println("Calling URL: " + client.getBaseUrl() + "/users/developers/search?email=" + encodedDevEmail);
-
         HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
-                .uri(URI.create(client.getBaseUrl() + "/users/developers/search?email=" + encodedDevEmail))
+                .uri(URI.create(client.getBaseUrl() + USERS_PATH + DEVELOPER_SEARCH_PATH + encodedDevEmail))
                 .GET();
 
-        handleHttpRequest(requestBuilder);
+        return handleHttpRequest(requestBuilder);
 
     }
 
-
-    private void handleHttpRequest(HttpRequest.Builder requestBuilder){
+    private boolean handleHttpRequest(HttpRequest.Builder requestBuilder){
 
         try {
 
@@ -95,32 +90,41 @@ public class UserController {
             if (response.statusCode() == 200) {
 
                 this.users = client.getObjectMapper().readValue(response.body(), new TypeReference<>() {});
+                logger.log(Level.FINE, "Search completed successfully. Number of users founded: {0}", this.users.size());
 
+                return true;
 
             } else if (response.statusCode() == 204) {
 
-                //Nessun risultato, svuoto la cache
+                //No results, clear the cache
                 this.users = new ArrayList<>();
+
+                logger.log(Level.FINE, "Search completed successfully, BUT no users were found. ");
 
             } else {
 
-                // CASO ERRORE (500, 400, ecc.)
-                System.err.println("Errore dal server. Codice: " + response.statusCode());
-                System.err.println("Dettaglio errore: " + response.body());
+                // Generic error
+
+                String errorMsg = client.getErrorMessageFromResponse(response);
+
+                logger.log(Level.WARNING, "Users search failed. Error: {0}", errorMsg);
+
                 this.users = new ArrayList<>();
 
             }
 
-        } catch (RequestError re) {
+        }  catch (RequestError re) {
 
-            System.err.println("Backend offline: " + re.getMessage());
+            logger.log(Level.WARNING, "Backend offline: {0}", re.getMessage());
             this.users = new ArrayList<>();
 
         } catch (Exception e) {
 
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage());
             this.users = new ArrayList<>();
         }
+
+        return false;
 
     }
 

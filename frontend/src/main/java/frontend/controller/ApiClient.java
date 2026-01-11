@@ -2,7 +2,6 @@ package frontend.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import frontend.exception.RequestError;
 
 import java.awt.*;
 import java.io.IOException;
@@ -13,6 +12,7 @@ import java.time.Duration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import frontend.exception.RequestError;
 import frontend.gui.LogInPage;
 import lombok.Getter;
 import lombok.Setter;
@@ -56,6 +56,7 @@ public class ApiClient {
 
     public HttpResponse<String> sendRequest(HttpRequest.Builder requestBuilder) {
 
+        boolean isLoginRequest = false;
         try {
 
             if (jwtToken != null) {
@@ -63,11 +64,12 @@ public class ApiClient {
             }
 
             HttpRequest request = requestBuilder.build();
+            isLoginRequest = request.uri().getPath().endsWith("/login");
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-            if (response.statusCode() == 401 || response.statusCode() == 403) {
-                handleSessionExpiration();
-                throw new RequestError("Sessione scaduta. Effettua nuovamente il login.");
+            if (!isLoginRequest && (response.statusCode() == 401 || response.statusCode() == 403)) {
+                handleCriticalError("La sessione è scaduta. \nEffettua nuovamente il login.");
+                throw new RequestError();
             }
 
             return response;
@@ -75,36 +77,44 @@ public class ApiClient {
 
         }catch (IOException e) {
 
-            logger.log(Level.SEVERE, "Errore di rete", e);
+            logger.log(Level.SEVERE, "Errore di connessione al server: {0}", e.toString());
 
-            throw new RequestError("Impossibile contattare il server. Verifica che il backend sia attivo.");
+            if(!isLoginRequest)
+                handleCriticalError("Impossibile contattare il server.\nRiprovare più tardi.");
+
+            throw new RequestError();
 
         } catch (InterruptedException e) {
 
             logger.log(Level.WARNING, "Richiesta interrotta dal sistema", e);
 
             Thread.currentThread().interrupt();
-            throw new RequestError("Richiesta interrotta dal sistema.");
+            throw new RequestError();
         }
     }
 
-    private void handleSessionExpiration() {
+    private void handleCriticalError(String message) {
 
         this.jwtToken = null;
 
         SwingUtilities.invokeLater(() -> {
 
             for (Window window : Window.getWindows()) {
-                window.dispose();
+                if (window.isDisplayable()) {
+                    window.dispose();
+                }
             }
 
+
             JOptionPane.showMessageDialog(null,
-                    "La sessione è scaduta o il token non è valido.\nVerrai reindirizzato al login.",
-                    "Sessione Scaduta",
-                    JOptionPane.WARNING_MESSAGE);
+                    message,
+                    "Errore di Connessione",
+                    JOptionPane.ERROR_MESSAGE);
+
 
             new LogInPage().setVisible(true);
         });
+
     }
 
     public String getErrorMessageFromResponse(HttpResponse<String> response) {

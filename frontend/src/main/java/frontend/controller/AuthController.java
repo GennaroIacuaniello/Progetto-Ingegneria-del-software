@@ -23,7 +23,7 @@ public class AuthController {
     private UserDTO loggedUser;
 
     private AuthController(){
-        //Empty constructor needed for jackson
+
     }
 
     public static AuthController getInstance() {

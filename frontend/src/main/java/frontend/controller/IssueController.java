@@ -220,7 +220,7 @@ public class IssueController {
             } else if (response.statusCode() == 204) {
 
                 this.issues = new ArrayList<>();
-                logger.log(Level.WARNING, "Search completed successfully, BUT no issues were founded. ");
+                logger.log(Level.FINE, "Search completed successfully, BUT no issues were found. ");
                 return true;
 
             } else {
@@ -229,6 +229,9 @@ public class IssueController {
                 String errorMsg = client.getErrorMessageFromResponse(response);
 
                 logger.log(Level.WARNING, "Issue search failed. Error: {0}", errorMsg);
+
+                this.issues = new ArrayList<>();
+
             }
 
         } catch (RequestError re) {

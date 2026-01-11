@@ -5,6 +5,7 @@ import frontend.controller.UserController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ShowIssueAdmin extends ShowReportedIssueDeveloper {
@@ -52,8 +53,11 @@ public class ShowIssueAdmin extends ShowReportedIssueDeveloper {
 
     private List<String> search() {
 
-        UserController.getInstance().searchDevOrAdminByEmailAndProject((searchField.getText().equals(SEARCHFIELD_PLACEHOLDER) ?
+        boolean success = UserController.getInstance().searchDevOrAdminByEmailAndProject((searchField.getText().equals(SEARCHFIELD_PLACEHOLDER) ?
                 "" : searchField.getText()));
+
+        if(!success)
+            return new ArrayList<>();
 
         return UserController.getInstance().getUsersEmails();
     }
@@ -69,6 +73,10 @@ public class ShowIssueAdmin extends ShowReportedIssueDeveloper {
             item.addActionListener(e -> {
 
                 boolean success = IssueController.getInstance().assignIssueToDeveloper(developer);
+
+                if(!success)
+                    return;
+
                 statusLabel.setText("Stato: ASSIGNED");
                 assignedDeveloperLabel.setText("Developer assegnato: " + developer);
                 new FloatingMessage("Assegnazione avvenuta con successo", searchButton, FloatingMessage.SUCCESS_MESSAGE);

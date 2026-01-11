@@ -61,7 +61,10 @@ public class TeamReportSearchPanel extends RoundedPanel{
         if(!yearTextField.getText().equals(YEAR_TEXTFIELD_PLACEHOLDER) &&
         yearTextField.getText().matches("\\d+")) {
 
-            TeamController.getInstance().createReport(Objects.requireNonNull(monthComboBox.getSelectedItem()).toString(), yearTextField.getText());
+            boolean success = TeamController.getInstance().createReport(Objects.requireNonNull(monthComboBox.getSelectedItem()).toString(), yearTextField.getText());
+
+            if(!success)
+                return;
 
             new ReportResults(searchPage);
         } else

@@ -179,6 +179,9 @@ public class ReportIssueUser extends RoundedPanel{
 
         boolean success = IssueController.getInstance().reportIssue(issue, tagsButton.getTags(), fileChooserPanel.getSelectedFile());
 
+        if(!success)
+            return;
+
         homePanelUser.returnToDefaultContentPanel();
     }
 

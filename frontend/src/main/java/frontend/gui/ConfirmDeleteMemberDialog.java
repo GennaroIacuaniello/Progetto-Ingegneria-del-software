@@ -1,12 +1,18 @@
 package frontend.gui;
 
+import frontend.controller.ProjectController;
 import frontend.controller.TeamController;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ConfirmDeleteMemberDialog extends JDialog {
+
+    static final Logger logger = Logger.getLogger(ConfirmDeleteMemberDialog.class.getName());
+
 
     public ConfirmDeleteMemberDialog(JFrame owner, String email, ManageMembersDialog parentDialog) {
 
@@ -42,9 +48,12 @@ public class ConfirmDeleteMemberDialog extends JDialog {
 
         confirmBtn.addActionListener(e -> {
 
-            TeamController.getInstance().removeMemberFromSelectedTeam(email);
+            boolean success = TeamController.getInstance().removeMemberFromSelectedTeam(email);
 
-            System.out.println("Remove user " + email + " from team " + TeamController.getInstance().getTeam().getId());
+            if(!success)
+                return;
+
+            logger.log(Level.FINE, "Rimosso utente: {0}, dal team con ID: {1}", new Object[]{email, TeamController.getInstance().getTeam().getId()});
 
             parentDialog.performSearch();
 

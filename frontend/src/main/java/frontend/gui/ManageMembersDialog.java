@@ -113,7 +113,11 @@ public class ManageMembersDialog extends JDialog {
         String text = searchTextField.getText();
         String userMail = text.equals(PLACEHOLDER) ? "" : text;
 
-        UserController.getInstance().searchDevOrAdminByEmailAndTeam(userMail);
+        boolean success = UserController.getInstance().searchDevOrAdminByEmailAndTeam(userMail);
+
+        if(!success)
+            return;
+
         ArrayList<String> emails = (ArrayList<String>) UserController.getInstance().getUsersEmails();
 
         updateTable(emails);

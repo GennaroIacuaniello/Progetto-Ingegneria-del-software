@@ -2,10 +2,12 @@ package frontend.controller;
 
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import frontend.config.ApiPaths;
 import frontend.dto.TeamDTO;
 import frontend.dto.StatisticDTO;
 import frontend.dto.UserDTO;
 import frontend.exception.RequestError;
+import lombok.Getter;
 
 import java.net.URI;
 import java.net.URLEncoder;
@@ -15,6 +17,8 @@ import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @SuppressWarnings("java:S6548")
 public class TeamController {
@@ -22,10 +26,19 @@ public class TeamController {
     private static TeamController instance;
     private final ApiClient client = ApiClient.getInstance();
 
+    private static final Logger logger = Logger.getLogger(TeamController.class.getName());
+
+
     private ArrayList<TeamDTO> teams;
+    @Getter
     private TeamDTO team;
 
     private StatisticDTO teamReport;
+
+    private static final String CONTENT_TYPE = "Content-Type";
+    private static final String APPLICATION_JSON = "application/json";
+
+    private static final String TEAMS_PATH = ApiPaths.TEAMS;
 
 
     private TeamController(){
@@ -39,7 +52,7 @@ public class TeamController {
         return instance;
     }
 
-    public void createTeam(String teamName){
+    public boolean createTeam(String teamName){
 
         try {
 
@@ -54,32 +67,41 @@ public class TeamController {
 
             HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
                     .uri(URI.create(client.getBaseUrl() + "/teams"))
-                    .header("Content-Type", "application/json")
+                    .header(CONTENT_TYPE, APPLICATION_JSON)
                     .POST(HttpRequest.BodyPublishers.ofString(jsonBody));
 
             HttpResponse<String> response = client.sendRequest(requestBuilder);
 
             if (response.statusCode() == 200) {
-                System.out.println("Team created successfully!");
+
+                logger.log(Level.FINE, "Team created successfully!");
+
+                return true;
+
             } else {
-                System.err.println("Team creation failed. Code: " + response.statusCode());
-                System.err.println("Error body: " + response.body());
+
+                logger.log(Level.WARNING, "Team creation failed. Code: {0}", response.statusCode());
+
+                logger.log(Level.WARNING, "Error body: {0}", response.body());
+
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage());
         }
+
+        return false;
 
     }
 
-    public void searchTeamsByNameAndProject(String teamName) {
+    public boolean searchTeamsByNameAndProject(String teamName) {
 
         try {
 
-            //Da utilizzare dato che non possono esserci spazi nei parametri search delle richieste HTTP
+            //Encoder to use since there cannot be spaces in search parameters of HTTP requests
             String encodedTeamName = URLEncoder.encode(teamName, StandardCharsets.UTF_8);
 
             HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
-                    .uri(URI.create(client.getBaseUrl() + "/teams/search?teamName=" + encodedTeamName +
+                    .uri(URI.create(client.getBaseUrl() + TEAMS_PATH + "search?teamName=" + encodedTeamName +
                             "&projectId=" + ProjectController.getInstance().getProject().getId()))
                     .GET();
 
@@ -89,95 +111,128 @@ public class TeamController {
 
                 this.teams = client.getObjectMapper().readValue(response.body(), new TypeReference<>() {});
 
+                logger.log(Level.FINE, "Search completed successfully. Number of teams founded: {0}", this.teams.size());
+
+                return true;
 
             } else if (response.statusCode() == 204) {
 
-                //Nessun risultato, svuoto la cache
+                //No results, clear the cache
                 this.teams = new ArrayList<>();
+
+                logger.log(Level.FINE, "Search completed successfully, BUT no teams were found. ");
+
+                return true;
 
             } else {
 
-                // CASO ERRORE (500, 400, ecc.)
-                System.err.println("Errore dal server. Codice: " + response.statusCode());
-                System.err.println("Dettaglio errore: " + response.body());
+                // Generic error
+
+                String errorMsg = client.getErrorMessageFromResponse(response);
+
+                logger.log(Level.WARNING, "Projects search failed. Error: {0}", errorMsg);
+
                 this.teams = new ArrayList<>();
 
             }
 
         } catch (RequestError re) {
 
-            System.err.println("Backend offline: " + re.getMessage());
+            logger.log(Level.WARNING, "Backend offline: {0}", re.getMessage());
             this.teams = new ArrayList<>();
 
         } catch (Exception e) {
 
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage());
             this.teams = new ArrayList<>();
         }
 
+        return false;
+
     }
 
-    public void removeMemberFromSelectedTeam(String emailUserToRemove){
+    public boolean removeMemberFromSelectedTeam(String emailUserToRemove){
 
         try {
 
-            //Da utilizzare dato che non possono esserci spazi nei parametri search delle richieste HTTP
+            //Encoder to use since there cannot be spaces in search parameters of HTTP requests
             String encodedUserEmail = URLEncoder.encode(emailUserToRemove, StandardCharsets.UTF_8);
 
             HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
-                    .uri(URI.create(client.getBaseUrl() + "/teams/remove-member?teamId=" + TeamController.getInstance().getTeam().getId() + "&email=" + encodedUserEmail))
+                    .uri(URI.create(client.getBaseUrl() + TEAMS_PATH + "remove-member?teamId=" + TeamController.getInstance().getTeam().getId() + "&email=" + encodedUserEmail))
                     .DELETE();
 
             HttpResponse<String> response = client.sendRequest(requestBuilder);
 
             if (response.statusCode() == 200) {
-                System.out.println("Member deleted successfully!");
+
+                logger.log(Level.FINE, "Member deleted successfully: {0}", response.body());
+
+                return true;
+
+            }else if (response.statusCode() == 404) {
+
+                logger.log(Level.WARNING, "Member deletion error because either the team or the user were not found, or the user was not in the team. Searched ID was {0}, user email was {1}", new Object[]{team.getId(), emailUserToRemove});
+
             } else {
-                System.err.println("Member deletion error. Code: " + response.statusCode());
-                System.err.println("Error body: " + response.body());
+
+                String errorMsg = client.getErrorMessageFromResponse(response);
+                logger.log(Level.WARNING, "Member deletion error: {0}", errorMsg);
+
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage());
         }
 
+        return false;
 
     }
 
-    public void addMemberToSelectedTeam(String emailUserToAdd) {
+    public boolean addMemberToSelectedTeam(String emailUserToAdd) {
 
         try {
 
-            //Da utilizzare dato che non possono esserci spazi nei parametri search delle richieste HTTP
+            //Encoder to use since there cannot be spaces in search parameters of HTTP requests
             String encodedUserEmail = URLEncoder.encode(emailUserToAdd, StandardCharsets.UTF_8);
 
             HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
-                    .uri(URI.create(client.getBaseUrl() + "/teams/add-member?teamId=" + TeamController.getInstance().getTeam().getId() + "&email=" + encodedUserEmail))
+                    .uri(URI.create(client.getBaseUrl() + TEAMS_PATH + "add-member?teamId=" + TeamController.getInstance().getTeam().getId() + "&email=" + encodedUserEmail))
                     .POST(HttpRequest.BodyPublishers.noBody());
 
             HttpResponse<String> response = client.sendRequest(requestBuilder);
 
             if (response.statusCode() == 200) {
-                System.out.println("Member addedd successfully!");
+
+                logger.log(Level.FINE, "Member added successfully: {0}", response.body());
+
+                return true;
+
+            }else if (response.statusCode() == 409) {
+
+                logger.log(Level.WARNING, "Member adding error because either the team or the user were not found, or the user was already in the team. Searched ID was {0}, user email was {1}", new Object[]{team.getId(), emailUserToAdd});
+
             } else {
-                System.err.println("Member adding error. Code: " + response.statusCode());
-                System.err.println("Error body: " + response.body());
+
+                String errorMsg = client.getErrorMessageFromResponse(response);
+                logger.log(Level.WARNING, "Member adding error: {0}", errorMsg);
+
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage());
         }
 
+        return false;
 
     }
 
-
-    public void createReport(String month, String year) {
+    public boolean createReport(String month, String year) {
         try {
 
             String encodedMonth = URLEncoder.encode(month, StandardCharsets.UTF_8);
             String encodedYear = URLEncoder.encode(year, StandardCharsets.UTF_8);
 
             HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
-                    .uri(URI.create(client.getBaseUrl() + "/teams/" + this.team.getId() + "/report?month=" + encodedMonth + "&year=" + encodedYear))
+                    .uri(URI.create(client.getBaseUrl() + TEAMS_PATH + this.team.getId() + "/report?month=" + encodedMonth + "&year=" + encodedYear))
                     .GET();
 
             HttpResponse<String> response = client.sendRequest(requestBuilder);
@@ -186,21 +241,25 @@ public class TeamController {
 
                 this.teamReport = client.getObjectMapper().readValue(response.body(), StatisticDTO.class);
 
-                System.out.println("Report generated successfully!");
+                logger.log(Level.FINE, "Report generated successfully!");
+
+                return true;
 
             } else {
-                System.err.println("Error report generation. Code: " + response.statusCode());
-                System.err.println("Error body: " + response.body());
+
+                logger.log(Level.WARNING, "Error report generation. Code: {0}", response.statusCode());
+
+                logger.log(Level.WARNING, "Error body: {0}", response.body());
+
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage());
         }
+
+        return false;
+
     }
 
-
-    public TeamDTO getTeam(){
-        return this.team;
-    }
 
     public List<Integer> getTeamsIds () {
 

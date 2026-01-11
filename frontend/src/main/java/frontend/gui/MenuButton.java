@@ -60,6 +60,7 @@ public class MenuButton extends IconButton {
 
                     CreateProjectDialog createProjectDialog = new CreateProjectDialog(owner);
                     createProjectDialog.setVisible(true);
+                    break;
                 default:
                     break;
             }

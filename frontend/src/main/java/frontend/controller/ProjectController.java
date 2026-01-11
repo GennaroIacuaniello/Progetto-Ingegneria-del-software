@@ -1,10 +1,12 @@
 package frontend.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import frontend.config.ApiPaths;
 import frontend.dto.ProjectDTO;
 import frontend.dto.StatisticDTO;
 import frontend.dto.UserDTO;
 import frontend.exception.RequestError;
+import lombok.Getter;
 
 import java.net.URI;
 import java.net.URLEncoder;
@@ -14,6 +16,8 @@ import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @SuppressWarnings("java:S6548")
 public class ProjectController {
@@ -21,10 +25,18 @@ public class ProjectController {
     private static ProjectController instance;
     private final ApiClient client = ApiClient.getInstance();
 
+    private static final Logger logger = Logger.getLogger(ProjectController.class.getName());
+
     private ArrayList<ProjectDTO> projects;
+    @Getter
     private ProjectDTO project;
 
-    private StatisticDTO dashbordData;
+    private StatisticDTO dashboardData;
+
+    private static final String CONTENT_TYPE = "Content-Type";
+    private static final String APPLICATION_JSON = "application/json";
+
+    private static final String PROJECTS_PATH = ApiPaths.PROJECTS;
 
 
     private ProjectController(){
@@ -38,15 +50,15 @@ public class ProjectController {
         return instance;
     }
 
-    public void searchProjectsByName(String projectName) {
+    public boolean searchProjectsByName(String projectName) {
 
         try {
 
-            //Da utilizzare dato che non possono esserci spazi nei parametri search delle richieste HTTP
+            //Encoder to use since there cannot be spaces in search parameters of HTTP requests
             String encodedProjectName = URLEncoder.encode(projectName, StandardCharsets.UTF_8);
 
             HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
-                    .uri(URI.create(client.getBaseUrl() + "/projects/search?name=" + encodedProjectName))
+                    .uri(URI.create(client.getBaseUrl() + PROJECTS_PATH +"search?name=" + encodedProjectName))
                     .GET();
 
             HttpResponse<String> response = client.sendRequest(requestBuilder);
@@ -54,36 +66,46 @@ public class ProjectController {
             if (response.statusCode() == 200) {
 
                 this.projects = client.getObjectMapper().readValue(response.body(), new TypeReference<>() {});
+                logger.log(Level.FINE, "Search completed successfully. Number of projects founded: {0}", this.projects.size());
 
+                return true;
 
             } else if (response.statusCode() == 204) {
 
-                //Nessun risultato, svuoto la cache
+                //No results, clear the cache
                 this.projects = new ArrayList<>();
+                logger.log(Level.FINE, "Search completed successfully, BUT no projects were found. ");
+
+                return true;
 
             } else {
 
-                // CASO ERRORE (500, 400, ecc.)
-                System.err.println("Errore dal server. Codice: " + response.statusCode());
-                System.err.println("Dettaglio errore: " + response.body());
+                // Generic error
+
+                String errorMsg = client.getErrorMessageFromResponse(response);
+
+                logger.log(Level.WARNING, "Projects search failed. Error: {0}", errorMsg);
+
                 this.projects = new ArrayList<>();
 
             }
 
         } catch (RequestError re) {
 
-            System.err.println("Backend offline: " + re.getMessage());
+            logger.log(Level.WARNING, "Backend offline: {0}", re.getMessage());
             this.projects = new ArrayList<>();
 
         } catch (Exception e) {
 
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage());
             this.projects = new ArrayList<>();
         }
 
+        return false;
+
     }
 
-    public void createProject(String projectName){
+    public boolean createProject(String projectName){
 
         try {
 
@@ -94,46 +116,61 @@ public class ProjectController {
 
             HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
                     .uri(URI.create(client.getBaseUrl() + "/projects"))
-                    .header("Content-Type", "application/json")
+                    .header(CONTENT_TYPE, APPLICATION_JSON)
                     .POST(HttpRequest.BodyPublishers.ofString(jsonBody));
 
             HttpResponse<String> response = client.sendRequest(requestBuilder);
 
             if (response.statusCode() == 200) {
-                System.out.println("Project created successfully!");
+
+                logger.log(Level.FINE, "Project created successfully!");
+
+                return true;
+
             } else {
-                System.err.println("Project creation failed. Code: " + response.statusCode());
-                System.err.println("Error body: " + response.body());
+
+                logger.log(Level.WARNING, "Project creation failed. Code: {0}", response.statusCode());
+
+                logger.log(Level.WARNING, "Error body: {0}", response.body());
+
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage());
         }
+
+        return false;
 
     }
 
-    public void createDashBoard() {
+    public boolean createDashBoard() {
 
         try {
 
             HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
-                    .uri(URI.create(client.getBaseUrl() + "/projects/dashboard"))
+                    .uri(URI.create(client.getBaseUrl() + PROJECTS_PATH + "dashboard"))
                     .GET();
 
             HttpResponse<String> response = client.sendRequest(requestBuilder);
 
             if (response.statusCode() == 200) {
 
-                this.dashbordData = client.getObjectMapper().readValue(response.body(), StatisticDTO.class);
+                this.dashboardData = client.getObjectMapper().readValue(response.body(), StatisticDTO.class);
+                logger.log(Level.FINE, "Dashboard generated successfully!");
 
-                System.out.println("Dashboard generated successfully!");
+                return true;
 
             } else {
-                System.err.println("Error dashboard generation. Code: " + response.statusCode());
-                System.err.println("Error body: " + response.body());
+
+                logger.log(Level.WARNING, "Error dashboard generation. Code: {0}", response.statusCode());
+
+                logger.log(Level.WARNING, "Error body: {0}", response.body());
+
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage());
         }
+
+        return false;
 
     }
 
@@ -173,19 +210,11 @@ public class ProjectController {
 
     }
 
-    public ProjectDTO getProject() {
-        return project;
-    }
-
-    public void setProjectWithValues(ProjectDTO project) {
-        this.project = project;
-    }
-
     public List<String> getDevelopersEmails() {
 
         ArrayList<String> emails = new ArrayList<>();
 
-        for(UserDTO dev : this.dashbordData.getDevelopers())
+        for(UserDTO dev : this.dashboardData.getDevelopers())
             emails.add(dev.getEmail());
 
         return emails;
@@ -193,22 +222,22 @@ public class ProjectController {
     }
 
     public List<Integer> getOpenIssues() {
-        return this.dashbordData.getNumOpenIssues();
+        return this.dashboardData.getNumOpenIssues();
     }
 
     public List<Integer> getResolvedIssues() {
-        return this.dashbordData.getNumClosedIssues();
+        return this.dashboardData.getNumClosedIssues();
     }
 
     public List<Duration> getAverageResolvingDurations() {
-        return this.dashbordData.getAverageResolutionDurations();
+        return this.dashboardData.getAverageResolutionDurations();
     }
 
     public int getTotalOpenIssues() {
 
         int total = 0;
 
-        for (Integer i : this.dashbordData.getNumOpenIssues())
+        for (Integer i : this.dashboardData.getNumOpenIssues())
             total += i;
 
         return total;
@@ -218,18 +247,18 @@ public class ProjectController {
 
         int total = 0;
 
-        for (Integer i : this.dashbordData.getNumClosedIssues())
+        for (Integer i : this.dashboardData.getNumClosedIssues())
             total += i;
 
         return total;
     }
 
     public Duration getTotalAverageResolvingDuration() {
-        return this.dashbordData.getTotalAverageResolutionDuration();
+        return this.dashboardData.getTotalAverageResolutionDuration();
     }
 
     public Integer getNumIssuesNotAssigned(){
-        return this.dashbordData.getNumIssuesNotAssigned();
+        return this.dashboardData.getNumIssuesNotAssigned();
     }
 
 }

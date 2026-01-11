@@ -6,8 +6,13 @@ import frontend.controller.TeamController;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CreateTeamDialog extends JDialog {
+
+    static final Logger logger = Logger.getLogger(CreateTeamDialog.class.getName());
+
     public CreateTeamDialog(JFrame owner) {
         super(owner, "Nuovo Team", true);
 
@@ -42,9 +47,15 @@ public class CreateTeamDialog extends JDialog {
         confirmBtn.addActionListener(e -> {
             String teamName = nameField.getText().trim();
             if (!teamName.isEmpty()) {
-                TeamController.getInstance().createTeam(teamName);
-                System.out.println("Team '" + teamName + "' creato per Progetto ID: " + ProjectController.getInstance().getProject().getId());
-                dispose();
+                boolean success = TeamController.getInstance().createTeam(teamName);
+
+                if(!success)
+                    return;
+
+                JOptionPane.showMessageDialog(this, "Progetto creato con successo!", "Creazione avvenuta", JOptionPane.INFORMATION_MESSAGE);
+                logger.log(Level.FINE, "Team creato: {0}, per Progetto con ID: {1}", new Object[]{teamName, ProjectController.getInstance().getProject().getId()});
+                this.dispose();
+
             } else {
                 new FloatingMessage("Il nome del team è obbligatorio", confirmBtn, FloatingMessage.ERROR_MESSAGE);
             }

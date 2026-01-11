@@ -22,8 +22,11 @@ public class SearchProjectsButtonUser extends IconButton {
 
     protected void search(JFrame mainFrame, HomePanelUser homePanel,  JTextField searchTextField, String placeholder) {
 
-        ProjectController.getInstance().searchProjectsByName((searchTextField.getText().equals(placeholder) ?
+        boolean success = ProjectController.getInstance().searchProjectsByName((searchTextField.getText().equals(placeholder) ?
                 "" : searchTextField.getText()));
+
+        if(!success)
+            return;
 
         new SearchProjectResultsUser(mainFrame, homePanel, ProjectController.getInstance().getProjectsIds(), ProjectController.getInstance().getProjectsNames());
     }

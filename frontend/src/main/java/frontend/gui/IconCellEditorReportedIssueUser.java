@@ -44,6 +44,9 @@ public class IconCellEditorReportedIssueUser extends DefaultCellEditor {
         IssueController.getInstance().setIssue(IssueController.getInstance().getIssueFromIndex(parentTable.getSelectedRow()));
         boolean success = IssueController.getInstance().getIssueById();
 
+        if(!success)
+            return null;
+
         ShowReportedIssueUser dialog = new ShowReportedIssueUser(mainFrame);
         dialog.pack();
         dialog.setLocationRelativeTo(mainFrame);
