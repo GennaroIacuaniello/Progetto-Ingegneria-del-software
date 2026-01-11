@@ -6,23 +6,32 @@ import frontend.exception.RequestError;
 
 import java.awt.*;
 import java.io.IOException;
-import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import frontend.gui.LogInPage;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.swing.*;
 
+@SuppressWarnings("java:S6548")
 public class ApiClient {
 
     private static ApiClient instance;
 
-    private final String BASE_URL = "http://localhost:8080";
+    private static final Logger logger = Logger.getLogger(ApiClient.class.getName());
+
     private final HttpClient httpClient;
+
+    @Getter
     private final ObjectMapper objectMapper;
+
+    @Setter
     private String jwtToken = null;
 
     private ApiClient() {
@@ -41,16 +50,8 @@ public class ApiClient {
         return instance;
     }
 
-    public ObjectMapper getObjectMapper() {
-        return objectMapper;
-    }
-
     public String getBaseUrl() {
-        return BASE_URL;
-    }
-
-    public void setJwtToken(String token) {
-        this.jwtToken = token;
+        return "http://localhost:8080";
     }
 
     public HttpResponse<String> sendRequest(HttpRequest.Builder requestBuilder) {
@@ -74,11 +75,13 @@ public class ApiClient {
 
         }catch (IOException e) {
 
-            System.err.println("Errore di rete: " + e.getMessage());
+            logger.log(Level.SEVERE, "Errore di rete", e);
 
             throw new RequestError("Impossibile contattare il server. Verifica che il backend sia attivo.");
 
         } catch (InterruptedException e) {
+
+            logger.log(Level.WARNING, "Richiesta interrotta dal sistema", e);
 
             Thread.currentThread().interrupt();
             throw new RequestError("Richiesta interrotta dal sistema.");
@@ -112,7 +115,7 @@ public class ApiClient {
                 return node.get("message").asText();
             }
         } catch (Exception e) {
-            // If error, basic error message
+            logger.log(Level.FINE, "Impossibile fare il parsing del messaggio di errore JSON: {0}", e.getMessage());
         }
         //Basic error message
         return "Errore " + response.statusCode() + ": " + response.body();

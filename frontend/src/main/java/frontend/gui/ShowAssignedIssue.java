@@ -42,7 +42,7 @@ public class ShowAssignedIssue extends ShowReportedIssueDeveloper {
 
     private void resolve() {
 
-        IssueController.getInstance().setIssueAsResolved();
+        boolean success = IssueController.getInstance().setIssueAsResolved();
 
         statusLabel.setText("Stato: Risolta");
         new FloatingMessage("Segnalazione avvenuta con successo", resolveButton, FloatingMessage.SUCCESS_MESSAGE);

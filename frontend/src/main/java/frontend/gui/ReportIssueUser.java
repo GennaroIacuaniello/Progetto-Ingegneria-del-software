@@ -177,7 +177,7 @@ public class ReportIssueUser extends RoundedPanel{
 
         issue.setPriority(IssueController.getInstance().priorityStringToInt("Media"));
 
-        IssueController.getInstance().reportIssue(issue, tagsButton.getTags(), fileChooserPanel.getSelectedFile());
+        boolean success = IssueController.getInstance().reportIssue(issue, tagsButton.getTags(), fileChooserPanel.getSelectedFile());
 
         homePanelUser.returnToDefaultContentPanel();
     }

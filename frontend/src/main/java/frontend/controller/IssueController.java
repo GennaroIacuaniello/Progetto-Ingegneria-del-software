@@ -1,11 +1,16 @@
 package frontend.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import frontend.config.ApiPaths;
 import frontend.dto.IssueDTO;
 import frontend.dto.IssueStatusDTO;
 import frontend.dto.ProjectDTO;
 import frontend.dto.UserDTO;
 import frontend.exception.RequestError;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,15 +25,26 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+@SuppressWarnings("java:S6548")
 public class IssueController {
 
     private static IssueController instance;
+
     private final ApiClient client = ApiClient.getInstance();
 
+    private static final Logger logger = Logger.getLogger(IssueController.class.getName());
 
     private ArrayList<IssueDTO> issues;
+    @Setter
     private IssueDTO issue;
+
+    private static final String CONTENT_TYPE = "Content-Type";
+    private static final String APPLICATION_JSON = "application/json";
+
+    private static final String ISSUES_PATH = ApiPaths.ISSUES;
 
     private static final String RESOLVER_ID = "resolverId=";
     private static final String REPORTER_ID = "reporterId=";
@@ -45,7 +61,7 @@ public class IssueController {
         return instance;
     }
 
-    public void reportIssue(IssueDTO issueToReport, List<String> tags, File image) {
+    public boolean reportIssue(IssueDTO issueToReport, List<String> tags, File image) {
 
         try {
 
@@ -69,8 +85,6 @@ public class IssueController {
             issueToReport.setReportingUser(userToSend);
 
 
-
-
             ProjectDTO relatedProject = ProjectController.getInstance().getProject();
 
             ProjectDTO projectToSend = new ProjectDTO();
@@ -89,23 +103,31 @@ public class IssueController {
 
             HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
                     .uri(URI.create(client.getBaseUrl() + "/issues"))
-                    .header("Content-Type", "application/json")
+                    .header(CONTENT_TYPE, APPLICATION_JSON)
                     .POST(HttpRequest.BodyPublishers.ofString(jsonBody));
 
             HttpResponse<String> response = client.sendRequest(requestBuilder);
 
             if (response.statusCode() == 200) {
-                System.out.println("Issue reported successfully!");
+
+                logger.log(Level.FINE, "Issue reported successfully!");
+
+                return true;
+
             } else {
-                System.err.println("Issue report failed. Code: " + response.statusCode());
-                System.err.println("Error body: " + response.body());
+
+                logger.log(Level.WARNING, "Issue report failed. Code: {0}", response.statusCode());
+
+                logger.log(Level.WARNING, "Error body: {0}", response.body());
+
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage());
         }
+        return false;
     }
 
-    private void searchIssueGeneral(String issueTitle, String issueStatus, List<String> issueTags, String issueType, String issuePriority, String roleToSearch) {
+    private boolean searchIssueGeneral(String issueTitle, String issueStatus, List<String> issueTags, String issueType, String issuePriority, String roleToSearch) {
 
         List<String> params = setUpSearchParams(issueTitle, issueStatus, issueTags, issueType, issuePriority);
 
@@ -116,17 +138,17 @@ public class IssueController {
 
         HttpResponse<String> response = sendSearchRequest(queryString);
 
-        handleSearchResponse(response);
+        return handleSearchResponse(response);
 
     }
 
-    public void searchAssignedIssues(String issueTitle, String issueStatus, List<String> issueTags, String issueType, String issuePriority) {
+    public boolean searchAssignedIssues(String issueTitle, String issueStatus, List<String> issueTags, String issueType, String issuePriority) {
 
-        searchIssueGeneral(issueTitle, issueStatus, issueTags, issueType, issuePriority, RESOLVER_ID);
+        return searchIssueGeneral(issueTitle, issueStatus, issueTags, issueType, issuePriority, RESOLVER_ID);
 
     }
 
-    public void searchAllIssues(String issueTitle, String issueStatus, List<String> issueTags, String issueType, String issuePriority) {
+    public boolean searchAllIssues(String issueTitle, String issueStatus, List<String> issueTags, String issueType, String issuePriority) {
 
         List<String> params = setUpSearchParams(issueTitle, issueStatus, issueTags, issueType, issuePriority);
 
@@ -136,13 +158,13 @@ public class IssueController {
 
         HttpResponse<String> response = sendSearchRequest(queryString);
 
-        handleSearchResponse(response);
+        return handleSearchResponse(response);
 
     }
 
-    public void searchReportedIssues(String issueTitle, String issueStatus, List<String> issueTags, String issueType, String issuePriority) {
+    public boolean searchReportedIssues(String issueTitle, String issueStatus, List<String> issueTags, String issueType, String issuePriority) {
 
-        searchIssueGeneral(issueTitle, issueStatus, issueTags, issueType, issuePriority, REPORTER_ID);
+        return searchIssueGeneral(issueTitle, issueStatus, issueTags, issueType, issuePriority, REPORTER_ID);
 
     }
 
@@ -151,7 +173,7 @@ public class IssueController {
         List<String> params = new ArrayList<>();
 
         if (issueTitle != null && !issueTitle.isEmpty()) {
-            //Encoder da utilizzare dato che non possono esserci spazi nei parametri search delle richieste HTTP
+            //Encoder to use since there cannot be spaces in search parameters of HTTP requests
             params.add("title=" + URLEncoder.encode(issueTitle, StandardCharsets.UTF_8));
         }
         if (issueStatus != null && !issueStatus.isEmpty()) {
@@ -175,7 +197,7 @@ public class IssueController {
 
         fullUrl += "?" + queryString;
 
-        System.out.println("Calling URL: " + fullUrl); // Debug utile
+        logger.log(Level.FINE, "Calling URL: {0}", fullUrl);
 
         HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
                 .uri(URI.create(fullUrl))
@@ -185,44 +207,51 @@ public class IssueController {
 
     }
 
-    private void handleSearchResponse(HttpResponse<String> response){
+    private boolean handleSearchResponse(HttpResponse<String> response){
 
         try{
 
             if (response.statusCode() == 200) {
 
                 this.issues = client.getObjectMapper().readValue(response.body(), new TypeReference<>(){});
+                logger.log(Level.FINE, "Search completed successfully. Number of issues founded: {0}", this.issues.size());
+                return true;
 
             } else if (response.statusCode() == 204) {
 
                 this.issues = new ArrayList<>();
+                logger.log(Level.WARNING, "Search completed successfully, BUT no issues were founded. ");
+                return true;
 
             } else {
+                // Generic error
 
-                // CASO ERRORE (500, 400, ecc.)
-                System.err.println("Errore dal server. Codice: " + response.statusCode());
-                System.err.println("Dettaglio errore: " + response.body());
+                String errorMsg = client.getErrorMessageFromResponse(response);
+
+                logger.log(Level.WARNING, "Issue search failed. Error: {0}", errorMsg);
             }
 
         } catch (RequestError re) {
 
-            System.err.println("Backend offline: " + re.getMessage());
+            logger.log(Level.WARNING, "Backend offline: {0}", re.getMessage());
             this.issues = new ArrayList<>();
 
         } catch (Exception e) {
 
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage());
             this.issues = new ArrayList<>();
         }
 
+        return false;
+
     }
 
-    public void getIssueById() {
+    public boolean getIssueById() {
 
         try {
 
             HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
-                    .uri(URI.create(client.getBaseUrl() + "/issues/" + issue.getId()))
+                    .uri(URI.create(client.getBaseUrl() + ISSUES_PATH + issue.getId()))
                     .GET();
 
             HttpResponse<String> response = client.sendRequest(requestBuilder);
@@ -230,26 +259,32 @@ public class IssueController {
             if (response.statusCode() == 200) {
 
                 this.issue = client.getObjectMapper().readValue(response.body(), new TypeReference<>() {});
+                logger.log(Level.FINE, "Search of issue by ID completed successfully. Issue id: {0}", this.issue.getId());
+                return true;
 
             } else if (response.statusCode() == 404) {
 
-                System.err.println("Issue non trovata (ID: " + issue.getId() + ")");
+                logger.log(Level.WARNING, "Issue search failed. Searched ID was {0}", issue.getId());
                 this.issue = null;
 
             } else {
-                System.err.println("Errore server: " + response.statusCode());
+
+                String errorMsg = client.getErrorMessageFromResponse(response);
+                logger.log(Level.WARNING, "Server error: {0}", errorMsg);
                 this.issue = null;
+
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage());
+            this.issue = null;
         }
 
-
+        return false;
 
     }
 
-    public void setIssueAsResolved() {
+    public boolean setIssueAsResolved() {
 
         try {
 
@@ -258,26 +293,39 @@ public class IssueController {
             String jsonBody = client.getObjectMapper().writeValueAsString(requestBody);
 
             HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
-                    .uri(URI.create(client.getBaseUrl() + "/issues/" + issue.getId() + "/status"))
-                    .header("Content-Type", "application/json")
+                    .uri(URI.create(client.getBaseUrl() + ISSUES_PATH + issue.getId() + "/status"))
+                    .header(CONTENT_TYPE, APPLICATION_JSON)
                     .PUT(HttpRequest.BodyPublishers.ofString(jsonBody));
 
             HttpResponse<String> response = client.sendRequest(requestBuilder);
 
             if (response.statusCode() == 200) {
+
                 issue.setStatus(IssueStatusDTO.RESOLVED);
-                System.out.println("Status update success: " + response.body());
-            } else {
-                System.err.println("Error in status update: " + response.statusCode());
+                logger.log(Level.FINE, "Issue status update success: {0}", response.body());
+
+                return true;
+            } else if (response.statusCode() == 404) {
+
+                logger.log(Level.WARNING, "Issue status update failed because the issue was not found. Searched ID was {0}", issue.getId());
+                this.issue = null;
+
+            }else {
+
+                String errorMsg = client.getErrorMessageFromResponse(response);
+                logger.log(Level.WARNING, "Error in status update: {0}", errorMsg);
+
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage());
         }
+
+        return false;
 
     }
 
-    public void assignIssueToDeveloper(String resolverEmail) {
+    public boolean assignIssueToDeveloper(String resolverEmail) {
 
         try {
 
@@ -287,8 +335,8 @@ public class IssueController {
             String jsonBody = client.getObjectMapper().writeValueAsString(resolver);
 
             HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
-                    .uri(URI.create(client.getBaseUrl() + "/issues/" + issue.getId() + "/resolver"))
-                    .header("Content-Type", "application/json")
+                    .uri(URI.create(client.getBaseUrl() + ISSUES_PATH + issue.getId() + "/resolver"))
+                    .header(CONTENT_TYPE, APPLICATION_JSON)
                     .PUT(HttpRequest.BodyPublishers.ofString(jsonBody));
 
             HttpResponse<String> response = client.sendRequest(requestBuilder);
@@ -299,36 +347,37 @@ public class IssueController {
 
                 issue.setAssignedDeveloper(fullResolverInfo);
 
-                System.out.println("Issue assigned correctly to: " + fullResolverInfo.getEmail());
+                logger.log(Level.FINE, "Issue assigned correctly to: {0}", fullResolverInfo.getEmail());
+
+                return true;
+
+            } else if (response.statusCode() == 404) {
+
+                logger.log(Level.WARNING, "Issue assigning failed because either the issue or the user were not found. Searched ID was {0}, user email was {1}", new Object[]{issue.getId(), resolverEmail});
 
             } else {
-                System.err.println("Error assigning issue. Code: " + response.statusCode());
+
+                String errorMsg = client.getErrorMessageFromResponse(response);
+                logger.log(Level.WARNING, "Error in issue assigment: {0}", errorMsg);
+
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage());
         }
+
+        return false;
+
     }
 
+    @Setter
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class StatusUpdateRequest {
 
         private IssueStatusDTO newStatus;
 
-        public StatusUpdateRequest() {
-            //Empty constructor needed for jackson
-        }
-
-        public StatusUpdateRequest(IssueStatusDTO newStatus) {
-            this.newStatus = newStatus;
-        }
-
-        public IssueStatusDTO getNewStatus() {
-            return newStatus;
-        }
-
-        public void setNewStatus(IssueStatusDTO newStatus) {
-            this.newStatus = newStatus;
-        }
     }
 
     public List<String> getIssuesTitles () {
@@ -374,7 +423,7 @@ public class IssueController {
 
             return tempFile;
         }catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage());
             return null;
         }
     }
@@ -406,12 +455,6 @@ public class IssueController {
 
     public UserDTO getIssueAssignedDeveloper () {
         return issue.getAssignedDeveloper();
-    }
-
-    public void setIssue(IssueDTO i) {
-
-        issue = i;
-
     }
 
     public IssueDTO getIssueFromIndex(int index) {

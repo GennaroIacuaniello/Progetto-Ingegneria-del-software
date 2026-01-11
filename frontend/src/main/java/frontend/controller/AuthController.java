@@ -6,11 +6,17 @@ import lombok.*;
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+@SuppressWarnings("java:S6548")
 public class AuthController {
 
     private static AuthController instance;
+
     private final ApiClient client = ApiClient.getInstance();
+
+    private static final Logger logger = Logger.getLogger(AuthController.class.getName());
 
     @Setter
     @Getter
@@ -48,14 +54,18 @@ public class AuthController {
                 client.setJwtToken(authResponse.getToken());
                 this.loggedUser= authResponse.getUser();
 
-                System.out.println("Login OK. Ruolo: " + authResponse.getUser().getRole());
+                logger.log(Level.FINE, "Login OK. Ruolo: " + authResponse.getUser().getRole());
+
                 return true;
             } else {
-                System.err.println("Login fallito. Codice: " + response.statusCode());
-                System.err.println("Dettaglio server: " + response.body());
+
+                logger.log(Level.WARNING, "Login fallito. Codice: {0}", response.statusCode());
+
+                logger.log(Level.WARNING, "Dettaglio server: {0}", response.body());
+
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage());
         }
         return false;
     }
@@ -96,14 +106,14 @@ public class AuthController {
 
             if (response.statusCode() == 200) {
 
-                System.out.println("Registration ok! Login to start working!");
+                logger.log(Level.FINE,"Registration ok! Login to start working!");
                 return true;
 
             } else {
-                System.err.println("Registration failed. Error code: " + response.statusCode());
+                logger.log(Level.WARNING,"Registration failed. Error code: {0}", response.statusCode());
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage());
         }
         return false;
     }

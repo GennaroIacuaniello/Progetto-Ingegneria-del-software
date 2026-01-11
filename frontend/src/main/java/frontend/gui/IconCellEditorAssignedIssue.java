@@ -15,7 +15,7 @@ public class IconCellEditorAssignedIssue extends IconCellEditorReportedIssueDeve
     public Object getCellEditorValue() {
 
         IssueController.getInstance().setIssue(IssueController.getInstance().getIssueFromIndex(parentTable.getSelectedRow()));
-        IssueController.getInstance().getIssueById();
+        boolean success = IssueController.getInstance().getIssueById();
 
         ShowReportedIssueUser dialog = new ShowAssignedIssue(mainFrame);
         dialog.pack();

@@ -68,7 +68,7 @@ public class ShowIssueAdmin extends ShowReportedIssueDeveloper {
 
             item.addActionListener(e -> {
 
-                IssueController.getInstance().assignIssueToDeveloper(developer);
+                boolean success = IssueController.getInstance().assignIssueToDeveloper(developer);
                 statusLabel.setText("Stato: ASSIGNED");
                 assignedDeveloperLabel.setText("Developer assegnato: " + developer);
                 new FloatingMessage("Assegnazione avvenuta con successo", searchButton, FloatingMessage.SUCCESS_MESSAGE);

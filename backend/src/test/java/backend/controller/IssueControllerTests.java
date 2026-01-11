@@ -66,6 +66,8 @@ class IssueControllerTests {
 
     private int testIssueId;
 
+    private int testProjectId;
+
     private UserDTO adminForTesting;
 
     @BeforeEach
@@ -93,6 +95,8 @@ class IssueControllerTests {
         List<ProjectDTO> projectJustCreatedForId = projectDAO.searchProjectsByName("RelatedProjectTest_Test");
 
         relatedProjectTest.setId(projectJustCreatedForId.get(0).getId());
+
+        this.testProjectId = relatedProjectTest.getId();
 
         testIssue.setRelatedProject(relatedProjectTest);
 
@@ -320,5 +324,16 @@ class IssueControllerTests {
             ps.executeUpdate();
             System.out.println("Deletion complete: Issue " + testIssueId + " eliminated.");
         }
+
+        query = "DELETE FROM Project WHERE project_id = ?";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, testProjectId);
+            ps.executeUpdate();
+            System.out.println("Deletion complete: Project " + testProjectId + " eliminated.");
+        }
+
     }
+
 }

@@ -16,6 +16,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("java:S6548")
 public class TeamController {
 
     private static TeamController instance;

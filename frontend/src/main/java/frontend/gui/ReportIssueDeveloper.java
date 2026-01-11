@@ -44,7 +44,7 @@ public class ReportIssueDeveloper extends ReportIssueUser {
 
         issue.setPriority(IssueController.getInstance().priorityStringToInt(Objects.requireNonNull(priorityComboBox.getSelectedItem()).toString()));
 
-        IssueController.getInstance().reportIssue(issue, tagsButton.getTags(), fileChooserPanel.getSelectedFile());
+        boolean success = IssueController.getInstance().reportIssue(issue, tagsButton.getTags(), fileChooserPanel.getSelectedFile());
 
         homePanelUser.returnToDefaultContentPanel();
     }
