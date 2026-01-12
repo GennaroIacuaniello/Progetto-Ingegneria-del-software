@@ -1,6 +1,5 @@
 package backend.database.implneondb;
 
-
 import backend.database.dao.ProjectDAO;
 import backend.dto.IssueDTO;
 import backend.dto.ProjectDTO;
@@ -15,15 +14,43 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Implementazione del Data Access Object (DAO) per la gestione dei progetti.
+ * <p>
+ * Questa classe gestisce l'interazione diretta con il database per le operazioni sui progetti.
+ * Oltre alle operazioni standard CRUD (creazione e ricerca), implementa una logica complessa
+ * per la generazione della dashboard statistica, aggregando dati su issue, sviluppatori e tempi di risoluzione.
+ * </p>
+*/
 @Repository
 public class ProjectDAOImpl implements ProjectDAO {
 
+    /**
+     * Fonte dati per la connessione al database.
+     * Gestisce il pool di connessioni JDBC verso il database persistente.
+     */
     private final DataSource dataSource;
 
+    /**
+     * Costruttore per l'iniezione delle dipendenze.
+     *
+     * @param dataSource Il DataSource configurato per l'accesso al database.
+     */
     public ProjectDAOImpl(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
+    /**
+     * Cerca i progetti nel database in base al nome.
+     * <p>
+     * Esegue una query SQL utilizzando l'operatore ILIKE per una ricerca case-insensitive
+     * che trova corrispondenze parziali nel nome del progetto.
+     * </p>
+     *
+     * @param projectName Il nome (o parte di esso) da cercare.
+     * @return Una lista di {@code ProjectDTO} contenente i progetti trovati.
+     * @throws SQLException In caso di errori durante l'esecuzione della query.
+     */
     public List<ProjectDTO> searchProjectsByName(String projectName) throws SQLException{
 
 
@@ -57,6 +84,15 @@ public class ProjectDAOImpl implements ProjectDAO {
 
     }
 
+    /**
+     * Crea un nuovo progetto nel database.
+     * <p>
+     * Esegue un'istruzione INSERT per salvare il nome del nuovo progetto.
+     * </p>
+     *
+     * @param projectToCreate Il DTO contenente i dati del progetto da creare.
+     * @throws SQLException In caso di errori durante l'inserimento nel database.
+     */
     public void createProject(ProjectDTO projectToCreate) throws SQLException{
 
         String query = "INSERT INTO Project (project_name) VALUES "+
@@ -73,6 +109,23 @@ public class ProjectDAOImpl implements ProjectDAO {
 
     }
 
+    /**
+     * Genera le statistiche globali per la dashboard del sistema.
+     * <p>
+     * Esegue un'analisi approfondita recuperando tutte le issue e i relativi risolutori.
+     * Calcola metriche come:
+     * <ul>
+     * <li>Numero di issue aperte e chiuse.</li>
+     * <li>Issue non assegnate.</li>
+     * <li>Tempo medio di risoluzione totale e per singolo sviluppatore.</li>
+     * <li>Carico di lavoro per sviluppatore (issue aperte vs chiuse).</li>
+     * </ul>
+     * Utilizza metodi helper statici per organizzare la logica di elaborazione dei risultati.
+     * </p>
+     *
+     * @return Un oggetto {@code StatisticDTO} popolato con tutti i dati aggregati.
+     * @throws SQLException In caso di errori durante l'interrogazione del database.
+     */
     public StatisticDTO generateDashboard() throws SQLException{
 
         StatisticDTO dashboardData;
@@ -158,6 +211,22 @@ public class ProjectDAOImpl implements ProjectDAO {
 
     }
 
+    /**
+     * Gestisce l'associazione e l'inizializzazione dei dati relativi allo sviluppatore (risolutore).
+     * <p>
+     * Se lo sviluppatore è già stato incontrato durante l'iterazione, lo associa alla issue corrente.
+     * Se è nuovo, crea un nuovo oggetto UserDTO, lo aggiunge alle liste di tracciamento e inizializza
+     * i contatori per le statistiche individuali.
+     * </p>
+     *
+     * @param devAlreadyFoundedIds Lista degli ID degli sviluppatori già processati.
+     * @param resolverId           ID del risolutore corrente.
+     * @param dashboardData        DTO delle statistiche in fase di popolamento.
+     * @param foundedIssue         La issue corrente in elaborazione.
+     * @param rs                   Il ResultSet posizionato sulla riga corrente.
+     * @param numIssueSolvedForDev Lista contatore per le issue risolte per ogni dev.
+     * @throws SQLException In caso di errori nel recupero dei dati dal ResultSet.
+     */
     public static void resolverHandler(List<Integer> devAlreadyFoundedIds, int resolverId, StatisticDTO dashboardData, IssueDTO foundedIssue, ResultSet rs, List<Integer> numIssueSolvedForDev) throws SQLException {
 
         if(devAlreadyFoundedIds.contains(resolverId)){
@@ -188,6 +257,18 @@ public class ProjectDAOImpl implements ProjectDAO {
         }
     }
 
+    /**
+     * Aggiorna le metriche temporali per uno sviluppatore quando una issue è risolta.
+     * <p>
+     * Accumula la durata della risoluzione per il calcolo successivo della media e
+     * incrementa il contatore delle issue risolte per lo specifico sviluppatore.
+     * </p>
+     *
+     * @param dashboardData        DTO delle statistiche.
+     * @param foundedIssue         La issue risolta corrente.
+     * @param issueDuration        La durata calcolata per la risoluzione della issue.
+     * @param numIssueSolvedForDev Lista contatore per le issue risolte.
+     */
     public static void manageDevAverageDuration(StatisticDTO dashboardData, IssueDTO foundedIssue, Duration issueDuration, List<Integer> numIssueSolvedForDev) {
         int devIndex = dashboardData.getDevelopers().indexOf(foundedIssue.getAssignedDeveloper());
 
@@ -202,6 +283,16 @@ public class ProjectDAOImpl implements ProjectDAO {
         }
     }
 
+    /**
+     * Gestisce il conteggio delle issue aperte per uno sviluppatore.
+     * <p>
+     * Incrementa il contatore delle issue aperte per lo sviluppatore assegnato
+     * e aggiunge la issue alla lista globale delle issue aperte.
+     * </p>
+     *
+     * @param dashboardData DTO delle statistiche.
+     * @param foundedIssue  La issue aperta corrente.
+     */
     public static void manageDevNumOpenIssues(StatisticDTO dashboardData, IssueDTO foundedIssue) {
         int devIndex = dashboardData.getDevelopers().indexOf(foundedIssue.getAssignedDeveloper());
 
@@ -217,6 +308,18 @@ public class ProjectDAOImpl implements ProjectDAO {
         dashboardData.getOpenIssues().add(foundedIssue);
     }
 
+    /**
+     * Finalizza i calcoli statistici al termine dell'elaborazione di tutte le issue.
+     * <p>
+     * Calcola la durata media di risoluzione per ogni sviluppatore (dividendo la somma totale per il numero di issue)
+     * e la durata media globale del sistema.
+     * </p>
+     *
+     * @param dashboardData        DTO delle statistiche completato con i dati grezzi.
+     * @param numIssueSolvedForDev Lista con il numero di issue risolte per ogni dev.
+     * @param resolvedCount        Numero totale di issue risolte nel sistema.
+     * @param totalDuration        Durata totale accumulata di tutte le risoluzioni.
+     */
     public static void countingAndAverageCalculation(StatisticDTO dashboardData, List<Integer> numIssueSolvedForDev, int resolvedCount, Duration totalDuration) {
         for (int i = 0; i < dashboardData.getAverageResolutionDurations().size(); i++) {
 

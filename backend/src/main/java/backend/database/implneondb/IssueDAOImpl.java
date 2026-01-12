@@ -10,15 +10,44 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Implementazione del Data Access Object (DAO) per la gestione delle segnalazioni (Issue).
+ * <p>
+ * Questa classe gestisce l'interazione diretta con il database (configurato per NeonDB/PostgreSQL)
+ * tramite JDBC. Si occupa di tradurre le operazioni logiche definite nell'interfaccia {@link IssueDAO}
+ * in query SQL concrete per la creazione, ricerca, aggiornamento e assegnazione delle segnalazioni.
+ * </p>
+ */
 @Repository
 public class IssueDAOImpl implements IssueDAO {
 
+    /**
+     * Fonte dati per la connessione al database.
+     * Viene iniettata da Spring e gestisce il pool di connessioni verso il DB persistente.
+     */
     private final DataSource dataSource;
 
+    /**
+     * Costruttore per l'iniezione delle dipendenze.
+     *
+     * @param dataSource Il DataSource configurato per l'accesso al database.
+     */
     public IssueDAOImpl(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
+    /**
+     * Registra una nuova segnalazione nel database.
+     * <p>
+     * Esegue una query di inserimento (INSERT) popolando la tabella 'Issue'.
+     * Gestisce la conversione dei tipi Java in tipi SQL (es. Enum in stringhe per i tipi custom di Postgres,
+     * gestione dei BLOB per le immagini, gestione dei NULL).
+     * Imposta automaticamente la data di creazione al timestamp corrente.
+     * </p>
+     *
+     * @param issueToReport Il DTO contenente i dati della segnalazione da creare.
+     * @throws SQLException In caso di errori di connessione o esecuzione della query SQL.
+     */
     public void reportIssue(IssueDTO issueToReport) throws SQLException{
 
         String query = "INSERT INTO Issue (title, issue_description, issue_priority, issue_image, issue_type, issue_status, tags, report_time, reporter_id, resolver_id, project_id) VALUES "+
@@ -52,6 +81,21 @@ public class IssueDAOImpl implements IssueDAO {
 
     }
 
+    /**
+     * Esegue una ricerca dinamica delle segnalazioni basata su filtri opzionali.
+     * <p>
+     * Costruisce dinamicamente la query SQL (StringBuilder) aggiungendo clausole WHERE
+     * solo per i parametri di ricerca effettivamente forniti (non null o non vuoti).
+     * Utilizza operatori come ILIKE per ricerche testuali case-insensitive su titolo e tag.
+     * </p>
+     *
+     * @param issueToSearch DTO contenente i criteri di filtro (titolo, stato, tipo, priorità, tags).
+     * @param resolverId    ID dello sviluppatore assegnatario (opzionale).
+     * @param reporterId    ID dell'utente reporter (opzionale).
+     * @param projectId     ID del progetto (obbligatorio) a cui le issue devono appartenere.
+     * @return Una lista di {@code IssueDTO} (in formato ridotto per liste) trovate.
+     * @throws SQLException In caso di errori durante l'esecuzione della query dinamica.
+     */
     public List<IssueDTO> searchIssues(IssueDTO issueToSearch, Integer resolverId, Integer reporterId, Integer projectId) throws SQLException{
 
         List<IssueDTO> searchResult;
@@ -130,6 +174,17 @@ public class IssueDAOImpl implements IssueDAO {
 
     }
 
+    /**
+     * Recupera i dettagli completi di una specifica segnalazione.
+     * <p>
+     * Esegue una query di JOIN tra le tabelle 'Issue', 'User_' (per reporter e resolver)
+     * e 'Project' per costruire un oggetto DTO completo di tutte le relazioni.
+     * </p>
+     *
+     * @param issueId L'identificativo univoco della segnalazione.
+     * @return Il DTO completo della segnalazione, o {@code null} se l'ID non esiste.
+     * @throws SQLException In caso di errori di accesso al database.
+     */
     public IssueDTO getIssueById(Integer issueId) throws SQLException{
 
         IssueDTO searchResult = null;
@@ -214,7 +269,17 @@ public class IssueDAOImpl implements IssueDAO {
 
     }
 
-
+    /**
+     * Aggiorna lo stato di una segnalazione esistente.
+     * <p>
+     * Modifica il campo 'issue_status' della tabella 'Issue' per il record specificato.
+     * </p>
+     *
+     * @param id        L'ID della segnalazione da aggiornare.
+     * @param newStatus Il nuovo stato da applicare.
+     * @return {@code true} se almeno una riga è stata aggiornata, {@code false} altrimenti.
+     * @throws SQLException In caso di errori durante l'aggiornamento.
+     */
     public boolean updateStatus(Integer id, IssueStatusDTO newStatus) throws SQLException{
 
         String query = "UPDATE Issue SET issue_status = ?::IssueStatus WHERE issue_id = ?";
@@ -233,6 +298,21 @@ public class IssueDAOImpl implements IssueDAO {
 
     }
 
+    /**
+     * Assegna una segnalazione a uno sviluppatore e ne aggiorna lo stato.
+     * <p>
+     * Esegue una query complessa che:
+     * 1. Cerca l'ID dell'utente basandosi sull'email fornita.
+     * 2. Aggiorna la tabella 'Issue' impostando il resolver_id trovato.
+     * 3. Aggiorna automaticamente lo stato della issue ad 'ASSIGNED'.
+     * Utilizza la clausola RETURNING per ottenere immediatamente i dati dell'utente assegnato.
+     * </p>
+     *
+     * @param id            L'ID della segnalazione da assegnare.
+     * @param resolverEmail L'email dello sviluppatore a cui assegnare la task.
+     * @return UserDTO con i dati dello sviluppatore assegnato se l'operazione ha successo, altrimenti null.
+     * @throws SQLException In caso di errori durante l'aggiornamento o la selezione.
+     */
     public UserDTO assignIssueToDeveloperByEmail(Integer id, String resolverEmail) throws SQLException{
 
         String query = "UPDATE Issue I " +
@@ -269,6 +349,5 @@ public class IssueDAOImpl implements IssueDAO {
         return null;
 
     }
-
 
 }

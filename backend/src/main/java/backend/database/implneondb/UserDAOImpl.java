@@ -12,18 +12,54 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implementazione del Data Access Object (DAO) per la gestione degli utenti.
+ * <p>
+ * Questa classe gestisce l'interazione diretta con il database (configurato per NeonDB/PostgreSQL)
+ * tramite JDBC per tutte le operazioni relative agli utenti: registrazione, login (ricerca per email)
+ * e ricerche avanzate per l'assegnazione di task o la gestione dei team.
+ * </p>
+ */
 @Repository
 public class UserDAOImpl implements UserDAO {
 
+    /**
+     * Fonte dati per la connessione al database.
+     * Gestisce il pool di connessioni verso il DB persistente.
+     */
     private final DataSource dataSource;
 
+    /**
+     * Costante per il nome della colonna identificativa dell'utente nel database.
+     * Utilizzata per evitare errori di digitazione nel recupero dei dati dal ResultSet.
+     */
     private static final String USER_ID = "user_id";
+
+    /**
+     * Costante per il nome della colonna email nel database.
+     */
     private static final String EMAIL = "email";
 
+    /**
+     * Costruttore per l'iniezione delle dipendenze.
+     *
+     * @param dataSource Il DataSource configurato per l'accesso al database.
+     */
     public UserDAOImpl(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
+    /**
+     * Cerca un utente nel database tramite l'indirizzo email (match esatto).
+     * <p>
+     * Utilizzata principalmente per il login, recupera tutti i dati sensibili dell'utente
+     * (inclusa la password hashata) per la verifica delle credenziali.
+     * </p>
+     *
+     * @param email L'email dell'utente da cercare.
+     * @return Il {@code UserDTO} popolato se l'utente esiste, altrimenti {@code null}.
+     * @throws SQLException In caso di errori durante l'esecuzione della query.
+     */
     public UserDTO searchUserByMail(String email) throws SQLException{
 
         UserDTO foundedUser = null;
@@ -55,6 +91,15 @@ public class UserDAOImpl implements UserDAO {
         return foundedUser;
     }
 
+    /**
+     * Registra un nuovo utente nel database.
+     * <p>
+     * Inserisce un nuovo record nella tabella 'User_' con i dati forniti.
+     * </p>
+     *
+     * @param newUser Il DTO contenente email, password (già hashata) e ruolo.
+     * @throws SQLException In caso di errori durante l'inserimento (es email duplicata).
+     */
     public void registerNewUser(UserDTO newUser) throws SQLException{
 
         String query = "INSERT INTO User_ (email, hashed_password, user_type) VALUES "+
@@ -74,6 +119,18 @@ public class UserDAOImpl implements UserDAO {
 
     }
 
+    /**
+     * Cerca sviluppatori o amministratori all'interno di un progetto specifico.
+     * <p>
+     * Esegue una JOIN con la tabella 'Works_on' per trovare utenti che lavorano al progetto indicato
+     * e che hanno un ruolo privilegiato (user_type > 0).
+     * </p>
+     *
+     * @param email     Stringa di ricerca per l'email (match parziale).
+     * @param projectId L'ID del progetto in cui cercare.
+     * @return Lista di utenti trovati.
+     * @throws SQLException In caso di errori durante la ricerca.
+     */
     public List<UserDTO> searchDevOrAdminByEmailAndProject(String email, Integer projectId) throws SQLException{
 
         List<UserDTO> searchResult;
@@ -88,6 +145,17 @@ public class UserDAOImpl implements UserDAO {
 
     }
 
+    /**
+     * Cerca membri all'interno di un team specifico.
+     * <p>
+     * Esegue una JOIN con la tabella 'Works_in' per trovare utenti che appartengono al team indicato.
+     * </p>
+     *
+     * @param email  Stringa di ricerca per l'email (match parziale).
+     * @param teamId L'ID del team in cui cercare.
+     * @return Lista di utenti trovati.
+     * @throws SQLException In caso di errori durante la ricerca.
+     */
     public List<UserDTO> searchDevOrAdminByEmailAndTeam(String email, Integer teamId) throws SQLException{
 
         List<UserDTO> searchResult;
@@ -102,6 +170,19 @@ public class UserDAOImpl implements UserDAO {
 
     }
 
+    /**
+     * Metodo helper privato per eseguire le ricerche parametrizzate.
+     * <p>
+     * Evita la duplicazione di codice gestendo la preparazione dello statement,
+     * l'impostazione dei parametri (email con wildcard e ID oggetto) e il mapping del ResultSet.
+     * </p>
+     *
+     * @param email    La stringa parziale dell'email da cercare.
+     * @param objectId L'ID del contesto (progetto o team).
+     * @param query    La query SQL da eseguire.
+     * @return Una lista di UserDTO popolata con i risultati.
+     * @throws SQLException In caso di errori SQL.
+     */
     private List<UserDTO> performSearch(String email, Integer objectId, String query) throws SQLException {
 
         List<UserDTO> searchResult;
@@ -135,6 +216,17 @@ public class UserDAOImpl implements UserDAO {
         return searchResult;
     }
 
+    /**
+     * Cerca globalmente sviluppatori o amministratori nel sistema.
+     * <p>
+     * Filtra gli utenti in base al ruolo (user_type > 0) ignorando gli utenti base.
+     * Utilizza ILIKE per una ricerca case-insensitive sull'email.
+     * </p>
+     *
+     * @param email La stringa parziale dell'email da cercare.
+     * @return Lista di utenti con ruolo Dev o Admin trovati.
+     * @throws SQLException In caso di errori durante la ricerca.
+     */
     public List<UserDTO> searchDevOrAdminByEmail(String email) throws SQLException{
 
         List<UserDTO> searchResult;
@@ -171,6 +263,5 @@ public class UserDAOImpl implements UserDAO {
         return searchResult;
 
     }
-
 
 }
