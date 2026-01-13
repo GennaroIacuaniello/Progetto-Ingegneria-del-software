@@ -40,12 +40,12 @@ public class UserController {
      * <p>
      * La ricerca può essere contestualizzata a un progetto o a un team specifico, oppure essere globale.
      * La logica di filtraggio segue questo ordine di priorità:
+     * </p>
      * <ul>
      * <li>Se è presente {@code projectId}: cerca tra i membri associati a quel progetto.</li>
      * <li>Altrimenti, se è presente {@code teamId}: cerca tra i candidati validi per quel team (es membri del progetto non ancora nel team).</li>
      * <li>Altrimenti: esegue una ricerca globale nel sistema.</li>
      * </ul>
-     * </p>
      *
      * @param email     L'email (o parte di essa) da cercare. Obbligatoria.
      * @param projectId (Opzionale) L'ID del progetto in cui limitare la ricerca.

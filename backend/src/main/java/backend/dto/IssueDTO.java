@@ -16,6 +16,7 @@ import java.util.Date;
  * <p>
  * <strong>Utilizzo di Lombok:</strong><br>
  * Per ridurre la verbosità del codice ("boilerplate code"), questa classe sfrutta le seguenti annotazioni:
+ * </p>
  * <ul>
  * <li>{@link Data @Data}: Genera automaticamente i metodi <strong>getter</strong> e <strong>setter</strong> per tutti i campi,
  * oltre all'implementazione standard dei metodi {@code toString()}, {@code equals()} e {@code hashCode()}.</li>
@@ -24,7 +25,6 @@ import java.util.Date;
  * <li>{@link AllArgsConstructor @AllArgsConstructor}: Genera un <strong>costruttore completo</strong> che accetta
  * come argomenti tutti i campi della classe, utile per creare istanze popolate in un'unica istruzione.</li>
  * </ul>
- * </p>
  */
 @Data
 @NoArgsConstructor

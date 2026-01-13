@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"backend"},{"l":"backend.config"},{"l":"backend.controller"},{"l":"backend.database.dao"},{"l":"backend.database.implneondb"},{"l":"backend.dto"},{"l":"backend.exception"},{"l":"backend.model"}];updateSearchResults();

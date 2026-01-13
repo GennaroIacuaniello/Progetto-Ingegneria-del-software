@@ -114,12 +114,14 @@ public class ProjectDAOImpl implements ProjectDAO {
      * <p>
      * Esegue un'analisi approfondita recuperando tutte le issue e i relativi risolutori.
      * Calcola metriche come:
+     * </p>
      * <ul>
      * <li>Numero di issue aperte e chiuse.</li>
      * <li>Issue non assegnate.</li>
      * <li>Tempo medio di risoluzione totale e per singolo sviluppatore.</li>
      * <li>Carico di lavoro per sviluppatore (issue aperte vs chiuse).</li>
      * </ul>
+     * <p>
      * Utilizza metodi helper statici per organizzare la logica di elaborazione dei risultati.
      * </p>
      *

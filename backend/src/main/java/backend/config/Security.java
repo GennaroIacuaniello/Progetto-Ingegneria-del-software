@@ -40,6 +40,7 @@ public class Security {
      * Configura la catena dei filtri di sicurezza (Security Filter Chain).
      * <p>
      * Imposta le regole principali:
+     * </p>
      * <ul>
      * <li>Disabilita CSRF (non necessario per JWT/Stateless).</li>
      * <li>Autorizza liberamente gli endpoint di autenticazione (/auth/**).</li>
@@ -47,7 +48,6 @@ public class Security {
      * <li>Imposta la gestione della sessione su STATELESS.</li>
      * <li>Inserisce il {@code JWTRequestFilter} prima del filtro di autenticazione standard.</li>
      * </ul>
-     * </p>
      *
      * @param http L'oggetto per la configurazione della sicurezza HTTP.
      * @return La catena di filtri costruita.

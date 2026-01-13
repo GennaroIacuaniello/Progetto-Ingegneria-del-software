@@ -52,6 +52,7 @@ public class JWTRequestFilter extends OncePerRequestFilter {
      * Esegue la logica di filtraggio per ogni richiesta HTTP.
      * <p>
      * Il metodo segue questi passaggi:
+     * </p>
      * <ol>
      * <li>Controlla l'header "Authorization" per verificare la presenza del prefisso "Bearer ".</li>
      * <li>Estrae il token JWT e lo analizza per ottenere lo username (subject).</li>
@@ -60,7 +61,6 @@ public class JWTRequestFilter extends OncePerRequestFilter {
      * <li>Se il token è valido, crea un oggetto di autenticazione e lo imposta nel {@link SecurityContextHolder},
      * permettendo a Spring Security di riconoscere l'utente come loggato.</li>
      * </ol>
-     * </p>
      *
      * @param request  La richiesta HTTP in arrivo.
      * @param response La risposta HTTP in uscita.

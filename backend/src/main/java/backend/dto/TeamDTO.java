@@ -14,12 +14,12 @@ import java.util.List;
  * </p>
  * <p>
  * <strong>Utilizzo di Lombok:</strong><br>
+ * </p>
  * <ul>
  * <li>{@link Data @Data}: Genera automaticamente getter, setter, toString, equals e hashCode.</li>
  * <li>{@link NoArgsConstructor @NoArgsConstructor}: Genera il costruttore vuoto.</li>
  * <li>{@link AllArgsConstructor @AllArgsConstructor}: Genera il costruttore con tutti gli argomenti.</li>
  * </ul>
- * </p>
  */
 @Data
 @NoArgsConstructor
