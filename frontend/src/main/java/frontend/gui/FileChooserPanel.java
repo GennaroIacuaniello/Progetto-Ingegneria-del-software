@@ -9,10 +9,12 @@ import java.io.File;
  * Pannello composito per la selezione e gestione di un file allegato.
  * <p>
  * Questa classe estende {@link RoundedPanel} e funge da contenitore logico e grafico per:
+ * </p>
  * <ul>
  * <li>Il pulsante di apertura del selettore file ({@link FileChooserButton}).</li>
  * <li>Il componente che mostra il nome del file selezionato e permette di rimuoverlo ({@link FileButton}).</li>
  * </ul>
+ * <p>
  * Mantiene lo stato del file correntemente selezionato e coordina l'aggiornamento dell'interfaccia
  * quando un file viene aggiunto o rimosso.
  * </p>

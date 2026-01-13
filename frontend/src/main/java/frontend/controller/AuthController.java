@@ -70,12 +70,12 @@ public class AuthController {
      * <p>
      * Prepara una richiesta di login, la serializza in JSON e la invia al backend.
      * Se la risposta è positiva (HTTP 200):
+     * </p>
      * <ol>
      * <li>Deserializza la risposta per ottenere il token JWT e i dati utente.</li>
      * <li>Imposta il token nel {@link ApiClient} per le richieste future.</li>
      * <li>Memorizza l'utente loggato in {@code loggedUser}.</li>
      * </ol>
-     * </p>
      *
      * @param email    L'indirizzo email dell'utente.
      * @param password La password dell'utente.

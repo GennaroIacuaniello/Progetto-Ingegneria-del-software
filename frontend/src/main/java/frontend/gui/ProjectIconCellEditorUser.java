@@ -10,12 +10,14 @@ import java.awt.*;
  * <p>
  * Questa classe estende {@link DefaultCellEditor} e trasforma specifiche celle della tabella progetti
  * in pulsanti interattivi (icone). Gestisce la logica di navigazione quando un utente clicca su un'icona.
+ * </p>
  * <br>
  * Per un utente standard, le azioni disponibili sono limitate a:
  * <ul>
  * <li><b>SEGNALA ISSUE:</b> Apre la schermata per creare una nuova segnalazione.</li>
  * <li><b>ISSUE SEGNALATE:</b> Apre la lista delle segnalazioni fatte dall'utente in quel progetto.</li>
  * </ul>
+ * <p>
  * Questa classe viene estesa da {@link ProjectIconCellEditorDeveloper} e {@link ProjectIconCellEditorAdmin}
  * per aggiungere ulteriori funzionalità.
  * </p>
@@ -110,12 +112,12 @@ class ProjectIconCellEditorUser extends DefaultCellEditor {
      * <p>
      * Questo metodo viene chiamato quando l'editing termina (al click del bottone).
      * La logica è la seguente:
+     * </p>
      * <ol>
      * <li>Recupera il nome della colonna per capire quale azione l'utente vuole eseguire.</li>
      * <li>Imposta il progetto attivo nel {@link ProjectController} prendendo ID (colonna 0) e Nome (colonna 1) dalla riga selezionata.</li>
      * <li>In base all'azione, sostituisce il pannello centrale della Home con la nuova vista (ReportIssue o SearchReportedIssue).</li>
      * </ol>
-     * </p>
      *
      * @return {@code null}, poiché l'azione è la navigazione, non la modifica dei dati.
      */

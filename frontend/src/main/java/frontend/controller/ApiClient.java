@@ -107,13 +107,13 @@ public class ApiClient {
      * Invia una richiesta HTTP al backend gestendo automaticamente errori e autenticazione.
      * <p>
      * Esegue i seguenti passaggi:
+     * </p>
      * <ol>
      * <li>Aggiunge l'header "Authorization" se il token è presente.</li>
      * <li>Invia la richiesta e attende la risposta.</li>
      * <li>Se riceve un errore 401 o 403 (e non è una richiesta di login), forza il logout dell'utente.</li>
      * <li>Gestisce eccezioni di I/O (server non raggiungibile) mostrando un errore all'utente.</li>
      * </ol>
-     * </p>
      *
      * @param requestBuilder Il builder della richiesta HTTP pre-configurato (URL, metodo, body).
      * @return La risposta HTTP ricevuta.

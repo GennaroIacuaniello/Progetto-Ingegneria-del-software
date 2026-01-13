@@ -15,22 +15,42 @@ import java.awt.event.MouseEvent;
  * <p>
  * Questa classe estende {@link JFrame} e fornisce l'interfaccia per creare un nuovo account.
  * Le caratteristiche principali includono:
+ * </p>
  * <ul>
  * <li>Campi per Email e Password con validazione e placeholder dinamici.</li>
  * <li>Integrazione con {@link AuthController} per inviare la richiesta di registrazione.</li>
  * <li>Navigazione per tornare alla pagina di Login se l'utente possiede già un account.</li>
  * </ul>
+ * <p>
  * Nota: Questa pagina registra di default utenti con ruolo "User" (livello 0).
  * </p>
  */
 public class RegistrationPage extends JFrame {
 
+    /**
+     * Textfield per la mail.
+     */
     private JTextField emailField;
+
+    /**
+     * Textfield per la password.
+     */
     private JPasswordField passwordField;
 
     // Costanti grafiche per mantenere coerenza stilistica
+    /**
+     * Dimensioni grafiche.
+     */
     private final Dimension INPUT_DIMENSION = new Dimension(300, 45);
+
+    /**
+     * Colore principale della schermata.
+     */
     private final Color PRIMARY_COLOR = new Color(0, 120, 215);
+
+    /**
+     * Colore principale del testo.
+     */
     private final Color TEXT_COLOR = new Color(50, 50, 50);
 
     /**

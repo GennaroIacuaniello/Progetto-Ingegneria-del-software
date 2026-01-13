@@ -36,6 +36,7 @@ public class ReportedIssueSearchResultsPanelDeveloper extends ReportedIssueSearc
      * Crea e configura la tabella dei risultati specifica per lo sviluppatore.
      * <p>
      * Configura la JTable con le seguenti caratteristiche:
+     * </p>
      * <ul>
      * <li>Utilizza il renderer grafico standard (icona "showIssueIconButton").</li>
      * <li><b>Differenza Chiave:</b> Imposta {@link IconCellEditorReportedIssueDeveloper} come editor della cella.
@@ -43,7 +44,6 @@ public class ReportedIssueSearchResultsPanelDeveloper extends ReportedIssueSearc
      * invece di quella in sola lettura per utenti.</li>
      * <li>Imposta l'altezza delle righe e lo stile dell'header (non ridimensionabile, colore specifico).</li>
      * </ul>
-     * </p>
      *
      * @param mainFrame    Il frame principale.
      * @param issuesTitles La lista dei titoli per popolare il modello dati.

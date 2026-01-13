@@ -32,6 +32,7 @@ public class DashBoard extends MyDialog {
      * Costruttore della Dashboard.
      * <p>
      * Esegue le seguenti operazioni:
+     * </p>
      * <ol>
      * <li>Invoca il costruttore della superclasse.</li>
      * <li>Chiama {@link ProjectController#createDashBoard()} per recuperare i dati statistici.</li>
@@ -39,7 +40,6 @@ public class DashBoard extends MyDialog {
      * <li>Configura l'area di visualizzazione tramite {@link #setSearchViewResults()}.</li>
      * <li>Istanzia {@link ReportResults} passandogli un riferimento a se stessa, avviando così la popolazione dei grafici.</li>
      * </ol>
-     * </p>
      *
      * @param parent Il frame principale dell'applicazione (parent window).
      */

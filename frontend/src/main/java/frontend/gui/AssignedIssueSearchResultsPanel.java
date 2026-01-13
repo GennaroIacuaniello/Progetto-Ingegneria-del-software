@@ -36,12 +36,12 @@ public class AssignedIssueSearchResultsPanel extends ReportedIssueSearchResultsP
      * Crea e configura la tabella per visualizzare i risultati della ricerca.
      * <p>
      * Sovrascrive il metodo della superclasse per utilizzare componenti specifici per le issue assegnate:
+     * </p>
      * <ul>
      * <li>Imposta {@link IconCellRenderer} per mostrare l'icona "visualizza" (occhio) nella colonna delle azioni.</li>
      * <li>Imposta {@link IconCellEditorAssignedIssue} come editor, che gestisce il click sull'icona aprendo la finestra di dettaglio con permessi di modifica.</li>
      * <li>Configura l'aspetto grafico dell'header e l'altezza delle righe.</li>
      * </ul>
-     * </p>
      *
      * @param mainFrame    Il frame principale.
      * @param issuesTitles La lista dei titoli da visualizzare.

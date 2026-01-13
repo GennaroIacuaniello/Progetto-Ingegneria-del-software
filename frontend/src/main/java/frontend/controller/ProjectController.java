@@ -23,13 +23,13 @@ import java.util.logging.Logger;
  * Controller singleton per la gestione delle operazioni sui progetti lato client.
  * <p>
  * Si occupa di:
+ * </p>
  * <ul>
  * <li>Cercare progetti esistenti nel backend.</li>
  * <li>Creare nuovi progetti.</li>
  * <li>Mantenere il riferimento al progetto attualmente selezionato ({@code project}).</li>
  * <li>Recuperare e fornire i dati statistici per la Dashboard ({@code dashboardData}).</li>
  * </ul>
- * </p>
  */
 @SuppressWarnings("java:S6548")
 public class ProjectController {
@@ -108,12 +108,12 @@ public class ProjectController {
      * <p>
      * Codifica il parametro di ricerca per l'URL e invia una richiesta GET.
      * Gestisce tre casi:
+     * </p>
      * <ul>
      * <li>**200 OK**: Popola la lista {@code projects} con i risultati.</li>
      * <li>**204 No Content**: Svuota la lista (nessun progetto trovato).</li>
      * <li>**Errore**: Logga l'errore e svuota la lista.</li>
      * </ul>
-     * </p>
      *
      * @param projectName Il nome (o parte di esso) del progetto da cercare.
      * @return {@code true} se l'operazione (ricerca o nessun risultato) va a buon fine senza errori di rete.

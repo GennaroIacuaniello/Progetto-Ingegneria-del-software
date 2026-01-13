@@ -44,19 +44,21 @@ public class RemoveMemberCellEditor extends DefaultCellEditor {
      * Costruttore dell'editor.
      * <p>
      * Inizializza il pulsante con uno stile specifico:
+     * </p>
      * <ul>
      * <li>Sfondo trasparente e nessun bordo (aspetto testuale).</li>
      * <li>Colore del testo rosso (RGB 220, 53, 69) per indicare pericolo/eliminazione.</li>
      * <li>Cursore a mano per indicare cliccabilità.</li>
      * </ul>
+     * <p>
      * Configura l'azione al click:
+     * </p>
      * <ol>
      * <li>Identifica la riga selezionata.</li>
      * <li>Interrompe l'editing della cella.</li>
      * <li>Estrae l'email del membro dalla colonna 0.</li>
      * <li>Apre {@link ConfirmDeleteMemberDialog} passando l'email e il riferimento al dialog padre per il refresh.</li>
      * </ol>
-     * </p>
      *
      * @param mainFrame    Il frame principale dell'applicazione.
      * @param table        La tabella dei membri.

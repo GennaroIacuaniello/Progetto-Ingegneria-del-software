@@ -36,13 +36,13 @@ public class IconCellEditorAllIssue extends IconCellEditorAssignedIssue{
      * Definisce l'azione da eseguire quando l'utente attiva l'editor (clicca sull'icona).
      * <p>
      * Esegue i seguenti passaggi:
+     * </p>
      * <ol>
      * <li>Identifica la riga selezionata nella tabella.</li>
      * <li>Comunica al {@link IssueController} quale issue è stata selezionata.</li>
      * <li>Richiede al controller di scaricare i dettagli completi dell'issue ({@code getIssueById}).</li>
      * <li>In caso di successo, istanzia e mostra la finestra di dialogo {@link ShowIssueAdmin} per visualizzare i dettagli.</li>
      * </ol>
-     * </p>
      *
      * @return {@code null}, poiché l'editor non deve restituire un valore da salvare nel modello della tabella, ma solo innescare l'apertura del dialog.
      */

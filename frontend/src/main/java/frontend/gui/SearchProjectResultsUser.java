@@ -13,13 +13,13 @@ import java.util.Map;
  * in una tabella interattiva ({@link JTable}) integrata nella GUI.
  * <br>
  * Funge da "View Builder" e da classe base per le specializzazioni di ruolo:
+ * </p>
  * <ul>
  * <li>Definisce quali azioni sono disponibili (per l'utente base: "Report" e "Reported").</li>
  * <li>Associa le icone alle azioni.</li>
  * <li>Costruisce il {@link javax.swing.table.TableModel}.</li>
  * <li>Configura i Renderer (immagini) e gli Editor (click) per le colonne pulsante.</li>
  * </ul>
- * </p>
  */
 public class SearchProjectResultsUser {
 
@@ -35,13 +35,13 @@ public class SearchProjectResultsUser {
      * Costruttore principale.
      * <p>
      * Esegue la sequenza di inizializzazione:
+     * </p>
      * <ol>
      * <li>Configura la mappa delle icone e le azioni disponibili (sovrascrivibili dalle sottoclassi).</li>
      * <li>Costruisce la tabella completa chiamando {@link #createTable}.</li>
      * <li><b>Aggiorna la vista:</b> Invia immediatamente la tabella generata al pannello Home tramite
      * {@code homePanel.updateSearchProjectViewResults()}.</li>
      * </ol>
-     * </p>
      *
      * @param mainFrame     Il frame principale.
      * @param homePanel     Il pannello Home che ospiterà i risultati.
@@ -60,10 +60,12 @@ public class SearchProjectResultsUser {
      * Inizializza la mappa che associa i nomi logici delle azioni ai percorsi delle icone.
      * <p>
      * Per l'utente base:
+     * </p>
      * <ul>
      * <li>"Report" -> Icona per segnalare una issue.</li>
      * <li>"Reported" -> Icona per vedere le issue segnalate.</li>
      * </ul>
+     * <p>
      * Questo metodo è {@code protected} per essere esteso/sovrascritto da Developer e Admin.
      * </p>
      */
@@ -87,6 +89,7 @@ public class SearchProjectResultsUser {
      * Crea e configura la JTable dei risultati.
      * <p>
      * Questo è il metodo core della classe:
+     * </p>
      * <ol>
      * <li>Crea il modello dati tramite {@link #createTableModel}.</li>
      * <li>Itera sull'array {@code buttonActions} per configurare le colonne dinamiche:
@@ -98,7 +101,6 @@ public class SearchProjectResultsUser {
      * </li>
      * <li>Configura l'aspetto estetico (altezza righe, header non riordinabile).</li>
      * </ol>
-     * </p>
      *
      * @return La tabella configurata pronta per essere visualizzata.
      */
@@ -137,12 +139,14 @@ public class SearchProjectResultsUser {
      * Costruisce una matrice di oggetti per popolare la tabella.
      * <br>
      * Struttura base (4 colonne):
+     * </p>
      * <ol>
      * <li><b>0:</b> ID Progetto.</li>
      * <li><b>1:</b> Nome Progetto.</li>
      * <li><b>2:</b> Stringa "Report" (chiave per l'azione).</li>
      * <li><b>3:</b> Stringa "Reported" (chiave per l'azione).</li>
      * </ol>
+     * <p>
      * Restituisce {@link ProjectTableModelUser} che definisce quali celle sono editabili.
      * </p>
      */

@@ -44,11 +44,11 @@ public class IssueTableModel extends AbstractTableModel {
      * Definisce i nomi delle colonne della tabella.
      * <p>
      * Configura la tabella con due colonne:
+     * </p>
      * <ol>
      * <li><b>TITOLO ISSUE:</b> Il testo descrittivo della segnalazione.</li>
      * <li><b>VEDI ISSUE:</b> La colonna contenente il pulsante di azione.</li>
      * </ol>
-     * </p>
      */
     protected void setColumnNames() {
 
@@ -92,12 +92,12 @@ public class IssueTableModel extends AbstractTableModel {
      * Restituisce la classe degli oggetti contenuti nella colonna specificata.
      * <p>
      * Questo metodo è fondamentale per il rendering corretto:
+     * </p>
      * <ul>
      * <li>Se l'indice è 1 (seconda colonna), restituisce {@link IconButton}.class. Questo segnala alla JTable
      * di utilizzare il renderer/editor personalizzato per i pulsanti invece di visualizzare il testo "toString()".</li>
      * <li>Per le altre colonne, usa il comportamento di default.</li>
      * </ul>
-     * </p>
      */
     @Override
     public Class<?> getColumnClass(int columnIndex) {

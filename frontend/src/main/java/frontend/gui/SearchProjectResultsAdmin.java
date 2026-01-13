@@ -12,11 +12,11 @@ import java.util.Map;
  * Questa classe estende {@link SearchProjectResultsDeveloper} e configura la tabella dei risultati
  * con il set massimo di funzionalità disponibili.
  * Rispetto alla vista sviluppatore, aggiunge due colonne di azione fondamentali per l'amministrazione:
+ * </p>
  * <ul>
  * <li><b>View (Vedi tutte le issue):</b> Per monitorare l'intero stato del progetto.</li>
  * <li><b>Teams (Gestisci Team):</b> Per assegnare o rimuovere membri dal progetto.</li>
  * </ul>
- * </p>
  */
 public class SearchProjectResultsAdmin extends SearchProjectResultsDeveloper{
 
@@ -40,11 +40,11 @@ public class SearchProjectResultsAdmin extends SearchProjectResultsDeveloper{
      * Definisce la mappa tra i nomi delle azioni e le icone corrispondenti.
      * <p>
      * Aggiunge le icone specifiche per l'admin:
+     * </p>
      * <ul>
      * <li>"View" -> {@code viewIssues.png} (Occhio)</li>
      * <li>"Teams" -> {@code teamsIconButton.png} (Gruppo di persone)</li>
      * </ul>
-     * </p>
      */
     @Override
     protected void setIconUrlMap() {
@@ -74,6 +74,7 @@ public class SearchProjectResultsAdmin extends SearchProjectResultsDeveloper{
      * Crea il modello dati per la tabella (Data Model).
      * <p>
      * Costruisce una matrice con 7 colonne:
+     * </p>
      * <ol>
      * <li>ID Progetto</li>
      * <li>Nome Progetto</li>
@@ -83,6 +84,7 @@ public class SearchProjectResultsAdmin extends SearchProjectResultsDeveloper{
      * <li>View (Azione Admin)</li>
      * <li>Teams (Azione Admin)</li>
      * </ol>
+     * <p>
      * Restituisce un'istanza di {@link ProjectTableModelAdmin} che rende editabili (cliccabili) le ultime 5 colonne.
      * </p>
      *
@@ -113,12 +115,12 @@ public class SearchProjectResultsAdmin extends SearchProjectResultsDeveloper{
      * Costruisce e configura la JTable effettiva.
      * <p>
      * Itera sulle 5 colonne di azione (dalla 2 alla 6) e per ognuna:
+     * </p>
      * <ul>
      * <li>Imposta il <b>Renderer</b> per disegnare l'icona corretta.</li>
      * <li>Imposta l'<b>Editor</b> usando {@link ProjectIconCellEditorAdmin}. Questo è cruciale perché
      * collega il click dell'admin alle funzioni di gestione team e supervisione globale.</li>
      * </ul>
-     * </p>
      *
      * @param mainFrame    Il frame principale.
      * @param homePanel    Il pannello home.

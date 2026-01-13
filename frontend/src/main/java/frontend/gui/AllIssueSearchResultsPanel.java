@@ -36,12 +36,12 @@ public class AllIssueSearchResultsPanel extends AssignedIssueSearchResultsPanel 
      * <p>
      * Sovrascrive il metodo della superclasse per utilizzare componenti specifici per la gestione
      * delle issue globali:
+     * </p>
      * <ul>
      * <li>Imposta {@link IconCellRenderer} per mostrare l'icona "visualizza" nella colonna delle azioni.</li>
      * <li>Imposta {@link IconCellEditorAllIssue} come editor, gestendo il click sull'icona per aprire i dettagli.</li>
      * <li>Configura l'aspetto grafico dell'header e delle righe.</li>
      * </ul>
-     * </p>
      *
      * @param mainFrame    Il frame principale, passato agli editor per gestire i dialoghi.
      * @param issuesTitles La lista dei dati da visualizzare.

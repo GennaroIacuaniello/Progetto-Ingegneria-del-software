@@ -43,6 +43,7 @@ public class ManageMembersTextCellEditor extends DefaultCellEditor {
      * Inizializza il componente {@link JButton} rimuovendo le decorazioni standard (bordi, sfondo)
      * per farlo sembrare un semplice testo cliccabile.
      * Configura l'azione al click:
+     * </p>
      * <ol>
      * <li>Identifica la riga selezionata nella tabella.</li>
      * <li>Recupera l'ID del team (presumibilmente nella colonna 0, indice 0).</li>
@@ -50,7 +51,6 @@ public class ManageMembersTextCellEditor extends DefaultCellEditor {
      * <li>Interrompe l'editing della cella.</li>
      * <li>Apre la finestra {@link ManageMembersDialog}.</li>
      * </ol>
-     * </p>
      *
      * @param mainFrame Il frame principale dell'applicazione.
      * @param table     La tabella che contiene questo editor.

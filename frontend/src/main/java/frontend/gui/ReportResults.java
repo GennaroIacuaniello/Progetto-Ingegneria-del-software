@@ -15,10 +15,12 @@ import java.util.List;
  * <p>
  * Questa classe agisce come un ponte tra i dati statistici (forniti dai Controller) e l'interfaccia grafica.
  * È in grado di generare visualizzazioni tabellari per due contesti diversi:
+ * </p>
  * <ol>
  * <li><b>Report di Team:</b> Statistiche specifiche per i membri di un singolo team (via {@link TeamController}).</li>
  * <li><b>Dashboard di Progetto:</b> Statistiche globali per tutti gli sviluppatori del progetto (via {@link ProjectController}).</li>
  * </ol>
+ * <p>
  * La visualizzazione prodotta include una tabella di dettaglio per ogni sviluppatore e una riga di riepilogo con i totali.
  * </p>
  */

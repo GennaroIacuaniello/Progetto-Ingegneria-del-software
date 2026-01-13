@@ -18,14 +18,32 @@ import java.awt.event.FocusEvent;
  */
 public class DevOrAdminCreationDialog extends JDialog {
 
+    /**
+     * Textfield per la mail.
+     */
     private JTextField emailField;
+
+    /**
+     * Textfield per la password.
+     */
     private JPasswordField passwordField;
+
+    /**
+     * CheckBox per il ruolo di admin.
+     */
     private JCheckBox adminCheckBox;
 
-    // Dimensioni standard per i campi di input
-    private final Dimension INPUT_DIMENSION = new Dimension(350, 50);
-    // Colore primario per il pulsante di creazione e l'icona occhio attiva
-    private final Color PRIMARY_COLOR = new Color(0, 120, 215);
+
+    /**
+     * Dimensioni standard per i campi di input.
+     */
+    private final Dimension inputDimension = new Dimension(350, 50);
+
+
+    /**
+     * Colore primario per il pulsante di creazione e l'icona occhio attiva.
+     */
+    private final Color primaryColor = new Color(0, 120, 215);
 
     /**
      * Costruttore della finestra di dialogo.
@@ -116,9 +134,9 @@ public class DevOrAdminCreationDialog extends JDialog {
     private JPanel createEmailPanel(String placeholder) {
 
         RoundedPanel wrapper = new RoundedPanel(new GridBagLayout());
-        wrapper.setPreferredSize(INPUT_DIMENSION);
-        wrapper.setMinimumSize(INPUT_DIMENSION);
-        wrapper.setMaximumSize(INPUT_DIMENSION);
+        wrapper.setPreferredSize(inputDimension);
+        wrapper.setMinimumSize(inputDimension);
+        wrapper.setMaximumSize(inputDimension);
         wrapper.setBackground(Color.WHITE);
         wrapper.setRoundBorderColor(ColorsList.BORDER_COLOR);
         wrapper.setBorder(new EmptyBorder(5, 10, 5, 10));
@@ -156,9 +174,9 @@ public class DevOrAdminCreationDialog extends JDialog {
     private JPanel createPasswordPanel(String placeholder) {
 
         RoundedPanel wrapper = new RoundedPanel(new GridBagLayout());
-        wrapper.setPreferredSize(INPUT_DIMENSION);
-        wrapper.setMinimumSize(INPUT_DIMENSION);
-        wrapper.setMaximumSize(INPUT_DIMENSION);
+        wrapper.setPreferredSize(inputDimension);
+        wrapper.setMinimumSize(inputDimension);
+        wrapper.setMaximumSize(inputDimension);
         wrapper.setBackground(Color.WHITE);
         wrapper.setRoundBorderColor(ColorsList.BORDER_COLOR);
         wrapper.setBorder(new EmptyBorder(5, 10, 5, 5));
@@ -210,7 +228,7 @@ public class DevOrAdminCreationDialog extends JDialog {
 
             if (passwordField.getEchoChar() == '•') {
                 passwordField.setEchoChar((char) 0); // Mostra password
-                eyeButton.setForeground(PRIMARY_COLOR);
+                eyeButton.setForeground(primaryColor);
             } else {
                 passwordField.setEchoChar('•'); // Nascondi password
                 eyeButton.setForeground(Color.GRAY);
@@ -236,7 +254,7 @@ public class DevOrAdminCreationDialog extends JDialog {
         JButton createButton = new JButton("Crea Utenza");
         createButton.setFont(new Font("Segoe UI", Font.BOLD, 16));
         createButton.setForeground(Color.WHITE);
-        createButton.setBackground(PRIMARY_COLOR);
+        createButton.setBackground(primaryColor);
         createButton.setFocusPainted(false);
         createButton.setBorderPainted(false);
         createButton.setCursor(new Cursor(Cursor.HAND_CURSOR));

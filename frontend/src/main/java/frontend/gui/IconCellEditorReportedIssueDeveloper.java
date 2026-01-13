@@ -36,12 +36,12 @@ public class IconCellEditorReportedIssueDeveloper extends IconCellEditorReported
      * Gestisce l'azione al click sull'icona.
      * <p>
      * Il flusso operativo è:
+     * </p>
      * <ol>
      * <li>Recupera l'issue selezionata dalla riga della tabella.</li>
      * <li>Scarica i dettagli completi tramite {@link IssueController}.</li>
      * <li>Apre la finestra di dialogo {@link ShowReportedIssueDeveloper} per mostrare i dettagli.</li>
      * </ol>
-     * </p>
      *
      * @return {@code null}.
      */

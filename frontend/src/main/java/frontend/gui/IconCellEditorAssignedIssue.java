@@ -36,13 +36,13 @@ public class IconCellEditorAssignedIssue extends IconCellEditorReportedIssueDeve
      * Esegue l'azione associata al click sulla cella.
      * <p>
      * La logica è la seguente:
+     * </p>
      * <ol>
      * <li>Individua l'issue corrispondente alla riga selezionata nella tabella.</li>
      * <li>Recupera i dettagli completi dell'issue tramite {@link IssueController#getIssueById()}.</li>
      * <li>Se il recupero ha successo, apre la finestra di dialogo {@link ShowAssignedIssue},
      * specifica per le issue in carico all'utente, permettendo azioni di modifica stato.</li>
      * </ol>
-     * </p>
      *
      * @return {@code null}, in quanto l'azione principale è l'apertura del dialog e non la modifica del valore della cella nel modello.
      */

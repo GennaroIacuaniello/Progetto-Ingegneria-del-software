@@ -27,12 +27,12 @@ public class DisposeTimers {
      * Costruttore che inizializza e avvia la sequenza di chiusura automatica.
      * <p>
      * La sequenza temporale è la seguente:
+     * </p>
      * <ol>
      * <li><b>Attesa iniziale:</b> La finestra rimane pienamente visibile per 1500ms.</li>
      * <li><b>Dissolvenza:</b> Dopo 1500ms, parte {@code decreaseOpacityTimer} che riduce l'opacità dell'1% ogni 10ms (durata totale dissolvenza: 1 secondo).</li>
      * <li><b>Chiusura:</b> Dopo 2500ms totali (1500ms attesa + 1000ms dissolvenza), la finestra viene chiusa definitivamente.</li>
      * </ol>
-     * </p>
      *
      * @param window La finestra {@link JWindow} su cui applicare l'animazione e la chiusura.
      */

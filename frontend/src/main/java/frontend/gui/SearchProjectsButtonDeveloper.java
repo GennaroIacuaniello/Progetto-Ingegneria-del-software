@@ -34,11 +34,13 @@ public class SearchProjectsButtonDeveloper extends SearchProjectsButtonUser {
      * Esegue la logica di ricerca e visualizzazione per lo Sviluppatore.
      * <p>
      * Il metodo esegue i seguenti passaggi:
+     * </p>
      * <ol>
      * <li>Recupera il termine di ricerca dal campo di testo (gestendo il placeholder).</li>
      * <li>Invoca {@link ProjectController#searchProjectsByName} per cercare i progetti nel database.</li>
      * <li>Se la ricerca ha successo, istanzia {@link SearchProjectResultsDeveloper}.</li>
      * </ol>
+     * <p>
      * L'uso di {@code SearchProjectResultsDeveloper} è fondamentale perché genera una tabella dei risultati
      * che include la colonna "Assigned" (Issue Assegnate), funzionalità non presente per l'utente base.
      * </p>

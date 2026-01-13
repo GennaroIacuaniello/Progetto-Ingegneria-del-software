@@ -13,11 +13,13 @@ import java.util.ArrayList;
  * dinamicamente molteplici etichette (tag) a una segnalazione.
  * <br>
  * Struttura:
+ * </p>
  * <ul>
  * <li>Un pulsante "Aggiungi" (+) in alto a destra.</li>
  * <li>Un'area scorrevole ({@link JScrollPane}) che contiene la lista dei pannelli.</li>
  * <li>Una lista di {@link TagPanel}, ognuno rappresentante una singola etichetta modificabile.</li>
  * </ul>
+ * <p>
  * <b>Nota:</b> La classe è annotata con {@code @Getter} per esporre la lista {@code tagPanels},
  * permettendo a {@link TagsButton} di recuperare i testi inseriti dall'utente.
  * </p>
@@ -31,7 +33,14 @@ public class TagsMenu extends MyDialog{
      */
     private final ArrayList<TagPanel> tagPanels = new ArrayList<>();
 
+    /**
+     * ScrollPane in cui inserire i dati.
+     */
     private JScrollPane scrollPane;
+
+    /**
+     * Pannello dei tag della issue.
+     */
     private JPanel tagsPanel;
 
     /**

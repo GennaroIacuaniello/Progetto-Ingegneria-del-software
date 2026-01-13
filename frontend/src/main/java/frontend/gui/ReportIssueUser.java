@@ -12,6 +12,7 @@ import java.util.Objects;
  * <p>
  * Questa classe estende {@link RoundedPanel} e fornisce un form per inserire i dettagli di un problema o richiesta.
  * I campi disponibili per l'utente base sono:
+ * </p>
  * <ul>
  * <li><b>Titolo:</b> Breve riassunto della segnalazione.</li>
  * <li><b>Descrizione:</b> Dettagli estesi del problema.</li>
@@ -20,6 +21,7 @@ import java.util.Objects;
  * <li><b>Allegati:</b> Caricamento file (tramite {@link FileChooserPanel}).</li>
  * </ul>
  * <br>
+ * <p>
  * Nota: Questa classe funge da base per {@link ReportIssueDeveloper}. I metodi di posizionamento (Constraints)
  * sono {@code protected} proprio per permettere alla sottoclasse di riorganizzare il layout quando aggiunge nuovi campi (come la Priorità).
  * </p>

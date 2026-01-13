@@ -95,13 +95,13 @@ public class IconCellEditorReportedIssueUser extends DefaultCellEditor {
      * Esegue l'azione principale quando l'utente clicca sull'icona.
      * <p>
      * La logica implementata è:
+     * </p>
      * <ol>
      * <li>Identifica l'issue corrispondente alla riga selezionata.</li>
      * <li>Imposta l'issue corrente nel {@link IssueController}.</li>
      * <li>Richiede i dettagli completi dell'issue al backend.</li>
      * <li>Se il recupero ha successo, apre la finestra di dialogo {@link ShowReportedIssueUser}.</li>
      * </ol>
-     * </p>
      *
      * @return {@code null}, poiché l'azione non produce un valore da salvare nel modello della tabella, ma apre solo una vista.
      */

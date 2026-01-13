@@ -8,10 +8,12 @@ import java.awt.*;
  * <p>
  * Questa classe estende {@link RoundedPanel} e agisce come contenitore macroscopico.
  * Il layout è diviso verticalmente in due sezioni:
+ * </p>
  * <ol>
  * <li><b>Area Superiore:</b> Contiene il pannello di ricerca {@link ReportedIssueSearchPanelUser} con i filtri.</li>
  * <li><b>Area Inferiore:</b> Contiene il {@link SearchViewResults}, un'area scorrevole dove viene renderizzata la tabella dei risultati.</li>
  * </ol>
+ * <p>
  * Questa classe è progettata per essere estesa (es. da {@link SearchReportedIssuePageDeveloper}) per modificare
  * il tipo di pannello di ricerca o il titolo della pagina, mantenendo inalterata la struttura del layout.
  * </p>

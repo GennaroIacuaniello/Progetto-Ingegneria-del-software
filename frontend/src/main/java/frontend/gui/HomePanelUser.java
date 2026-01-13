@@ -10,6 +10,7 @@ import java.awt.*;
  * <p>
  * Questa classe definisce il layout base della dashboard post-login.
  * Le sue responsabilità principali includono:
+ * </p>
  * <ul>
  * <li>Configurazione del contenitore principale arrotondato.</li>
  * <li>Posizionamento del pulsante di Logout.</li>
@@ -17,6 +18,7 @@ import java.awt.*;
  * la ricerca dei progetti, ma può essere sostituita per mostrare altre viste (es. dettagli di un progetto).</li>
  * <li>Fornitura di metodi per aggiornare i risultati della ricerca o tornare alla vista iniziale.</li>
  * </ul>
+ * <p>
  * È progettata per essere estesa da {@link HomePanelDeveloper} e {@link HomePanelAdmin}.
  * </p>
  */

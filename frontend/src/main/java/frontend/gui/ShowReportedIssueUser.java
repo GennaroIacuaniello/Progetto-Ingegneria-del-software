@@ -16,6 +16,7 @@ import java.util.Date;
  * in un layout organizzato.
  * <br>
  * Funzionalità principali:
+ * </p>
  * <ul>
  * <li>Visualizzazione di Titolo e Descrizione (in area di testo scorrevole non modificabile).</li>
  * <li>Visualizzazione dei metadati: Autore, Date (segnalazione/risoluzione), Tipo, Stato.</li>
@@ -23,6 +24,7 @@ import java.util.Date;
  * <li><b>Gestione Allegati:</b> Pulsante per aprire l'immagine allegata col visualizzatore di sistema.</li>
  * <li><b>Gestione Tag:</b> Pulsante che apre un menu popup con la lista dei tag.</li>
  * </ul>
+ * <p>
  * I campi {@code statusLabel} e {@code assignedDeveloperLabel} sono {@code protected} per permettere
  * alle sottoclassi (Admin/Developer) di aggiornarli dinamicamente dopo azioni di modifica.
  * </p>

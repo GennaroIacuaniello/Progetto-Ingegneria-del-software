@@ -12,28 +12,68 @@ import java.util.Objects;
  * Questa classe estende {@link RoundedPanel} e fornisce l'interfaccia grafica per permettere all'utente
  * di cercare e filtrare le issue che ha segnalato.
  * I filtri disponibili in questa versione base sono:
+ * </p>
  * <ul>
  * <li><b>Titolo:</b> Ricerca testuale.</li>
  * <li><b>Stato:</b> Filtro sullo stato di avanzamento (To do, Assegnate, Risolte).</li>
  * <li><b>Tag:</b> Filtro per etichette tramite {@link TagsButton}.</li>
  * <li><b>Tipo:</b> Filtro per tipologia (Bug, Feature, Documentazione, Domanda).</li>
  * </ul>
+ * <p>
  * Questa classe è progettata per essere estesa da {@link ReportedIssueSearchPanelDeveloper}.
  * </p>
  */
 public class ReportedIssueSearchPanelUser extends RoundedPanel{
 
+    /**
+     * Pagina per la ricerca.
+     */
     protected SearchReportedIssuePageUser searchPage;
+
+    /**
+     * Panel per il titolo.
+     */
     private RoundedPanel titlePanel;
+
+    /**
+     * TextField.
+     */
     protected JTextField titleTextField;
+
+    /**
+     * ComboBox per lo status.
+     */
     protected JComboBox<String> statusComboBox;
+
+    /**
+     * Pulsante per i tag.
+     */
     protected TagsButton tagsButton;
+
+    /**
+     * ComboBox per il tipo.
+     */
     protected JComboBox<String> typeComboBox;
 
     // Costanti per i placeholder e le opzioni dei menu a tendina
+    /**
+     * Placeholder per il titolo.
+     */
     protected static final String TITLE_PLACEHOLDER = "Inserisci titolo";
+
+    /**
+     * Placeholder per "Tutte".
+     */
     protected static final String ALL_PLACEHOLDER = "Tutte";
+
+    /**
+     * Placeholder per le opzioni dello status della issue.
+     */
     private static final String[] statusOptions = {ALL_PLACEHOLDER , "To do", "Assegnate", "Risolte"};
+
+    /**
+     * Placeholder per le opzioni per il tipo ella issue.
+     */
     private static final String[] typeOptions = {ALL_PLACEHOLDER, "Bug", "Documentazione", "Feature", "Domanda"};
 
 

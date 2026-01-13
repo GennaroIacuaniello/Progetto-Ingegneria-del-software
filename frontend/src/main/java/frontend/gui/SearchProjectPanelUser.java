@@ -8,10 +8,12 @@ import java.awt.*;
  * <p>
  * Questa classe costruisce la barra di ricerca visualizzata nella dashboard.
  * Graficamente, è composta da un pannello arrotondato contenente:
+ * </p>
  * <ul>
  * <li>Una casella di testo per inserire il nome del progetto.</li>
  * <li>Un pulsante (lente d'ingrandimento) per avviare la ricerca.</li>
  * </ul>
+ * <p>
  * Questa classe è progettata per essere estesa: mentre il campo di testo rimane uguale per tutti,
  * il pulsante di ricerca viene sostituito nelle sottoclassi (Developer/Admin) per attivare
  * logiche di ricerca differenti.

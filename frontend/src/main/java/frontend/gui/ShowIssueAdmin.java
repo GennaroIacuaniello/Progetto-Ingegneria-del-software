@@ -23,9 +23,24 @@ import java.util.List;
 public class ShowIssueAdmin extends ShowReportedIssueDeveloper {
 
     // Componenti per la ricerca dello sviluppatore da assegnare
+    /**
+     * Rounded panel.
+     */
     private RoundedPanel tmpPanel;
+
+    /**
+     * TextField per la ricerca.
+     */
     private JTextField searchField;
+
+    /**
+     * Pulsante per la ricerca.
+     */
     private IconButton searchButton;
+
+    /**
+     * Placeholder per la ricerca.
+     */
     private static final String SEARCHFIELD_PLACEHOLDER = "Inserisci email developer per assegnare";
 
     /**

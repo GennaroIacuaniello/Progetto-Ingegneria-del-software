@@ -12,10 +12,12 @@ import java.io.IOException;
  * <p>
  * Questa classe estende {@link JPanel} e visualizza il nome del file corrente accanto a un
  * pulsante di rimozione. Offre funzionalità interattive:
+ * </p>
  * <ul>
  * <li>Cliccando sul nome del file, si tenta di aprirlo con l'applicazione di sistema predefinita.</li>
  * <li>Cliccando sul pulsante "X", il file viene rimosso dalla selezione (tramite callback al {@code parentPanel}).</li>
  * </ul>
+ * <p>
  * Il componente gestisce automaticamente la propria visibilità in base alla presenza o meno di un file.
  * </p>
  */
@@ -104,10 +106,12 @@ public class FileButton extends JPanel {
      * Aggiorna il componente con un nuovo file.
      * <p>
      * Se il file passato è diverso da null:
+     * </p>
      * <ul>
      * <li>Aggiorna il testo dell'etichetta con il nome del file.</li>
      * <li>Rende il componente visibile.</li>
      * </ul>
+     * <p>
      * Se il file è null, nasconde il componente.
      * </p>
      *

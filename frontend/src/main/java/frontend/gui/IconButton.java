@@ -12,10 +12,12 @@ import java.net.URL;
  * Questa classe estende {@link JButton} per creare pulsanti costituiti esclusivamente da un'immagine,
  * privi dei classici bordi, sfondi e feedback visivi dei bottoni standard di Swing.
  * Supporta nativamente:
+ * </p>
  * <ul>
  * <li><b>File SVG:</b> Utilizzando {@link FlatSVGIcon} per un rendering nitido a qualsiasi dimensione.</li>
  * <li><b>Immagini Raster (PNG, JPG):</b> Utilizzando {@link ImageIcon} standard.</li>
  * </ul>
+ * <p>
  * La classe gestisce autonomamente il ridimensionamento, il centraggio e l'antialiasing dell'icona.
  * </p>
  */
@@ -104,12 +106,12 @@ public class IconButton extends JButton {
      * Gestisce il rendering personalizzato del componente.
      * <p>
      * Sovrascrive il metodo di disegno standard per:
+     * </p>
      * <ol>
      * <li>Attivare l'antialiasing e l'interpolazione bicubica per la massima qualità visiva.</li>
      * <li>Calcolare la posizione per centrare perfettamente l'immagine nel pulsante.</li>
      * <li>Disegnare l'SVG (ridimensionato dinamicamente) o l'immagine raster.</li>
      * </ol>
-     * </p>
      *
      * @param g Il contesto grafico utilizzato per disegnare.
      */

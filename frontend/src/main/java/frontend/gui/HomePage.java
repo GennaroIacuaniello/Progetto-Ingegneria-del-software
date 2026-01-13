@@ -12,13 +12,13 @@ import java.awt.*;
  * <p>
  * Questa classe funge da container principale (Main Frame) dopo l'accesso.
  * Le sue responsabilità includono:
+ * </p>
  * <ul>
  * <li>Inizializzazione del Look and Feel (FlatLaf).</li>
  * <li>Configurazione della finestra principale (`JFrame`).</li>
  * <li>Selezione dinamica del pannello di contenuto (Dashboard) in base al ruolo dell'utente loggato (Utente base, Sviluppatore, Admin).</li>
  * <li>Gestione del layout responsive tramite listener sul ridimensionamento della finestra.</li>
  * </ul>
- * </p>
  */
 public class HomePage {
 

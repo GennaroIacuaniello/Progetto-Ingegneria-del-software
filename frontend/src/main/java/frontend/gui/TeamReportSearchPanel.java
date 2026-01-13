@@ -12,13 +12,13 @@ import java.util.Objects;
  * Questa classe estende {@link RoundedPanel} e fornisce l'interfaccia di input per definire
  * i criteri temporali del report.
  * Contiene:
+ * </p>
  * <ul>
  * <li>Un pulsante "Indietro" per tornare alla gestione team.</li>
  * <li>Un menu a tendina (ComboBox) per la selezione del <b>Mese</b>.</li>
  * <li>Una casella di testo per l'inserimento dell'<b>Anno</b>.</li>
  * <li>Un pulsante di ricerca per avviare la generazione del report tramite il Controller.</li>
  * </ul>
- * </p>
  */
 public class TeamReportSearchPanel extends RoundedPanel{
 
@@ -29,11 +29,25 @@ public class TeamReportSearchPanel extends RoundedPanel{
      */
     TeamReportPage searchPage;
 
+    /**
+     * Pulsante per la ricerca.
+     */
     private IconButton searchButton;
+
+    /**
+     * Combobox per il mese.
+     */
     private JComboBox<String> monthComboBox;
+
+    /**
+     * textField per l'anno.
+     */
     private JTextField yearTextField;
 
-    // Costante per il testo segnaposto dell'anno
+
+    /**
+     * Costante per il testo segnaposto dell'anno
+     */
     private static final String YEAR_TEXTFIELD_PLACEHOLDER = "Inserisci anno";
 
     /**

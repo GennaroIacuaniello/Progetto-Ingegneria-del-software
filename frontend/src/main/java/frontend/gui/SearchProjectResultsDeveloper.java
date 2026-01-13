@@ -37,12 +37,12 @@ public class SearchProjectResultsDeveloper extends SearchProjectResultsUser{
      * Definisce la mappa tra i nomi delle azioni e le icone corrispondenti.
      * <p>
      * Sovrascrive il metodo base per includere l'icona per le issue assegnate:
+     * </p>
      * <ul>
      * <li>"Report" -> Icona di segnalazione.</li>
      * <li>"Reported" -> Icona lista segnalazioni fatte.</li>
      * <li><b>"Assigned"</b> -> Icona lista task assegnati (Specifica Developer).</li>
      * </ul>
-     * </p>
      */
     @Override
     protected void setIconUrlMap() {
@@ -70,6 +70,7 @@ public class SearchProjectResultsDeveloper extends SearchProjectResultsUser{
      * Crea il modello dati per la tabella (Data Model).
      * <p>
      * Costruisce una matrice con 5 colonne:
+     * </p>
      * <ol>
      * <li>ID Progetto</li>
      * <li>Nome Progetto</li>
@@ -77,6 +78,7 @@ public class SearchProjectResultsDeveloper extends SearchProjectResultsUser{
      * <li>Reported (Azione)</li>
      * <li>Assigned (Azione)</li>
      * </ol>
+     * <p>
      * Restituisce un'istanza di {@link ProjectTableModelDeveloper} che rende editabili le ultime 3 colonne.
      * </p>
      *
@@ -105,12 +107,12 @@ public class SearchProjectResultsDeveloper extends SearchProjectResultsUser{
      * Costruisce e configura la JTable effettiva.
      * <p>
      * Itera sulle 3 colonne di azione (dalla 2 alla 4) e per ognuna:
+     * </p>
      * <ul>
      * <li>Imposta il <b>Renderer</b> per l'icona.</li>
      * <li>Imposta l'<b>Editor</b> usando {@link ProjectIconCellEditorDeveloper}. Questo garantisce che
      * il click sull'icona "Assigned" porti effettivamente alla pagina dei task assegnati.</li>
      * </ul>
-     * </p>
      *
      * @param mainFrame    Il frame principale.
      * @param homePanel    Il pannello home.

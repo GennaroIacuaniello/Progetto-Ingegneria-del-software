@@ -11,11 +11,13 @@ import java.util.List;
  * Questa classe ha la responsabilità di costruire e configurare la {@link JTable} contenente
  * i risultati della ricerca.
  * Il suo compito principale è associare ai dati grezzi (titoli delle issue) i componenti grafici corretti:
+ * </p>
  * <ul>
  * <li>Il {@link IssueTableModel} per strutturare i dati.</li>
  * <li>Il {@link IconCellRenderer} per visualizzare l'icona "Vedi Dettagli".</li>
  * <li>Il {@link IconCellEditorReportedIssueUser} per gestire il click e aprire la vista di dettaglio utente.</li>
  * </ul>
+ * <p>
  * Questa classe viene estesa dalla versione Developer per cambiare il comportamento al click.
  * </p>
  */
@@ -47,11 +49,13 @@ public class ReportedIssueSearchResultsPanelUser {
      * <p>
      * 1. Crea il modello dati tramite {@link #createTableModel}.<br>
      * 2. Configura la colonna 1 (quella del pulsante):
+     * </p>
      * <ul>
      * <li>Imposta il Renderer per disegnare l'icona.</li>
      * <li>Imposta l'Editor {@link IconCellEditorReportedIssueUser} per gestire l'apertura
      * della issue in modalità visualizzazione/utente.</li>
      * </ul>
+     * <p>
      * 3. Configura l'aspetto grafico (altezza righe, stile header).
      * </p>
      *
@@ -86,11 +90,11 @@ public class ReportedIssueSearchResultsPanelUser {
      * compatibile con {@link IssueTableModel}.
      * <br>
      * Struttura:
+     * </p>
      * <ul>
      * <li>Colonna 0: Titolo della issue (dal database).</li>
      * <li>Colonna 1: Stringa "View" (placeholder per il pulsante).</li>
      * </ul>
-     * </p>
      *
      * @param issueTitles Lista dei titoli delle issue.
      * @return Il modello dati popolato.

@@ -39,6 +39,7 @@ public class ProjectIconCellEditorAdmin extends ProjectIconCellEditorDeveloper {
      * Gestisce l'azione eseguita al click sull'icona.
      * <p>
      * Il metodo esegue le seguenti operazioni:
+     * </p>
      * <ol>
      * <li>Identifica l'azione richiesta leggendo il nome della colonna cliccata.</li>
      * <li>Recupera l'ID del progetto dalla prima colonna della riga selezionata e lo imposta come attivo nel {@link ProjectController}.</li>
@@ -52,7 +53,6 @@ public class ProjectIconCellEditorAdmin extends ProjectIconCellEditorDeveloper {
      * </ul>
      * </li>
      * </ol>
-     * </p>
      *
      * @return {@code null}, poiché l'azione è la navigazione e non la modifica del valore della cella.
      */

@@ -20,6 +20,7 @@ public class ProjectTableModelAdmin extends ProjectTableModelDeveloper{
      * Definisce le intestazioni delle colonne per la vista Amministratore.
      * <p>
      * Configura la tabella con il set più completo di azioni disponibili:
+     * </p>
      * <ol>
      * <li><b>ID PROGETTO</b> (Dato)</li>
      * <li><b>NOME PROGETTO</b> (Dato)</li>
@@ -29,7 +30,6 @@ public class ProjectTableModelAdmin extends ProjectTableModelDeveloper{
      * <li><b>VEDI TUTTE LE ISSUE:</b> (Nuova) Permette di vedere tutte le segnalazioni del progetto, indipendentemente dall'autore o dall'assegnatario.</li>
      * <li><b>GESTISCI TEAM:</b> (Nuova) Permette di aggiungere/rimuovere team e membri dal progetto.</li>
      * </ol>
-     * </p>
      */
     protected void setColumnNames() {
 

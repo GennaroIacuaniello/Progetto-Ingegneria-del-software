@@ -9,13 +9,13 @@ import java.awt.*;
  * Questa classe estende {@link JDialog} e funge da modello (template) per tutte le finestre secondarie
  * dell'applicazione (es. Dashboard, Report).
  * Le sue caratteristiche principali sono:
+ * </p>
  * <ul>
  * <li><b>Undecorated:</b> Rimuove i bordi e la barra del titolo del sistema operativo.</li>
  * <li><b>Aspetto coerente:</b> Utilizza un {@link RoundedPanel} come contenitore principale per dare l'effetto "angoli arrotondati".</li>
  * <li><b>Dimensionamento relativo:</b> Si ridimensiona automaticamente al 75% delle dimensioni della finestra genitore.</li>
  * <li><b>Navigazione:</b> Include di default un pulsante "Indietro" per chiudere la finestra.</li>
  * </ul>
- * </p>
  */
 public class MyDialog extends JDialog {
 

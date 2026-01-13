@@ -37,11 +37,13 @@ public class SearchProjectsButtonAdmin extends SearchProjectsButtonDeveloper {
      * Esegue la logica di ricerca e visualizzazione per l'Amministratore.
      * <p>
      * Il metodo esegue i seguenti passaggi:
+     * </p>
      * <ol>
      * <li>Recupera il testo dal campo di input (convertendo il placeholder in stringa vuota).</li>
      * <li>Invoca {@link ProjectController#searchProjectsByName} per eseguire la query sul database.</li>
      * <li>Se la ricerca ha successo, istanzia {@link SearchProjectResultsAdmin}.</li>
      * </ol>
+     * <p>
      * L'uso di {@code SearchProjectResultsAdmin} è il punto chiave: trasforma i dati grezzi (ID e Nomi)
      * in una tabella completa di 7 colonne, abilitando le funzioni di gestione.
      * </p>

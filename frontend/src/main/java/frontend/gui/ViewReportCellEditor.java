@@ -33,6 +33,7 @@ public class ViewReportCellEditor extends DefaultCellEditor {
      * <p>
      * Configura un {@link JButton} "invisibile" (trasparente) che si attiva al click sulla cella.
      * Definisce la logica dell'azione (ActionListener):
+     * </p>
      * <ol>
      * <li>Recupera l'indice della riga selezionata.</li>
      * <li>Estrae l'ID del Team dalla prima colonna (indice 0) della tabella.</li>
@@ -40,7 +41,6 @@ public class ViewReportCellEditor extends DefaultCellEditor {
      * <li>Ferma la modalità di editing della cella.</li>
      * <li>Effettua il cambio di schermata nel pannello Home, caricando {@link TeamReportPage}.</li>
      * </ol>
-     * </p>
      *
      * @param table            La tabella su cui opera l'editor (necessaria per leggere l'ID del team).
      * @param homePanel        Il pannello Home principale (necessario per cambiare la vista centrale).

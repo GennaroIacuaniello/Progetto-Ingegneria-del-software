@@ -17,7 +17,14 @@ import java.awt.*;
  */
 public class ShowAssignedIssue extends ShowReportedIssueDeveloper {
 
+    /**
+     * Pulsante per la risoluzione.
+     */
     private JButton resolveButton;
+
+    /**
+     * Rounded panel.
+     */
     private RoundedPanel tmpPanel;
 
     /**

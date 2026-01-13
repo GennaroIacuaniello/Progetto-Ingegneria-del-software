@@ -29,13 +29,13 @@ public class AddMemberActionCellEditor extends DefaultCellEditor {
      * <p>
      * Inizializza il pulsante definendone lo stile (trasparente, testo blu, cursore a mano) per sembrare un link o un'azione moderna.
      * Aggiunge un {@link java.awt.event.ActionListener} che:
+     * </p>
      * <ol>
      * <li>Identifica la riga selezionata nella tabella.</li>
      * <li>Estrae l'email dell'utente dalla prima colonna (indice 0).</li>
      * <li>Ferma l'editing della cella.</li>
      * <li>Apre il dialog di conferma {@link ConfirmAddDialog}.</li>
      * </ol>
-     * </p>
      *
      * @param mainFrame    Il frame principale dell'applicazione, usato come parent per i dialoghi modali.
      * @param table        La tabella su cui opera l'editor.

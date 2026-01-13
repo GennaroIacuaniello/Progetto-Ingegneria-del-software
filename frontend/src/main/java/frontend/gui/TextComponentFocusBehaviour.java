@@ -25,12 +25,14 @@ public class TextComponentFocusBehaviour {
      * Applica il comportamento di "Placeholder" a un componente di testo.
      * <p>
      * Aggiunge un {@link java.awt.event.FocusListener} al componente specificato per gestire due stati:
+     * </p>
      * <ul>
      * <li><b>Focus Gained (Click nel campo):</b> Se il testo attuale corrisponde esattamente al placeholder,
      * il campo viene svuotato per permettere all'utente di scrivere.</li>
      * <li><b>Focus Lost (Click fuori dal campo):</b> Se l'utente non ha scritto nulla (il campo è vuoto),
      * viene reinserito il testo del placeholder.</li>
      * </ul>
+     * <p>
      * Questo metodo accetta {@link JTextComponent}, quindi funziona sia per {@code JTextField} che per {@code JTextArea}.
      * </p>
      *

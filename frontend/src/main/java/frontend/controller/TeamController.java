@@ -24,13 +24,13 @@ import java.util.logging.Logger;
  * Controller singleton per la gestione delle operazioni sui team lato client.
  * <p>
  * Questa classe offre metodi per:
+ * </p>
  * <ul>
  * <li>Creare nuovi team all'interno del progetto corrente.</li>
  * <li>Cercare i team esistenti.</li>
  * <li>Aggiungere o rimuovere membri dai team.</li>
  * <li>Generare report statistici mensili per un team specifico ({@code teamReport}).</li>
  * </ul>
- * </p>
  */
 @SuppressWarnings("java:S6548")
 public class TeamController {

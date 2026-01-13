@@ -10,10 +10,12 @@ import java.awt.*;
  * <p>
  * Questa classe estende {@link RoundedPanel} per fornire un contenitore visivo arrotondato per ogni tag.
  * Ogni {@code TagPanel} è composto da due elementi principali:
+ * </p>
  * <ol>
  * <li><b>Campo di testo:</b> Per digitare il nome dell'etichetta (es. "Backend", "Urgente").</li>
  * <li><b>Pulsante Rimuovi:</b> Un pulsante (X) per eliminare questa specifica etichetta dalla lista.</li>
  * </ol>
+ * <p>
  * La classe mantiene anche il proprio indice posizionale all'interno della lista dei tag gestita da {@link TagsMenu},
  * permettendo una gestione ordinata delle rimozioni.
  * </p>

@@ -8,10 +8,12 @@ import java.awt.*;
  * Questa classe estende {@link RoundedPanel} e fornisce l'interfaccia utente per analizzare
  * le statistiche dei membri di un team.
  * La pagina è divisa verticalmente in due sezioni:
+ * </p>
  * <ol>
  * <li><b>Area di Ricerca (Top):</b> Contiene il {@link TeamReportSearchPanel}, che permette di selezionare il team desiderato.</li>
  * <li><b>Area Risultati (Center):</b> Contiene il {@link SearchViewResults}, dove verranno visualizzate le tabelle statistiche (create da {@link ReportResults}).</li>
  * </ol>
+ * <p>
  * Gestisce inoltre la navigazione per tornare al pannello di gestione team.
  * </p>
  */

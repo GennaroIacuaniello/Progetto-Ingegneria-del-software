@@ -9,12 +9,12 @@ import javax.swing.*;
  * <p>
  * Estende {@link IconButton} per visualizzare l'icona di uscita specifica.
  * Al click, questo pulsante gestisce l'intero flusso di disconnessione:
+ * </p>
  * <ol>
  * <li>Chiede conferma all'utente tramite un dialog modale.</li>
  * <li>Se confermato, resetta l'utente corrente nel {@link AuthController}.</li>
  * <li>Chiude la finestra principale e riporta l'applicazione alla schermata di Login.</li>
  * </ol>
- * </p>
  */
 public class LogOutButton extends IconButton {
 

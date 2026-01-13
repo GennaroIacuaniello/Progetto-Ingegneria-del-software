@@ -13,6 +13,12 @@ import java.awt.*;
 public class ContainerFactory {
 
     /**
+     * Costruttore privato.
+     */
+    private ContainerFactory(){
+
+    }
+    /**
      * Avvolge un componente generico all'interno di un pannello con bordi arrotondati.
      * <p>
      * Il metodo crea un {@link RoundedPanel}, imposta lo sfondo bianco e il colore del bordo

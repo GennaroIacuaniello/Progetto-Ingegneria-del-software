@@ -11,12 +11,12 @@ import java.util.List;
  * (l'icona del cartellino).
  * <br>
  * Le sue responsabilità principali sono due:
+ * </p>
  * <ol>
  * <li><b>Interazione UI:</b> Al click, apre e mostra la finestra {@link TagsMenu} sovrapposta al frame principale.</li>
  * <li><b>Recupero Dati:</b> Fornisce il metodo {@link #getTags()} che permette ai form genitori (es. {@link ReportIssueUser})
  * di estrarre la lista delle stringhe (tag) create dall'utente all'interno del menu, per poi inviarle al Controller.</li>
  * </ol>
- * </p>
  */
 public class TagsButton extends IconButton {
 

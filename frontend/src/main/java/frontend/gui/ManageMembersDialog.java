@@ -15,20 +15,37 @@ import java.util.List;
  * Finestra di dialogo per la gestione dei membri di un team.
  * <p>
  * Questa classe estende {@link JDialog} e fornisce un'interfaccia completa per:
+ * </p>
  * <ul>
  * <li>Visualizzare l'elenco dei membri attualmente assegnati al team.</li>
  * <li>Cercare membri specifici tramite barra di ricerca (filtro per email).</li>
  * <li>Aggiungere nuovi membri (aprendo {@link AddMemberDialog}).</li>
  * <li>Rimuovere membri esistenti tramite un'azione dedicata nella tabella.</li>
  * </ul>
+ * <p>
  * I dati vengono recuperati e gestiti tramite {@link UserController}.
  * </p>
  */
 public class ManageMembersDialog extends JDialog {
 
+    /**
+     *Textfield per la ricerca.
+     */
     private JTextField searchTextField;
+
+    /**
+     * Pannello per i risultati della ricerca.
+     */
     private JPanel resultsPanel;
+
+    /**
+     * Placeholder per la ricerca.
+     */
     private final String PLACEHOLDER = "Cerca email membro...";
+
+    /**
+     * Mainframe.
+     */
     private final JFrame mainFrame;
 
     /**

@@ -8,12 +8,12 @@ import java.awt.*;
  * <p>
  * Questa classe estende {@link JPanel} per fornire un contenitore grafico con bordi smussati (rounded corners).
  * A differenza di un pannello standard, che è sempre rettangolare e opaco, questo componente:
+ * </p>
  * <ul>
  * <li>Disabilita l'opacità standard per permettere la trasparenza negli angoli (fuori dalla curva).</li>
  * <li>Sovrascrive il metodo {@link #paintComponent(Graphics)} per disegnare manualmente lo sfondo e il bordo arrotondato.</li>
  * <li>Utilizza l'anti-aliasing per garantire che le curve siano disegnate in modo fluido e non "pixellato".</li>
  * </ul>
- * </p>
  */
 public class RoundedPanel extends JPanel {
 
@@ -49,11 +49,13 @@ public class RoundedPanel extends JPanel {
      * <p>
      * Questo è il cuore della personalizzazione grafica. Viene invocato automaticamente da Swing ogni volta
      * che il componente deve essere ridisegnato.
+     * </p>
      * <ol>
      * <li>Attiva l'<b>Anti-aliasing</b> per rendere le linee curve morbide.</li>
      * <li>Disegna il rettangolo arrotondato di sfondo (fillRoundRect).</li>
      * <li>Disegna il bordo arrotondato (drawRoundRect) sopra lo sfondo.</li>
      * </ol>
+     * <p>
      * Il raggio degli angoli è fissato hardcoded a 30 pixel.
      * </p>
      *

@@ -8,13 +8,13 @@ import java.awt.*;
  * <p>
  * Questa classe incapsula uno {@link JScrollPane} che funge da contenitore dinamico.
  * Gestisce due stati visivi:
+ * </p>
  * <ol>
  * <li><b>Stato Iniziale (Placeholder):</b> Quando non è stata ancora effettuata una ricerca, mostra un
  * pannello informativo (esteticamente coerente con {@link RoundedPanel}) che invita l'utente all'azione.</li>
  * <li><b>Stato Risultati:</b> Quando una ricerca va a buon fine, il contenuto viene sostituito dinamicamente
  * con il componente dei risultati (solitamente una {@link JTable}).</li>
  * </ol>
- * </p>
  */
 public class SearchViewResults {
 

@@ -21,21 +21,30 @@ import static frontend.gui.HomePage.setFlatLaf;
  * <p>
  * Questa classe estende {@link JFrame} e fornisce l'interfaccia grafica per l'autenticazione degli utenti.
  * Le sue funzionalità principali includono:
+ * </p>
  * <ul>
  * <li>Campi di input stilizzati per email e password con gestione dei placeholder.</li>
  * <li>Pulsante per mostrare/nascondere la password in chiaro.</li>
  * <li>Collegamento alla pagina di registrazione per nuovi utenti.</li>
  * <li>Integrazione con {@link AuthController} per la verifica delle credenziali.</li>
- * <li>Metodo {@code main} che configura il Look & Feel e avvia l'applicazione.</li>
+ * <li>Metodo {@code main} che configura il Look And Feel e avvia l'applicazione.</li>
  * </ul>
- * </p>
  */
 public class LogInPage extends JFrame {
 
+    /**
+     * Textfield per la mail.
+     */
     private JTextField emailField;
+
+    /**
+     * Textfield per la password.
+     */
     private JPasswordField passwordField;
 
-    // Dimensione standard per i campi di input
+    /**
+     * Dimensione standard per i campi di input.
+     */
     private final Dimension INPUT_DIMENSION = new Dimension(300, 45);
 
     /**

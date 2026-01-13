@@ -15,6 +15,7 @@ import java.util.List;
  * Pannello principale per la gestione dei Team all'interno di un Progetto.
  * <p>
  * Questa classe estende {@link RoundedPanel} e fornisce un'interfaccia utente completa per:
+ * </p>
  * <ul>
  * <li>Visualizzare l'elenco dei team associati al progetto corrente.</li>
  * <li>Cercare team specifici tramite nome.</li>
@@ -22,15 +23,37 @@ import java.util.List;
  * <li>Accedere alla gestione dei membri del team (tramite {@link ManageMembersTextCellEditor}).</li>
  * <li>Visualizzare i report mensili del team (tramite {@link ViewReportCellEditor}).</li>
  * </ul>
- * </p>
  */
 public class ManageTeamsPanel extends RoundedPanel {
 
+    /**
+     * Textfield per la ricerca.
+     */
     private JTextField searchTextField;
+
+    /**
+     * Panel per la ricerca.
+     */
     private final JPanel resultsPanel;
+
+    /**
+     * Placeholder per la ricerca.
+     */
     private final String PLACEHOLDER = "Cerca nome team...";
+
+    /**
+     * Mainframe.
+     */
     private final JFrame mainFrame;
+
+    /**
+     * Home panel.
+     */
     private final HomePanelUser homePanel;
+
+    /**
+     * Placeholder per il titolo.
+     */
     private final String TITLE_PLACEHOLDER = "GESTISCI TEAMS";
 
     /**

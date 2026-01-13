@@ -8,12 +8,14 @@ import javax.swing.table.AbstractTableModel;
  * Questa classe estende {@link AbstractTableModel} e definisce come i dati dei progetti vengono
  * presentati in una {@link javax.swing.JTable}.
  * Configura la vista per un utente base, prevedendo 4 colonne:
+ * </p>
  * <ol>
  * <li><b>ID PROGETTO:</b> Identificativo numerico.</li>
  * <li><b>NOME PROGETTO:</b> Nome del progetto.</li>
  * <li><b>SEGNALA ISSUE:</b> Pulsante per aprire la segnalazione.</li>
  * <li><b>ISSUE SEGNALATE:</b> Pulsante per vedere le proprie segnalazioni.</li>
  * </ol>
+ * <p>
  * Funge da superclasse per {@link ProjectTableModelDeveloper} e {@link ProjectTableModelAdmin}.
  * </p>
  */
@@ -92,12 +94,12 @@ public class ProjectTableModelUser extends AbstractTableModel {
      * Restituisce la classe degli oggetti contenuti nella colonna specificata.
      * <p>
      * Questo metodo è cruciale per il rendering:
+     * </p>
      * <ul>
      * <li>Se l'indice è 2 o 3 (le colonne azione), restituisce {@link IconButton}.class.
      * Questo segnala alla tabella di usare il renderer personalizzato per i pulsanti.</li>
      * <li>Per le colonne 0 e 1, usa il comportamento standard (visualizzazione testo).</li>
      * </ul>
-     * </p>
      */
     @Override
     public Class<?> getColumnClass(int columnIndex) {

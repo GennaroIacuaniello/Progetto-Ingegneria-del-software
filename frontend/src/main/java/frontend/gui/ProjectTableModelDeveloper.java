@@ -26,6 +26,7 @@ public class ProjectTableModelDeveloper extends ProjectTableModelUser{
      * Definisce le intestazioni delle colonne per la vista Sviluppatore.
      * <p>
      * Configura la tabella con le seguenti colonne:
+     * </p>
      * <ol>
      * <li><b>ID PROGETTO</b> (Dato)</li>
      * <li><b>NOME PROGETTO</b> (Dato)</li>
@@ -33,7 +34,6 @@ public class ProjectTableModelDeveloper extends ProjectTableModelUser{
      * <li><b>ISSUE SEGNALATE</b> (Azione)</li>
      * <li><b>ISSUE ASSEGNATE:</b> (Nuova) Permette allo sviluppatore di vedere le issue che deve risolvere.</li>
      * </ol>
-     * </p>
      */
     @Override
     protected void setColumnNames() {
