@@ -7,18 +7,48 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
+/**
+ * Pannello grafico per la creazione di una nuova segnalazione (Issue) da parte di un Utente Standard.
+ * <p>
+ * Questa classe estende {@link RoundedPanel} e fornisce un form per inserire i dettagli di un problema o richiesta.
+ * I campi disponibili per l'utente base sono:
+ * <ul>
+ * <li><b>Titolo:</b> Breve riassunto della segnalazione.</li>
+ * <li><b>Descrizione:</b> Dettagli estesi del problema.</li>
+ * <li><b>Tipo:</b> Categoria (Bug, Documentation, Feature, Question).</li>
+ * <li><b>Tag:</b> Etichette per la classificazione (tramite {@link TagsButton}).</li>
+ * <li><b>Allegati:</b> Caricamento file (tramite {@link FileChooserPanel}).</li>
+ * </ul>
+ * <br>
+ * Nota: Questa classe funge da base per {@link ReportIssueDeveloper}. I metodi di posizionamento (Constraints)
+ * sono {@code protected} proprio per permettere alla sottoclasse di riorganizzare il layout quando aggiunge nuovi campi (come la Priorità).
+ * </p>
+ */
 public class ReportIssueUser extends RoundedPanel{
 
+    // Componenti grafici del form
     protected JTextField titleTextField;
     protected JTextArea descriptionTextArea;
     protected JComboBox<String> typeComboBox;
     protected TagsButton tagsButton;
     protected FileChooserPanel fileChooserPanel;
     protected JButton reportButton;
+
+    // Costanti per i testi di default
     protected static final String TITLE_PLACEHOLDER = "Inserisci titolo";
     protected static final String DESCRIPTION_PLACEHOLDER = "Inserisci descrizione";
     protected static final String[] options = {"Bug", "Documentation", "Feature", "Question"};
 
+    /**
+     * Costruttore del pannello di segnalazione Utente.
+     * <p>
+     * Inizializza il layout, configura l'aspetto grafico trasparente, aggiunge i componenti
+     * e imposta il titolo nella barra superiore dell'applicazione ("SEGNALA ISSUE").
+     * </p>
+     *
+     * @param mainFrame     Il frame principale (necessario per dialoghi modali come il FileChooser o TagSelector).
+     * @param homePanelUser Il pannello Home (necessario per la navigazione "Indietro").
+     */
     public ReportIssueUser(JFrame mainFrame, HomePanelUser homePanelUser) {
 
         super(new GridBagLayout());
@@ -34,6 +64,14 @@ public class ReportIssueUser extends RoundedPanel{
         repaint();
     }
 
+    /**
+     * Metodo template per l'aggiunta dei componenti al pannello.
+     * <p>
+     * Richiama in sequenza i metodi per costruire le varie parti del form.
+     * È marcato {@code protected} per permettere alle sottoclassi di sovrascriverlo
+     * se l'ordine o la composizione dei componenti deve cambiare.
+     * </p>
+     */
     protected void setComponents(JFrame mainFrame, HomePanelUser  homePanelUser) {
 
         setBackButton(homePanelUser);
@@ -45,12 +83,21 @@ public class ReportIssueUser extends RoundedPanel{
         setReportButton(homePanelUser);
     }
 
+    /**
+     * Configura lo sfondo del pannello per essere trasparente.
+     * Permette di vedere lo sfondo dell'applicazione sottostante.
+     */
     private void setRoundedPanel() {
 
         setRoundBorderColor(ColorsList.EMPTY_COLOR);
         setBackground(ColorsList.EMPTY_COLOR);
     }
 
+    /**
+     * Aggiunge il pulsante "Indietro".
+     *
+     * @param homePanelUser Il riferimento per tornare alla schermata precedente.
+     */
     protected void setBackButton(HomePanelUser homePanelUser) {
 
         IconButton backButton = new IconButton("/frontend/gui/images/backIconButton.svg", 32, 32);
@@ -63,6 +110,12 @@ public class ReportIssueUser extends RoundedPanel{
         this.add(backButton, Constraints.getGridBagConstraints());
     }
 
+    /**
+     * Configura il campo di testo per il Titolo.
+     * <p>
+     * Include la gestione del placeholder e l'avvolgimento in un {@link RoundedPanel} per lo stile.
+     * </p>
+     */
     protected void setTitleTextField() {
 
         titleTextField = new JTextField(TITLE_PLACEHOLDER, 30);
@@ -82,6 +135,12 @@ public class ReportIssueUser extends RoundedPanel{
         this.add(tmpPanel, Constraints.getGridBagConstraints());
     }
 
+    /**
+     * Configura l'area di testo per la Descrizione.
+     * <p>
+     * Inserita in uno {@link JScrollPane} per gestire testi lunghi.
+     * </p>
+     */
     protected void setDescriptionTextArea() {
 
         descriptionTextArea = new JTextArea(DESCRIPTION_PLACEHOLDER, 10, 60);
@@ -103,6 +162,9 @@ public class ReportIssueUser extends RoundedPanel{
         this.add(tmpPanel, Constraints.getGridBagConstraints());
     }
 
+    /**
+     * Configura il menu a tendina per il Tipo di issue.
+     */
     protected void setTypeComboBox() {
 
         typeComboBox = new JComboBox<>(options);
@@ -122,24 +184,36 @@ public class ReportIssueUser extends RoundedPanel{
         this.add(tmpPanel, Constraints.getGridBagConstraints());
     }
 
+    /**
+     * Inizializza il componente per la gestione dei Tag.
+     */
     protected void setTagsButton(JFrame mainFrame) {
 
         tagsButton = new TagsButton(mainFrame);
 
-        setTagsButtonConstraints();
+        setTagsButtonConstraints(); // Usa metodo separato per override
 
         this.add(tagsButton, Constraints.getGridBagConstraints());
     }
 
+    /**
+     * Inizializza il componente per il caricamento dei file.
+     */
     protected void setFileChooserPanel() {
 
         fileChooserPanel = new FileChooserPanel();
 
-        setFileChooserPanelConstraints();
+        setFileChooserPanelConstraints(); // Usa metodo separato per override
 
         this.add(fileChooserPanel, Constraints.getGridBagConstraints());
     }
 
+    /**
+     * Configura il pulsante di invio "Report".
+     * <p>
+     * Gestisce la validazione minima (il titolo non deve essere vuoto) e scatena l'evento di report.
+     * </p>
+     */
     protected void setReportButton(HomePanelUser homePanelUser) {
 
         reportButton = new JButton("Report");
@@ -149,6 +223,7 @@ public class ReportIssueUser extends RoundedPanel{
         reportButton.setBackground(ColorsList.EMPTY_COLOR);
 
         reportButton.addActionListener(e -> {
+            // Validazione base
             if (titleTextField.getText().equals(TITLE_PLACEHOLDER))
                 new FloatingMessage("Inserire il titolo per segnalare una issue", reportButton, FloatingMessage.ERROR_MESSAGE);
             else
@@ -167,6 +242,16 @@ public class ReportIssueUser extends RoundedPanel{
         this.add(tmpPanel, Constraints.getGridBagConstraints());
     }
 
+    /**
+     * Esegue la logica di invio della segnalazione.
+     * <p>
+     * 1. Raccoglie i dati dai campi di input e popola un {@link IssueDTO}.<br>
+     * 2. <b>Nota Importante:</b> Per l'utente standard, la priorità viene impostata automaticamente a "Media"
+     * poiché non ha i permessi per deciderla.<br>
+     * 3. Invoca {@link IssueController#reportIssue} passando DTO, tag e file.<br>
+     * 4. Se l'operazione ha successo, torna alla schermata principale.
+     * </p>
+     */
     protected void report(HomePanelUser homePanelUser) {
 
         IssueDTO issue = new IssueDTO();
@@ -175,6 +260,7 @@ public class ReportIssueUser extends RoundedPanel{
         issue.setDescription((descriptionTextArea.getText().equals(DESCRIPTION_PLACEHOLDER) ? "" : descriptionTextArea.getText()));
         issue.setTypeWithString((String) Objects.requireNonNull(typeComboBox.getSelectedItem()));
 
+        // Default Priority per User: MEDIA
         issue.setPriority(IssueController.getInstance().priorityStringToInt("Media"));
 
         boolean success = IssueController.getInstance().reportIssue(issue, tagsButton.getTags(), fileChooserPanel.getSelectedFile());
@@ -185,6 +271,9 @@ public class ReportIssueUser extends RoundedPanel{
         homePanelUser.returnToDefaultContentPanel();
     }
 
+    /**
+     * Helper per creare etichette trasparenti.
+     */
     protected JLabel createTransparentLabel(String text) {
 
         JLabel label = new JLabel(text);
@@ -195,6 +284,13 @@ public class ReportIssueUser extends RoundedPanel{
         return label;
     }
 
+    /**
+     * Definisce i vincoli di layout per il pulsante dei Tag.
+     * <p>
+     * È un metodo separato e {@code protected} per consentire a {@link ReportIssueDeveloper}
+     * di spostare questo pulsante (cambiando gridx/gridy) per fare spazio al campo Priorità.
+     * </p>
+     */
     protected void setTagsButtonConstraints() {
 
         Constraints.setConstraints(0, 3, 1, 1,
@@ -202,6 +298,13 @@ public class ReportIssueUser extends RoundedPanel{
                 0.5f, 0.5f);
     }
 
+    /**
+     * Definisce i vincoli di layout per il pannello File Chooser.
+     * <p>
+     * È un metodo separato e {@code protected} per consentire l'override da parte delle sottoclassi
+     * per riorganizzare la griglia.
+     * </p>
+     */
     protected void setFileChooserPanelConstraints() {
 
         Constraints.setConstraints(1, 3, 1, 1,

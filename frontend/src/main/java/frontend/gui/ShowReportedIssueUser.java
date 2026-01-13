@@ -8,11 +8,49 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Finestra di dialogo per la visualizzazione dei dettagli di una Issue (Lato Utente).
+ * <p>
+ * Questa classe estende {@link MyDialog} (una finestra modale personalizzata) e si occupa di
+ * recuperare tutti i dati della issue corrente tramite {@link IssueController} e impaginarli
+ * in un layout organizzato.
+ * <br>
+ * Funzionalità principali:
+ * <ul>
+ * <li>Visualizzazione di Titolo e Descrizione (in area di testo scorrevole non modificabile).</li>
+ * <li>Visualizzazione dei metadati: Autore, Date (segnalazione/risoluzione), Tipo, Stato.</li>
+ * <li>Visualizzazione del Developer assegnato (se presente).</li>
+ * <li><b>Gestione Allegati:</b> Pulsante per aprire l'immagine allegata col visualizzatore di sistema.</li>
+ * <li><b>Gestione Tag:</b> Pulsante che apre un menu popup con la lista dei tag.</li>
+ * </ul>
+ * I campi {@code statusLabel} e {@code assignedDeveloperLabel} sono {@code protected} per permettere
+ * alle sottoclassi (Admin/Developer) di aggiornarli dinamicamente dopo azioni di modifica.
+ * </p>
+ */
 public class ShowReportedIssueUser extends MyDialog {
 
+    /**
+     * Etichetta dello stato. Protetta per consentire l'aggiornamento immediato
+     * se una sottoclasse cambia lo stato (es. da "Assegnata" a "Risolta").
+     */
     protected JLabel statusLabel;
+
+    /**
+     * Etichetta del developer assegnato. Protetta per consentire l'aggiornamento immediato
+     * se l'Admin assegna l'issue dalla sua vista estesa.
+     */
     protected JLabel assignedDeveloperLabel;
 
+    /**
+     * Costruttore della finestra di dettaglio.
+     * <p>
+     * Costruisce l'interfaccia chiamando in sequenza i metodi di setup per ogni componente.
+     * I dati vengono prelevati "al volo" dal Singleton {@link IssueController}, che mantiene
+     * lo stato dell'issue attualmente selezionata.
+     * </p>
+     *
+     * @param parent Il frame genitore (per rendere il dialogo modale rispetto ad esso).
+     */
     public ShowReportedIssueUser(JFrame parent) {
 
         super(parent);
@@ -31,6 +69,9 @@ public class ShowReportedIssueUser extends MyDialog {
         setStatusLabel();
     }
 
+    /**
+     * Mostra il titolo dell'issue con un font grande ed evidente.
+     */
     private void setTitleLabel() {
 
         JLabel titleLabel = new JLabel(IssueController.getInstance().getIssueTitle());
@@ -46,6 +87,14 @@ public class ShowReportedIssueUser extends MyDialog {
         mainPanel.add(tmp, Constraints.getGridBagConstraints());
     }
 
+    /**
+     * Configura l'area di testo per la descrizione.
+     * <p>
+     * Utilizza un {@link JTextArea} inserito in uno {@link JScrollPane}.
+     * Importante: L'area è impostata come non editabile ({@code setEditable(false)}) poiché
+     * questa è una vista di consultazione.
+     * </p>
+     */
     private void setDescriptionTextArea() {
 
         JTextArea descriptionTextArea = getJTextArea();
@@ -64,6 +113,10 @@ public class ShowReportedIssueUser extends MyDialog {
         mainPanel.add(tmpPanel, Constraints.getGridBagConstraints());
     }
 
+    /**
+     * Metodo helper per creare e configurare la JTextArea.
+     * Gestisce il caso di descrizione vuota fornendo un testo di default.
+     */
     private static JTextArea getJTextArea() {
 
         String description = IssueController.getInstance().getIssueDescription().isEmpty() ?
@@ -74,11 +127,14 @@ public class ShowReportedIssueUser extends MyDialog {
         descriptionTextArea.setBorder(BorderFactory.createEmptyBorder());
         descriptionTextArea.setBackground(Color.WHITE);
         descriptionTextArea.setFont(new Font("JetBrains Mono", Font.PLAIN, 16));
-        descriptionTextArea.setEditable(false);
+        descriptionTextArea.setEditable(false); // Sola lettura
         descriptionTextArea.setFocusable(false);
         return descriptionTextArea;
     }
 
+    /**
+     * Mostra il tipo di issue (Bug, Feature, ecc.).
+     */
     private void setTypeLabel() {
         JLabel typeLabel = new JLabel("Tipo: " + IssueController.getInstance().getIssueType());
 
@@ -93,6 +149,15 @@ public class ShowReportedIssueUser extends MyDialog {
         mainPanel.add(tmp, Constraints.getGridBagConstraints());
     }
 
+    /**
+     * Configura il pulsante per visualizzare i Tag.
+     * <p>
+     * Al click sul pulsante (icona tag):
+     * 1. Controlla se ci sono tag.
+     * 2. Se presenti, crea e mostra un {@link JPopupMenu} con la lista dei tag.
+     * 3. Se assenti, mostra un {@link FloatingMessage} di avviso.
+     * </p>
+     */
     private void setTagsList() {
 
         IconButton tagsButton = new IconButton("/frontend/gui/images/tagsButton.svg", 32, 32);
@@ -121,6 +186,16 @@ public class ShowReportedIssueUser extends MyDialog {
         mainPanel.add(tagsButton, Constraints.getGridBagConstraints());
     }
 
+    /**
+     * Configura il pulsante per aprire l'allegato immagine.
+     * <p>
+     * Al click:
+     * Tenta di aprire il file usando {@link Desktop#open(java.io.File)}.
+     * Gestisce le eccezioni:
+     * - {@code IOException}: Errore di apertura file.
+     * - {@code NullPointerException}: Nessun file allegato (mostra avviso).
+     * </p>
+     */
     private void setImageButton() {
 
         IconButton imageButton = new IconButton("/frontend/gui/images/imageButton.svg", 32, 32);
@@ -142,6 +217,12 @@ public class ShowReportedIssueUser extends MyDialog {
         mainPanel.add(imageButton, Constraints.getGridBagConstraints());
     }
 
+    /**
+     * Mostra lo stato corrente (To do, Assigned, Resolved).
+     * <p>
+     * Questo metodo è {@code protected} per permettere override o accessi dalle sottoclassi.
+     * </p>
+     */
     protected void setStatusLabel() {
 
         statusLabel = new JLabel("Stato: " + IssueController.getInstance().getIssueStatus());
@@ -157,6 +238,9 @@ public class ShowReportedIssueUser extends MyDialog {
         mainPanel.add(tmp, Constraints.getGridBagConstraints());
     }
 
+    /**
+     * Mostra la data di creazione della segnalazione.
+     */
     private void setReportDateLabel() {
 
         JLabel reportDateLabel = new JLabel("Segnalazione: " + formatDate(IssueController.getInstance().getIssueReportDate()));
@@ -172,6 +256,10 @@ public class ShowReportedIssueUser extends MyDialog {
         mainPanel.add(tmp, Constraints.getGridBagConstraints());
     }
 
+    /**
+     * Mostra la data di risoluzione (se disponibile).
+     * Gestisce il caso in cui la data sia null (issue non ancora risolta).
+     */
     private void setResolutionDateLabel() {
 
         JLabel resolutionDateLabel = new JLabel("Risoluzione: " + (IssueController.getInstance().getIssueResolutionDate() != null ?
@@ -188,11 +276,17 @@ public class ShowReportedIssueUser extends MyDialog {
         mainPanel.add(tmp, Constraints.getGridBagConstraints());
     }
 
+    /**
+     * Utility per formattare la data nel formato italiano "dd/MM/yyyy".
+     */
     private String formatDate(Date date) {
 
         return new SimpleDateFormat("dd/MM/yyyy").format(date);
     }
 
+    /**
+     * Mostra l'email dell'utente che ha creato la segnalazione.
+     */
     private void setReportingUserLabel() {
 
         JLabel reportingUserLabel = new JLabel("Segnalatore: " + IssueController.getInstance().getIssueReportingUser().getEmail());
@@ -208,6 +302,10 @@ public class ShowReportedIssueUser extends MyDialog {
         mainPanel.add(tmp, Constraints.getGridBagConstraints());
     }
 
+    /**
+     * Mostra l'email dello sviluppatore assegnato.
+     * Gestisce il caso in cui non ci sia ancora un assegnatario (null).
+     */
     private void setAssignedDeveloperLabel() {
 
         assignedDeveloperLabel = new JLabel("Developer assegnato: " + ((IssueController.getInstance().getIssueAssignedDeveloper() != null) ?

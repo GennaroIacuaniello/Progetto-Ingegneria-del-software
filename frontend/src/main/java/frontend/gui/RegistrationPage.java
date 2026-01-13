@@ -10,15 +10,36 @@ import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+ * Finestra per la registrazione di nuovi utenti.
+ * <p>
+ * Questa classe estende {@link JFrame} e fornisce l'interfaccia per creare un nuovo account.
+ * Le caratteristiche principali includono:
+ * <ul>
+ * <li>Campi per Email e Password con validazione e placeholder dinamici.</li>
+ * <li>Integrazione con {@link AuthController} per inviare la richiesta di registrazione.</li>
+ * <li>Navigazione per tornare alla pagina di Login se l'utente possiede già un account.</li>
+ * </ul>
+ * Nota: Questa pagina registra di default utenti con ruolo "User" (livello 0).
+ * </p>
+ */
 public class RegistrationPage extends JFrame {
 
     private JTextField emailField;
     private JPasswordField passwordField;
 
+    // Costanti grafiche per mantenere coerenza stilistica
     private final Dimension INPUT_DIMENSION = new Dimension(300, 45);
     private final Color PRIMARY_COLOR = new Color(0, 120, 215);
     private final Color TEXT_COLOR = new Color(50, 50, 50);
 
+    /**
+     * Costruttore della pagina di Registrazione.
+     * <p>
+     * Inizializza la finestra, imposta le dimensioni e costruisce l'interfaccia
+     * richiamando i metodi di setup per Titolo, Input e Footer.
+     * </p>
+     */
     public RegistrationPage() {
 
         super("Registrazione - BugBoard26");
@@ -38,6 +59,11 @@ public class RegistrationPage extends JFrame {
         this.setContentPane(mainPanel);
     }
 
+    /**
+     * Configura il titolo della pagina ("BugBoard26").
+     *
+     * @param panel Il pannello principale.
+     */
     private void setupTitle(JPanel panel) {
         JLabel titleLabel = new JLabel("BugBoard26");
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 48));
@@ -49,6 +75,11 @@ public class RegistrationPage extends JFrame {
         panel.add(titleLabel, Constraints.getGridBagConstraints());
     }
 
+    /**
+     * Configura il contenitore centrale per i campi di input.
+     *
+     * @param panel Il pannello principale.
+     */
     private void setupInputs(JPanel panel) {
         JPanel inputsContainer = new JPanel(new GridBagLayout());
         inputsContainer.setOpaque(false);
@@ -62,6 +93,15 @@ public class RegistrationPage extends JFrame {
         panel.add(inputsContainer, Constraints.getGridBagConstraints());
     }
 
+    /**
+     * Metodo helper per aggiungere un campo di input con etichetta.
+     *
+     * @param container   Il pannello contenitore degli input.
+     * @param gridY       La posizione verticale nella griglia.
+     * @param labelText   Il testo dell'etichetta.
+     * @param placeholder Il testo segnaposto.
+     * @param isPassword  True se è un campo password, False se è email.
+     */
     private void addLabeledInput(JPanel container, int gridY, String labelText, String placeholder, boolean isPassword) {
 
         JLabel label = new JLabel(labelText);
@@ -85,6 +125,13 @@ public class RegistrationPage extends JFrame {
         container.add(inputWrapper, Constraints.getGridBagConstraints());
     }
 
+    /**
+     * Crea il pannello per l'input Email.
+     * <p>
+     * Include la logica per il placeholder (sparire al focus, riapparire se vuoto) e
+     * collega il tasto Invio alla funzione di registrazione.
+     * </p>
+     */
     private JPanel createEmailPanel(String placeholder) {
         RoundedPanel wrapper = new RoundedPanel(new GridBagLayout());
         wrapper.setPreferredSize(INPUT_DIMENSION);
@@ -113,6 +160,13 @@ public class RegistrationPage extends JFrame {
         return cushion;
     }
 
+    /**
+     * Crea il pannello per l'input Password.
+     * <p>
+     * Gestisce il mascheramento dei caratteri, il placeholder e include il pulsante "Occhio"
+     * per visualizzare la password in chiaro.
+     * </p>
+     */
     private JPanel createPasswordPanel(String placeholder) {
         RoundedPanel wrapper = new RoundedPanel(new GridBagLayout());
         wrapper.setPreferredSize(INPUT_DIMENSION);
@@ -129,6 +183,7 @@ public class RegistrationPage extends JFrame {
 
         passwordField.setEchoChar((char) 0);
 
+        // Gestione manuale del placeholder per JPasswordField
         passwordField.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -154,6 +209,7 @@ public class RegistrationPage extends JFrame {
                 1, 1, GridBagConstraints.CENTER, new Insets(0, 0, 0, 5));
         wrapper.add(passwordField, Constraints.getGridBagConstraints());
 
+        // Bottone mostra/nascondi password
         JButton eyeButton = new JButton("👁");
         eyeButton.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 18));
         eyeButton.setBorderPainted(false);
@@ -185,6 +241,9 @@ public class RegistrationPage extends JFrame {
         return cushion;
     }
 
+    /**
+     * Configura il piè di pagina con il pulsante di azione e il link al Login.
+     */
     private void setupFooter(JPanel panel) {
         JPanel footerPanel = new JPanel(new GridBagLayout());
         footerPanel.setOpaque(false);
@@ -205,6 +264,7 @@ public class RegistrationPage extends JFrame {
                 0, 0, GridBagConstraints.CENTER, 0.0f, 0.0f, new Insets(0, 0, 20, 0));
         footerPanel.add(registerButton, Constraints.getGridBagConstraints());
 
+        // Link per tornare al Login
         JLabel loginLabel = new JLabel("Hai già un account? Effettua il login");
         loginLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         loginLabel.setForeground(Color.GRAY);
@@ -237,6 +297,16 @@ public class RegistrationPage extends JFrame {
         panel.add(footerPanel, Constraints.getGridBagConstraints());
     }
 
+    /**
+     * Esegue la logica di registrazione.
+     * <p>
+     * 1. Recupera i dati dai campi.<br>
+     * 2. Verifica che i campi non siano vuoti o uguali ai placeholder.<br>
+     * 3. Invoca {@link AuthController#registration} passando ruolo 0 (Utente Standard).<br>
+     * 4. Se successo, mostra messaggio di conferma e reindirizza al Login.<br>
+     * 5. Altrimenti mostra errore.
+     * </p>
+     */
     private void performRegistration() {
         String email = emailField.getText();
         String password = new String(passwordField.getPassword());
@@ -249,7 +319,7 @@ public class RegistrationPage extends JFrame {
             return;
         }
 
-
+        // Il parametro '0' indica la creazione di un utente standard (USER)
         boolean success = AuthController.getInstance().registration(email, password, 0);
 
         if (success) {

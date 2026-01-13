@@ -20,31 +20,79 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Controller singleton per la gestione delle operazioni sui team lato client.
+ * <p>
+ * Questa classe offre metodi per:
+ * <ul>
+ * <li>Creare nuovi team all'interno del progetto corrente.</li>
+ * <li>Cercare i team esistenti.</li>
+ * <li>Aggiungere o rimuovere membri dai team.</li>
+ * <li>Generare report statistici mensili per un team specifico ({@code teamReport}).</li>
+ * </ul>
+ * </p>
+ */
 @SuppressWarnings("java:S6548")
 public class TeamController {
 
+    /**
+     * Istanza unica della classe (Pattern Singleton).
+     */
     private static TeamController instance;
+
+    /**
+     * Riferimento al client HTTP per le comunicazioni di rete.
+     */
     private final ApiClient client = ApiClient.getInstance();
 
+    /**
+     * Logger per la registrazione degli eventi.
+     */
     private static final Logger logger = Logger.getLogger(TeamController.class.getName());
 
-
+    /**
+     * Cache locale dei team trovati nell'ultima ricerca.
+     */
     private ArrayList<TeamDTO> teams;
+
+    /**
+     * Il team attualmente selezionato dall'utente per le operazioni di dettaglio (es report).
+     */
     @Getter
     private TeamDTO team;
 
+    /**
+     * DTO contenente le statistiche del report generato per il team selezionato.
+     */
     private StatisticDTO teamReport;
 
+    /**
+     * Costante per le intestazioni HTTP.
+     */
     private static final String CONTENT_TYPE = "Content-Type";
+
+    /**
+     * Costante per le intestazioni HTTP.
+     */
     private static final String APPLICATION_JSON = "application/json";
 
+    /**
+     * Costante per il path HTTP.
+     */
     private static final String TEAMS_PATH = ApiPaths.TEAMS;
 
-
+    /**
+     * Costruttore privato per il Singleton.
+     */
     private TeamController(){
 
     }
 
+    /**
+     * Restituisce l'istanza unica di TeamController.
+     *
+     * @return L'istanza singleton.
+     */
     public static TeamController getInstance() {
         if (instance == null) {
             instance = new TeamController();
@@ -52,6 +100,16 @@ public class TeamController {
         return instance;
     }
 
+    /**
+     * Crea un nuovo team associato al progetto corrente.
+     * <p>
+     * Costruisce un {@code TeamDTO} con il nome specificato, il progetto attuale
+     * (recuperato da {@link ProjectController}) e l'utente corrente come primo membro.
+     * </p>
+     *
+     * @param teamName Il nome del team da creare.
+     * @return {@code true} se la creazione ha successo.
+     */
     public boolean createTeam(String teamName){
 
         try {
@@ -93,6 +151,12 @@ public class TeamController {
 
     }
 
+    /**
+     * Cerca i team in base al nome all'interno del progetto corrente.
+     *
+     * @param teamName Il nome (o parte di esso) del team da cercare.
+     * @return {@code true} se la ricerca va a buon fine (200 o 204).
+     */
     public boolean searchTeamsByNameAndProject(String teamName) {
 
         try {
@@ -151,6 +215,12 @@ public class TeamController {
 
     }
 
+    /**
+     * Rimuove un membro dal team correntemente selezionato.
+     *
+     * @param emailUserToRemove L'email dell'utente da rimuovere.
+     * @return {@code true} se la rimozione ha successo.
+     */
     public boolean removeMemberFromSelectedTeam(String emailUserToRemove){
 
         try {
@@ -188,7 +258,13 @@ public class TeamController {
 
     }
 
-    public boolean addMemberToSelectedTeam(String emailUserToAdd) {
+    /**
+     * Aggiunge un nuovo membro al team correntemente selezionato.
+     *
+     * @param emailUserToAdd L'email dell'utente da aggiungere.
+     * @return {@code 0} se l'aggiunta ha successo, 1 o 2 come codici di errore altrimenti.
+     */
+    public Integer addMemberToSelectedTeam(String emailUserToAdd) {
 
         try {
 
@@ -205,7 +281,7 @@ public class TeamController {
 
                 logger.log(Level.FINE, "Member added successfully: {0}", response.body());
 
-                return true;
+                return 0;
 
             }else if (response.statusCode() == 409) {
 
@@ -215,16 +291,24 @@ public class TeamController {
 
                 String errorMsg = client.getErrorMessageFromResponse(response);
                 logger.log(Level.WARNING, "Member adding error: {0}", errorMsg);
+                return 1;
 
             }
         } catch (Exception e) {
             logger.log(Level.SEVERE, e.getMessage());
         }
 
-        return false;
+        return 2;
 
     }
 
+    /**
+     * Genera e recupera il report statistico per il team selezionato, filtrato per mese e anno.
+     *
+     * @param month Il mese del report (stringa).
+     * @param year  L'anno del report (stringa).
+     * @return {@code true} se il report viene generato correttamente.
+     */
     public boolean createReport(String month, String year) {
         try {
 
@@ -260,7 +344,11 @@ public class TeamController {
 
     }
 
-
+    /**
+     * Restituisce una lista degli ID dei team trovati nell'ultima ricerca.
+     *
+     * @return Lista di interi (ID).
+     */
     public List<Integer> getTeamsIds () {
 
         List<Integer> ids = new ArrayList<>();
@@ -271,6 +359,11 @@ public class TeamController {
         return ids;
     }
 
+    /**
+     * Restituisce una lista dei nomi dei team trovati nell'ultima ricerca.
+     *
+     * @return Lista di stringhe (nomi).
+     */
     public List<String> getTeamsNames () {
 
         List<String> names = new ArrayList<>();
@@ -281,6 +374,11 @@ public class TeamController {
         return names;
     }
 
+    /**
+     * Imposta il team corrente cercandolo per ID nella lista dei team caricati ({@code teams}).
+     *
+     * @param id L'ID del team da selezionare.
+     */
     public void setTeamWithId(int id) {
 
         for(TeamDTO t: teams)
@@ -292,6 +390,11 @@ public class TeamController {
 
     }
 
+    /**
+     * Restituisce le email degli sviluppatori inclusi nel report.
+     *
+     * @return Lista di email.
+     */
     public List<String> getDevelopersEmails() {
 
         ArrayList<String> emails = new ArrayList<>();
@@ -303,18 +406,38 @@ public class TeamController {
 
     }
 
+    /**
+     * Restituisce il numero di issue aperte per ogni sviluppatore nel periodo del report.
+     *
+     * @return Lista di conteggi.
+     */
     public List<Integer> getOpenIssues() {
         return this.teamReport.getNumOpenIssues();
     }
 
+    /**
+     * Restituisce il numero di issue risolte per ogni sviluppatore nel periodo del report.
+     *
+     * @return Lista di conteggi.
+     */
     public List<Integer> getResolvedIssues() {
         return this.teamReport.getNumClosedIssues();
     }
 
+    /**
+     * Restituisce le durate medie di risoluzione per ogni sviluppatore nel periodo del report.
+     *
+     * @return Lista di {@code Duration}.
+     */
     public List<Duration> getAverageResolvingDurations() {
         return this.teamReport.getAverageResolutionDurations();
     }
 
+    /**
+     * Calcola il numero totale di issue aperte nel report.
+     *
+     * @return Totale issue aperte.
+     */
     public int getTotalOpenIssues() {
 
         int total = 0;
@@ -325,6 +448,11 @@ public class TeamController {
         return total;
     }
 
+    /**
+     * Calcola il numero totale di issue risolte nel report.
+     *
+     * @return Totale issue risolte.
+     */
     public int getTotalResolvedIssues() {
 
         int total = 0;
@@ -335,6 +463,11 @@ public class TeamController {
         return total;
     }
 
+    /**
+     * Restituisce la durata media globale di risoluzione per il team nel periodo del report.
+     *
+     * @return Durata media totale.
+     */
     public Duration getTotalAverageResolvingDuration() {
         return this.teamReport.getTotalAverageResolutionDuration();
     }

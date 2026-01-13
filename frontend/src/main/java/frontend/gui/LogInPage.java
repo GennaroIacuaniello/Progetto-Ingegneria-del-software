@@ -16,18 +16,41 @@ import java.util.logging.Logger;
 
 import static frontend.gui.HomePage.setFlatLaf;
 
+/**
+ * Finestra principale per il Login e punto di ingresso dell'applicazione (Main Class).
+ * <p>
+ * Questa classe estende {@link JFrame} e fornisce l'interfaccia grafica per l'autenticazione degli utenti.
+ * Le sue funzionalità principali includono:
+ * <ul>
+ * <li>Campi di input stilizzati per email e password con gestione dei placeholder.</li>
+ * <li>Pulsante per mostrare/nascondere la password in chiaro.</li>
+ * <li>Collegamento alla pagina di registrazione per nuovi utenti.</li>
+ * <li>Integrazione con {@link AuthController} per la verifica delle credenziali.</li>
+ * <li>Metodo {@code main} che configura il Look & Feel e avvia l'applicazione.</li>
+ * </ul>
+ * </p>
+ */
 public class LogInPage extends JFrame {
 
     private JTextField emailField;
     private JPasswordField passwordField;
 
+    // Dimensione standard per i campi di input
     private final Dimension INPUT_DIMENSION = new Dimension(300, 45);
 
+    /**
+     * Costruttore della pagina di Login.
+     * <p>
+     * Configura le proprietà della finestra (titolo, dimensioni fisse, chiusura),
+     * inizializza il layout principale e richiama i metodi per costruire le varie sezioni
+     * dell'interfaccia (Titolo, Input, Footer).
+     * </p>
+     */
     public LogInPage() {
         super("Login - BugBoard26");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(600, 500);
-        this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null); // Centra la finestra nello schermo
         this.setResizable(false);
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
@@ -41,6 +64,11 @@ public class LogInPage extends JFrame {
         this.setContentPane(mainPanel);
     }
 
+    /**
+     * Configura e aggiunge il titolo dell'applicazione al pannello.
+     *
+     * @param panel Il pannello principale a cui aggiungere il titolo.
+     */
     private void setupTitle(JPanel panel) {
 
         JLabel titleLabel = new JLabel("BugBoard26");
@@ -53,6 +81,11 @@ public class LogInPage extends JFrame {
         panel.add(titleLabel, Constraints.getGridBagConstraints());
     }
 
+    /**
+     * Organizza l'area centrale contenente i campi di input.
+     *
+     * @param panel Il pannello principale.
+     */
     private void setupInputs(JPanel panel) {
         JPanel inputsContainer = new JPanel(new GridBagLayout());
         inputsContainer.setOpaque(false);
@@ -66,6 +99,15 @@ public class LogInPage extends JFrame {
         panel.add(inputsContainer, Constraints.getGridBagConstraints());
     }
 
+    /**
+     * Metodo helper per aggiungere una riga di input (Etichetta + Campo) al container.
+     *
+     * @param container   Il pannello contenitore degli input.
+     * @param gridY       La riga della griglia dove posizionare i componenti.
+     * @param labelText   Il testo dell'etichetta (es. "Email:").
+     * @param placeholder Il testo segnaposto del campo.
+     * @param isPassword  True se il campo deve essere mascherato (password), False altrimenti.
+     */
     private void addLabeledInput(JPanel container, int gridY, String labelText, String placeholder, boolean isPassword) {
 
         JLabel label = new JLabel(labelText);
@@ -89,6 +131,12 @@ public class LogInPage extends JFrame {
         container.add(inputWrapper, Constraints.getGridBagConstraints());
     }
 
+    /**
+     * Crea il pannello stilizzato per l'inserimento dell'Email.
+     *
+     * @param placeholder Testo segnaposto.
+     * @return Il pannello contenente il campo di testo.
+     */
     private JPanel createEmailPanel(String placeholder) {
 
         RoundedPanel wrapper = new RoundedPanel(new GridBagLayout());
@@ -104,6 +152,7 @@ public class LogInPage extends JFrame {
         emailField.setBorder(BorderFactory.createEmptyBorder());
         emailField.setOpaque(false);
 
+        // Gestione automatica del focus per rimuovere/ripristinare il placeholder
         TextComponentFocusBehaviour.setTextComponentFocusBehaviour(emailField, placeholder);
 
         Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.HORIZONTAL,
@@ -114,11 +163,22 @@ public class LogInPage extends JFrame {
         cushion.setOpaque(false);
         cushion.add(wrapper);
 
+        // Permette di fare login premendo INVIO nel campo email
         emailField.addActionListener(e -> performLogin());
 
         return cushion;
     }
 
+    /**
+     * Crea il pannello stilizzato per l'inserimento della Password.
+     * <p>
+     * Include un pulsante "Occhio" per commutare la visibilità della password e
+     * gestisce manualmente il comportamento del placeholder in combinazione con il mascheramento dei caratteri.
+     * </p>
+     *
+     * @param placeholder Testo segnaposto.
+     * @return Il pannello contenente il campo password e il toggle di visibilità.
+     */
     private JPanel createPasswordPanel(String placeholder) {
 
         RoundedPanel wrapper = new RoundedPanel(new GridBagLayout());
@@ -134,6 +194,7 @@ public class LogInPage extends JFrame {
         passwordField.setBorder(BorderFactory.createEmptyBorder());
         passwordField.setOpaque(false);
 
+        // Inizialmente mostra il placeholder in chiaro (nessun echo char)
         passwordField.setEchoChar((char) 0);
 
         passwordField.addFocusListener(new FocusAdapter() {
@@ -142,7 +203,7 @@ public class LogInPage extends JFrame {
                 String currentText = new String(passwordField.getPassword());
                 if (currentText.equals(placeholder)) {
                     passwordField.setText("");
-                    passwordField.setEchoChar('•');
+                    passwordField.setEchoChar('•'); // Attiva mascheramento all'inserimento
                 }
             }
 
@@ -150,7 +211,7 @@ public class LogInPage extends JFrame {
             public void focusLost(FocusEvent e) {
                 if (passwordField.getPassword().length == 0) {
                     passwordField.setText(placeholder);
-                    passwordField.setEchoChar((char) 0);
+                    passwordField.setEchoChar((char) 0); // Ripristina testo in chiaro per il placeholder
                 }
             }
         });
@@ -159,6 +220,7 @@ public class LogInPage extends JFrame {
                 1, 1, GridBagConstraints.CENTER, new Insets(0, 0, 0, 5));
         wrapper.add(passwordField, Constraints.getGridBagConstraints());
 
+        // Pulsante "Occhio"
         JButton eyeButton = new JButton("👁");
         eyeButton.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 18));
         eyeButton.setBorderPainted(false);
@@ -169,14 +231,14 @@ public class LogInPage extends JFrame {
         eyeButton.setPreferredSize(new Dimension(30, 30));
 
         eyeButton.addActionListener(e -> {
-
+            // Non fare nulla se c'è il placeholder
             if (new String(passwordField.getPassword()).equals(placeholder)) return;
 
             if (passwordField.getEchoChar() == '•') {
-                passwordField.setEchoChar((char) 0);
+                passwordField.setEchoChar((char) 0); // Mostra password
                 eyeButton.setForeground(ColorsList.PRIMARY_COLOR);
             } else {
-                passwordField.setEchoChar('•');
+                passwordField.setEchoChar('•'); // Nascondi password
                 eyeButton.setForeground(Color.GRAY);
             }
         });
@@ -189,15 +251,22 @@ public class LogInPage extends JFrame {
         cushion.setOpaque(false);
         cushion.add(wrapper);
 
+        // Permette di fare login premendo INVIO nel campo password
         passwordField.addActionListener(e -> performLogin());
 
         return cushion;
     }
 
+    /**
+     * Configura il piè di pagina con il pulsante di accesso e il link alla registrazione.
+     *
+     * @param panel Il pannello principale.
+     */
     private void setupFooter(JPanel panel) {
         JPanel footerPanel = new JPanel(new GridBagLayout());
         footerPanel.setOpaque(false);
 
+        // Pulsante Accedi
         JButton loginButton = new JButton("Accedi");
         loginButton.setFont(new Font("Segoe UI", Font.BOLD, 18));
         loginButton.setForeground(Color.WHITE);
@@ -214,20 +283,23 @@ public class LogInPage extends JFrame {
                 0, 0, GridBagConstraints.CENTER, 0.0f, 0.0f, new Insets(0, 0, 20, 0));
         footerPanel.add(loginButton, Constraints.getGridBagConstraints());
 
+        // Link Registrazione
         JLabel registerLabel = new JLabel("Non hai un account? Registrati");
         registerLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         registerLabel.setForeground(Color.GRAY);
         registerLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
+        // Gestione hover e click per la registrazione
         registerLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 new RegistrationPage().setVisible(true);
-                dispose();
+                dispose(); // Chiude la finestra di login
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
+                // Effetto hover: cambia colore e mette in grassetto
                 registerLabel.setText("<html>Non hai un account? <font color='#0078D7'><b>Registrati</b></font></html>");
             }
 
@@ -246,12 +318,23 @@ public class LogInPage extends JFrame {
         panel.add(footerPanel, Constraints.getGridBagConstraints());
     }
 
+    /**
+     * Esegue la logica di autenticazione.
+     * <p>
+     * 1. Recupera i dati dai campi.<br>
+     * 2. Verifica che non siano vuoti o uguali ai placeholder.<br>
+     * 3. Invoca {@link AuthController#login}.<br>
+     * 4. Se il login ha successo, apre la {@link HomePage} e chiude questa finestra.<br>
+     * 5. Altrimenti, mostra un messaggio di errore.
+     * </p>
+     */
     private void performLogin() {
         String email = emailField.getText();
         String password = new String(passwordField.getPassword());
         String placeholderEmail = "Inserisci la tua email...";
         String placeholderPass = "Inserisci la tua password...";
 
+        // Validazione base
         if (email.isEmpty() || email.equals(placeholderEmail) ||
                 password.isEmpty() || password.equals(placeholderPass)) {
             JOptionPane.showMessageDialog(this, "Inserisci credenziali valide.", "Attenzione", JOptionPane.WARNING_MESSAGE);
@@ -262,19 +345,31 @@ public class LogInPage extends JFrame {
 
         if (success) {
             HomePage homePage = new HomePage();
-            homePage.getMainFrame().setExtendedState(Frame.MAXIMIZED_BOTH);
+            homePage.getMainFrame().setExtendedState(Frame.MAXIMIZED_BOTH); // Apre la home a schermo intero
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Credenziali non valide o errore di connessione.", "Errore Login", JOptionPane.ERROR_MESSAGE);
         }
     }
 
+    /**
+     * Punto di ingresso principale dell'applicazione.
+     * <p>
+     * Configura il Look and Feel (FlatLaf), imposta un gestore globale per le eccezioni non catturate
+     * (filtrando gli errori di richiesta attesi) e avvia l'interfaccia grafica nel thread AWT.
+     * </p>
+     *
+     * @param args Argomenti da riga di comando (non utilizzati).
+     */
     public static void main(String[] args) {
 
         setFlatLaf();
         final Logger logger = Logger.getLogger(LogInPage.class.getName());
+
+        // Gestore globale per le eccezioni non catturate
         Thread.setDefaultUncaughtExceptionHandler((thread, throwable) -> {
 
+            // Ignora le eccezioni di tipo RequestError (spesso usate per controllo flusso o errori utente noti)
             if (throwable instanceof RequestError) {
                 return;
             }

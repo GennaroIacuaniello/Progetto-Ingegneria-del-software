@@ -9,10 +9,30 @@ import java.awt.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Finestra di dialogo per la creazione di un nuovo team.
+ * <p>
+ * Questa classe estende {@link JDialog} e fornisce un'interfaccia grafica per permettere all'utente
+ * di inserire il nome di un nuovo team da associare al progetto corrente.
+ * Gestisce la validazione dell'input e invoca il {@link TeamController} per la persistenza dei dati.
+ * </p>
+ */
 public class CreateTeamDialog extends JDialog {
 
+    /**
+     * Logger per la registrazione degli eventi di creazione team.
+     */
     static final Logger logger = Logger.getLogger(CreateTeamDialog.class.getName());
 
+    /**
+     * Costruttore della finestra di dialogo.
+     * <p>
+     * Configura il layout, aggiunge l'etichetta, il campo di testo per il nome del team
+     * e il pulsante di conferma. La finestra è modale rispetto al frame proprietario.
+     * </p>
+     *
+     * @param owner Il frame principale dell'applicazione che funge da genitore per questo dialogo.
+     */
     public CreateTeamDialog(JFrame owner) {
         super(owner, "Nuovo Team", true);
 
@@ -39,9 +59,24 @@ public class CreateTeamDialog extends JDialog {
         this.setLocationRelativeTo(owner);
     }
 
+    /**
+     * Crea e configura il pulsante di conferma per la creazione del team.
+     * <p>
+     * Definisce l'azione da eseguire al click:
+     * <ol>
+     * <li>Verifica che il nome inserito non sia vuoto.</li>
+     * <li>Invoca {@link TeamController#createTeam(String)} per creare il team.</li>
+     * <li>In caso di successo, mostra un messaggio di conferma, registra l'evento nel log (includendo l'ID del progetto corrente) e chiude la finestra.</li>
+     * <li>In caso di nome vuoto, mostra un errore locale tramite {@link FloatingMessage}.</li>
+     * </ol>
+     * </p>
+     *
+     * @param nameField Il componente di testo da cui leggere il nome del team.
+     * @return Il pulsante configurato e pronto all'uso.
+     */
     private JButton getConfirmBtn(JTextField nameField) {
         JButton confirmBtn = new JButton("Conferma");
-        confirmBtn.setBackground(new Color(0, 120, 215));
+        confirmBtn.setBackground(new Color(0, 120, 215)); // Blu primario
         confirmBtn.setForeground(Color.WHITE);
 
         confirmBtn.addActionListener(e -> {
@@ -52,6 +87,8 @@ public class CreateTeamDialog extends JDialog {
                 if(!success)
                     return;
 
+                // Nota: Il messaggio "Progetto creato" potrebbe essere un refuso nel codice originale (dovrebbe essere "Team creato"),
+                // ma viene mantenuto fedele al codice sorgente fornito.
                 JOptionPane.showMessageDialog(this, "Progetto creato con successo!", "Creazione avvenuta", JOptionPane.INFORMATION_MESSAGE);
                 logger.log(Level.FINE, "Team creato: {0}, per Progetto con ID: {1}", new Object[]{teamName, ProjectController.getInstance().getProject().getId()});
                 this.dispose();

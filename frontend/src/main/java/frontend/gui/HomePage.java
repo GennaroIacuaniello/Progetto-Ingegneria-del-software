@@ -7,18 +7,39 @@ import lombok.Getter;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Classe principale che gestisce la finestra Home dell'applicazione.
+ * <p>
+ * Questa classe funge da container principale (Main Frame) dopo l'accesso.
+ * Le sue responsabilità includono:
+ * <ul>
+ * <li>Inizializzazione del Look and Feel (FlatLaf).</li>
+ * <li>Configurazione della finestra principale (`JFrame`).</li>
+ * <li>Selezione dinamica del pannello di contenuto (Dashboard) in base al ruolo dell'utente loggato (Utente base, Sviluppatore, Admin).</li>
+ * <li>Gestione del layout responsive tramite listener sul ridimensionamento della finestra.</li>
+ * </ul>
+ * </p>
+ */
 public class HomePage {
 
+    /**
+     * Il frame principale dell'applicazione.
+     */
     @Getter
     protected JFrame mainFrame;
+
+    /**
+     * Il pannello centrale che contiene le funzionalità specifiche per il ruolo dell'utente.
+     */
     private HomePanelUser homePanel;
 
+    /**
+     * Costruttore della HomePage.
+     * <p>
+     * Configura il frame, aggiunge i pannelli (Titolo e Dashboard) e rende la finestra visibile.
+     * </p>
+     */
     public HomePage() {
-
-        double scale = GraphicsEnvironment.getLocalGraphicsEnvironment()
-                .getDefaultScreenDevice().getDefaultConfiguration()
-                .getDefaultTransform().getScaleX();
-        System.out.println("Current Scaling: " + (scale * 100) + "%");
 
         setMainFrame();
         setPanels();
@@ -26,6 +47,13 @@ public class HomePage {
         mainFrame.setVisible(true);
     }
 
+    /**
+     * Configura il Look and Feel globale dell'applicazione utilizzando FlatLaf.
+     * <p>
+     * Imposta il tema "FlatLightLaf", definisce un fattore di scala per l'interfaccia (1.25x)
+     * e abilita l'antialiasing per i testi e la grafica per migliorare la resa visiva.
+     * </p>
+     */
     public static void setFlatLaf() {
 
         System.setProperty("flatlaf.uiScale", "1.25");
@@ -41,6 +69,12 @@ public class HomePage {
         }
     }
 
+    /**
+     * Inizializza le proprietà del frame principale.
+     * <p>
+     * Imposta titolo, layout (GridBagLayout), dimensioni, operazione di chiusura e colore di sfondo.
+     * </p>
+     */
     private void setMainFrame() {
 
         mainFrame = new JFrame("Home Page");
@@ -52,12 +86,18 @@ public class HomePage {
         mainFrame.getContentPane().setBackground(ColorsList.FRAME_COLOR);
     }
 
+    /**
+     * Orchestra l'aggiunta dei pannelli principali al frame.
+     */
     private void setPanels() {
 
         setTitlePanel();
         setHomePanel();
     }
 
+    /**
+     * Aggiunge il pannello del titolo (Header) nella parte superiore del frame.
+     */
     private void setTitlePanel() {
 
         TitlePanel titlePanel = TitlePanel.getInstance();
@@ -68,6 +108,19 @@ public class HomePage {
         mainFrame.add(titlePanel.getTitlePanel(), Constraints.getGridBagConstraints());
     }
 
+    /**
+     * Determina e istanzia il pannello home specifico in base al ruolo dell'utente.
+     * <p>
+     * Interroga l'{@link AuthController} per ottenere il ruolo dell'utente loggato:
+     * <ul>
+     * <li><b>0:</b> Utente standard (HomePanelUser)</li>
+     * <li><b>1:</b> Sviluppatore (HomePanelDeveloper)</li>
+     * <li><b>2:</b> Amministratore (HomePanelAdmin)</li>
+     * </ul>
+     * Aggiunge inoltre un {@link java.awt.event.ComponentAdapter} per aggiornare i vincoli
+     * di layout quando la finestra viene ridimensionata.
+     * </p>
+     */
     private void setHomePanel() {
 
         switch (AuthController.getInstance().getLoggedUser().getRole()) {
@@ -94,8 +147,17 @@ public class HomePage {
         });
     }
 
+    /**
+     * Aggiorna dinamicamente i vincoli di layout del pannello home.
+     * <p>
+     * Questo metodo viene chiamato al ridimensionamento della finestra per calcolare
+     * margini laterali proporzionali (10% della larghezza del frame), garantendo
+     * che il contenuto rimanga centrato e visivamente gradevole ("responsive").
+     * </p>
+     */
     protected void updateHomePanelConstraints() {
 
+        // Rimuove temporaneamente il pannello per riaggiungerlo con i nuovi vincoli
         mainFrame.remove(homePanel.getHomePanel());
 
         Constraints.setConstraints(0, 1, 1, 1,

@@ -8,15 +8,34 @@ import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
+/**
+ * Finestra di dialogo per la creazione di nuove utenze (Sviluppatori o Amministratori).
+ * <p>
+ * Questa interfaccia permette a un amministratore di registrare manualmente nuovi utenti nel sistema.
+ * Fornisce campi per email e password (con funzionalità mostra/nascondi) e una checkbox per
+ * assegnare privilegi amministrativi. La logica di registrazione è delegata all'{@link AuthController}.
+ * </p>
+ */
 public class DevOrAdminCreationDialog extends JDialog {
 
     private JTextField emailField;
     private JPasswordField passwordField;
     private JCheckBox adminCheckBox;
 
+    // Dimensioni standard per i campi di input
     private final Dimension INPUT_DIMENSION = new Dimension(350, 50);
+    // Colore primario per il pulsante di creazione e l'icona occhio attiva
     private final Color PRIMARY_COLOR = new Color(0, 120, 215);
 
+    /**
+     * Costruttore della finestra di dialogo.
+     * <p>
+     * Inizializza il pannello principale, il titolo, i campi di input e il footer con il pulsante di conferma.
+     * La finestra è impostata come modale e non ridimensionabile.
+     * </p>
+     *
+     * @param owner Il frame principale che funge da genitore per questo dialogo.
+     */
     public DevOrAdminCreationDialog(JFrame owner) {
         super(owner, "Crea Nuova Utenza", true);
 
@@ -34,6 +53,11 @@ public class DevOrAdminCreationDialog extends JDialog {
         this.setResizable(false);
     }
 
+    /**
+     * Configura e aggiunge il titolo della finestra.
+     *
+     * @param panel Il pannello principale a cui aggiungere il titolo.
+     */
     private void setupTitle(JPanel panel) {
         JLabel titleLabel = new JLabel("Crea Utenza");
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
@@ -45,20 +69,28 @@ public class DevOrAdminCreationDialog extends JDialog {
         panel.add(titleLabel, Constraints.getGridBagConstraints());
     }
 
+    /**
+     * Organizza i campi di input (Email, Password, Checkbox Ruolo).
+     *
+     * @param panel Il pannello principale.
+     */
     private void setupInputs(JPanel panel) {
         JPanel inputsContainer = new JPanel(new GridBagLayout());
         inputsContainer.setOpaque(false);
 
+        // Campo Email
         JPanel emailPanel = createEmailPanel("Email utente...");
         Constraints.setConstraints(0, 0, 1, 1, GridBagConstraints.NONE,
                 0, 0, GridBagConstraints.CENTER, 0.0f, 0.0f, new Insets(0, 0, 15, 0));
         inputsContainer.add(emailPanel, Constraints.getGridBagConstraints());
 
+        // Campo Password
         JPanel passwordPanel = createPasswordPanel("Inserisci password...");
         Constraints.setConstraints(0, 1, 1, 1, GridBagConstraints.NONE,
                 0, 0, GridBagConstraints.CENTER, 0.0f, 0.0f, new Insets(0, 0, 15, 0));
         inputsContainer.add(passwordPanel, Constraints.getGridBagConstraints());
 
+        // Checkbox Amministratore
         adminCheckBox = new JCheckBox("Conferisci privilegi di Amministratore");
         adminCheckBox.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         adminCheckBox.setForeground(new Color(80, 80, 80));
@@ -69,11 +101,18 @@ public class DevOrAdminCreationDialog extends JDialog {
                 0, 0, GridBagConstraints.LINE_START, 0.0f, 0.0f, new Insets(0, 10, 0, 0));
         inputsContainer.add(adminCheckBox, Constraints.getGridBagConstraints());
 
+        // Aggiunta del container al pannello principale
         Constraints.setConstraints(0, 1, 1, 1, GridBagConstraints.HORIZONTAL,
                 0, 0, GridBagConstraints.CENTER, 1.0f, 1.0f, new Insets(0, 0, 20, 0));
         panel.add(inputsContainer, Constraints.getGridBagConstraints());
     }
 
+    /**
+     * Crea un pannello stilizzato contenente il campo email.
+     *
+     * @param placeholder Il testo segnaposto da mostrare quando il campo è vuoto.
+     * @return Il pannello contenitore configurato.
+     */
     private JPanel createEmailPanel(String placeholder) {
 
         RoundedPanel wrapper = new RoundedPanel(new GridBagLayout());
@@ -101,6 +140,19 @@ public class DevOrAdminCreationDialog extends JDialog {
         return cushion;
     }
 
+    /**
+     * Crea un pannello stilizzato contenente il campo password e il pulsante "occhio".
+     * <p>
+     * Include la logica per:
+     * <ul>
+     * <li>Gestire il placeholder (mostrato in chiaro) vs la password reale (mascherata).</li>
+     * <li>Alternare la visibilità della password tramite il pulsante occhio.</li>
+     * </ul>
+     * </p>
+     *
+     * @param placeholder Il testo segnaposto.
+     * @return Il pannello contenitore configurato.
+     */
     private JPanel createPasswordPanel(String placeholder) {
 
         RoundedPanel wrapper = new RoundedPanel(new GridBagLayout());
@@ -115,15 +167,17 @@ public class DevOrAdminCreationDialog extends JDialog {
         passwordField.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         passwordField.setBorder(BorderFactory.createEmptyBorder());
         passwordField.setOpaque(false);
+        // Inizialmente mostra il placeholder in chiaro (echoChar 0)
         passwordField.setEchoChar((char) 0);
 
+        // Listener personalizzato per gestire il placeholder su JPasswordField
         passwordField.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
                 String currentText = new String(passwordField.getPassword());
                 if (currentText.equals(placeholder)) {
                     passwordField.setText("");
-                    passwordField.setEchoChar('•');
+                    passwordField.setEchoChar('•'); // Attiva il mascheramento
                 }
             }
 
@@ -131,7 +185,7 @@ public class DevOrAdminCreationDialog extends JDialog {
             public void focusLost(FocusEvent e) {
                 if (passwordField.getPassword().length == 0) {
                     passwordField.setText(placeholder);
-                    passwordField.setEchoChar((char) 0);
+                    passwordField.setEchoChar((char) 0); // Disattiva mascheramento per il placeholder
                 }
             }
         });
@@ -140,6 +194,7 @@ public class DevOrAdminCreationDialog extends JDialog {
                 1, 1, GridBagConstraints.CENTER, new Insets(0, 0, 0, 5));
         wrapper.add(passwordField, Constraints.getGridBagConstraints());
 
+        // Bottone "Occhio" per mostrare/nascondere la password
         JButton eyeButton = new JButton("👁");
         eyeButton.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 18));
         eyeButton.setBorderPainted(false);
@@ -150,12 +205,14 @@ public class DevOrAdminCreationDialog extends JDialog {
         eyeButton.setPreferredSize(new Dimension(30, 30));
 
         eyeButton.addActionListener(e -> {
+            // Non fare nulla se c'è il placeholder
             if (new String(passwordField.getPassword()).equals(placeholder)) return;
+
             if (passwordField.getEchoChar() == '•') {
-                passwordField.setEchoChar((char) 0);
+                passwordField.setEchoChar((char) 0); // Mostra password
                 eyeButton.setForeground(PRIMARY_COLOR);
             } else {
-                passwordField.setEchoChar('•');
+                passwordField.setEchoChar('•'); // Nascondi password
                 eyeButton.setForeground(Color.GRAY);
             }
         });
@@ -170,6 +227,11 @@ public class DevOrAdminCreationDialog extends JDialog {
         return cushion;
     }
 
+    /**
+     * Configura e aggiunge il footer con il pulsante di creazione.
+     *
+     * @param panel Il pannello principale.
+     */
     private void setupFooter(JPanel panel) {
         JButton createButton = new JButton("Crea Utenza");
         createButton.setFont(new Font("Segoe UI", Font.BOLD, 16));
@@ -187,6 +249,18 @@ public class DevOrAdminCreationDialog extends JDialog {
         panel.add(createButton, Constraints.getGridBagConstraints());
     }
 
+    /**
+     * Esegue la logica di creazione dell'utente.
+     * <p>
+     * Recupera i dati dai campi, esegue una validazione basilare (campi vuoti o placeholder)
+     * e chiama {@link AuthController#registration} con il ruolo appropriato:
+     * <ul>
+     * <li>Ruolo 1: Sviluppatore (Default)</li>
+     * <li>Ruolo 2: Amministratore (Se la checkbox è selezionata)</li>
+     * </ul>
+     * Mostra feedback all'utente sull'esito dell'operazione.
+     * </p>
+     */
     private void performCreation() {
         String email = emailField.getText();
         String password = new String(passwordField.getPassword());
@@ -197,6 +271,7 @@ public class DevOrAdminCreationDialog extends JDialog {
             return;
         }
 
+        // 1 = Developer, 2 = Admin
         int role = adminCheckBox.isSelected() ? 2 : 1;
 
 
