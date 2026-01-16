@@ -153,7 +153,7 @@ public class ShowIssueAdmin extends ShowReportedIssueDeveloper {
                     return;
 
                 // Aggiornamento GUI immediato
-                statusLabel.setText("Stato: ASSIGNED");
+                statusLabel.setText("Stato: assegnata");
                 assignedDeveloperLabel.setText("Developer assegnato: " + developer);
                 new FloatingMessage("Assegnazione avvenuta con successo", searchButton, FloatingMessage.SUCCESS_MESSAGE);
 

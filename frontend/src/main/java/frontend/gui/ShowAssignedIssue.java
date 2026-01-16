@@ -97,7 +97,7 @@ public class ShowAssignedIssue extends ShowReportedIssueDeveloper {
         if(!success)
             return;
 
-        statusLabel.setText("Stato: Risolta");
+        statusLabel.setText("Stato: risolta");
         resolutionDateLabel.setText("Risoluzione: " + LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         new FloatingMessage("Segnalazione avvenuta con successo", resolveButton, FloatingMessage.SUCCESS_MESSAGE);
         tmpPanel.setVisible(false);

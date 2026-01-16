@@ -144,7 +144,7 @@ public class ShowReportedIssueUser extends MyDialog {
      * Mostra il tipo di issue (Bug, Feature, ecc.).
      */
     private void setTypeLabel() {
-        JLabel typeLabel = new JLabel("Tipo: " + IssueController.getInstance().getIssueType());
+        JLabel typeLabel = new JLabel("Tipo: " + formatIssueType(IssueController.getInstance().getIssueType()));
 
         typeLabel.setBorder(BorderFactory.createEmptyBorder());
         typeLabel.setBackground(ColorsList.EMPTY_COLOR);
@@ -233,7 +233,7 @@ public class ShowReportedIssueUser extends MyDialog {
      */
     protected void setStatusLabel() {
 
-        statusLabel = new JLabel("Stato: " + IssueController.getInstance().getIssueStatus());
+        statusLabel = new JLabel("Stato: " + formatIssueStatus(IssueController.getInstance().getIssueStatus()));
 
         statusLabel.setBorder(BorderFactory.createEmptyBorder());
         statusLabel.setBackground(ColorsList.EMPTY_COLOR);
@@ -328,5 +328,34 @@ public class ShowReportedIssueUser extends MyDialog {
                 0, 0, GridBagConstraints.CENTER, 0.1f, 0.1f,
                 new Insets(10, 10, 10, 10));
         mainPanel.add(tmp, Constraints.getGridBagConstraints());
+    }
+
+    /**
+     * Metodo helper per convertire il valore enum del backend nell'etichetta del tipo (UI).
+     * Es. "QUESTION" -> "Domanda".
+     */
+    protected String formatIssueType(String issueType) {
+
+        return switch (issueType) {
+            case "BUG" -> "bug";
+            case "DOCUMENTATION" -> "documentazione";
+            case "FEATURE" -> "feature";
+            case "QUESTION" -> "domanda";
+            default -> null;
+        };
+    }
+
+    /**
+     * Metodo helper per convertire l'etichetta dello stato (UI) nel valore enum del backend.
+     * Es. "Risolte" -> "RESOLVED".
+     */
+    protected String formatIssueStatus(String issueStatus) {
+
+        return switch (issueStatus) {
+            case "ASSIGNED" -> "assegnata";
+            case "RESOLVED" -> "risolta";
+            case "TODO" -> "to do";
+            default -> null;
+        };
     }
 }
