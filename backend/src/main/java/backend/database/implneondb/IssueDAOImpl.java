@@ -133,8 +133,14 @@ public class IssueDAOImpl implements IssueDAO {
             searchParam.add(issueToSearch.getPriority());
         }
         if (issueToSearch.getTags() != null && !issueToSearch.getTags().isEmpty()) {
-            query.append(" AND tags ILIKE ?");
-            searchParam.add("%" + issueToSearch.getTags() + "%");
+            
+            String[] tagsArray = issueToSearch.getTags().split(";");
+
+            for(String tag: tagsArray){
+                query.append(" AND tags ILIKE ?");
+                searchParam.add("%" + tag + "%");
+            }
+
         }
 
 
