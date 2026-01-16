@@ -39,7 +39,7 @@ public class ReportIssueUser extends RoundedPanel{
     // Costanti per i testi di default
     protected static final String TITLE_PLACEHOLDER = "Inserisci titolo";
     protected static final String DESCRIPTION_PLACEHOLDER = "Inserisci descrizione";
-    protected static final String[] options = {"Bug", "Documentation", "Feature", "Question"};
+    protected static final String[] options = {"Bug", "Documentazione", "Feature", "Domanda"};
 
     /**
      * Costruttore del pannello di segnalazione Utente.
@@ -260,7 +260,7 @@ public class ReportIssueUser extends RoundedPanel{
 
         issue.setTitle(titleTextField.getText());
         issue.setDescription((descriptionTextArea.getText().equals(DESCRIPTION_PLACEHOLDER) ? "" : descriptionTextArea.getText()));
-        issue.setTypeWithString((String) Objects.requireNonNull(typeComboBox.getSelectedItem()));
+        issue.setTypeWithString(formatIssueType(Objects.requireNonNull(typeComboBox.getSelectedItem())));
 
         // Default Priority per User: MEDIA
         issue.setPriority(IssueController.getInstance().priorityStringToInt("Media"));
@@ -312,5 +312,20 @@ public class ReportIssueUser extends RoundedPanel{
         Constraints.setConstraints(1, 3, 1, 1,
                 GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
                 0.5f, 0.5f);
+    }
+
+    /**
+     * Metodo helper per convertire l'etichetta del tipo (UI) nel valore enum del backend.
+     * Es. "Domanda" -> "QUESTION".
+     */
+    protected String formatIssueType(Object issueType) {
+
+        return switch (issueType.toString()) {
+            case "Bug" -> "Bug";
+            case "Documentazione" -> "Documentation";
+            case "Feature" -> "Feature";
+            case "Domanda" -> "Question";
+            default -> null;
+        };
     }
 }

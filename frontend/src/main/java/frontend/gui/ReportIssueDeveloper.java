@@ -86,7 +86,7 @@ public class ReportIssueDeveloper extends ReportIssueUser {
 
         issue.setTitle(titleTextField.getText());
         issue.setDescription((descriptionTextArea.getText().equals(DESCRIPTION_PLACEHOLDER) ? "" : descriptionTextArea.getText()));
-        issue.setTypeWithString((String) Objects.requireNonNull(typeComboBox.getSelectedItem()));
+        issue.setTypeWithString(formatIssueType(Objects.requireNonNull(typeComboBox.getSelectedItem()).toString()));
 
         // Gestione specifica della priorità
         issue.setPriority(IssueController.getInstance().priorityStringToInt(Objects.requireNonNull(priorityComboBox.getSelectedItem()).toString()));

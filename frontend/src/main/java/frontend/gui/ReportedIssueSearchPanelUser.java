@@ -280,7 +280,7 @@ public class ReportedIssueSearchPanelUser extends RoundedPanel{
 
         return switch (issueType.toString()) {
             case "Bug" -> "BUG";
-            case "Documentation" -> "DOCUMENTATION";
+            case "Documentazione" -> "DOCUMENTATION";
             case "Feature" -> "FEATURE";
             case "Domanda" -> "QUESTION";
             default -> null;
