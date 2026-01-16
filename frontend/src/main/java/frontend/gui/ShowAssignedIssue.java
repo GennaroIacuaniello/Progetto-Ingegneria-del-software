@@ -4,6 +4,8 @@ import frontend.controller.IssueController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Vista di dettaglio per le Issue Assegnate (Lato Sviluppatore).
@@ -96,6 +98,7 @@ public class ShowAssignedIssue extends ShowReportedIssueDeveloper {
             return;
 
         statusLabel.setText("Stato: Risolta");
+        resolutionDateLabel.setText("Risoluzione: " + LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         new FloatingMessage("Segnalazione avvenuta con successo", resolveButton, FloatingMessage.SUCCESS_MESSAGE);
         tmpPanel.setVisible(false);
     }

@@ -44,6 +44,12 @@ public class ShowReportedIssueUser extends MyDialog {
     protected JLabel assignedDeveloperLabel;
 
     /**
+     * Etichetta del tempo di risoluzione. Protetta per consentire l'aggiornamento immediato
+     * se l'Admin senga l'issue come risolta dalla sua vista estesa.
+     */
+    protected JLabel resolutionDateLabel;
+
+    /**
      * Costruttore della finestra di dettaglio.
      * <p>
      * Costruisce l'interfaccia chiamando in sequenza i metodi di setup per ogni componente.
@@ -264,7 +270,7 @@ public class ShowReportedIssueUser extends MyDialog {
      */
     private void setResolutionDateLabel() {
 
-        JLabel resolutionDateLabel = new JLabel("Risoluzione: " + (IssueController.getInstance().getIssueResolutionDate() != null ?
+        resolutionDateLabel = new JLabel("Risoluzione: " + (IssueController.getInstance().getIssueResolutionDate() != null ?
                 formatDate(IssueController.getInstance().getIssueResolutionDate()) : "questa issue non è ancora stata risolta"));
 
         resolutionDateLabel.setBorder(BorderFactory.createEmptyBorder());
