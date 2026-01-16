@@ -1,0 +1,6 @@
+docker build -t backend-app .
+
+
+
+
+docker run -d -p 8080:8080 --env-file .env --name backend-container backend-app
