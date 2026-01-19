@@ -226,8 +226,8 @@ public class ReportIssueUser extends RoundedPanel{
 
         reportButton.addActionListener(e -> {
             // Validazione base
-            if (titleTextField.getText().equals(TITLE_PLACEHOLDER))
-                new FloatingMessage("Inserire il titolo per segnalare una issue", reportButton, FloatingMessage.ERROR_MESSAGE);
+            if (titleTextField.getText().equals(TITLE_PLACEHOLDER) || descriptionTextArea.getText().equals(DESCRIPTION_PLACEHOLDER))
+                new FloatingMessage("Titolo e descrizione sono obbligatori per segnalare una issue", reportButton, FloatingMessage.ERROR_MESSAGE);
             else
                 report(homePanelUser);
         });
