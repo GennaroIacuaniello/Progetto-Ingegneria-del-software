@@ -188,7 +188,7 @@ public class ReportedIssueSearchPanelUser extends RoundedPanel{
         if(!success)
             return;
 
-        new ReportedIssueSearchResultsPanelUser(mainFrame, searchPage, IssueController.getInstance().getIssuesTitles(), "Decrescente");
+        new ReportedIssueSearchResultsPanelUser(mainFrame, searchPage, IssueController.getInstance().getIssuesTitles());
     }
 
     /**

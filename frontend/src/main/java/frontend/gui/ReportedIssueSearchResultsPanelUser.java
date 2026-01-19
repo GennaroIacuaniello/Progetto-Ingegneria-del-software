@@ -1,5 +1,7 @@
 package frontend.gui;
 
+import frontend.controller.IssueController;
+
 import javax.swing.*;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
@@ -39,9 +41,9 @@ public class ReportedIssueSearchResultsPanelUser {
      * @param searchPage   La pagina di ricerca che ospiterà la tabella.
      * @param issuesTitles La lista dei titoli delle issue trovate.
      */
-    public ReportedIssueSearchResultsPanelUser(JFrame mainFrame, SearchReportedIssuePageUser searchPage, List<String> issuesTitles, String order) {
+    public ReportedIssueSearchResultsPanelUser(JFrame mainFrame, SearchReportedIssuePageUser searchPage, List<String> issuesTitles) {
 
-        searchPage.updateSearchIssueViewResults(createTable(mainFrame, issuesTitles, order));
+        searchPage.updateSearchIssueViewResults(createTable(mainFrame, issuesTitles));
     }
 
     /**
@@ -63,9 +65,9 @@ public class ReportedIssueSearchResultsPanelUser {
      * @param issuesTitles La lista dei dati da visualizzare.
      * @return La tabella configurata pronta per essere mostrata.
      */
-    protected JTable createTable(JFrame mainFrame, List<String> issuesTitles, String order) {
+    protected JTable createTable(JFrame mainFrame, List<String> issuesTitles) {
 
-        JTable resultsTable = new JTable(createTableModel(issuesTitles, order));
+        JTable resultsTable = new JTable(createTableModel(issuesTitles));
 
         TableColumn buttonColumn = resultsTable.getColumnModel().getColumn(1);
 
@@ -99,26 +101,17 @@ public class ReportedIssueSearchResultsPanelUser {
      * @param issueTitles Lista dei titoli delle issue.
      * @return Il modello dati popolato.
      */
-    protected IssueTableModel createTableModel(List<String> issueTitles, String order) {
+    protected IssueTableModel createTableModel(List<String> issueTitles) {
 
         int numRows = issueTitles.size();
         Object[][] rowData = new Object[numRows][2];
 
-        if (order.equals("Decrescente")) {
+        for (int i = 0; i < numRows; i++) {
 
-            for (int i = 0; i < numRows; i++) {
-
-                rowData[i][0] = issueTitles.get(i);
-                rowData[i][1] = "View"; // Valore fittizio, verrà sovrascritto graficamente dall'icona
-            }
-        } else {
-
-            for (int i = 0; i < numRows; i++) {
-
-                rowData[i][0] = issueTitles.get(numRows - i - 1);
-                rowData[i][1] = "View"; // Valore fittizio, verrà sovrascritto graficamente dall'icona
-            }
+            rowData[i][0] = issueTitles.get(i);
+            rowData[i][1] = "View"; // Valore fittizio, verrà sovrascritto graficamente dall'icona
         }
+
 
         return new IssueTableModel(rowData);
     }

@@ -26,9 +26,9 @@ public class AllIssueSearchResultsPanel extends AssignedIssueSearchResultsPanel 
      * @param searchPage   La pagina di ricerca che ospita questo pannello.
      * @param issuesTitles La lista dei titoli delle issue trovate dalla ricerca.
      */
-    public AllIssueSearchResultsPanel(JFrame mainFrame, SearchReportedIssuePageUser searchPage, List<String> issuesTitles, String order) {
+    public AllIssueSearchResultsPanel(JFrame mainFrame, SearchReportedIssuePageUser searchPage, List<String> issuesTitles) {
 
-        super(mainFrame, searchPage, issuesTitles, order);
+        super(mainFrame, searchPage, issuesTitles);
     }
 
     /**
@@ -48,9 +48,9 @@ public class AllIssueSearchResultsPanel extends AssignedIssueSearchResultsPanel 
      * @return L'istanza di {@link JTable} configurata.
      */
     @Override
-    protected JTable createTable(JFrame mainFrame, List<String> issuesTitles, String order) {
+    protected JTable createTable(JFrame mainFrame, List<String> issuesTitles) {
 
-        JTable resultsTable = new JTable(createTableModel(issuesTitles, order));
+        JTable resultsTable = new JTable(createTableModel(issuesTitles));
 
         // Configurazione della colonna delle azioni (indice 1)
         TableColumn buttonColumn = resultsTable.getColumnModel().getColumn(1);

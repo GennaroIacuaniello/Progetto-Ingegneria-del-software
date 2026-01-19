@@ -128,10 +128,13 @@ public class ReportedIssueSearchPanelDeveloper extends ReportedIssueSearchPanelU
                 (Objects.equals(priorityComboBox.getSelectedItem(), ALL_PLACEHOLDER)) ? null : (String)priorityComboBox.getSelectedItem()
         );
 
+        if (Objects.equals(orderComboBox.getSelectedItem(), "Crescente"))
+            IssueController.getInstance().reOrderIssues();
+
         if(!success)
             return;
 
         // Visualizza i risultati usando il pannello specifico per sviluppatori
-        new ReportedIssueSearchResultsPanelDeveloper(mainFrame, searchPage, IssueController.getInstance().getIssuesTitles(), Objects.requireNonNull(orderComboBox.getSelectedItem()).toString());
+        new ReportedIssueSearchResultsPanelDeveloper(mainFrame, searchPage, IssueController.getInstance().getIssuesTitles());
     }
 }

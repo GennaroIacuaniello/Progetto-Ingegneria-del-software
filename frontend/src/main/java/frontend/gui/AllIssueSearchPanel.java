@@ -51,6 +51,9 @@ public class AllIssueSearchPanel extends ReportedIssueSearchPanelDeveloper {
         if(!success)
             return;
 
-        new AllIssueSearchResultsPanel(mainFrame, searchPage, IssueController.getInstance().getIssuesTitles(), Objects.requireNonNull(orderComboBox.getSelectedItem()).toString());
+        if (Objects.equals(orderComboBox.getSelectedItem(), "Crescente"))
+            IssueController.getInstance().reOrderIssues();
+
+        new AllIssueSearchResultsPanel(mainFrame, searchPage, IssueController.getInstance().getIssuesTitles());
     }
 }
