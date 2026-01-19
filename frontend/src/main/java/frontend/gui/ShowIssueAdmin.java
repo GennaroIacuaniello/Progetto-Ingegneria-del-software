@@ -58,7 +58,7 @@ public class ShowIssueAdmin extends ShowReportedIssueDeveloper {
         super(parent);
 
         // Mostra i controlli di assegnazione solo se l'issue è ancora in attesa (TODO)
-        if (statusLabel.getText().equals("Stato: TODO")) {
+        if (statusLabel.getText().equals("Stato: to do")) {
 
             setTmpPanel();
             setSearchButton();
