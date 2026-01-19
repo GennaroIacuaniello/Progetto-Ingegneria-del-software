@@ -64,7 +64,7 @@ public class AuthController {
         }
         return instance;
     }
-    
+
     /**
      * Effettua il tentativo di login al sistema.
      * <p>
