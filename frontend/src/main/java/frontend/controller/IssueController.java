@@ -697,7 +697,7 @@ public class IssueController {
         IssueDTO issueTmp;
         int size = issues.size();
 
-        for(int i=0; i < size; i++){
+        for(int i=0; i < size/2; i++){
             issueTmp = issues.get(i);
             issues.set(i, issues.get( size - i -1) );
             issues.set( size - i -1, issueTmp);
