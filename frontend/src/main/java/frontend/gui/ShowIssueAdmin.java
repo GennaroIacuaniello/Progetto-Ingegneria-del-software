@@ -76,7 +76,7 @@ public class ShowIssueAdmin extends ShowReportedIssueDeveloper {
         tmpPanel.setRoundBorderColor(ColorsList.BORDER_COLOR);
         tmpPanel.setBackground(Color.WHITE);
 
-        Constraints.setConstraints(0, 5, 4, 1, GridBagConstraints.NONE,
+        Constraints.setConstraints(0, 6, 4, 1, GridBagConstraints.NONE,
                 0, 0, GridBagConstraints.CENTER, 0.1f, 0.1f,
                 new Insets(5, 5, 5, 5));
         mainPanel.add(tmpPanel, Constraints.getGridBagConstraints());

@@ -72,7 +72,7 @@ public class ShowAssignedIssue extends ShowReportedIssueDeveloper {
         tmpPanel.setBackground(ColorsList.GREEN_BACKGROUND_COLOR);
         tmpPanel.setCursor(new  Cursor(Cursor.HAND_CURSOR));
 
-        Constraints.setConstraints(0, 5, 4, 1,
+        Constraints.setConstraints(0, 6, 4, 1,
                 GridBagConstraints.NONE, 40, 20, GridBagConstraints.CENTER,
                 0.5f, 0.5f, new Insets(5, 5, 5, 5));
         mainPanel.add(tmpPanel, Constraints.getGridBagConstraints());
