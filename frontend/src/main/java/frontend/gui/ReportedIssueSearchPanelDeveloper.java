@@ -23,10 +23,14 @@ public class ReportedIssueSearchPanelDeveloper extends ReportedIssueSearchPanelU
      */
     protected JComboBox<String> priorityComboBox;
 
+    protected JComboBox<String> orderComboBox;
+
     /**
      * Opzioni disponibili per il filtro priorità.
      */
     private static final String[] priorityOptions = {"Tutte", "Molto bassa", "Bassa", "Media", "Alta", "Molto alta"};
+
+    private static final String[] orderOptions = {"Crescente", "Decrescente"};
 
     /**
      * Costruttore del pannello di ricerca Developer.
@@ -43,6 +47,7 @@ public class ReportedIssueSearchPanelDeveloper extends ReportedIssueSearchPanelU
         super(mainFrame, searchPage);
 
         setPriorityComboBox();
+        setOrderComboBox();
     }
 
     /**
@@ -77,6 +82,29 @@ public class ReportedIssueSearchPanelDeveloper extends ReportedIssueSearchPanelU
         this.add(tmpPanel, Constraints.getGridBagConstraints());
     }
 
+    public void setOrderComboBox() {
+
+        orderComboBox = new JComboBox<>(orderOptions);
+
+        orderComboBox.setBorder(BorderFactory.createEmptyBorder());
+        orderComboBox.setBackground(ColorsList.EMPTY_COLOR);
+
+        // Avvolge il combobox in un pannello arrotondato per coerenza stilistica
+        RoundedPanel tmpPanel = ContainerFactory.createRoundedPanelContainer(orderComboBox);
+
+        // Aggiunge l'etichetta "Priorità:"
+        Constraints.setConstraints(7, 2, 1, 1,
+                GridBagConstraints.NONE, 0, 0, GridBagConstraints.LINE_END,
+                0.5f, 0.5f);
+        this.add(createTransparentLabel("Ordine di priorità: "), Constraints.getGridBagConstraints());
+
+        // Aggiunge il componente di selezione
+        Constraints.setConstraints(8, 2, 1, 1,
+                GridBagConstraints.NONE, 0, 0, GridBagConstraints.LINE_START,
+                0.5f, 0.5f);
+        this.add(tmpPanel, Constraints.getGridBagConstraints());
+    }
+
     /**
      * Gestisce l'azione di ricerca (click sul pulsante "Cerca").
      * <p>
@@ -104,6 +132,6 @@ public class ReportedIssueSearchPanelDeveloper extends ReportedIssueSearchPanelU
             return;
 
         // Visualizza i risultati usando il pannello specifico per sviluppatori
-        new ReportedIssueSearchResultsPanelDeveloper(mainFrame, searchPage, IssueController.getInstance().getIssuesTitles());
+        new ReportedIssueSearchResultsPanelDeveloper(mainFrame, searchPage, IssueController.getInstance().getIssuesTitles(), Objects.requireNonNull(orderComboBox.getSelectedItem()).toString());
     }
 }

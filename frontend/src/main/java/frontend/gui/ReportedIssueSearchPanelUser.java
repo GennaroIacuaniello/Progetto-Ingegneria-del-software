@@ -142,7 +142,7 @@ public class ReportedIssueSearchPanelUser extends RoundedPanel{
         titlePanel.setRoundBorderColor(ColorsList.BORDER_COLOR);
         titlePanel.setBackground(Color.WHITE);
 
-        Constraints.setConstraints(0, 1, 7, 1,
+        Constraints.setConstraints(0, 1, 9, 1,
                 GridBagConstraints.NONE, 0, 0, GridBagConstraints.CENTER,
                 1f, 0.5f);
         this.add(titlePanel, Constraints.getGridBagConstraints());
@@ -188,7 +188,7 @@ public class ReportedIssueSearchPanelUser extends RoundedPanel{
         if(!success)
             return;
 
-        new ReportedIssueSearchResultsPanelUser(mainFrame, searchPage, IssueController.getInstance().getIssuesTitles());
+        new ReportedIssueSearchResultsPanelUser(mainFrame, searchPage, IssueController.getInstance().getIssuesTitles(), "Decrescente");
     }
 
     /**

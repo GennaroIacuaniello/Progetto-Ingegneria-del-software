@@ -27,9 +27,9 @@ public class ReportedIssueSearchResultsPanelDeveloper extends ReportedIssueSearc
      * @param searchPage   La pagina di ricerca padre (per la navigazione indietro).
      * @param issuesTitles La lista dei titoli delle issue trovate da visualizzare.
      */
-    public ReportedIssueSearchResultsPanelDeveloper(JFrame mainFrame, SearchReportedIssuePageUser searchPage, List<String> issuesTitles) {
+    public ReportedIssueSearchResultsPanelDeveloper(JFrame mainFrame, SearchReportedIssuePageUser searchPage, List<String> issuesTitles, String order) {
 
-        super(mainFrame, searchPage, issuesTitles);
+        super(mainFrame, searchPage, issuesTitles, order);
     }
 
     /**
@@ -50,9 +50,9 @@ public class ReportedIssueSearchResultsPanelDeveloper extends ReportedIssueSearc
      * @return La {@link JTable} configurata.
      */
     @Override
-    protected JTable createTable(JFrame mainFrame, List<String> issuesTitles) {
+    protected JTable createTable(JFrame mainFrame, List<String> issuesTitles, String order) {
 
-        JTable resultsTable = new JTable(createTableModel(issuesTitles));
+        JTable resultsTable = new JTable(createTableModel(issuesTitles, order));
 
         // Configurazione della colonna azioni (Indice 1)
         TableColumn buttonColumn = resultsTable.getColumnModel().getColumn(1);

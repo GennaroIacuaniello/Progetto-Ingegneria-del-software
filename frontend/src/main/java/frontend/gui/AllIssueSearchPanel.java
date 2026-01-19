@@ -51,6 +51,6 @@ public class AllIssueSearchPanel extends ReportedIssueSearchPanelDeveloper {
         if(!success)
             return;
 
-        new AllIssueSearchResultsPanel(mainFrame, searchPage, IssueController.getInstance().getIssuesTitles());
+        new AllIssueSearchResultsPanel(mainFrame, searchPage, IssueController.getInstance().getIssuesTitles(), Objects.requireNonNull(orderComboBox.getSelectedItem()).toString());
     }
 }

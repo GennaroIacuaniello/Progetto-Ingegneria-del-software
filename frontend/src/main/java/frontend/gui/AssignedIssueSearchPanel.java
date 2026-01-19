@@ -50,6 +50,6 @@ public class AssignedIssueSearchPanel extends ReportedIssueSearchPanelDeveloper 
         if(!success)
             return;
 
-        new AssignedIssueSearchResultsPanel(mainFrame, searchPage, IssueController.getInstance().getIssuesTitles());
+        new AssignedIssueSearchResultsPanel(mainFrame, searchPage, IssueController.getInstance().getIssuesTitles(), Objects.requireNonNull(orderComboBox.getSelectedItem()).toString());
     }
 }
