@@ -689,4 +689,19 @@ public class IssueController {
         };
     }
 
+    /**
+     * Ribalta l'ArrayList issues per mostrarle all'utente ordinate per priorità crescente o decrescente.
+     */
+    public void reOrderIssues(){
+
+        IssueDTO issueTmp;
+        int size = issues.size();
+
+        for(int i=0; i < size; i++){
+            issueTmp = issues.get(i);
+            issues.set(i, issues.get( size - i -1) );
+            issues.set( size - i -1, issueTmp);
+        }
+
+    }
 }
