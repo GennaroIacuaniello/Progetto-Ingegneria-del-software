@@ -143,6 +143,8 @@ public class IssueDAOImpl implements IssueDAO {
 
         }
 
+        query.append(" ORDER BY issue_priority");
+
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query.toString())) {
