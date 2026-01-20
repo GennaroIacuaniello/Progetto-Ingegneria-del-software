@@ -96,6 +96,7 @@ public class ReportIssueDeveloper extends ReportIssueUser {
         if(!success)
             return;
 
+        new FloatingMessage("Issue reportata con successo", reportButton, FloatingMessage.SUCCESS_MESSAGE);
         homePanelUser.returnToDefaultContentPanel();
     }
 
