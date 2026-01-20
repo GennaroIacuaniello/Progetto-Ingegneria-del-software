@@ -45,7 +45,7 @@ public class ShowAssignedIssue extends ShowReportedIssueDeveloper {
         super(parent);
 
         // Aggiunge il pulsante di azione solo se l'issue è ancora in lavorazione
-        if (statusLabel.getText().equals("Stato: ASSIGNED"))
+        if (statusLabel.getText().equals("Stato: assegnata"))
             setResolveButton();
     }
 
