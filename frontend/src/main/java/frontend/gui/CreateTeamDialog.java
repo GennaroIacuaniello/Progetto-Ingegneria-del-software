@@ -89,7 +89,7 @@ public class CreateTeamDialog extends JDialog {
 
                 // Nota: Il messaggio "Progetto creato" potrebbe essere un refuso nel codice originale (dovrebbe essere "Team creato"),
                 // ma viene mantenuto fedele al codice sorgente fornito.
-                JOptionPane.showMessageDialog(this, "Progetto creato con successo!", "Creazione avvenuta", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Team creato con successo!", "Creazione avvenuta", JOptionPane.INFORMATION_MESSAGE);
                 logger.log(Level.FINE, "Team creato: {0}, per Progetto con ID: {1}", new Object[]{teamName, ProjectController.getInstance().getProject().getId()});
                 this.dispose();
 
