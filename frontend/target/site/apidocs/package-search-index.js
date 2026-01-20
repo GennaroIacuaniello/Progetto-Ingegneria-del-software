@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"frontend.config"},{"l":"frontend.controller"},{"l":"frontend.dto"},{"l":"frontend.exception"},{"l":"frontend.gui"}];updateSearchResults();

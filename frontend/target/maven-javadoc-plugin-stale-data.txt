@@ -1,0 +1,55 @@
+@options
+@packages
+--class-path
+'C:/Users/genna/Documents/GitHub/Progetto-Ingegneria-del-software/frontend/target/classes;C:/Users/genna/.m2/repository/com/formdev/flatlaf/3.5.2/flatlaf-3.5.2.jar;C:/Users/genna/.m2/repository/com/formdev/flatlaf-extras/3.5.2/flatlaf-extras-3.5.2.jar;C:/Users/genna/.m2/repository/com/github/weisj/jsvg/1.4.0/jsvg-1.4.0.jar;C:/Users/genna/.m2/repository/com/github/lgooddatepicker/LGoodDatePicker/11.2.1/LGoodDatePicker-11.2.1.jar;C:/Users/genna/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.15.2/jackson-databind-2.15.2.jar;C:/Users/genna/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.15.2/jackson-annotations-2.15.2.jar;C:/Users/genna/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.15.2/jackson-core-2.15.2.jar;C:/Users/genna/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.15.2/jackson-datatype-jsr310-2.15.2.jar;C:/Users/genna/.m2/repository/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar'
+-encoding
+'UTF-8'
+-protected
+-source
+'21'
+-sourcepath
+'C:/Users/genna/Documents/GitHub/Progetto-Ingegneria-del-software/frontend/src/main/java;C:/Users/genna/Documents/GitHub/Progetto-Ingegneria-del-software/frontend/target/generated-sources/annotations'
+-author
+-bottom
+'Copyright &#169; 2026. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'C:/Users/genna/Documents/GitHub/Progetto-Ingegneria-del-software/frontend/target/site/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'frontend 1.0-SNAPSHOT API'
+-use
+-version
+-windowtitle
+'frontend 1.0-SNAPSHOT API'
+frontend.config
+frontend.controller
+frontend.dto
+frontend.exception
+frontend.gui
+C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java = 1766574702568
+C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\target\generated-sources\annotations = 1768912835565
+C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\target\site\apidocs\allclasses-index.html = 1768912865683
+C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\target\site\apidocs\allpackages-index.html = 1768912865689
+C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\target\site\apidocs\constant-values.html = 1768912864889
+C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\target\site\apidocs\copy.svg = 1768912865795
+C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\target\site\apidocs\element-list = 1768912864711
+C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\target\site\apidocs\help-doc.html = 1768912865787
+C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\target\site\apidocs\index-all.html = 1768912865761
+C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\target\site\apidocs\index.html = 1768912865572
+C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\target\site\apidocs\link.svg = 1768912865796
+C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\target\site\apidocs\member-search-index.js = 1768912865703
+C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\target\site\apidocs\module-search-index.js = 1768912865691
+C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\target\site\apidocs\overview-summary.html = 1768912865772
+C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\target\site\apidocs\overview-tree.html = 1768912865563
+C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\target\site\apidocs\package-search-index.js = 1768912865694
+C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\target\site\apidocs\script.js = 1768912865793
+C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\target\site\apidocs\search-page.js = 1768912865806
+C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\target\site\apidocs\search.html = 1768912865768
+C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\target\site\apidocs\search.js = 1768912865803
+C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\target\site\apidocs\serialized-form.html = 1768912864990
+C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\target\site\apidocs\stylesheet.css = 1768912865791
+C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\target\site\apidocs\tag-search-index.js = 1768912865704
+C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\target\site\apidocs\type-search-index.js = 1768912865696

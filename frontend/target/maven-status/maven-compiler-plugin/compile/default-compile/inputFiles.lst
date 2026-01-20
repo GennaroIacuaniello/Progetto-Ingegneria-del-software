@@ -1,8 +1,6 @@
-C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\caso\AdminDTO.java
-C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\caso\DeveloperDTO.java
+C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\config\ApiPaths.java
 C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\controller\ApiClient.java
 C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\controller\AuthController.java
-C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\controller\ControllerTMP.java
 C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\controller\IssueController.java
 C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\controller\ProjectController.java
 C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\controller\TeamController.java
@@ -11,9 +9,10 @@ C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\ma
 C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\dto\IssueStatusDTO.java
 C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\dto\IssueTypeDTO.java
 C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\dto\ProjectDTO.java
+C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\dto\StatisticDTO.java
 C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\dto\TeamDTO.java
-C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\dto\TeamReportDTO.java
 C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\dto\UserDTO.java
+C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\exception\FloatingMessageException.java
 C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\exception\RequestError.java
 C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\gui\AddMemberActionCellEditor.java
 C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\gui\AddMemberDialog.java
@@ -29,12 +28,12 @@ C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\ma
 C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\gui\CreateProjectDialog.java
 C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\gui\CreateTeamDialog.java
 C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\gui\DashBoard.java
+C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\gui\DevOrAdminCreationDialog.java
 C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\gui\DisposeTimers.java
 C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\gui\FileButton.java
 C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\gui\FileChooserButton.java
 C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\gui\FileChooserPanel.java
 C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\gui\FloatingMessage.java
-C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\gui\FloatingMessageException.java
 C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\gui\HomePage.java
 C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\gui\HomePanelAdmin.java
 C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\gui\HomePanelDeveloper.java
@@ -50,9 +49,7 @@ C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\ma
 C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\gui\LogOutButton.java
 C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\gui\ManageMembersDialog.java
 C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\gui\ManageMembersTextCellEditor.java
-C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\gui\ManageProjectsDialog.java
-C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\gui\ManageTeamsDialog.java
-C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\gui\ManageTeamTextCellEditor.java
+C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\gui\ManageTeamsPanel.java
 C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\gui\MenuButton.java
 C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\gui\MyDialog.java
 C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\gui\ProjectIconCellEditorAdmin.java
@@ -61,6 +58,7 @@ C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\ma
 C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\gui\ProjectTableModelAdmin.java
 C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\gui\ProjectTableModelDeveloper.java
 C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\gui\ProjectTableModelUser.java
+C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\gui\RegistrationPage.java
 C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\gui\RemoveMemberCellEditor.java
 C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\gui\RemoveTagButton.java
 C:\Users\genna\Documents\GitHub\Progetto-Ingegneria-del-software\frontend\src\main\java\frontend\gui\ReportedIssueSearchPanelDeveloper.java
