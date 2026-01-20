@@ -270,6 +270,7 @@ public class ReportIssueUser extends RoundedPanel{
         if(!success)
             return;
 
+        new FloatingMessage("Issue reportata con successo", reportButton, FloatingMessage.SUCCESS_MESSAGE);
         homePanelUser.returnToDefaultContentPanel();
     }
 
