@@ -11,6 +11,8 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.net.URL;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -61,6 +63,9 @@ public class LogInPage extends JFrame {
         this.setSize(600, 500);
         this.setLocationRelativeTo(null); // Centra la finestra nello schermo
         this.setResizable(false);
+        URL iconURL = getClass().getResource("/frontend/gui/images/applicationIcon.png");
+        if (iconURL != null)
+            this.setIconImage(new ImageIcon(iconURL).getImage());
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
         mainPanel.setBackground(Color.WHITE);

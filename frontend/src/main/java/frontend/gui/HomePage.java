@@ -6,6 +6,7 @@ import lombok.Getter;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.URL;
 
 /**
  * Classe principale che gestisce la finestra Home dell'applicazione.
@@ -84,6 +85,10 @@ public class HomePage {
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         mainFrame.getContentPane().setBackground(ColorsList.FRAME_COLOR);
+
+        URL iconURL = getClass().getResource("/frontend/gui/images/applicationIcon.png");
+        if (iconURL != null)
+            mainFrame.setIconImage(new ImageIcon(iconURL).getImage());
     }
 
     /**
