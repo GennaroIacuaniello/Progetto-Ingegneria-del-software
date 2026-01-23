@@ -174,7 +174,6 @@ public class ShowReportedIssueUser extends MyDialog {
 
         for (String tag : IssueController.getInstance().getIssueTagsAsList()) {
 
-            System.out.println(tag);
             JLabel tmpLabel = new JLabel(tag);
             tmpLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
             menu.add(tmpLabel);
